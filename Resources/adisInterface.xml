@@ -1,0 +1,2034 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+adisInterface
+</name>
+</assembly>
+<members>
+<member name="T:adisInterface.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:adisInterface.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:adisInterface.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:adisInterface.PagedDutBase">
+ <summary>
+ Base class for devices with paged register access.  Builds pageing functionality on to DutBase.
+ Does not implement streaming routines, this is left fro inheriting classes.
+ </summary>
+</member>
+<member name="M:adisInterface.PagedDutBase.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
+<member name="M:adisInterface.PagedDutBase.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.PagedDutBase.ReadPageRegister">
+ <summary>
+ Returns the current memory page.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.PagedDutBase.WritePageRegister(System.UInt32)">
+ <summary>
+ Sets the memory page.
+ </summary>
+ <param name="page"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.PagedDutBase.WriteReadUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32},System.UInt32)">
+ <summary>
+ Writes page, creates address list, returns Unsigned data.
+ </summary>
+ <param name="regDataList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.PagedDutBase.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
+ <summary>
+ Writes page register, writes data list element to corrosponding registers list element.
+ </summary>
+ <param name="regDatList"></param>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.AdcmInterface3Axis.RealTimeSamplingFrameSize">
+ <summary>
+ Stores the real time sampling frane frame size for 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.AdcmInterface3Axis.RealTimeSamplingRegList">
+ <summary>
+ Returns the register list to use for ADcmXL Real Time Streaming
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.AdcmInterface3Axis.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null for ADcmXL.</param>
+</member>
+<member name="M:adisInterface.AdcmInterface3Axis.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.AdcmInterface3Axis.AddTransletedRtsFrameToList(System.UInt16[],System.Collections.Generic.List{System.UInt16})">
+ <summary>
+ Transforms a single raw RTS Frame into multiColumn data packet for datalogging, adds it to specified list
+ </summary>
+ <param name="rtsFrame"></param>
+ <param name="list"></param>
+</member>
+<member name="T:adisInterface.AdcmInterfaceBase">
+ <summary>
+ Interface class for ADcmXL family. 
+ Adds ADcmXL specific burst functionality to paged register base class.
+ </summary>
+</member>
+<member name="P:adisInterface.AdcmInterfaceBase.StreamRawRealTimeSamplingData">
+ <summary>
+ Selects whether GetBufferedStreamDataPacket returns raw or translated data.  Default is False.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.AdcmInterfaceBase.SwapRealTimeSamplingDataBytes">
+ <summary>
+ Selects whether to swap words in each word read in real time sampling mode.  Default is True.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.AdcmInterfaceBase.RealTimeSamplingFrameSize">
+ <summary>
+ Stores the real time sampling frane frame size for 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.AdcmInterfaceBase.RealTimeSamplingRegList">
+ <summary>
+ Returns the register list to use for ADcmXL Real Time Streaming
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.AdcmInterfaceBase.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null for ADcmXL.</param>
+</member>
+<member name="M:adisInterface.AdcmInterfaceBase.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.AdcmInterfaceBase.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Starts the buffered stream capture process (nSamples of RegList = numBuffers * numCaptures per buffer)
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.AdcmInterfaceBase.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts a streaming operation.
+ </summary>
+ <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.AdcmInterfaceBase.GetBufferedStreamDataPacket">
+ <summary>
+ Returns the next packet from the buffer, as transleted for datalogging. 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.AdcmInterfaceBase.AddTransletedRtsFrameToList(System.UInt16[],System.Collections.Generic.List{System.UInt16})">
+ <summary>
+ Transforms a raw RTS Frame into multiColumn data packet for datalogging, adds it to specified list
+ </summary>
+ <param name="rtsFrame"></param>
+ <param name="list"></param>
+</member>
+<member name="M:adisInterface.CpldInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
+<member name="M:adisInterface.CpldInterface.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
+ </summary>
+ <param name="adis">Reg interface object to use for dut communication.</param>
+</member>
+<member name="M:adisInterface.CpldInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Starts a buffered stream capture of registers in regList of numBuffers * numCaptures per buffer.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.CpldInterface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts an unbuffered streaming operation.
+ </summary>
+ <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.CpldInterface.WriteReadUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32},System.UInt32)">
+ <summary>
+ Creates address list, returns Unsigned data.
+ </summary>
+ <param name="regDataList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.CpldInterface.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
+ <summary>
+ Writes page register, writes data list element to corrosponding registers list element.
+ </summary>
+ <param name="regDatList"></param>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.sumBurstClass">
+ <summary>
+ Supports reading iSensor device in Burst Mode.  Supports checksum mode for ADiS16470.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.sumBurstClass.#ctor">
+ <summary>
+ Creates a new instance of the burst class.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.sumBurstClass.#ctor(adisInterface.DutBase)">
+ <summary>
+ Creates a new instance of the burst class.
+ </summary>
+ <param name="base"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.sumBurstClass.CalculateDataCrc(System.Collections.Generic.IEnumerable{System.UInt16})">
+ <summary>
+ Calculates a CRC using a collection of bytes.
+ </summary>
+ <param name="data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.aducBurstClass">
+ <summary>
+ Supports reading iSensor device in Burst Mode.  Supports CRC mode for ADiS16448.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducBurstClass.#ctor">
+ <summary>
+ Creates a new instance of the burst class.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducBurstClass.#ctor(adisInterface.DutBase)">
+ <summary>
+ Creates a new instance of the burst class.
+ </summary>
+ <param name="base"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducBurstClass.CalculateDataCrc(System.Collections.Generic.IEnumerable{System.UInt16})">
+ <summary>
+ Calculates a CRC using a collection of bytes.
+ </summary>
+ <param name="data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
+<member name="M:adisInterface.aducInterface.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.aducInterface.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
+ <summary>
+ This overload requires an IEnumerable(Of RegDataU32 pairs) 
+ </summary>
+ <param name="RegandDataList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.WriteEmbeddedWord(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Writes a Word; low byte to the specified address, high byte is written to the address + 1
+ </summary>
+ <param name="reg"></param>
+ <param name="dat"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.GetEmbMemWordDataPairs(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Creates 4 address byte, data byte pairs. For Embedded Register write.
+ </summary>
+ <param name="reg"></param>
+ <param name="dat"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.ReadUnsignedImplementation(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.Nullable{System.UInt32})">
+ <summary>
+ Internal method called by all Public ReadUnsigned overloads.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.ReadEmbedded(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Write the embedded Pointer then Read a data word, for each list member.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Starts a buffered streaming operation.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts a streaming operation.
+ </summary>
+ <param name="regList">Registers (16 and/ot 32 bit) to include in stream.</param>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.aducInterface.WriteReadUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32},System.UInt32)">
+ <summary>
+ Writes page, creates address list, returns Unsigned data.
+ </summary>
+ <param name="regDataList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.adbfInterface">
+ <summary>
+ Interface for devices with paged register access and IMU result streaming.
+ </summary>
+</member>
+<member name="M:adisInterface.adbfInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
+<member name="M:adisInterface.adbfInterface.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.adbfInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ nSamples of RegList = numBuffers * numCaptures per buffer
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.adbfInterface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts a streaming operation.
+ </summary>
+ <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.adisRegInterface">
+ <summary>
+ Implements the ADiS SPI Read/Write/Reset Protocols using an AdisApi.ISpiInterface.
+ </summary>
+ <remarks>Based on SDP spi and gpio.</remarks>
+</member>
+<member name="M:adisInterface.adisRegInterface.#ctor(AdisApi.Spi,adisInterface.gpioBit)">
+ <summary>
+ 
+ </summary>
+ <param name="spi">ADis SPI object for the SPI interface to use.</param>
+ <param name="resetPin">GPIO bit object for GPIO used to reset ADiS device.</param>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.BurstBase">
+ <summary>
+ Supports reading iSensor device in Burst Mode.  Supports CRC mode for ADiS16448.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.BurstBase.CrcFirstIndex">
+ <summary>
+ Gets or sets the index of the first burst data word used in COC calculations.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.BurstBase.CrcLastIndex">
+ <summary>
+ Gets or sets the index of the last burst data word used in COC calculations.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.BurstBase.CrcResultIndex">
+ <summary>
+ Gets or sets the index of the word that contains the CRC result.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.BurstBase.WordCount">
+ <summary>
+ Gets or sets the number of 16 bit words that are transferred during the burst.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.BurstBase.TriggerReg">
+ <summary>
+ Gets or sets register that is used to trigger burst operation.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.BurstBase.Trigger">
+ <summary>
+ Gets a one element array containing a modified trigger reg object to use for aducInterface calls.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.ClearBurstMode">
+ <summary>
+ Takes interface out of burst mode by setting burstMode to zero.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.SetupBurstMode">
+ <summary>
+ Puts interface into burst mode by setting burstMode to match word count.
+ </summary>
+ <remarks></remarks>
+ <exception cref="T:System.InvalidOperationException">Thrown if word count has not been set.</exception>
+</member>
+<member name="M:adisInterface.BurstBase.#ctor">
+ <summary>
+ Creates a new instance of the burst class.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.#ctor(adisInterface.DutBase)">
+ <summary>
+ Creates a new instance of the burst class.
+ </summary>
+ <param name="base"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.CalculateBurstCrc(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Calculates the CRC of a list of values.  
+ </summary>
+ <param name="values"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.CalculateDataCrc(System.Collections.Generic.IEnumerable{System.UInt16})">
+ <summary>
+ Calculates a CRC using a collection of data words.
+ </summary>
+ <param name="data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.ReadUnsigned(System.UInt32,System.UInt32)">
+ <summary>
+ Reads multiple data words (unsigned, unmasked, no twos-comp) using burst mode.  Multiple stream transfers packets.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.ReadUnsigned(System.UInt32)">
+ <summary>
+ Reads multiple data words (unsigned, unmasked, no twos-comp) using burst mode.  Multiple Burst Reads.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.ReadUnsigned">
+ <summary>
+ Reads multiple data words (unsigned, unmasked, no twos-comp) using burst mode.  Single Burst.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.StartStream(System.UInt32)">
+ <summary>
+ Starts an unbuffered streaming operation.
+ </summary>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Starts a buffered streaming operation.
+ </summary>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.GetStreamDataPacketU16">
+ <summary>
+ Gets a stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.StopStream">
+ <summary>
+ Stops a Streaming Operation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.ConvertReadDataToU32(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt16})">
+ <summary>
+ Converts 16 bit reg data reads to Uinteger array, processing 16, or 8 bit data based on reg List item numBytes.
+ </summary>
+ <param name="regList"></param>
+ <param name="u16data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.GetBufferedStreamDataPacket">
+ <summary>
+ Gets a buffered stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.BurstBase.ScaleRegData(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Scales data values read from an enumerable collection of registers.
+ </summary>
+ <param name="regList">Collection of registers that are included in the burst read sequence.</param>
+ <param name="uintData">Data collected in butse mod read operation.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.DutBase">
+ <summary>
+ Base Class for Eut Interface Implementations
+ </summary>
+</member>
+<member name="M:adisInterface.DutBase.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
+<member name="M:adisInterface.DutBase.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.DutBase.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ nSamples of RegList = numBuffers * numCaptures per buffer
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts a streaming operation.
+ </summary>
+ <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.GetBufferedStreamDataPacket">
+ <summary>
+ Gets buffered stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.GetStreamDataPacketU16">
+ <summary>
+ Gets an unbuffered stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.StopStream">
+ <summary>
+ Stops a Streaming Operation
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(RegMapClasses.RegClass)">
+ <summary>
+ Reads the scaled value of a single register, 16 and 32 bit capable.
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Reads the scaled value of a list of registers, 16 and 32 bit capable.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads the scaled value of a single register, multiple passes.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Reads the scaled value of a list of registers, multiple passes.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads the scaled value of a single register, multiple passes, multiple stream packets.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads the scaled value of a list of registers, multiple passes, multiple stream packets.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Int32,RegMapClasses.RegClass)">
+ <summary>
+ Returns the scaled value, or null if no value was read (timeout occurred).
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks>The recieving variable MUST be declared as Double? Nullable. Otherwise 'Nothing' will be translated to value 0.0</remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Returns the scaled value, or null if no value was read (timeout occurred).
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Int32,RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Returns the scaled values, or null if no value was read (timeout occurred).
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Returns the scaled values, or null if no value was read (timeout occurred).
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Int32,RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads scaled values from a register, returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadScaledValue(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads scaled values from registers, returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds">Number of Seconds between packets that will trigger a timeout.</param>
+ <param name="regList">Collection of registers to be captured.</param>
+ <param name="numCaptures">Number of Captures Per USB transfer packet.</param>
+ <param name="numBuffers">Number of Packets to be returned.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(RegMapClasses.RegClass)">
+ <summary>
+ Reads the Signed value of a single register, 16 and 32 bit capable.
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Reads the Signed value of a list of registers, 16 and 32 bit capable.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads the Signed value of a single register, multiple passes.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Reads the Signed value of a list of registers, multiple passes.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads the Signed value of a single register, multiple passes, multiple stream packets.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads the Signed value of a list of registers, multiple passes, multiple stream packets.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Int32,RegMapClasses.RegClass)">
+ <summary>
+ Returns signed value, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks>The recieving variable MUST be declared as Double? Nullable. Otherwise 'Nothing' will be translated to value 0.0</remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Returns signed values, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks>Returns 'Nothing' if timeout occured.</remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Int32,RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Returns signed values, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks>Returns 'Nothing' if timeout occured.</remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Returns signed values, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks>Returns 'Nothing' if timeout occured.</remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Int32,RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads Signed values from a register, returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks>Returns 'Nothing' if timeout occured.</remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadSigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads Signed values from registers, returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds">Number of Seconds between packets that will trigger a timeout.</param>
+ <param name="regList">Collection of registers to be captured.</param>
+ <param name="numCaptures">Number of Captures Per USB transfer packet.</param>
+ <param name="numBuffers">Number of Packets to be returned.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(RegMapClasses.RegClass)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a register.
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a list of registers.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a list of registers, multiple passes.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a list of registers, multiple passes, multiple stream packets.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a single register, multiple passes, multiple stream packets.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a single register, multiple passes.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Int32,RegMapClasses.RegClass)">
+ <summary>
+ Reads and Returns Unsigned data, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks>The recieving variable MUST be declared as UInteger? Nullable. Otherwise 'Nothing' will be translated to value 0.0</remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Reads and Returns Unsigned data, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Reads and Returns Unsigned data, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Int32,RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads and Returns Unsigned data, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Int32,RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads and Returns Unsigned data, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ReadUnsigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads and Returns Unsigned data, or null if timeout occurred.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteReadUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32},System.UInt32)">
+ <summary>
+ Writes page, creates address list, returns Unsigned data.
+ </summary>
+ <param name="regDataList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks>Implementation must be provided my inheriting classes.</remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteSigned(adisInterface.RegDataI32)">
+ <summary>
+ Write Signed unscaled data to register.
+ </summary>
+ <param name="regDat"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteScaledValue(RegMapClasses.RegClass,System.Double)">
+ <summary>
+ De-scales a value per register scale, writes to register.
+ </summary>
+ <param name="Reg"></param>
+ <param name="Value"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteScaledValue(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.Double})">
+ <summary>
+ De-scales a value per register scale, writes to register.
+ </summary>
+ <param name="regList"></param>
+ <param name="valList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteScaledValue(System.Collections.Generic.IEnumerable{adisInterface.RegDataDbl})">
+ <summary>
+ De-scales a value per register scale, writes to register.
+ </summary>
+ <param name="regDatList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteCommand(RegMapClasses.RegMapCollection,RegMapClasses.CommandClass)">
+ <summary>
+ Writes a masked bit pattern followed by a delay specified in a Command csv file.
+ </summary>
+ <param name="map"></param>
+ <param name="cmd"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteCommand(RegMapClasses.RegClass,RegMapClasses.CommandClass)">
+ <summary>
+ Writes a masked bit pattern followed by a delay specified in a Command csv file.
+ </summary>
+ <param name="reg"></param>
+ <param name="cmd"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteUnsigned(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Write page of register, Write unscaled data to register.
+ </summary>
+ <param name="reg"></param>
+ <param name="dat"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Writes unscaled data to registers.
+ </summary>
+ <param name="regList"></param>
+ <param name="datList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteUnsigned(adisInterface.RegDataU32)">
+ <summary>
+ Write unscaled data to register.
+ </summary>
+ <param name="RegandData"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
+ <summary>
+ Writes page register, writes data list element to corrosponding registers list element.
+ </summary>
+ <param name="RegandDataList"></param>
+ <remarks></remarks>
+ 
+</member>
+<member name="M:adisInterface.DutBase.ScaleRegData(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Returns a masked, twos complement decoded and scaled register value based on a data word read from a SPI interface.  
+ </summary>
+ <param name="Reg">Reg object provides data length, twos complement flag, and scaling factors.</param>
+ <param name="Data">Data word read back from SPI interface.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ScaleRegData(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Scales multiple read data values.
+ </summary>
+ <param name="regList"></param>
+ <param name="uintData"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.UnscaleRegData(RegMapClasses.RegClass,System.Double)">
+ <summary>
+ Uses register properties to select between unscaled float and two's comp. data.
+ </summary>
+ <param name="Reg"></param>
+ <param name="Data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.UnscaleRegData(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.Double})">
+ <summary>
+ Returns a list of unscaled values read from the specified registers.
+ </summary>
+ <param name="regList"></param>
+ <param name="valList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.ConvertReadDataToU32(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt16})">
+ <summary>
+ Converts 16 bit reg data reads to 32, 16, or 8 bit data based on reg List items.
+ </summary>
+ <param name="regList">regList used to read the Data.</param>
+ <param name="u16data">16 bit data from a reg read or get stream data operation.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DutBase.MakeReadAddressList(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Creates an array of 16 bit addresses for 16/32 bit register reads.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.RunAsyncCompletedEventArgs">
+ <summary>
+ The object passes to the RunAsynCompleted event handler when stream is complete.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.RunAsyncCompletedEventArgs.Cancelled">
+ <summary>
+ True if the streaming operation was cancelled using the CancelAsync() method.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.RunAsyncCompletedEventArgs.EnqueueError">
+ <summary>
+ Returns any exception that occurred in the ennqueing thread, including stream packet time out exceptions.
+ </summary>
+ <value></value>
+ <returns>Returns exception or null if no exceptions were thrown.</returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.RunAsyncCompletedEventArgs.DequeueError">
+ <summary>
+ Returns any exception that occurred in the dequeueing thread, including file access exceptions.
+ </summary>
+ <value></value>
+ <returns>Returns exception or null if no exceptions were thrown.</returns>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.RunAsyncCompletedEventHandler">
+ <summary>
+ Type for the RunAsyncCompleted handler routine.
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.TextFileStreamManager">
+ <summary>
+ This class manages the streaming process from a device to a text file.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="E:adisInterface.TextFileStreamManager.ProgressChanged">
+ <summary>
+ Event will be raised to report progress percentage each time a packet is added to the queue.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="E:adisInterface.TextFileStreamManager.RunAsyncCompleted">
+ <summary>
+ Event will be raised when the streaming operation is completed, including canceeled operations and operation with errors.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.CancellationPending">
+ <summary>
+ Indicates that stream cancellation has been requested for thie StreamManager.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.Buffers">
+ <summary>
+ The number of stream buffers to be transferred in the streaming operation.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.BuffersPerWrite">
+ <summary>
+ The number of stream buffers to be written to the file in one operation.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.BufferTimeout">
+ <summary>
+ The maximum time system will wait for each streaming data packet. 
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.Captures">
+ <summary>
+ The number of captures of the reg list to be inclded in each stream buffer.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.DataFormatString">
+ <summary>
+ The data formatting stream to be used for the generated data files. (Defaults to "".)
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.DataSeperator">
+ <summary>
+ The field delimiter for the generated data files. (Defaults to comma deleimted.)
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.DutInterface">
+ <summary>
+ The instance of DutInterface associated with the device to be used.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.ElapsedCaptureTime">
+ <summary>
+ Returns the amount of time that elapsed during a capture operation.  May be called during a capture or after a capture is complete.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.FileBaseName">
+ <summary>
+ The base name (not includeng path) of the data files that will be written. 
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.FileExtension">
+ <summary>
+ The file extension to be used for the generated data files (Defaults to "csv")
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.FileMaxDataRows">
+ <summary>
+ The maximum number of data rows to be included in each file.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.FilePath">
+ <summary>
+ The directory path (not including file name) for the generated data files 
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.FooterGeneratorFunc">
+ <summary>
+ Externally supplied function to produce file footers. 
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks>No footer will be used if this property is null.</remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.HeaderGeneratorFunc">
+ <summary>
+ Externally supplied function to produce non-default file headers. 
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks>Default header format will be used if this property is null.</remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.IncludeSampleNumberColumn">
+ <summary>
+ Indicates wether text files will contain a sample number column on the left. 
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.IsBusy">
+ <summary>
+ Indicates whether a streaming  operation is currently in progress.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.RegList">
+ <summary>
+ The registers that are to be read for each capture.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.TextFileStreamManager.ScaleData">
+ <summary>
+ Indicates whether data should be scaled.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.#ctor">
+ <summary>
+ Creates a new instance of the TextFileStreamManager object.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.CancelAsync">
+ <summary>
+ Requests cancellation of current streaming operation. 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.RunAsync">
+ <summary>
+ Creates a new data file, begins a streaming operation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.CreateNewFile(System.Int32)">
+ <summary>
+ Creates a new file, with header.
+ </summary>
+ <param name="n"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.InitilizeForRun">
+ <summary>
+ Initialize variables to run.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.WriteHeaderText(System.IO.TextWriter,System.String)">
+ <summary>
+ Writes custom or default header text to TextWriter.
+ </summary>
+ <param name="writer"></param>
+ <param name="fileName"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.WriteFooterText(System.IO.TextWriter,System.String)">
+ <summary>
+ Writes custom footer text to TextWriter.
+ </summary>
+ <param name="writer"></param>
+ <param name="fileName"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.TextFileStreamManager.WriteDequeuedData(System.Collections.Generic.IEnumerable{System.UInt32},System.Boolean)">
+ <summary>
+ Writes data to a data file. 
+ </summary>
+ <param name="dat">Data to write.</param>
+ <param name="finalize">True if we should write footer to this file.</param>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.Cancelled">
+ <summary>
+ Returns true if the previous capture operation was cancelled.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.bgWorker">
+ <summary>
+ If set to a non-null value, Data capture will report progress check for cancellation.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.Samples">
+ <summary>
+ Number of samples for capture operations.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.SampleRate">
+ <summary>
+ Sample rate (data ready rate) in Hz, for data capture. 
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks>Used to calculate streaming packet size.</remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.RegList">
+ <summary>
+ List of registers to be read
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.ScaleData">
+ <summary>
+ Scaled Data will be stored if True.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.FileName">
+ <summary>
+ File Name that data file should be stored in
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.FileHeader">
+ <summary>
+ Set to true if file header is to be included
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.delimiter">
+ <summary>
+ Field Delimiter for file writes.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks>Defaults to comma for .csv files.</remarks>
+</member>
+<member name="P:adisInterface.DataCaptureClass.UseEvalLabel">
+ <summary>
+ Set to true if we want to use EvalLabels in file header instead of Labels.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DataCaptureClass.Capture">
+ <summary>
+ Capture using most appropriate capture type.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.DataCaptureClass.CaptureByLine">
+ <summary>
+ Captures by reading one line of data at a time.
+ </summary>
+ <remarks>Appropriate when sampling slowly enough to allow USB round trip delay.</remarks>
+</member>
+<member name="M:adisInterface.Functions.DecodeFloat(System.UInt32)">
+ <summary>
+ Performs conversion from raw data to single format
+ </summary>
+ <param name="Data">Data word read back from SPI interface.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.Functions.EncodeFloat(System.Double)">
+ <summary>
+ Performs conversion from double to raw data
+ </summary>
+ <param name="value">Value to be encoded.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.Functions.EncodeFloat(System.Single)">
+ <summary>
+ Performs conversion from single to raw data
+ </summary>
+ <param name="value">Value to be encoded.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.Functions.DecodeTwosComp(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Masks and performs twos complement decoding on a data word read from a SPI interface. No scaling is performed.
+ </summary>
+ <param name="Reg">Reg object provides data length and twos complement flag.</param>
+ <param name="Data">Data word read back from SPI interface.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.Functions.EncodeTwosComp(RegMapClasses.RegClass,System.Int64)">
+ <summary>
+ Returns encoded data for a SPI write operation. Twos Comp data is NOT sign-extended. 
+ </summary>
+ <param name="Reg">Provides readlength and twos complement flag for encoding.</param>
+ <param name="data">Data to be encoded.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.Functions.EncodeTwosCompClamped(RegMapClasses.RegClass,System.Int64)">
+ <summary>
+ Returns encoded data for a SPI write operation. Twos Comp data is NOT sign-extended. 
+ </summary>
+ <param name="Reg">Provides readlength and twos complement flag for encoding.</param>
+ <param name="data">Data to be encoded.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.Functions.GetAddrDataPair(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Returns an address data pair necessary to write to the specified byte of a specified register.
+ </summary>
+ <param name="reg"></param>
+ <param name="index"></param>
+ <param name="dat"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.Functions.GetAddrDataPairs(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Returns a list of address data pairs necessary to write the specified register.
+ </summary>
+ <param name="reg"></param>
+ <param name="dat"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:adisInterface.gpioBit">
+ <summary>
+ Methods to configure, read, and write a single SDP GPIO bit.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.gpioBit.#ctor(AdisApi.Gpio,System.Byte)">
+ <summary>
+ 
+ </summary>
+ <param name="gpio">Reference to sdp gpio object.</param>
+ <param name="bitMask">Bit Mask of the gpio bit being used.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ScaleRegData(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Scales raw binary data read from a SPI interface.
+ </summary>
+ <param name="Reg"></param>
+ <param name="Data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ScaleRegData(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Scales raw binary data read from a SPI interface.
+ </summary>
+ <param name="regList"></param>
+ <param name="datList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.UnscaleRegData(RegMapClasses.RegClass,System.Double)">
+ <summary>
+ Removes scaling from number to prepare for write.
+ </summary>
+ <param name="Reg"></param>
+ <param name="Data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(RegMapClasses.RegClass)">
+ <summary>
+ Reads the scaled value of a single register, 16 and 32 bit capable.
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Reads the scaled value of a list of registers, 16 and 32 bit capable.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Reads the scaled value of a list of registers, multiple passes.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads the scaled value of a single register, multiple passes.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads the scaled value of a single register, multiple passes, multiple stream packets.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads the scaled value of a list of registers, multiple passes, multiple stream packets.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Int32,RegMapClasses.RegClass)">
+ <summary>
+ Reads the scaled value of a single register, 16 and 32 bit capable.
+ The recieving variable MUST be declared as Double? Nullable. Otherwise a return value of 'Nothing' will be translated to value 0.0
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Int32,RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Int32,RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadScaledValue(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(RegMapClasses.RegClass)">
+ <summary>
+ Reads the scaled value of a single register, 16 and 32 bit capable.
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Reads the Integer value of a list of registers, 16 and 32 bit capable.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Reads the Integer value of a list of registers, multiple passes.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads the Integer value of a single register, multiple passes.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads the Integer value of a single register, multiple passes, multiple stream packets.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads the scaled value of a list of registers, multiple passes, multiple stream packets.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Int32,RegMapClasses.RegClass)">
+ <summary>
+ Reads the Integer value of a single register, 16 and 32 bit capable.
+ The recieving variable MUST be declared as Double? Nullable. Otherwise a return value of 'Nothing' will be translated to value 0.0
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Int32,RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Int32,RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadSigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(RegMapClasses.RegClass)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a register.
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a list of registers.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a list of registers, multiple passes.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Reads Raw data (unsigned, unmasked, no twos comp) from a list of registers, multiple passes, multiple stream packets.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Reads Raw data (unsigned, unmasked, no twos comp) from a register, multiple passes, multiple stream packets.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a register, multiple passes.
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Int32,RegMapClasses.RegClass)">
+ <summary>
+ The recieving variable MUST be declared as UInteger? Nullable. Otherwise 'Nothing' will be translated to value 0.0
+ </summary>
+ <param name="reg"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Int32,System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Int32,RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Returns 'Nothing' if timeout occured.
+ </summary>
+ <param name="reg"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ReadUnsigned(System.Int32,RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Reads raw data (unsigned, unmasked, no twos-comp) from a register, multiple passes.
+ </summary>
+ <param name="timeOutSeconds"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteRegByte(System.UInt32,System.UInt32)">
+ <summary>
+ Writes data to one byte of a register.
+ </summary>
+ <param name="addr"></param>
+ <param name="data"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteByte(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
+ <summary>
+ Writes data to the byte at the specified index in the specified register. 
+ </summary>
+ <param name="reg"></param>
+ <param name="index"></param>
+ <param name="dat"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteClampedInteger(RegMapClasses.RegClass,System.Int32)">
+ <summary>
+ Forces a valid register value determined by the readlength and twos compliment properties of the register.
+ </summary>
+ <param name="reg"></param>
+ <param name="dat"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteCommand(RegMapClasses.RegMapCollection,RegMapClasses.CommandClass)">
+ <summary>
+ Writes a masked bit pattern followed by a delay specified in a command csv file.
+ </summary>
+ <param name="map"></param>
+ <param name="cmd"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteUnsigned(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Writes the specified data (unsigned, unmasked, no twos-comp) to the specified register.
+ </summary>
+ <param name="reg"></param>
+ <param name="dat"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteUnsigned(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Writes the specified data words (unsigned, unmasked, no twos-comp) to the specified registers.
+ </summary>
+ <param name="regList"></param>
+ <param name="datList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteUnsigned(adisInterface.RegDataU32)">
+ <summary>
+ Writes the specified data word (unsigned, unmasked, no twos-comp) to the specified registers.
+ </summary>
+ <param name="regDat"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
+ <summary>
+ Writes the specified data words (unsigned, unmasked, no twos-comp) to the specified registers.
+ </summary>
+ <param name="RegDataList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Starts a buffered streaming operation.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts a streaming operation.
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.GetBufferedStreamDataPacket">
+ <summary>
+ Returns a buffered stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.GetStreamDataPacketU16">
+ <summary>
+ Returns a stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.StopStream">
+ <summary>
+ Terminates a stream operation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.IDutInterface.ConvertReadDataToU32(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.Collections.Generic.IEnumerable{System.UInt16})">
+ <summary>
+ Converts 16 bit reg data reads to Uinteger array, processing 16, or 8 bit data based on reg List item numBytes.
+ </summary>
+ <param name="regList"></param>
+ <param name="u16data"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+</members>
+</doc>
