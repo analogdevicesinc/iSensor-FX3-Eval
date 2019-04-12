@@ -18,17 +18,25 @@ The Explorer Kit requires two jumpers to be installed before the interface libra
 
 The Explorer Kit must be programmed every time that it is powered off/on since the firmware is loaded into RAM by default. Clicking the "Connect to FX3" button in the main GUI will attempt to push firmware into the FX3 Explorer board, communicate with both the FX3 Explorer board and the sensor, and verify that the sensor has been properly connected by writing a random value to one of the user scratch registers and attempting to read it back. If successful, all buttons in the GUI will be enabled, allowing you to exercise additional features built into the interface and firmware. 
 
+![FX3Gui Successfully Connected](Documentation/successfully_connected.PNG)
+
 ## SPI Configuration
 
 The FX3 offers the flexibility to configure SPI parameters on-the-fly. We've implemented a simple GUI to make adjustments to the SPI configuration easy. The SPI configuration window includes many settings specific to the FX3, so please refer to the firmware library documentation for additional details. By default, the FX3 will be configured with settings that should work with product in the ADcmXL family. Note that a few features pertain only to IMUs and may be irrelevant for ADcmXL applications.
+
+![FX3Gui SPI Configuration Window](Documentation/spi_config.PNG)
 
 ## Register Access and Manual Data Capture
 
 The register access window allows you to read and write single registers as you would in any embedded application. The register locations, default values, and properties are loaded from the `adcmxl3021_regmap_adisAPI.csv` file located in the root directory of the project. In order to capture FFT or Time Capture data, the manual data capture window allows for different types of captures to be quickly performed and saved to a .csv file on your PC. 
 
+![FX3Gui Register Access Window](Documentation/register_access.PNG)
+
 ## Real-Time Streaming
 
 The FX3Gui application offers two methods of capturing real-time data. The `Real Time Streaming` form is very rudimentary and captures data by acquiring it from the FX3Interface class and appending it to a list. This list is then saved to disk at the end of the capture. The `Text File Stream Manager Streaming` form implements a `Text File Stream Manager` class which handles acquiring, buffering, and saving data to disk using background workers. This method of data capture is highly recommended. 
+
+![FX3Gui Text File Stream Manager Window](Documentation/tfsm.PNG)
 
 ## FX3-Related Utilities
 
