@@ -82,8 +82,7 @@ Public Class SpiSetupGUI
         End If
 
         stallTimeInput.Text = CStr(conn.FX3.StallTime)
-
-        StallCyclesInput.Text = conn.FX3.StallCycles.ToString
+        StallCyclesInput.Text = CStr((conn.FX3.StallTime / 1000000) / (1 / conn.FX3.SclkFrequency))
 
         If conn.FX3.DrActive Then
             dataReadyActiveInput.SelectedItem = "True: Data ready active"
@@ -200,10 +199,10 @@ Public Class SpiSetupGUI
 
         If Not stallTime = conn.FX3.StallTime Then
             conn.FX3.StallTime = stallTime
-            StallCyclesInput.Text = conn.FX3.StallCycles.ToString()
-        ElseIf Not stallCycles = conn.FX3.StallCycles Then
-            conn.FX3.StallCycles = stallCycles
-            stallTimeInput.Text = conn.FX3.StallTime.ToString()
+            stallCycles = (conn.FX3.StallTime / 1000000) / (1 / conn.FX3.SclkFrequency)
+        ElseIf Not stallCycles = (conn.FX3.StallTime / 1000000) / (1 / conn.FX3.SclkFrequency) Then
+            stallTime = (stallCycles * (1 / conn.FX3.SclkFrequency)) * 1000000
+            conn.FX3.StallTime = stallTime
         End If
 
         conn.FX3.PartType = DutInput.SelectedItem

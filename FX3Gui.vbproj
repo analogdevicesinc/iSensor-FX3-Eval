@@ -74,9 +74,8 @@
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Interface, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\FX3Interface.dll</HintPath>
+    <Reference Include="FX3Interface">
+      <HintPath>..\iSensor-FX3-Interface\Resources\FX3Interface.dll</HintPath>
     </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
@@ -214,7 +213,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy /Y "C:\Users\jchong\Documents\ADI GitLab\FX3-Firmware\Debug\FX3_Firmware.img" "$(SolutionDir)\Resources\FX3_Firmware.img"</PreBuildEvent>
+    <PreBuildEvent>copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Firmware\Debug\FX3_Firmware.img" "$(SolutionDir)\FX3_Firmware.img"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

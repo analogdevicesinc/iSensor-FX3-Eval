@@ -29,6 +29,7 @@ Public Class manualModeGUI
         Dim bufSize As UInteger = 4096
         Dim outputValues As New List(Of String)
         Dim signed As Boolean
+        Dim timewaited As Double
 
         'Set the mode (lower two bits)
         If modeSelect.SelectedItem() = "Manual FFT" Then
@@ -66,7 +67,7 @@ Public Class manualModeGUI
         conn.Dut.WriteUnsigned(conn.RegMap("COMMAND"), &H800)
 
         'Wait for data ready high
-        conn.FX3.PulseWait(conn.FX3.DIO2, 1, 0, 20000)
+        timewaited = conn.FX3.PulseWait(conn.FX3.DIO2, 1, 0, 20000)
 
         Dim xBuf, yBuf, ZBuf
 
