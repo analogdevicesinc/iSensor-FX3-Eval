@@ -22,6 +22,70 @@ adisInterface
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:adisInterface.AdcmInterface1Axis.RealTimeSamplingFrameSize">
+ <summary>
+ Stores the real time sampling frane frame size for 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.AdcmInterface1Axis.RealTimeSamplingRegList">
+ <summary>
+ Returns the register list to use for ADcmXL Real Time Streaming
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.AdcmInterface1Axis.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null for ADcmXL.</param>
+</member>
+<member name="M:adisInterface.AdcmInterface1Axis.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.AdcmInterface1Axis.AddTransletedRtsFrameToList(System.UInt16[],System.Collections.Generic.List{System.UInt16})">
+ <summary>
+ Transforms a single raw RTS Frame into multiColumn data packet for datalogging, adds it to specified list
+ </summary>
+ <param name="rtsFrame"></param>
+ <param name="list"></param>
+</member>
+<member name="P:adisInterface.AdcmInterface2Axis.RealTimeSamplingFrameSize">
+ <summary>
+ Stores the real time sampling frane frame size for 
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.AdcmInterface2Axis.RealTimeSamplingRegList">
+ <summary>
+ Returns the register list to use for ADcmXL Real Time Streaming
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.AdcmInterface2Axis.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null for ADcmXL.</param>
+</member>
+<member name="M:adisInterface.AdcmInterface2Axis.#ctor(AdisApi.IRegInterface)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="M:adisInterface.AdcmInterface2Axis.AddTransletedRtsFrameToList(System.UInt16[],System.Collections.Generic.List{System.UInt16})">
+ <summary>
+ Transforms a single raw RTS Frame into multiColumn data packet for datalogging, adds it to specified list
+ </summary>
+ <param name="rtsFrame"></param>
+ <param name="list"></param>
+</member>
 <member name="T:adisInterface.PagedDutBase">
  <summary>
  Base class for devices with paged register access.  Builds pageing functionality on to DutBase.
