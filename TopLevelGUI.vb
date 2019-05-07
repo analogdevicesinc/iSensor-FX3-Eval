@@ -7,8 +7,8 @@ Imports System.Threading
 Imports System.Windows.Forms
 
 Public Structure Connection
-    Public Dut As AdcmInterface3Axis
     Public FX3 As FX3Connection
+    Public Dut As AdcmInterfaceBase
     Public RegMap As RegMapCollection
 End Structure
 
@@ -16,6 +16,7 @@ Public Class TopLevelGUI
 
     Private FX3Connected As Boolean
     Private conn As Connection
+
     Private firmwarePath As String
     Private regMapPath As String
 
@@ -74,7 +75,6 @@ Public Class TopLevelGUI
 
         'Set connection
         conn.FX3 = New FX3Connection(FX3Connection.DeviceType.ADcmXL)
-        conn.Dut = New adisInterface.AdcmInterface3Axis(conn.FX3)
         conn.RegMap = New RegMapCollection
         conn.RegMap.ReadFromCSV(regMapPath)
 
@@ -123,6 +123,15 @@ Public Class TopLevelGUI
     Private Sub TestDUT()
         Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
         Dim DUTValue As UInteger
+
+        If conn.FX3.PartType = DUTType.ADcmXL3021 Then
+            conn.Dut = New adisInterface.AdcmInterface3Axis(conn.FX3)
+        ElseIf conn.FX3.PartType = DUTType.ADcmXL2021 Then
+            conn.Dut = New adisInterface.AdcmInterface2Axis(conn.FX3)
+        ElseIf conn.FX3.PartType = DUTType.ADcmXL1021 Then
+            conn.Dut = New adisInterface.AdcmInterface1Axis(conn.FX3)
+        End If
+
         If FX3Connected Then
             conn.Dut.WriteUnsigned(conn.RegMap("USER_SCRATCH"), randomValue)
             DUTValue = conn.Dut.ReadUnsigned(conn.RegMap("USER_SCRATCH"))

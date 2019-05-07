@@ -23,6 +23,13 @@ Public Class TextFileStreamManagerStreaming
 
     Public Sub SetConn(ByRef newConnection As Connection)
         conn = newConnection
+        If conn.FX3.PartType = DUTType.ADcmXL3021 Then
+            conn.Dut = New adisInterface.AdcmInterface3Axis(conn.FX3)
+        ElseIf conn.FX3.PartType = DUTType.ADcmXL2021 Then
+            conn.Dut = New adisInterface.AdcmInterface2Axis(conn.FX3)
+        ElseIf conn.FX3.PartType = DUTType.ADcmXL1021 Then
+            conn.Dut = New adisInterface.AdcmInterface1Axis(conn.FX3)
+        End If
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
