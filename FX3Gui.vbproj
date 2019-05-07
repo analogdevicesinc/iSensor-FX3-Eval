@@ -105,6 +105,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="helperFunctions.vb" />
     <Compile Include="manualModeGUI.Designer.vb">
       <DependentUpon>manualModeGUI.vb</DependentUpon>
@@ -210,6 +211,21 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\adisApi.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\adisInterface.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CyUSB.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FX3Interface.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\RegMapClasses.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
