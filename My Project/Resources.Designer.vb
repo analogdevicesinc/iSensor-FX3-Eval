@@ -59,55 +59,5 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property adisApi() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("adisApi", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property adisInterface() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("adisInterface", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property CyUSB() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("CyUSB", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property FX3Interface() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("FX3Interface", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Byte[].
-        '''</summary>
-        Friend ReadOnly Property RegMapClasses() As Byte()
-            Get
-                Dim obj As Object = ResourceManager.GetObject("RegMapClasses", resourceCulture)
-                Return CType(obj,Byte())
-            End Get
-        End Property
     End Module
 End Namespace

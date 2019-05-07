@@ -47,12 +47,12 @@ Public Class TextFileStreamManagerStreaming
         CaptureProgress.Minimum = 0
         CaptureProgress.Maximum = 100
 
-        CancelButton.Enabled = False
+        TFSMCancelButton.Enabled = False
         UpdateGuiCalcs()
     End Sub
 
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
-        CancelButton.Enabled = True
+        TFSMCancelButton.Enabled = True
         startButton.Enabled = False
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
@@ -121,10 +121,10 @@ Public Class TextFileStreamManagerStreaming
         LinesPerCSVInput.Enabled = True
         CaptureExitMethod.Enabled = True
         CaptureStartMethod.Enabled = True
-        CancelButton.Enabled = False
+        TFSMCancelButton.Enabled = False
     End Sub
 
-    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles CancelButton.Click
+    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles TFSMCancelButton.Click
         If fileManager.IsBusy Then
             fileManager.CancelAsync()
             statusLabel.Text = "Cancelling"

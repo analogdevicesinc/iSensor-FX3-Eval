@@ -13,10 +13,8 @@ Public Structure Connection
 End Structure
 
 Public Class TopLevelGUI
-
     Private FX3Connected As Boolean
     Private conn As Connection
-
     Private firmwarePath As String
     Private regMapPath As String
 

@@ -29,7 +29,7 @@ Partial Class TextFileStreamManagerStreaming
         Me.startButton = New System.Windows.Forms.Button()
         Me.CaptureProgress = New System.Windows.Forms.ProgressBar()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.CancelButton = New System.Windows.Forms.Button()
+        Me.TFSMCancelButton = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.statusLabel = New System.Windows.Forms.Label()
         Me.WriteFrameNumber = New System.Windows.Forms.CheckBox()
@@ -103,14 +103,14 @@ Partial Class TextFileStreamManagerStreaming
         Me.Label4.TabIndex = 23
         Me.Label4.Text = "Capture Progress:"
         '
-        'CancelButton
+        'TFSMCancelButton
         '
-        Me.CancelButton.Location = New System.Drawing.Point(99, 116)
-        Me.CancelButton.Name = "CancelButton"
-        Me.CancelButton.Size = New System.Drawing.Size(75, 107)
-        Me.CancelButton.TabIndex = 24
-        Me.CancelButton.Text = "Cancel Data Capture"
-        Me.CancelButton.UseVisualStyleBackColor = True
+        Me.TFSMCancelButton.Location = New System.Drawing.Point(99, 116)
+        Me.TFSMCancelButton.Name = "TFSMCancelButton"
+        Me.TFSMCancelButton.Size = New System.Drawing.Size(75, 107)
+        Me.TFSMCancelButton.TabIndex = 24
+        Me.TFSMCancelButton.Text = "Cancel Data Capture"
+        Me.TFSMCancelButton.UseVisualStyleBackColor = True
         '
         'Label5
         '
@@ -253,7 +253,7 @@ Partial Class TextFileStreamManagerStreaming
         Me.Controls.Add(Me.WriteFrameNumber)
         Me.Controls.Add(Me.statusLabel)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.CancelButton)
+        Me.Controls.Add(Me.TFSMCancelButton)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.CaptureProgress)
         Me.Controls.Add(Me.startButton)
@@ -274,7 +274,7 @@ Partial Class TextFileStreamManagerStreaming
     Friend WithEvents startButton As Button
     Friend WithEvents CaptureProgress As ProgressBar
     Friend WithEvents Label4 As Label
-    Friend WithEvents CancelButton As Button
+    Friend WithEvents TFSMCancelButton As Button
     Friend WithEvents Label5 As Label
     Friend WithEvents statusLabel As Label
     Friend WithEvents WriteFrameNumber As CheckBox

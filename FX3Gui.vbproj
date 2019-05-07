@@ -13,6 +13,7 @@
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -40,7 +40,7 @@
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
@@ -48,6 +48,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>FX3Gui.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -75,7 +76,7 @@
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
     <Reference Include="FX3Interface">
-      <HintPath>..\iSensor-FX3-Interface\Resources\FX3Interface.dll</HintPath>
+      <HintPath>Resources\FX3Interface.dll</HintPath>
     </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
@@ -213,23 +214,26 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\adisApi.dll" />
+    <EmbeddedResource Include="Resources\adisApi.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\adisInterface.dll" />
+    <EmbeddedResource Include="Resources\adisInterface.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\CyUSB.dll" />
+    <EmbeddedResource Include="Resources\CyUSB.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\FX3Interface.dll" />
+    <EmbeddedResource Include="Resources\FX3Interface.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\RegMapClasses.dll" />
+    <EmbeddedResource Include="Resources\RegMapClasses.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Firmware\Debug\FX3_Firmware.img" "$(SolutionDir)\FX3_Firmware.img"</PreBuildEvent>
+    <PreBuildEvent>copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Firmware\Debug\FX3_Firmware.img" "$(SolutionDir)\FX3_Firmware.img"
+copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.dll" "$(SolutionDir)\Resources\FX3Interface.dll"
+copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.xml" "$(SolutionDir)\Resources\FX3Interface.xml"
+copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.pdb" "$(SolutionDir)\Resources\FX3Interface.pdb"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
