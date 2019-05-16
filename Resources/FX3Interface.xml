@@ -80,65 +80,46 @@ FX3Interface
  <remarks></remarks>
  <exception cref="T:System.InvalidOperationException">Thrown if word count has not been set.</exception>
 </member>
-<member name="M:FX3Interface.FX3Connection.#ctor(FX3Interface.FX3Connection.DeviceType)">
+<member name="M:FX3Interface.FX3Connection.#ctor(System.String,System.String,FX3Interface.FX3Connection.DeviceType)">
  <summary>
- Class Constructor. Loads IMU SPI settings and default values for the interface
+ Class Constructor. Loads IMU SPI settings and default values for the interface.
  </summary>
  <param name="SensorType">The sensor type. Valid inputs are IMU and ADcmXL. Default is IMU.</param>
 </member>
-<member name="M:FX3Interface.FX3Connection.#ctor(System.String,FX3Interface.FX3Connection.DeviceType)">
+<member name="M:FX3Interface.FX3Connection.Connect(System.String)">
  <summary>
- Class constructor overload which lets you specify the firmware path and sensor type
+ Attempts to initialize the selected FX3 board and loads the FX3 runtime firmware.
  </summary>
- <param name="FX3FirmwarePath">The full path to the .img FX3 firmware image</param>
- <param name="SensorType">The sensor type. Valid inputs are IMU and ADcmXL</param>
-</member>
-<member name="M:FX3Interface.FX3Connection.Connect">
- <summary>
- This function detects FX3 boards connected to the system, connects to the first available board, and then flashes the board with the provided firmware
- </summary>
+ <param name="deviceSn">Serial number of the device being connected to.</param>
 </member>
 <member name="M:FX3Interface.FX3Connection.Disconnect">
  <summary>
- This function sends a reset command to the FX3 board, or does nothing if no board is connected
+ This function sends a reset command to the specified FX3 board, or does nothing if no board is connected
  </summary>
+</member>
+<member name="P:FX3Interface.FX3Connection.ActiveFX3">
+ <summary>
+ Property which returns the active FX3 board.
+ </summary>
+ <returns>Returns active FX3 device ID if enumeration has been completed. Returns nothing otherwise.</returns>
+</member>
+<member name="P:FX3Interface.FX3Connection.ActiveFX3SerialNumber">
+ <summary>
+ Property which returns the serial number of the active FX3 board. 
+ </summary>
+ <returns>Returns the serial number of the active FX3 device.</returns>
+</member>
+<member name="P:FX3Interface.FX3Connection.DetectedFX3s">
+ <summary>
+ Property which returns all FX3 boards detected on the system.
+ </summary>
+ <returns>All detected FX3 boards.</returns>
 </member>
 <member name="P:FX3Interface.FX3Connection.GetVersion">
  <summary>
  Property which reads the firmware version from the FX3
  </summary>
  <returns>The firmware version, as a string</returns>
-</member>
-<member name="M:FX3Interface.FX3Connection.ProgramSDRAM(System.String,System.Boolean)">
- <summary>
- Loads the firmware image at the specified file path into the FX3 RAM
- </summary>
- <param name="FileName">The path to the FX3 firmware (.img)</param>
- <param name="Reboot">Option to power cycle board</param>
-</member>
-<member name="M:FX3Interface.FX3Connection.FX3CodeRunning">
- <summary>
- Function which checks if the FX3 is connected and programmed
- </summary>
- <returns>A boolean indicating if the board is programmed</returns>
-</member>
-<member name="P:FX3Interface.FX3Connection.FirmwarePath">
- <summary>
- The path to the firmware .img file. Needs to be set before the FX3 can be programmed
- </summary>
- <returns>A string, represeting the path</returns>
-</member>
-<member name="P:FX3Interface.FX3Connection.GetBootStatus">
- <summary>
- Checks the boot status of the FX3 board by sending a vendor request
- </summary>
- <returns>The current connection status</returns>
-</member>
-<member name="P:FX3Interface.FX3Connection.FX3BoardAttached">
- <summary>
- Checks if there is a Cypress FX3 USB device connected to the system
- </summary>
- <returns>A boolean indicating if there is an FX3 attached</returns>
 </member>
 <member name="P:FX3Interface.FX3Connection.SclkFrequency">
  <summary>
@@ -236,17 +217,6 @@ FX3Interface
  </summary>
  <returns>Returns a list of available frequencies, in MHz</returns>
 </member>
-<member name="P:FX3Interface.FX3Connection.DebugEnabled">
- <summary>
- Setting for debug mode. In debug mode, the connect function call does not reprogram the FX3.
- </summary>
- <returns></returns>
-</member>
-<member name="M:FX3Interface.FX3Connection.PurgeBadFrameData">
- <summary>
- This function checks the CRC of each frame stored in the Stream Data Queue, and purges the bad ones
- </summary>
-</member>
 <member name="P:FX3Interface.FX3Connection.NumFramesPurged">
  <summary>
  Gets the number of bad frames purged with a call to PurgeBadFrameData
@@ -280,16 +250,6 @@ FX3Interface
  <param name="timeoutInMs">The timeout from when the pin measurement starts to when the function returns if the signal cannot be found</param>
  <returns>The DR frequency in Hz</returns>
 </member>
-<member name="M:FX3Interface.FX3Connection.StartRealTimeStreaming(System.UInt32)">
- <summary>
- This function starts real time streaming on the ADcmXLx021 (interface and FX3). Specifying pin exit is optional and must be 0 (disabled) or 1 (enabled)
- </summary>
-</member>
-<member name="M:FX3Interface.FX3Connection.StopRealTimeStreaming">
- <summary>
- This function stops real time streaming on the ADcmXLx021 (interface and FX3)
- </summary>
-</member>
 <member name="P:FX3Interface.FX3Connection.GetBuffer">
  <summary>
  Gets one frame from the thread safe queue. Waits to return until a frame is available
@@ -308,6 +268,16 @@ FX3Interface
  </summary>
  <returns>The frame availability</returns>
 </member>
+<member name="M:FX3Interface.FX3Connection.StopBurstStream">
+ <summary>
+ Stops a burst stream by setting the stream state variables
+ </summary>
+</member>
+<member name="M:FX3Interface.FX3Connection.BurstStreamManager">
+ <summary>
+ This function reads burst stream data from the DUT over the streaming endpoint. It is intended to operate in its own thread, and should not be called directly.
+ </summary>
+</member>
 <member name="M:FX3Interface.FX3Connection.StartGenericStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
  <summary>
  Starts a generic register stream
@@ -321,21 +291,6 @@ FX3Interface
  Stops a generic stream by setting the stream state variables
  </summary>
 </member>
-<member name="M:FX3Interface.FX3Connection.StopBurstStream">
- <summary>
- Stops a burst stream by setting the stream state variables
- </summary>
-</member>
-<member name="M:FX3Interface.FX3Connection.RealTimeStreamManager">
- <summary>
- This function pulls real time data from the DUT over the streaming endpoint. It is intended to operate in its own thread, and should not be called directly
- </summary>
-</member>
-<member name="M:FX3Interface.FX3Connection.BurstStreamManager">
- <summary>
- This function reads burst stream data from the DUT over the streaming endpoint. It is intended to operate in its own thread, and should not be called directly.
- </summary>
-</member>
 <member name="M:FX3Interface.FX3Connection.GenericStreamManager(System.Object)">
  <summary>
  This function pulls generic stream data from the FX3 over a bulk endpoint (DataIn). It is intended to run in its own thread,
@@ -343,18 +298,112 @@ FX3Interface
  </summary>
  <param name="BytesPerBuffer">The number of bytes per USB transaction</param>
 </member>
+<member name="M:FX3Interface.FX3Connection.StartRealTimeStreaming(System.UInt32)">
+ <summary>
+ This function starts real time streaming on the ADcmXLx021 (interface and FX3). Specifying pin exit is optional and must be 0 (disabled) or 1 (enabled)
+ </summary>
+</member>
+<member name="M:FX3Interface.FX3Connection.StopRealTimeStreaming">
+ <summary>
+ This function stops real time streaming on the ADcmXLx021 (interface and FX3)
+ </summary>
+</member>
+<member name="M:FX3Interface.FX3Connection.RealTimeStreamManager">
+ <summary>
+ This function pulls real time data from the DUT over the streaming endpoint. It is intended to operate in its own thread, and should not be called directly
+ </summary>
+</member>
+<member name="M:FX3Interface.FX3Connection.PurgeBadFrameData">
+ <summary>
+ This function checks the CRC of each frame stored in the Stream Data Queue, and purges the bad ones
+ </summary>
+</member>
+<member name="M:FX3Interface.FX3Connection.InitBoardList(System.Object,System.EventArgs)">
+ <summary>
+ Initializes the interrupt handlers for connecting/disconnecting boards and forces an FX3 list refresh
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:FX3Interface.FX3Connection.RefreshDeviceList">
+ <summary>
+ Refreshes the list of FX3 boards connected to the PC and flashes blinky firmware if necessary
+ </summary>
+</member>
+<member name="M:FX3Interface.FX3Connection.usbList_DeviceAttached(System.Object,System.EventArgs)">
+ <summary>
+ Handles connect events generated by the Cypress USB library
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:FX3Interface.FX3Connection.usbList_DeviceRemoved(System.Object,System.EventArgs)">
+ <summary>
+ Handles disconnect events generated by the cypress USB library
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:FX3Interface.FX3Connection.ProgramSDRAM(System.String,CyUSB.CyFX3Device)">
+ <summary>
+ Loads the firmware image at the specified file path into the FX3 RAM
+ </summary>
+ <param name="FileName">The path to the FX3 firmware (.img)</param>
+ <param name="boardId">The board ID to be programmed.</param>
+</member>
+<member name="M:FX3Interface.FX3Connection.FX3CodeRunning">
+ <summary>
+ Function which checks if the FX3 is connected and programmed
+ </summary>
+ <returns>A boolean indicating if the board is programmed</returns>
+</member>
+<member name="P:FX3Interface.FX3Connection.FirmwarePath">
+ <summary>
+ The path to the firmware .img file. Needs to be set before the FX3 can be programmed
+ </summary>
+ <returns>A string, represeting the path</returns>
+</member>
+<member name="P:FX3Interface.FX3Connection.BlinkFirmwarePath">
+ <summary>
+ Set/get the blink firmware .img file used for multi-board identification
+ </summary>
+ <returns>A string representing the path to the firmware on the user machine</returns>
+</member>
+<member name="P:FX3Interface.FX3Connection.GetBootStatus">
+ <summary>
+ Checks the boot status of the FX3 board by sending a vendor request
+ </summary>
+ <returns>The current connection status</returns>
+</member>
+<member name="P:FX3Interface.FX3Connection.FX3BoardAttached">
+ <summary>
+ Checks if there is a Cypress FX3 USB device connected to the system
+ </summary>
+ <returns>A boolean indicating if there is an FX3 attached</returns>
+</member>
+<member name="M:FX3Interface.FX3Connection.ResetFX3(CyUSB.CyFX3Device)">
+ <summary>
+ Send a reset command to the FX3
+ </summary>
+ <param name="boardHandle">Handle of the board to be reset.</param>
+</member>
+<member name="M:FX3Interface.FX3Connection.CleanUpStreamers">
+ <summary>
+ Looks for and resets boards in streamer (application) mode. Should only be called at program start, after InitBoardList()
+ </summary>
+ Note: Should not be used if running multiple instances of the GUI.
+</member>
+<member name="M:FX3Interface.FX3Connection.WaitForStreamer(System.Int32)">
+ <summary>
+ Wait for a newly-programmed FX3 to enumerate as a streamer (application) device
+ </summary>
+ <param name="timeout">Optional timeout to wait for a board to re-enumerate.</param>
+</member>
 <member name="M:FX3Interface.FX3Connection.SetDefaultValues(FX3Interface.FX3Connection.DeviceType)">
  <summary>
  Sets the default values for the interface. Used in constructor and after FX3 reset.
  </summary>
  <param name="SensorType">Parameter to specify default device SPI settings. Valid options are IMU and ADcmXL</param>
-</member>
-<member name="M:FX3Interface.FX3Connection.EnumerateFX3(System.Int32)">
- <summary>
- Enumerates one connected FX3 device
- </summary>
- <param name="Timeout">The timeout in ms before the enumerate process fails, if no FX3 boards are found</param>
- <returns>The device found</returns>
 </member>
 <member name="M:FX3Interface.FX3Connection.isFirmwarePathValid(System.String@)">
  <summary>
@@ -424,12 +473,23 @@ FX3Interface
  Checks that the board is enumerated and connected via USB 2.0 or 3.0
  </summary>
 </member>
-<member name="M:FX3Interface.FX3Connection.DisconnectHandler(System.Object,System.EventArgs)">
+<member name="M:FX3Interface.FX3Connection.BootloaderBlinkLED(System.String)">
  <summary>
- Handles disconnect events generate by the cypress USB library
+ BOOTLOADER FW: Blink the onboard LED
  </summary>
- <param name="sender"></param>
- <param name="e"></param>
+ <param name="sn">Serial number of the selected board</param>
+</member>
+<member name="M:FX3Interface.FX3Connection.BootloaderTurnOffLED(System.String)">
+ <summary>
+ BOOTLOADER FW: Turn off the LED
+ </summary>
+ <param name="sn">Serial number of the selected board</param>
+</member>
+<member name="M:FX3Interface.FX3Connection.BootloaderTurnOnLED(System.String)">
+ <summary>
+ BOOTLOADER FW: Turn on the LED
+ </summary>
+ <param name="sn">Serial number of the selected board</param>
 </member>
 <member name="M:FX3Interface.FX3Connection.calcCCITT16(System.Byte[])">
  <summary>

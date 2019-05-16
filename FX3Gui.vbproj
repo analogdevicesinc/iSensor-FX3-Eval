@@ -141,6 +141,12 @@
     <Compile Include="registerAccessGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SelectFX3GUI.designer.vb">
+      <DependentUpon>SelectFX3GUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SelectFX3GUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SpiSetupGUI.designer.vb">
       <DependentUpon>SpiSetupGUI.vb</DependentUpon>
     </Compile>
@@ -176,6 +182,9 @@
     <EmbeddedResource Include="registerAccessGUI.resx">
       <DependentUpon>registerAccessGUI.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SelectFX3GUI.resx">
+      <DependentUpon>SelectFX3GUI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SpiSetupGUI.resx">
       <DependentUpon>SpiSetupGUI.vb</DependentUpon>
     </EmbeddedResource>
@@ -189,6 +198,7 @@
   <ItemGroup>
     <EmbeddedResource Include="adcmxl3021_regmap_adisAPI.csv" />
     <EmbeddedResource Include="FX3_Firmware.img" />
+    <EmbeddedResource Include="boot_fw.img" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -231,6 +241,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PreBuildEvent>copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Firmware\Debug\FX3_Firmware.img" "$(SolutionDir)\FX3_Firmware.img"
+copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Firmware\boot_fw\Debug\Fx3BootAppGcc.img" "$(SolutionDir)boot_fw.img"
 copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.dll" "$(SolutionDir)\Resources\FX3Interface.dll"
 copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.xml" "$(SolutionDir)\Resources\FX3Interface.xml"
 copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.pdb" "$(SolutionDir)\Resources\FX3Interface.pdb"</PreBuildEvent>

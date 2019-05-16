@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FX3Gui", "FX3Gui.vbproj", "{CB0098AF-79CF-4114-81BA-FEC4695E34BE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A553CAC3-91BB-4ED1-914B-F55F1468B0C6} = {A553CAC3-91BB-4ED1-914B-F55F1468B0C6}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FX3Interface", "..\iSensor-FX3-Interface\FX3Interface.vbproj", "{A553CAC3-91BB-4ED1-914B-F55F1468B0C6}"
 EndProject

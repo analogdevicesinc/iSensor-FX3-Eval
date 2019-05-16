@@ -1,6 +1,7 @@
 ﻿Imports FX3Interface
 Imports adisInterface
 Imports RegMapClasses
+Imports CyUSB
 Imports System.IO
 Imports System.Reflection
 Imports System.Threading
@@ -22,6 +23,45 @@ Public Class TopLevelGUI
 
         ' This call is required by the designer.
         InitializeComponent()
+
+        Dim firmwarePath As String
+        Dim blinkFirmwarePath As String
+        Dim regMapPath As String
+
+        'Create a local copy of embedded firmware file
+        Dim firmwareResource As String = "FX3Gui.FX3_Firmware.img"
+        firmwarePath = System.Reflection.Assembly.GetExecutingAssembly.Location
+        firmwarePath = firmwarePath.Substring(0, firmwarePath.LastIndexOf("\") + 1)
+        firmwarePath = firmwarePath + "FX3_Firmware.img"
+        Dim assembly = System.Reflection.Assembly.GetExecutingAssembly()
+        Dim outputStream As New FileStream(firmwarePath, FileMode.Create)
+        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
+        outputStream.Close()
+
+        'Create a local copy of bootloader firmware file
+        firmwareResource = "FX3Gui.boot_fw.img"
+        blinkFirmwarePath = System.Reflection.Assembly.GetExecutingAssembly.Location
+        blinkFirmwarePath = blinkFirmwarePath.Substring(0, blinkFirmwarePath.LastIndexOf("\") + 1)
+        blinkFirmwarePath = blinkFirmwarePath + "boot_fw.img"
+        assembly = System.Reflection.Assembly.GetExecutingAssembly()
+        outputStream = New FileStream(blinkFirmwarePath, FileMode.Create)
+        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
+        outputStream.Close()
+
+        'Create local copy of regmap CSV
+        firmwareResource = "FX3Gui.adcmxl3021_regmap_adisAPI.csv"
+        regMapPath = System.Reflection.Assembly.GetExecutingAssembly.Location
+        regMapPath = regMapPath.Substring(0, regMapPath.LastIndexOf("\") + 1)
+        regMapPath = regMapPath + "adcmxl3021_regmap_adisAPI.csv"
+        assembly = System.Reflection.Assembly.GetExecutingAssembly()
+        outputStream = New FileStream(regMapPath, FileMode.Create)
+        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
+        outputStream.Close()
+
+        'Set connection
+        conn.FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Connection.DeviceType.ADcmXL)
+        conn.RegMap = New RegMapCollection
+        conn.RegMap.ReadFromCSV(regMapPath)
 
         'Add exception handler
         AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf GeneralErrorHandler
@@ -51,44 +91,30 @@ Public Class TopLevelGUI
         ResetButton.Enabled = FX3Connected
         TextFileStreamingButton.Enabled = FX3Connected
 
-        'Create a local copy of embedded firmware file
-        Dim firmwareResource As String = "FX3Gui.FX3_Firmware.img"
-        firmwarePath = System.Reflection.Assembly.GetExecutingAssembly.Location
-        firmwarePath = firmwarePath.Substring(0, firmwarePath.LastIndexOf("\") + 1)
-        firmwarePath = firmwarePath + "FX3_Firmware.img"
-        Dim assembly = System.Reflection.Assembly.GetExecutingAssembly()
-        Dim outputStream As New FileStream(firmwarePath, FileMode.Create)
-        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
-        outputStream.Close()
-
-        'Create local copy of regmap CSV
-        firmwareResource = "FX3Gui.adcmxl3021_regmap_adisAPI.csv"
-        regMapPath = System.Reflection.Assembly.GetExecutingAssembly.Location
-        regMapPath = regMapPath.Substring(0, regMapPath.LastIndexOf("\") + 1)
-        regMapPath = regMapPath + "adcmxl3021_regmap_adisAPI.csv"
-        assembly = System.Reflection.Assembly.GetExecutingAssembly()
-        outputStream = New FileStream(regMapPath, FileMode.Create)
-        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
-        outputStream.Close()
-
-        'Set connection
-        conn.FX3 = New FX3Connection(FX3Connection.DeviceType.ADcmXL)
-        conn.RegMap = New RegMapCollection
-        conn.RegMap.ReadFromCSV(regMapPath)
-
     End Sub
 
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
 
-        'If MsgBox("Connect in debug mode?", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-        '    conn.FX3.DebugEnabled = True
-        'Else
-        '    conn.FX3.DebugEnabled = False
-        'End If
-
         If conn.FX3.FX3BoardAttached Then
-            conn.FX3.FirmwarePath = firmwarePath
-            conn.FX3.Connect()
+
+            'Get list of connected FX3s and pop up selection window if more than one is detected
+            If conn.FX3.DetectedFX3s.Count > 1 Then
+                'Create a new instance of the selection form and show the dialog box. Block until the box is closed.
+                Dim selectFX3 = New SelectFX3GUI()
+                selectFX3.SetConn(conn)
+                selectFX3.ShowDialog()
+                'Check to make sure the user actually selected a board
+                If conn.FX3.ActiveFX3SerialNumber Is Nothing Then
+                    MessageBox.Show("Please select an FX3 board to connect to.", "Invalid FX3 selected!", MessageBoxButtons.OK)
+                    Exit Sub
+                End If
+                'Connect to the selected board
+                conn.FX3.Connect(conn.FX3.ActiveFX3SerialNumber)
+            Else
+                'Select the first (and only) board in the list
+                conn.FX3.Connect(CType(conn.FX3.DetectedFX3s(0), CyFX3Device).SerialNumber)
+            End If
+
             FX3Connected = conn.FX3.FX3CodeRunning
             readIDButton.Enabled = FX3Connected
             RegisterAccess.Enabled = FX3Connected
@@ -258,8 +284,6 @@ Public Class TopLevelGUI
     End Sub
 
     Private Sub Cleanup(sender As Object, e As EventArgs) Handles Me.Closing
-        File.Delete(firmwarePath)
-        File.Delete(regMapPath)
         If FX3Connected Then
             conn.FX3.Disconnect()
         End If
