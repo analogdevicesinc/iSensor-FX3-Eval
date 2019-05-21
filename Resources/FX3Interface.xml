@@ -351,7 +351,7 @@ FX3Interface
  <param name="FileName">The path to the FX3 firmware (.img)</param>
  <param name="boardId">The board ID to be programmed.</param>
 </member>
-<member name="M:FX3Interface.FX3Connection.FX3CodeRunning">
+<member name="M:FX3Interface.FX3Connection.FX3CodeRunningOnTarget">
  <summary>
  Function which checks if the FX3 is connected and programmed
  </summary>
@@ -381,9 +381,9 @@ FX3Interface
  </summary>
  <returns>A boolean indicating if there is an FX3 attached</returns>
 </member>
-<member name="M:FX3Interface.FX3Connection.ResetFX3(CyUSB.CyFX3Device)">
+<member name="M:FX3Interface.FX3Connection.ResetFX3Firmware(CyUSB.CyFX3Device)">
  <summary>
- Send a reset command to the FX3
+ Send a reset command to the FX3 firmware. This command works for either the application or bootloader firmware.
  </summary>
  <param name="boardHandle">Handle of the board to be reset.</param>
 </member>
@@ -393,11 +393,12 @@ FX3Interface
  </summary>
  Note: Should not be used if running multiple instances of the GUI.
 </member>
-<member name="M:FX3Interface.FX3Connection.WaitForStreamer(System.Int32)">
+<member name="M:FX3Interface.FX3Connection.WaitForStreamer(System.String,System.Int32)">
  <summary>
  Wait for a newly-programmed FX3 to enumerate as a streamer (application) device
  </summary>
  <param name="timeout">Optional timeout to wait for a board to re-enumerate.</param>
+ <param name="sn">Serial number of device we're waiting for.</param>
 </member>
 <member name="M:FX3Interface.FX3Connection.SetDefaultValues(FX3Interface.FX3Connection.DeviceType)">
  <summary>
@@ -435,6 +436,12 @@ FX3Interface
  </summary>
  <returns>Returns the firmware ID, as a string</returns>
 </member>
+<member name="M:FX3Interface.FX3Connection.GetSerialNumber">
+ <summary>
+ Gets the serial number of the target FX3 using the control endpoint
+ </summary>
+ <returns>The unique FX3 serial number</returns>
+</member>
 <member name="M:FX3Interface.FX3Connection.CheckEndpointStatus">
  <summary>
  Checks that all the endpoints are properly enumerated
@@ -463,12 +470,12 @@ FX3Interface
  Resets all the currently configured endpoints on the FX3.
  </summary>
 </member>
-<member name="M:FX3Interface.FX3Connection.EnumerateEndpoints">
+<member name="M:FX3Interface.FX3Connection.EnumerateEndpointsOnTarget">
  <summary>
  Enumerates all the FX3 endpoints used
  </summary>
 </member>
-<member name="M:FX3Interface.FX3Connection.CheckConnectionSpeed">
+<member name="M:FX3Interface.FX3Connection.CheckConnectionSpeedOnTarget">
  <summary>
  Checks that the board is enumerated and connected via USB 2.0 or 3.0
  </summary>

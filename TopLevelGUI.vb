@@ -115,7 +115,7 @@ Public Class TopLevelGUI
                 conn.FX3.Connect(CType(conn.FX3.DetectedFX3s(0), CyFX3Device).SerialNumber)
             End If
 
-            FX3Connected = conn.FX3.FX3CodeRunning
+            FX3Connected = conn.FX3.FX3CodeRunningOnTarget
             readIDButton.Enabled = FX3Connected
             RegisterAccess.Enabled = FX3Connected
             ManualMode.Enabled = FX3Connected
