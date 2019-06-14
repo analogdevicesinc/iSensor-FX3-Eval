@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Connection.vb" />
     <Compile Include="helperFunctions.vb" />
     <Compile Include="manualModeGUI.Designer.vb">
       <DependentUpon>manualModeGUI.vb</DependentUpon>
@@ -240,11 +241,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Firmware\Debug\FX3_Firmware.img" "$(SolutionDir)\FX3_Firmware.img"
-copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Firmware\boot_fw\Debug\Fx3BootAppGcc.img" "$(SolutionDir)boot_fw.img"
-copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.dll" "$(SolutionDir)\Resources\FX3Interface.dll"
-copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.xml" "$(SolutionDir)\Resources\FX3Interface.xml"
-copy /Y "C:\Users\jchong\Documents\GitHub\iSensor-FX3-Interface\bin\Debug\FX3Interface.pdb" "$(SolutionDir)\Resources\FX3Interface.pdb"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

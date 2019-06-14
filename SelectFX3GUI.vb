@@ -18,13 +18,11 @@ Public Class SelectFX3GUI
     Public Sub SetConn(ByRef newConnection As Connection)
         conn = newConnection
 
-        For Each item In conn.FX3.DetectedFX3s
-            If Not String.Equals(CType(item, CyFX3Device).FriendlyName, "Cypress FX3 USB StreamerExample Device") Then
-                'Build combo box list using board serial numbers
-                SelectFX3ComboBox.Items.Add(CType(item, CyFX3Device).SerialNumber)
-                'Build dictionary by storing serial number and blinking state together
-                blinkingDictionary.Add(CType(item, CyFX3Device).SerialNumber, False)
-            End If
+        For Each item In conn.FX3.AvailableFX3s
+            'Build combo box list using board serial numbers
+            SelectFX3ComboBox.Items.Add(item)
+            'Build dictionary by storing serial number and blinking state together
+            blinkingDictionary.Add(item, False)
         Next
 
         'Set combo box to read-only
@@ -41,16 +39,13 @@ Public Class SelectFX3GUI
 
         'Turn off all other blinking LEDs
         'For each FX3 board that was detected
-        For Each item In conn.FX3.DetectedFX3s
-            'Ignore devices already in streamer mode
-            If Not String.Equals(CType(item, CyFX3Device).FriendlyName, "Cypress FX3 USB StreamerExample Device") Then
-                'If the board currently being checked isn't the one selected
-                If Not String.Equals(CType(item, CyFX3Device).SerialNumber, SelectFX3ComboBox.Text) Then
-                    'If the board currently being checked is flagged as blinking
-                    If blinkingDictionary.Item(CType(item, CyFX3Device).SerialNumber) Then
-                        'Turn off the LED
-                        conn.FX3.BootloaderTurnOffLED(CType(item, CyFX3Device).SerialNumber)
-                    End If
+        For Each item In conn.FX3.AvailableFX3s
+            'If the board currently being checked isn't the one selected
+            If Not String.Equals(item, SelectFX3ComboBox.Text) Then
+                'If the board currently being checked is flagged as blinking
+                If blinkingDictionary.Item(item) Then
+                    'Turn off the LED
+                    conn.FX3.BootloaderTurnOffLED(item)
                 End If
             End If
         Next
@@ -72,13 +67,11 @@ Public Class SelectFX3GUI
 
         'Turn off all blinking LEDs
         'For each FX3 board that was detected
-        For Each item In conn.FX3.DetectedFX3s
-            If Not String.Equals(CType(item, CyFX3Device).FriendlyName, "Cypress FX3 USB StreamerExample Device") Then
-                'If the board currently being checked is flagged as blinking
-                If blinkingDictionary.Item(CType(item, CyFX3Device).SerialNumber) Then
-                    'Turn off the LED
-                    conn.FX3.BootloaderTurnOffLED(CType(item, CyFX3Device).SerialNumber)
-                End If
+        For Each item In conn.FX3.AvailableFX3s
+            'If the board currently being checked is flagged as blinking
+            If blinkingDictionary.Item(item) Then
+                'Turn off the LED
+                conn.FX3.BootloaderTurnOffLED(item)
             End If
         Next
     End Sub

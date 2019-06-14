@@ -128,6 +128,13 @@ adisInterface
  <returns></returns>
  <remarks></remarks>
 </member>
+<member name="M:adisInterface.PagedDutBase.MakeAddrDataList(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+ <summary>
+ Makes an address/data list for multi page reads.  Usable for streaming or non streaming reads.
+ </summary>
+ <param name="regList"></param>
+ <returns></returns>
+</member>
 <member name="M:adisInterface.PagedDutBase.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
  <summary>
  Writes page register, writes data list element to corrosponding registers list element.
@@ -456,26 +463,19 @@ adisInterface
  <param name="worker"></param>
  <remarks></remarks>
 </member>
+<member name="M:adisInterface.adbfInterface.GetBufferedStreamDataPacket">
+ <summary>
+ Gets buffered stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
 <member name="M:adisInterface.adbfInterface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
  <summary>
  Starts a streaming operation.
  </summary>
  <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
  <param name="numCaptures">Number of captures in each stream packet.</param>
- <remarks></remarks>
-</member>
-<member name="T:adisInterface.adisRegInterface">
- <summary>
- Implements the ADiS SPI Read/Write/Reset Protocols using an AdisApi.ISpiInterface.
- </summary>
- <remarks>Based on SDP spi and gpio.</remarks>
-</member>
-<member name="M:adisInterface.adisRegInterface.#ctor(AdisApi.Spi,adisInterface.gpioBit)">
- <summary>
- 
- </summary>
- <param name="spi">ADis SPI object for the SPI interface to use.</param>
- <param name="resetPin">GPIO bit object for GPIO used to reset ADiS device.</param>
  <remarks></remarks>
 </member>
 <member name="T:adisInterface.BurstBase">
@@ -2093,6 +2093,62 @@ adisInterface
  <param name="u16data"></param>
  <returns></returns>
  <remarks></remarks>
+</member>
+<member name="M:adisInterface.xc1500interface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
+<member name="M:adisInterface.xc1500interface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ nSamples of RegList = numBuffers * numCaptures per buffer
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.xc1500interface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts a streaming operation.
+ </summary>
+ <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.xc1500interface.WritePageRegister(System.UInt32)">
+ <summary>
+ Sets the memory page.
+ </summary>
+ <param name="page"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.xc1500interface.WriteReadUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32},System.UInt32)">
+ <summary>
+ Writes page, creates address list, returns Unsigned data.
+ </summary>
+ <param name="regDataList"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.xc1500interface.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
+ <summary>
+ Writes page register, writes data list element to corrosponding registers list element.
+ </summary>
+ <param name="regDatList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.xc1500interface.CalcCRCdecimal(System.UInt32)">
+ <summary>
+ Input command data and address. 28 bits or less. Returns 4 bit CRC, 0 to 15. 
+ </summary>
+ <param name="deci"></param>
+ <returns></returns>
 </member>
 </members>
 </doc>

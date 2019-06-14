@@ -1046,12 +1046,22 @@
         </member>
         <member name="P:AdisApi.iSensorSim.SimReadData">
             <summary>
-            Buffer of data that was written in last simulated write command call.
+            Buffer of data to be returned by read commands 
+            </summary>
+        </member>
+        <member name="P:AdisApi.iSensorSim.SimRtsData">
+            <summary>
+            Buffer of data to be returned by read commands 
             </summary>
         </member>
         <member name="P:AdisApi.iSensorSim.SimWriteData">
             <summary>
-            Buffer of data to be returned by read commands 
+            Buffer of data that was written in last simulated write command call.
+            </summary>
+        </member>
+        <member name="M:AdisApi.iSensorSim.ClearSimWriteData">
+            <summary>
+            Clears the accumulated write data.
             </summary>
         </member>
         <member name="M:AdisApi.iSensorSim.ReadRegArrayStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
@@ -1085,6 +1095,18 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:AdisApi.iSensorSim.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+            <summary>
+            Starts a buffered stream read, uses the background worker handle to update progress.
+            </summary>
+            <param name="addrData">Adresses to read/write.</param>
+            <param name="numCaptures">Number of captures in each buffer for SDP transfer.</param>
+            <param name="numBuffers">Number of buffers to Be captured.</param>
+            <param name="timeoutSeconds">Timeout for transmission of one stream packet.</param>
+            <param name="worker">BackgroundWorker that routine can report progress to (may be null).</param>
+            <remarks>
+            </remarks>
         </member>
         <member name="M:AdisApi.iSensorSim.StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
             <summary>
@@ -1354,6 +1376,18 @@
             <param name="timeoutSeconds"></param>
             <param name="worker"></param>
         </member>
+        <member name="M:AdisApi.IRegInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+            <summary>
+            Starts a buffered stream read, uses the background worker handle to update progress.
+            </summary>
+            <param name="addrData">Adresses to read/write.</param>
+            <param name="numCaptures">Number of captures in each buffer for SDP transfer.</param>
+            <param name="numBuffers">Number of buffers to Be captured.</param>
+            <param name="timeoutSeconds">Timeout for transmission of one stream packet.</param>
+            <param name="worker">BackgroundWorker that routine can report progress to (may be null).</param>
+            <remarks>
+            </remarks>
+        </member>
         <member name="M:AdisApi.IRegInterface.StartStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
             <summary>
             
@@ -1413,6 +1447,26 @@
             <summary>
             Basic SPI configuration, reads, and writes using ADiS spi code on Blackfin.
             </summary>    
+        </member>
+        <member name="T:AdisApi.iSensorSpi.frameProtocolType">
+            <summary>
+            SPI frame protocol identifiers.
+            </summary>
+        </member>
+        <member name="F:AdisApi.iSensorSpi.frameProtocolType.adis16bit">
+            <summary>
+            Standard legacy 16 bit frame.
+            </summary>
+        </member>
+        <member name="F:AdisApi.iSensorSpi.frameProtocolType.xc32bit">
+            <summary>
+            A 32 bit SPI frame used by the adxc1500 sensor.
+            </summary>
+        </member>
+        <member name="F:AdisApi.iSensorSpi.frameProtocol">
+            <summary>
+            To specify an SPI frame protocol
+            </summary>
         </member>
         <member name="M:AdisApi.iSensorSpi.setDefaultProperties">
             <summary>
@@ -1654,6 +1708,50 @@
             Consider adding manual locking and using a generic Queueto prevent cast.
             </remarks>
         </member>
+        <member name="M:AdisApi.iSensorSpi.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
+            <summary>
+            Starts a buffered stream read, no timeout.
+            </summary>
+            <param name="addrData">Adresses to read/write.</param>
+            <param name="numCaptures"></param>
+            <param name="numBuffers"></param>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32,System.ComponentModel.BackgroundWorker)">
+            <summary>
+            Starts a buffered stream read, no timeout.
+            </summary>
+            <param name="addrData">Adresses to read/write.</param>
+            <param name="numCaptures"></param>
+            <param name="numBuffers"></param>
+            <param name="worker">BackgroundWorker that routine can report progress to (may be null).</param>
+            <remarks>
+            This overload allows callers to call without timeoutSeconds.
+            </remarks>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32,System.Int32)">
+            <summary>
+            Starts a buffered stream read, no background worker.
+            </summary>
+            <param name="addrData">Adresses to read/write.</param>
+            <param name="numCaptures"></param>
+            <param name="numBuffers"></param>
+            <param name="timeoutSeconds"></param>
+            <remarks>
+            This overload allows callers to call without backgroundWorker.
+            </remarks>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+            <summary>
+            Starts a buffered stream read, uses the background worker handle to update progress.
+            </summary>
+            <param name="addrData">Adresses to read/write.</param>
+            <param name="numCaptures">Number of captures in each buffer for SDP transfer.</param>
+            <param name="numBuffers">Number of buffers to Be captured.</param>
+            <param name="timeoutSeconds">Timeout for transmission of one stream packet.</param>
+            <param name="worker">BackgroundWorker that routine can report progress to (may be null).</param>
+            <remarks>
+            </remarks>
+        </member>
         <member name="M:AdisApi.iSensorSpi.StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
             <summary>
             Starts a buffered stream read, no background worker, no Timeout.
@@ -1694,6 +1792,18 @@
             Starts a buffered stream read, uses the background worker handle to update progress.
             </summary>
             <param name="addr">Adresses to read.</param>
+            <param name="numCaptures">Number of captures in each buffer for SDP transfer.</param>
+            <param name="numBuffers">Number of buffers to Be captured.</param>
+            <param name="timeoutSeconds">Timeout for transmission of one stream packet.</param>
+            <param name="worker">BackgroundWorker that routine can report progress to (may be null).</param>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.StartBufferedStream(System.UInt16[],System.UInt32,System.UInt32,System.Nullable{System.Int32},System.ComponentModel.BackgroundWorker)">
+            <summary>
+            Starts a buffered stream read, uses the background worker handle to update progress.
+            </summary>
+            <param name="writeData">Data to be shifted.</param>
             <param name="numCaptures">Number of captures in each buffer for SDP transfer.</param>
             <param name="numBuffers">Number of buffers to Be captured.</param>
             <param name="timeoutSeconds">Timeout for transmission of one stream packet.</param>
@@ -2060,7 +2170,14 @@
             <param name="pin">IPinObject to use for PulseWait Operation</param>
             <returns></returns>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:AdisApi.PinFcns.SetPin(AdisApi.IPinObject,System.UInt32)" -->
+        <member name="M:AdisApi.PinFcns.SetPin(AdisApi.IPinObject,System.UInt32)">
+            <summary>
+            Sets the value of a pin
+            </summary>
+            <param name="pin">IPinObject to use for PulseWait Operation</param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="M:AdisApi.PinFcns.StartIntervalMeasurement(AdisApi.PinObject,System.UInt32,AdisApi.PinObject,System.UInt32,System.UInt32)">
             <summary>
             

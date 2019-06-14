@@ -4,20 +4,14 @@ Imports RegMapClasses
 Imports CyUSB
 Imports System.IO
 Imports System.Reflection
-Imports System.Threading
-Imports System.Windows.Forms
-
-Public Structure Connection
-    Public FX3 As FX3Connection
-    Public Dut As AdcmInterfaceBase
-    Public RegMap As RegMapCollection
-End Structure
+Imports System.Timers
 
 Public Class TopLevelGUI
     Private FX3Connected As Boolean
-    Private conn As Connection
+    Private WithEvents conn As Connection
     Private firmwarePath As String
     Private regMapPath As String
+    Private WithEvents disconnectTimer As Timer
 
     Public Sub New()
 
@@ -59,7 +53,8 @@ Public Class TopLevelGUI
         outputStream.Close()
 
         'Set connection
-        conn.FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Connection.DeviceType.ADcmXL)
+        conn = New Connection()
+        conn.FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Interface.DeviceType.ADcmXL)
         conn.RegMap = New RegMapCollection
         conn.RegMap.ReadFromCSV(regMapPath)
 
@@ -91,56 +86,110 @@ Public Class TopLevelGUI
         ResetButton.Enabled = FX3Connected
         TextFileStreamingButton.Enabled = FX3Connected
 
+        'register timeout event handler
+        disconnectTimer = New Timer(10000)
+        AddHandler disconnectTimer.Elapsed, New ElapsedEventHandler(AddressOf timeoutHandler)
+
+    End Sub
+
+    ''' <summary>
+    ''' Event handler for when the board is unplugged
+    ''' </summary>
+    ''' <param name="FX3SerialNumber">Serial Number of the board which generated the event</param>
+    Public Sub DisconnectHandler(FX3SerialNumber As String) Handles conn.UnexpectedDisconnect
+
+        'Reset GUI state
+        conn.FX3.Disconnect()
+        FX3Connected = False
+        'Disable buttons
+        readIDButton.Enabled = FX3Connected
+        RegisterAccess.Enabled = FX3Connected
+        ManualMode.Enabled = FX3Connected
+        configureSPI.Enabled = FX3Connected
+        checkConnection.Enabled = FX3Connected
+        ReadPinButton.Enabled = FX3Connected
+        ResetDUTButton.Enabled = FX3Connected
+        realTimeStreamButton.Enabled = FX3Connected
+        TextFileStreamingButton.Enabled = FX3Connected
+        ResetButton.Enabled = False
+        ConnectButton.Enabled = True
+
+        'Special error message
+        StatusText.Text = "ERROR: FX3 Connection Lost"
+        StatusText.BackColor = Color.Red
+        DUTStatusBox.Text = "ERROR: FX3 Connection Lost"
+        DUTStatusBox.BackColor = Color.Red
+
+    End Sub
+
+    ''' <summary>
+    ''' When the disconnect event finishes re-enable the connect button if needed.
+    ''' </summary>
+    ''' <param name="FX3SN"></param>
+    ''' <param name="DisconnectTime"></param>
+    Public Sub DisconnectFinishedHandler(FX3SN As String, DisconnectTime As Integer) Handles conn.DisconnectFinished
+        ConnectButton.Enabled = True
+        StatusText.Text = "FX3 Reset"
+        StatusText.BackColor = Color.Yellow
+        disconnectTimer.Enabled = False
     End Sub
 
     Private Sub ConnectButton_Click(sender As Object, e As EventArgs) Handles ConnectButton.Click
 
-        If conn.FX3.FX3BoardAttached Then
-
-            'Get list of connected FX3s and pop up selection window if more than one is detected
-            If conn.FX3.DetectedFX3s.Count > 1 Then
-                'Create a new instance of the selection form and show the dialog box. Block until the box is closed.
-                Dim selectFX3 = New SelectFX3GUI()
-                selectFX3.SetConn(conn)
-                selectFX3.ShowDialog()
-                'Check to make sure the user actually selected a board
-                If conn.FX3.ActiveFX3SerialNumber Is Nothing Then
-                    MessageBox.Show("Please select an FX3 board to connect to.", "Invalid FX3 selected!", MessageBoxButtons.OK)
-                    Exit Sub
+        'Exit if no available FX3's
+        Dim boardsInUse As Integer = conn.FX3.BusyFX3s.Count
+        Dim ResetResult As MsgBoxResult
+        If conn.FX3.AvailableFX3s.Count = 0 Then
+            If boardsInUse > 0 Then
+                ResetResult = MsgBox("ERROR: All " + boardsInUse.ToString() + " connected board(s) are currently in use. Attempt to reset all boards?", MsgBoxStyle.YesNo)
+                If ResetResult = MsgBoxResult.Yes Then
+                    conn.FX3.ResetAllFX3s()
                 End If
-                'Connect to the selected board
-                conn.FX3.Connect(conn.FX3.ActiveFX3SerialNumber)
-            Else
-                'Select the first (and only) board in the list
-                conn.FX3.Connect(CType(conn.FX3.DetectedFX3s(0), CyFX3Device).SerialNumber)
             End If
-
-            FX3Connected = conn.FX3.FX3CodeRunningOnTarget
-            readIDButton.Enabled = FX3Connected
-            RegisterAccess.Enabled = FX3Connected
-            ManualMode.Enabled = FX3Connected
-            configureSPI.Enabled = FX3Connected
-            checkConnection.Enabled = FX3Connected
-            ReadPinButton.Enabled = FX3Connected
-            realTimeStreamButton.Enabled = FX3Connected
-            ResetDUTButton.Enabled = FX3Connected
-            TextFileStreamingButton.Enabled = FX3Connected
-            ResetButton.Enabled = FX3Connected
-            ConnectButton.Enabled = False
-            TestDUT()
-            If FX3Connected Then
-                StatusText.Text = "Connected to FX3"
-                StatusText.BackColor = Color.Green
-            Else
-                StatusText.Text = "Programming FX3 Failed"
-                StatusText.BackColor = Color.Red
-            End If
-        Else
             FX3Connected = False
             StatusText.Text = "ERROR: No FX3 Attached"
             StatusText.BackColor = Color.Red
+            Exit Sub
         End If
 
+        'Get list of connected FX3s and pop up selection window if more than one is detected
+        If conn.FX3.AvailableFX3s.Count > 1 Then
+            'Create a new instance of the selection form and show the dialog box. Block until the box is closed.
+            Dim selectFX3 = New SelectFX3GUI()
+            selectFX3.SetConn(conn)
+            selectFX3.ShowDialog()
+            'Check to make sure the user actually selected a board
+            If conn.FX3.ActiveFX3SerialNumber Is Nothing Then
+                MessageBox.Show("Please select an FX3 board to connect to.", "Invalid FX3 selected!", MessageBoxButtons.OK)
+                Exit Sub
+            End If
+            'Connect to the selected board
+            conn.FX3.Connect(conn.FX3.ActiveFX3SerialNumber)
+        Else
+            'Select the first (and only) board in the list
+            conn.FX3.Connect(conn.FX3.AvailableFX3s(0))
+        End If
+
+        FX3Connected = conn.FX3.FX3CodeRunningOnTarget
+        readIDButton.Enabled = FX3Connected
+        RegisterAccess.Enabled = FX3Connected
+        ManualMode.Enabled = FX3Connected
+        configureSPI.Enabled = FX3Connected
+        checkConnection.Enabled = FX3Connected
+        ReadPinButton.Enabled = FX3Connected
+        realTimeStreamButton.Enabled = FX3Connected
+        ResetDUTButton.Enabled = FX3Connected
+        TextFileStreamingButton.Enabled = FX3Connected
+        ResetButton.Enabled = FX3Connected
+        ConnectButton.Enabled = False
+        TestDUT()
+        If FX3Connected Then
+            StatusText.Text = "Connected to FX3"
+            StatusText.BackColor = Color.Green
+        Else
+            StatusText.Text = "Programming FX3 Failed"
+            StatusText.BackColor = Color.Red
+        End If
 
     End Sub
 
@@ -216,6 +265,23 @@ Public Class TopLevelGUI
         StatusText.BackColor = Color.Yellow
         DUTStatusBox.BackColor = Color.Yellow
 
+        'Start a time out event (10 seconds)
+        disconnectTimer.Enabled = True
+        StatusText.Text = "FX3 Rebooting"
+        ConnectButton.Enabled = False
+
+    End Sub
+
+    Private Sub timeoutHandler(source As Object, e As ElapsedEventArgs)
+        disconnectTimer.Enabled = False
+        'Timers run in a seperate thread from GUI
+        Me.BeginInvoke(New MethodInvoker(AddressOf updateLabels))
+    End Sub
+
+    Private Sub updateLabels()
+        ConnectButton.Enabled = True
+        StatusText.Text = "Error: Disconnect timed out"
+        StatusText.BackColor = Color.Red
     End Sub
 
     Private Sub readIDButton_Click(sender As Object, e As EventArgs) Handles readIDButton.Click
