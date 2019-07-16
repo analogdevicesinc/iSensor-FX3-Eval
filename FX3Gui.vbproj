@@ -68,40 +68,27 @@
   <ItemGroup>
     <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-<<<<<<< HEAD
       <HintPath>Resources\adisApi.dll</HintPath>
     </Reference>
     <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\adisInterface.dll</HintPath>
-=======
-      <HintPath>..\AdisInterface\src\app\bin\Debug\adisApi.dll</HintPath>
-    </Reference>
-    <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\AdisInterface\src\app\bin\Debug\adisInterface.dll</HintPath>
->>>>>>> 731a8548305cf4ed8b0ae16c318685943c685306
     </Reference>
     <Reference Include="CyUSB, Version=1.2.3.0, Culture=neutral, PublicKeyToken=01f1d2b6c851ae92, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-Interface\bin\Debug\CyUSB.dll</HintPath>
+      <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
     <Reference Include="FX3Api, Version=1.0.6.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\FX3Api.dll</HintPath>
-=======
-    <Reference Include="FX3Interface, Version=1.0.5.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-Interface\bin\Debug\FX3Interface.dll</HintPath>
->>>>>>> 731a8548305cf4ed8b0ae16c318685943c685306
     </Reference>
     <Reference Include="RegMapClasses, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\AdisInterface\src\app\bin\Debug\RegMapClasses.dll</HintPath>
+      <HintPath>Resources\RegMapClasses.dll</HintPath>
     </Reference>
-    <Reference Include="sdpApi1">
-      <HintPath>..\AdisInterface\src\app\bin\Debug\sdpApi1.dll</HintPath>
+    <Reference Include="sdpApi1, Version=2.1.969.16, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\sdpApi1.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -255,8 +242,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy /Y "C:\Users\jchong\Documents\iSensor-FX3-Firmware\Debug\FX3_Firmware.img" "$(ProjectDir)FX3_Firmware.img"
-copy /Y "C:\Users\jchong\Documents\iSensor-FX3-Firmware\boot_fw\Debug\Fx3BootAppGcc.img" "$(ProjectDir)boot_fw.img"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
