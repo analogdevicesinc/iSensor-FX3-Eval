@@ -14,7 +14,6 @@
 
 # Binary files
 *.bin
-*.img
 
 # Build results
 [Dd]ebug/
