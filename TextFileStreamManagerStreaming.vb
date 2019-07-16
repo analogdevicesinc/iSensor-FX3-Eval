@@ -1,5 +1,4 @@
-﻿Imports AdisApi
-Imports FX3Interface
+﻿Imports FX3Api
 Imports adisInterface
 Imports System.ComponentModel
 

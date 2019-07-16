@@ -66,17 +66,20 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="adisApi">
+    <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\adisApi.dll</HintPath>
     </Reference>
-    <Reference Include="adisInterface">
+    <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\adisInterface.dll</HintPath>
     </Reference>
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Interface">
-      <HintPath>Resources\FX3Interface.dll</HintPath>
+    <Reference Include="FX3Api, Version=1.0.6.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\FX3Api.dll</HintPath>
     </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
@@ -130,12 +133,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="RealTimeStreamGUI.Designer.vb">
-      <DependentUpon>RealTimeStreamGUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="RealTimeStreamGUI.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="registerAccessGUI.designer.vb">
       <DependentUpon>registerAccessGUI.vb</DependentUpon>
     </Compile>
@@ -176,9 +173,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RealTimeStreamGUI.resx">
-      <DependentUpon>RealTimeStreamGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="registerAccessGUI.resx">
       <DependentUpon>registerAccessGUI.vb</DependentUpon>
@@ -228,16 +222,17 @@
     <EmbeddedResource Include="Resources\adisApi.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\adisInterface.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\CyUSB.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\FX3Interface.dll" />
+    <EmbeddedResource Include="Resources\RegMapClasses.dll" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\RegMapClasses.dll" />
+    <EmbeddedResource Include="Resources\Analog.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\adisInterface.dll" />
+    <Content Include="Resources\FX3Api.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

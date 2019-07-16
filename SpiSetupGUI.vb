@@ -1,4 +1,4 @@
-﻿Imports FX3Interface
+﻿Imports FX3Api
 
 Public Class SpiSetupGUI
 
@@ -242,10 +242,6 @@ Public Class SpiSetupGUI
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
         TopLevelGUI.Show()
-    End Sub
-
-    Private Sub SpiSetupGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
     End Sub
 
 End Class

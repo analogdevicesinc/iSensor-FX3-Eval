@@ -86,6 +86,174 @@ adisInterface
  <param name="rtsFrame"></param>
  <param name="list"></param>
 </member>
+<member name="T:adisInterface.InvalidCRCException">
+ <summary>
+ This exception type is thrown when the SPI data received from the DUT has an invalid CRC appended.
+ </summary>
+</member>
+<member name="M:adisInterface.InvalidCRCException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:adisInterface.InvalidCRCException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:adisInterface.InvalidCRCException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previos exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:adisInterface.StateVectorException">
+ <summary>
+ This exception is thrown when the state vector in the automotive SPI protocol indicates that an error has occured.
+ </summary>
+</member>
+<member name="M:adisInterface.StateVectorException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:adisInterface.StateVectorException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:adisInterface.StateVectorException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previos exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:adisInterface.SpiAddressException">
+ <summary>
+ This exception is thrown when the address recieved back from the DUT does not match the expected address.
+ </summary>
+</member>
+<member name="M:adisInterface.SpiAddressException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:adisInterface.SpiAddressException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:adisInterface.SpiAddressException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previos exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:adisInterface.TransactionCounterException">
+ <summary>
+ This exception is thrown when the transaction counter value recieved in the last SPI transaction does not match the expected transaction counter.
+ </summary>
+</member>
+<member name="M:adisInterface.TransactionCounterException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:adisInterface.TransactionCounterException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:adisInterface.TransactionCounterException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previos exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:adisInterface.iSensorAutomotiveSpi">
+ <summary>
+ This class allows for interfacing with parts using the ADI robust automotive SPI protocol. The automotive SPI protocol is designed to interface with
+ 16 bit registers, with an additional 16 bits of metadata appended to each SPI word. 
+ 
+ The general protocol is described below:
+ 
+ Master to DUT (MOSI) - Set via ISpi32Interface Write or Transfer commands
+ 31 |30 |29 |28 |27 |26 |25|24|23|22|21|20|19|18|17|16|15|14|13|12|11|10|9 |8 |7  |6|5|4|3   |2   |1   |0
+ D15|D14|D13|D12|D11|D10|D9|D8|D7|D6|D5|D4|D3|D2|D1|D0|A7|A6|A5|A4|A3|A2|A1|A0|R/W|0|0|0|CRC3|CRC2|CRC1|CRC0
+ 
+ DUT to Master (MISO) - Read via ISpi32Interface Read or Transfer commands
+ 31 |30 |29 |28 |27 |26 |25|24|23|22|21|20|19|18|17|16|15|14|13|12|11|10|9 |8 |7  |6  |5  |4  |3   |2   |1   |0
+ D15|D14|D13|D12|D11|D10|D9|D8|D7|D6|D5|D4|D3|D2|D1|D0|A7|A6|A5|A4|A3|A2|A1|A0|SV1|SV0|TC1|TC0|CRC3|CRC2|CRC1|CRC0
+ 
+ </summary>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.#ctor(AdisApi.ISpi32Interface)">
+ <summary>
+ Overloaded constructor which takes an instance of the ISpi32Interface.
+ </summary>
+ <param name="SpiInterface">The SPI interface to be used.</param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.#ctor">
+ <summary>
+ Set the base constructor to throw an exception
+ </summary>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.IgnoreExceptions">
+ <summary>
+ Property to enable error exceptions. When enabled, exceptions are thrown for invalid CRC, state vector, transaction counter, address.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.SetDefaultValues">
+ <summary>
+ This function sets all the default values for the class
+ </summary>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ValidateSpiWord(System.UInt32)">
+ <summary>
+ If exceptions are enabled, this function validates the 16 bits of metadata attached to the given SPI word. If the data
+ does not match the expected data, an exception is thrown corresponding to the error.
+ </summary>
+ <param name="SpiWord">The SPI word to check</param>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.DrActive">
+ <summary>
+ This property controls if stream packets trigger on a data ready or go at full speed. This implementation acts as a wrapper for
+ the ISpi32Interface implementation of DrActive.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.StreamTimeoutSeconds">
+ <summary>
+ This property controls the number of seconds which a stream will wait without data before timing out. This implementation
+ acts as a wrapper for the ISpi32Interface implementation of streamtimeoutseconds.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ReadRegArrayStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
+ <summary>
+ This is the most general interfacing function. All others call down to this implementation.
+ </summary>
+ <param name="addrData"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.CalcCRCdecimal(System.UInt32)">
+ <summary>
+ Input command data and address. 28 bits or less. Returns 4 bit CRC, 0 to 15. 
+ </summary>
+ <param name="deci"></param>
+ <returns></returns>
+</member>
 <member name="T:adisInterface.PagedDutBase">
  <summary>
  Base class for devices with paged register access.  Builds pageing functionality on to DutBase.
@@ -140,6 +308,32 @@ adisInterface
  Writes page register, writes data list element to corrosponding registers list element.
  </summary>
  <param name="regDatList"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.PagedDutBase.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ nSamples of RegList = numBuffers * numCaptures per buffer
+ </summary>
+ <param name="regList"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.PagedDutBase.GetBufferedStreamDataPacket">
+ <summary>
+ Gets buffered stream data packet.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:adisInterface.PagedDutBase.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
+ <summary>
+ Starts a streaming operation.
+ </summary>
+ <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
+ <param name="numCaptures">Number of captures in each stream packet.</param>
  <remarks></remarks>
 </member>
 <member name="P:adisInterface.AdcmInterface3Axis.RealTimeSamplingFrameSize">
@@ -451,32 +645,6 @@ adisInterface
  Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
  </summary>
  <param name="adis">Reg interface object to use for dut comminication.</param>
-</member>
-<member name="M:adisInterface.adbfInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
- <summary>
- nSamples of RegList = numBuffers * numCaptures per buffer
- </summary>
- <param name="regList"></param>
- <param name="numCaptures"></param>
- <param name="numBuffers"></param>
- <param name="timeoutSeconds"></param>
- <param name="worker"></param>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.adbfInterface.GetBufferedStreamDataPacket">
- <summary>
- Gets buffered stream data packet.
- </summary>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.adbfInterface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
- <summary>
- Starts a streaming operation.
- </summary>
- <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
- <param name="numCaptures">Number of captures in each stream packet.</param>
- <remarks></remarks>
 </member>
 <member name="T:adisInterface.BurstBase">
  <summary>
@@ -2093,62 +2261,6 @@ adisInterface
  <param name="u16data"></param>
  <returns></returns>
  <remarks></remarks>
-</member>
-<member name="M:adisInterface.xc1500interface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
- <summary>
- Create a new instance of a Dut interface class.
- </summary>
- <param name="adis">Reg interface object to use for dut comminication.</param>
- <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
-</member>
-<member name="M:adisInterface.xc1500interface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
- <summary>
- nSamples of RegList = numBuffers * numCaptures per buffer
- </summary>
- <param name="regList"></param>
- <param name="numCaptures"></param>
- <param name="numBuffers"></param>
- <param name="timeoutSeconds"></param>
- <param name="worker"></param>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.xc1500interface.StartStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32)">
- <summary>
- Starts a streaming operation.
- </summary>
- <param name="regList">Registers (16 and/or 32 bit) to include in stream.</param>
- <param name="numCaptures">Number of captures in each stream packet.</param>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.xc1500interface.WritePageRegister(System.UInt32)">
- <summary>
- Sets the memory page.
- </summary>
- <param name="page"></param>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.xc1500interface.WriteReadUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32},System.UInt32)">
- <summary>
- Writes page, creates address list, returns Unsigned data.
- </summary>
- <param name="regDataList"></param>
- <param name="numCaptures"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.xc1500interface.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
- <summary>
- Writes page register, writes data list element to corrosponding registers list element.
- </summary>
- <param name="regDatList"></param>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.xc1500interface.CalcCRCdecimal(System.UInt32)">
- <summary>
- Input command data and address. 28 bits or less. Returns 4 bit CRC, 0 to 15. 
- </summary>
- <param name="deci"></param>
- <returns></returns>
 </member>
 </members>
 </doc>

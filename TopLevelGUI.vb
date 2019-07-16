@@ -1,7 +1,5 @@
-﻿Imports FX3Interface
-Imports adisInterface
+﻿Imports FX3Api
 Imports RegMapClasses
-Imports CyUSB
 Imports System.IO
 Imports System.Reflection
 Imports System.Timers
@@ -54,7 +52,8 @@ Public Class TopLevelGUI
 
         'Set connection
         conn = New Connection()
-        conn.FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Interface.DeviceType.ADcmXL)
+        conn.FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Api.DeviceType.ADcmXL)
+
         conn.RegMap = New RegMapCollection
         conn.RegMap.ReadFromCSV(regMapPath)
 
@@ -75,16 +74,19 @@ Public Class TopLevelGUI
         DUTStatusBox.BackColor = Color.Yellow
 
         'Disable buttons initially
-        readIDButton.Enabled = FX3Connected
+        FX3BoardInfoBtn.Enabled = FX3Connected
         RegisterAccess.Enabled = FX3Connected
         ManualMode.Enabled = FX3Connected
         configureSPI.Enabled = FX3Connected
         checkConnection.Enabled = FX3Connected
         ReadPinButton.Enabled = FX3Connected
-        realTimeStreamButton.Enabled = FX3Connected
         ResetDUTButton.Enabled = FX3Connected
         ResetButton.Enabled = FX3Connected
         TextFileStreamingButton.Enabled = FX3Connected
+        APIInfoBtn.Enabled = FX3Connected
+
+        'Update the part type to 3021
+        conn.FX3.PartType = DUTType.ADcmXL3021
 
         'register timeout event handler
         disconnectTimer = New Timer(10000)
@@ -102,15 +104,15 @@ Public Class TopLevelGUI
         conn.FX3.Disconnect()
         FX3Connected = False
         'Disable buttons
-        readIDButton.Enabled = FX3Connected
+        FX3BoardInfoBtn.Enabled = FX3Connected
         RegisterAccess.Enabled = FX3Connected
         ManualMode.Enabled = FX3Connected
         configureSPI.Enabled = FX3Connected
         checkConnection.Enabled = FX3Connected
         ReadPinButton.Enabled = FX3Connected
         ResetDUTButton.Enabled = FX3Connected
-        realTimeStreamButton.Enabled = FX3Connected
         TextFileStreamingButton.Enabled = FX3Connected
+        APIInfoBtn.Enabled = FX3Connected
         ResetButton.Enabled = False
         ConnectButton.Enabled = True
 
@@ -171,15 +173,15 @@ Public Class TopLevelGUI
         End If
 
         FX3Connected = conn.FX3.FX3CodeRunningOnTarget
-        readIDButton.Enabled = FX3Connected
+        FX3BoardInfoBtn.Enabled = FX3Connected
         RegisterAccess.Enabled = FX3Connected
         ManualMode.Enabled = FX3Connected
         configureSPI.Enabled = FX3Connected
         checkConnection.Enabled = FX3Connected
         ReadPinButton.Enabled = FX3Connected
-        realTimeStreamButton.Enabled = FX3Connected
         ResetDUTButton.Enabled = FX3Connected
         TextFileStreamingButton.Enabled = FX3Connected
+        APIInfoBtn.Enabled = FX3Connected
         ResetButton.Enabled = FX3Connected
         ConnectButton.Enabled = False
         TestDUT()
@@ -248,15 +250,15 @@ Public Class TopLevelGUI
         conn.FX3.Disconnect()
         FX3Connected = False
         'Disable buttons
-        readIDButton.Enabled = FX3Connected
+        FX3BoardInfoBtn.Enabled = FX3Connected
         RegisterAccess.Enabled = FX3Connected
         ManualMode.Enabled = FX3Connected
         configureSPI.Enabled = FX3Connected
         checkConnection.Enabled = FX3Connected
         ReadPinButton.Enabled = FX3Connected
-        realTimeStreamButton.Enabled = FX3Connected
         ResetDUTButton.Enabled = FX3Connected
         TextFileStreamingButton.Enabled = FX3Connected
+        APIInfoBtn.Enabled = FX3Connected
         ConnectButton.Enabled = True
         ResetButton.Enabled = False
 
@@ -284,10 +286,8 @@ Public Class TopLevelGUI
         StatusText.BackColor = Color.Red
     End Sub
 
-    Private Sub readIDButton_Click(sender As Object, e As EventArgs) Handles readIDButton.Click
-        Dim firmwareID As String
-        firmwareID = conn.FX3.GetVersion
-        MsgBox(firmwareID)
+    Private Sub readIDButton_Click(sender As Object, e As EventArgs) Handles FX3BoardInfoBtn.Click
+        MsgBox(conn.FX3.ActiveFX3.ToString())
     End Sub
 
     Private Sub checkConnection_Click(sender As Object, e As EventArgs) Handles checkConnection.Click
@@ -318,17 +318,6 @@ Public Class TopLevelGUI
         End Try
         Dim pinValue As UInteger = conn.FX3.ReadPin(New FX3PinObject(GPIONumber))
         MsgBox("Pin " + GPIONumber.ToString + ": " + pinValue.ToString())
-    End Sub
-
-    Private Sub realTimeStreamButton_Click(sender As Object, e As EventArgs) Handles realTimeStreamButton.Click
-        If FX3Connected Then
-            Dim realTimeStream = New RealTimeStreamGUI()
-            realTimeStream.SetConn(conn)
-            realTimeStream.Show()
-            Hide()
-        Else
-            MsgBox("ERROR: FX3 not connected")
-        End If
     End Sub
 
     Private Sub TextFileStreamingButton_Click(sender As Object, e As EventArgs) Handles TextFileStreamingButton.Click
@@ -366,6 +355,10 @@ Public Class TopLevelGUI
         StatusText.BackColor = Color.Red
         DUTStatusBox.Text = "Waiting for FX3 to connect"
         DUTStatusBox.BackColor = Color.Yellow
+    End Sub
+
+    Private Sub APIInfoBtn_Click(sender As Object, e As EventArgs) Handles APIInfoBtn.Click
+        MsgBox(conn.FX3.GetFX3ApiInfo.ToString())
     End Sub
 
 End Class

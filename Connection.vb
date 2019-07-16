@@ -1,4 +1,4 @@
-﻿Imports FX3Interface
+﻿Imports FX3Api
 Imports RegMapClasses
 Imports adisInterface
 

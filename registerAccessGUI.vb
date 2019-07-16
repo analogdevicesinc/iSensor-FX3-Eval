@@ -1,5 +1,5 @@
 ﻿Imports RegMapClasses
-Imports FX3Interface
+Imports FX3Api
 
 Public Class registerAccessGUI
 
@@ -60,7 +60,4 @@ Public Class registerAccessGUI
         DRFreq.Text = FormatNumber(conn.FX3.ReadDRFreq(conn.FX3.DIO1, 1, 2000), 3).ToString + "  Hz"
     End Sub
 
-    Private Sub registerAccessGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
 End Class

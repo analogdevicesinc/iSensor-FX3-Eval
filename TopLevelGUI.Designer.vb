@@ -22,21 +22,22 @@ Partial Class TopLevelGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TopLevelGUI))
         Me.RegisterAccess = New System.Windows.Forms.Button()
         Me.ManualMode = New System.Windows.Forms.Button()
         Me.StatusLabel = New System.Windows.Forms.Label()
         Me.StatusText = New System.Windows.Forms.Label()
         Me.ConnectButton = New System.Windows.Forms.Button()
         Me.ResetButton = New System.Windows.Forms.Button()
-        Me.readIDButton = New System.Windows.Forms.Button()
+        Me.FX3BoardInfoBtn = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.DUTStatusBox = New System.Windows.Forms.Label()
         Me.configureSPI = New System.Windows.Forms.Button()
         Me.checkConnection = New System.Windows.Forms.Button()
         Me.ReadPinButton = New System.Windows.Forms.Button()
-        Me.realTimeStreamButton = New System.Windows.Forms.Button()
         Me.ResetDUTButton = New System.Windows.Forms.Button()
         Me.TextFileStreamingButton = New System.Windows.Forms.Button()
+        Me.APIInfoBtn = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'RegisterAccess
@@ -50,7 +51,7 @@ Partial Class TopLevelGUI
         '
         'ManualMode
         '
-        Me.ManualMode.Location = New System.Drawing.Point(255, 127)
+        Me.ManualMode.Location = New System.Drawing.Point(174, 127)
         Me.ManualMode.Name = "ManualMode"
         Me.ManualMode.Size = New System.Drawing.Size(75, 64)
         Me.ManualMode.TabIndex = 2
@@ -93,14 +94,14 @@ Partial Class TopLevelGUI
         Me.ResetButton.Text = "Reset FX3"
         Me.ResetButton.UseVisualStyleBackColor = True
         '
-        'readIDButton
+        'FX3BoardInfoBtn
         '
-        Me.readIDButton.Location = New System.Drawing.Point(93, 197)
-        Me.readIDButton.Name = "readIDButton"
-        Me.readIDButton.Size = New System.Drawing.Size(75, 64)
-        Me.readIDButton.TabIndex = 11
-        Me.readIDButton.Text = "Read Firmware ID"
-        Me.readIDButton.UseVisualStyleBackColor = True
+        Me.FX3BoardInfoBtn.Location = New System.Drawing.Point(93, 197)
+        Me.FX3BoardInfoBtn.Name = "FX3BoardInfoBtn"
+        Me.FX3BoardInfoBtn.Size = New System.Drawing.Size(75, 64)
+        Me.FX3BoardInfoBtn.TabIndex = 11
+        Me.FX3BoardInfoBtn.Text = "FX3 Board Info"
+        Me.FX3BoardInfoBtn.UseVisualStyleBackColor = True
         '
         'Label1
         '
@@ -132,7 +133,7 @@ Partial Class TopLevelGUI
         '
         'checkConnection
         '
-        Me.checkConnection.Location = New System.Drawing.Point(174, 197)
+        Me.checkConnection.Location = New System.Drawing.Point(255, 127)
         Me.checkConnection.Name = "checkConnection"
         Me.checkConnection.Size = New System.Drawing.Size(75, 64)
         Me.checkConnection.TabIndex = 15
@@ -148,15 +149,6 @@ Partial Class TopLevelGUI
         Me.ReadPinButton.Text = "Read Pin"
         Me.ReadPinButton.UseVisualStyleBackColor = True
         '
-        'realTimeStreamButton
-        '
-        Me.realTimeStreamButton.Location = New System.Drawing.Point(92, 127)
-        Me.realTimeStreamButton.Name = "realTimeStreamButton"
-        Me.realTimeStreamButton.Size = New System.Drawing.Size(75, 64)
-        Me.realTimeStreamButton.TabIndex = 17
-        Me.realTimeStreamButton.Text = "Real Time Streaming"
-        Me.realTimeStreamButton.UseVisualStyleBackColor = True
-        '
         'ResetDUTButton
         '
         Me.ResetDUTButton.Location = New System.Drawing.Point(255, 9)
@@ -168,33 +160,43 @@ Partial Class TopLevelGUI
         '
         'TextFileStreamingButton
         '
-        Me.TextFileStreamingButton.Location = New System.Drawing.Point(173, 127)
+        Me.TextFileStreamingButton.Location = New System.Drawing.Point(93, 127)
         Me.TextFileStreamingButton.Name = "TextFileStreamingButton"
         Me.TextFileStreamingButton.Size = New System.Drawing.Size(75, 64)
         Me.TextFileStreamingButton.TabIndex = 20
-        Me.TextFileStreamingButton.Text = "Text File Stream Manager Streaming"
+        Me.TextFileStreamingButton.Text = "Real Time Streaming"
         Me.TextFileStreamingButton.UseVisualStyleBackColor = True
+        '
+        'APIInfoBtn
+        '
+        Me.APIInfoBtn.Location = New System.Drawing.Point(174, 197)
+        Me.APIInfoBtn.Name = "APIInfoBtn"
+        Me.APIInfoBtn.Size = New System.Drawing.Size(75, 64)
+        Me.APIInfoBtn.TabIndex = 21
+        Me.APIInfoBtn.Text = "FX3 API Info"
+        Me.APIInfoBtn.UseVisualStyleBackColor = True
         '
         'TopLevelGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(344, 268)
+        Me.Controls.Add(Me.APIInfoBtn)
         Me.Controls.Add(Me.TextFileStreamingButton)
         Me.Controls.Add(Me.ResetDUTButton)
-        Me.Controls.Add(Me.realTimeStreamButton)
         Me.Controls.Add(Me.ReadPinButton)
         Me.Controls.Add(Me.checkConnection)
         Me.Controls.Add(Me.configureSPI)
         Me.Controls.Add(Me.DUTStatusBox)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.readIDButton)
+        Me.Controls.Add(Me.FX3BoardInfoBtn)
         Me.Controls.Add(Me.ResetButton)
         Me.Controls.Add(Me.ConnectButton)
         Me.Controls.Add(Me.StatusText)
         Me.Controls.Add(Me.StatusLabel)
         Me.Controls.Add(Me.ManualMode)
         Me.Controls.Add(Me.RegisterAccess)
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "TopLevelGUI"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "ADcmXLx021 Interface"
@@ -209,13 +211,13 @@ Partial Class TopLevelGUI
     Friend WithEvents StatusText As Label
     Friend WithEvents ConnectButton As Button
     Friend WithEvents ResetButton As Button
-    Friend WithEvents readIDButton As Button
+    Friend WithEvents FX3BoardInfoBtn As Button
     Friend WithEvents Label1 As Label
     Friend WithEvents DUTStatusBox As Label
     Friend WithEvents configureSPI As Button
     Friend WithEvents checkConnection As Button
     Friend WithEvents ReadPinButton As Button
-    Friend WithEvents realTimeStreamButton As Button
     Friend WithEvents ResetDUTButton As Button
     Friend WithEvents TextFileStreamingButton As Button
+    Friend WithEvents APIInfoBtn As Button
 End Class

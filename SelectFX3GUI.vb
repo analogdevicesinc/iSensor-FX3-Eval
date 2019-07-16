@@ -1,7 +1,4 @@
-﻿Imports CyUSB
-Imports AdisApi
-Imports FX3Interface
-Imports adisInterface
+﻿Imports FX3Api
 
 Public Class SelectFX3GUI
 
