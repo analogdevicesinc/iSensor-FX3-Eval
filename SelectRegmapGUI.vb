@@ -6,7 +6,6 @@
 Imports System.IO
 
 Public Class SelectRegmapGUI
-    Inherits FormBase
 
     'Private member variables
     Private m_regmaps() As String
