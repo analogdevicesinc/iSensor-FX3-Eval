@@ -1,4 +1,9 @@
-﻿Imports System.IO
+﻿'File:          helpterFunctions.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          7/25/2019
+'Description:   Module of generic helper functions for use in the GUI
+
+Imports System.IO
 
 Module helperFunctions
 

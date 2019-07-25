@@ -178,6 +178,11 @@ adisInterface
  <param name="message">The message to pass with the exception</param>
  <param name="innerException">The lower level exception to pass up</param>
 </member>
+<member name="T:adisInterface.DataFormatArray">
+ <summary>
+ Structure to store MOSI data and a format array used for parsing out the useful register data
+ </summary>
+</member>
 <member name="T:adisInterface.iSensorAutomotiveSpi">
  <summary>
  This class allows for interfacing with parts using the ADI robust automotive SPI protocol. The automotive SPI protocol is designed to interface with
@@ -201,11 +206,6 @@ adisInterface
  </summary>
  <param name="SpiInterface">The SPI interface to be used.</param>
 </member>
-<member name="M:adisInterface.iSensorAutomotiveSpi.#ctor">
- <summary>
- Set the base constructor to throw an exception
- </summary>
-</member>
 <member name="P:adisInterface.iSensorAutomotiveSpi.IgnoreExceptions">
  <summary>
  Property to enable error exceptions. When enabled, exceptions are thrown for invalid CRC, state vector, transaction counter, address.
@@ -217,12 +217,42 @@ adisInterface
  This function sets all the default values for the class
  </summary>
 </member>
-<member name="M:adisInterface.iSensorAutomotiveSpi.ValidateSpiWord(System.UInt32)">
+<member name="M:adisInterface.iSensorAutomotiveSpi.BuildCommandWord(System.UInt16,System.UInt32,System.Boolean)">
  <summary>
- If exceptions are enabled, this function validates the 16 bits of metadata attached to the given SPI word. If the data
- does not match the expected data, an exception is thrown corresponding to the error.
+ Builds a command word to send to the DUT, over the MOST line
  </summary>
- <param name="SpiWord">The SPI word to check</param>
+ <param name="Data">The 16 bit data field to send</param>
+ <param name="Address">The address to read/write</param>
+ <param name="Write">If the command is a write command. Set the false for a read.</param>
+ <returns>The 32 bit command word</returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.BuildMOSIDataArray(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair})">
+ <summary>
+ Builds an array of 32 bit MOSI values based on the address/data array. Inserts an additional read back at the end to get the last value.
+ </summary>
+ <param name="addrData">The addresses to read from. Expects 1 address per MOSI word. If data is not nothing, performs a write for that word</param>
+ <returns>An array of data to transmit on the MOSI line, with an associated formatting array</returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.BuildMOSIDataArray(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>                                                                                               
+ Builds an array of 32 bit MOSI values based on the address array. Inserts an additional read back at the end to get the last value.
+ </summary>
+ <param name="addr">The addresses to read from. Expects 1 address per MOSI word</param>
+ <returns>An array of data to transmit on the MOSI line. Will be of size addr.Count() + 1</returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ValidateCRC(System.UInt32)">
+ <summary>
+ This function validates that the four bit CRC appended to the given SPI word mathces the expected CRC. If the CRC does not match
+ the expected value, an InvalidCRCException is thrown.
+ </summary>
+ <param name="SpiWord">The SPI word to check (MISO data)</param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ValidateStateVector(System.UInt32)">
+ <summary>
+ This function validates that the state vector of the given SPI word does not indicate an error condition. If the state vecotor indicates an
+ error condition, a StateVectorException is thrown.
+ </summary>
+ <param name="SpiWord">The SPI word to check (MISO data)</param>
 </member>
 <member name="P:adisInterface.iSensorAutomotiveSpi.DrActive">
  <summary>
@@ -247,12 +277,12 @@ adisInterface
  <param name="numBuffers"></param>
  <returns></returns>
 </member>
-<member name="M:adisInterface.iSensorAutomotiveSpi.CalcCRCdecimal(System.UInt32)">
+<member name="M:adisInterface.iSensorAutomotiveSpi.CalcCRC28Bit(System.UInt32)">
  <summary>
- Input command data and address. 28 bits or less. Returns 4 bit CRC, 0 to 15. 
+ Calculates a 4 bit CRC on 28 bits of input data
  </summary>
- <param name="deci"></param>
- <returns></returns>
+ <param name="inData">The data to calculate the CRC of. Should be the 28 most significant bits of the SPI word</param>
+ <returns>The CRC value (0 - 15)</returns>
 </member>
 <member name="T:adisInterface.PagedDutBase">
  <summary>
@@ -272,6 +302,13 @@ adisInterface
  Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
  </summary>
  <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="P:adisInterface.PagedDutBase.PageReg">
+ <summary>
+ RegClass to describe page register to be used.  Defaults to reg with adress of 0 and length of 8 bits.
+ Set this property to describe register if a non-zero address or non 8 bit write is necessary.
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:adisInterface.PagedDutBase.ReadPageRegister">
  <summary>
@@ -309,6 +346,13 @@ adisInterface
  </summary>
  <param name="regDatList"></param>
  <remarks></remarks>
+</member>
+<member name="M:adisInterface.PagedDutBase.GetPageRegPairs(System.UInt32)">
+ <summary>
+ Returns a list of address data pairs for the page register.
+ </summary>
+ <param name="page"></param>
+ <returns></returns>
 </member>
 <member name="M:adisInterface.PagedDutBase.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
@@ -373,6 +417,12 @@ adisInterface
  Interface class for ADcmXL family. 
  Adds ADcmXL specific burst functionality to paged register base class.
  </summary>
+</member>
+<member name="P:adisInterface.AdcmInterfaceBase.DeviceWriteWordSize">
+ <summary>
+ SPI data word size used to write to a device. ADCM devices only support 8 bit writes.
+ </summary>
+ <returns></returns>
 </member>
 <member name="P:adisInterface.AdcmInterfaceBase.StreamRawRealTimeSamplingData">
  <summary>
@@ -455,6 +505,12 @@ adisInterface
  Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
  </summary>
  <param name="adis">Reg interface object to use for dut communication.</param>
+</member>
+<member name="P:adisInterface.CpldInterface.DeviceWriteWordSize">
+ <summary>
+ SPI data word size used to write to a device. CPLD devices only support 8 bit writes.
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:adisInterface.CpldInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
@@ -558,6 +614,12 @@ adisInterface
  </summary>
  <param name="adis">Reg interface object to use for dut comminication.</param>
 </member>
+<member name="P:adisInterface.aducInterface.DeviceWriteWordSize">
+ <summary>
+ SPI data word size used to write to a device. ADUC devices only support 8 bit writes.
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:adisInterface.aducInterface.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
  <summary>
  This overload requires an IEnumerable(Of RegDataU32 pairs) 
@@ -645,6 +707,12 @@ adisInterface
  Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
  </summary>
  <param name="adis">Reg interface object to use for dut comminication.</param>
+</member>
+<member name="P:adisInterface.adbfInterface.DeviceWriteWordSize">
+ <summary>
+ SPI data word size used to write to a device. ADBF devices only support 8 bit writes.
+ </summary>
+ <returns></returns>
 </member>
 <member name="T:adisInterface.BurstBase">
  <summary>
@@ -819,6 +887,18 @@ adisInterface
  <summary>
  Base Class for Eut Interface Implementations
  </summary>
+</member>
+<member name="P:adisInterface.DutBase.DeviceReadWordSize">
+ <summary>
+ SPI data word size used to write to a device. May be 8 or 16 bits data per SPi transaction, defaults to 8.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.DutBase.DeviceWriteWordSize">
+ <summary>
+ SPI data word size used to write to a device. May be 8 or 16 bits data per SPi transaction, defaults to 8.
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:adisInterface.DutBase.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
  <summary>
@@ -1296,7 +1376,6 @@ adisInterface
  <summary>
  Writes page register, writes data list element to corrosponding registers list element.
  </summary>
- <param name="RegandDataList"></param>
  <remarks></remarks>
  
 </member>
@@ -1767,7 +1846,7 @@ adisInterface
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:adisInterface.Functions.GetAddrDataPairs(RegMapClasses.RegClass,System.UInt32)">
+<member name="M:adisInterface.Functions.GetAddrDataPairs(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
  <summary>
  Returns a list of address data pairs necessary to write the specified register.
  </summary>

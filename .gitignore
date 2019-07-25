@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+*.sln
+
 # User-specific files
 *.suo
 *.user
@@ -11,9 +13,6 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
-
-# Binary files
-*.bin
 
 # Build results
 [Dd]ebug/
@@ -26,6 +25,9 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+[Rr]esources/FX3_Firmware.img
+[Rr]esources/FX3Interface.dll
+[Rr]esources/FX3Interface.xml
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -55,6 +57,7 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+**/Properties/launchSettings.json
 
 # StyleCop
 StyleCopReport.xml
@@ -62,7 +65,7 @@ StyleCopReport.xml
 # Files built by Visual Studio
 *_i.c
 *_p.c
-*_h.h
+*_i.h
 *.ilk
 *.meta
 *.obj
@@ -223,7 +226,7 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
-# Including strong name files can present a security risk
+# Including strong name files can present a security risk 
 # (https://github.com/github/gitignore/pull/2483#issue-259490424)
 #*.snk
 
@@ -319,7 +322,7 @@ __pycache__/
 # OpenCover UI analysis results
 OpenCover/
 
-# Azure Stream Analytics local run output
+# Azure Stream Analytics local run output 
 ASALocalRun/
 
 # MSBuild Binary and Structured Log
@@ -328,8 +331,8 @@ ASALocalRun/
 # NVidia Nsight GPU debugger configuration file
 *.nvuser
 
-# MFractors (Xamarin productivity tool) working folder
+# MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 
-# Local History for Visual Studio
-.localhistory/
+#Binary release files 
+*.zip

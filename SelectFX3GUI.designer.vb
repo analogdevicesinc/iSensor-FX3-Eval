@@ -1,6 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class SelectFX3GUI
-    Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -47,7 +46,7 @@ Partial Class SelectFX3GUI
         '
         'SelectFX3OKButton
         '
-        Me.SelectFX3OKButton.Location = New System.Drawing.Point(93, 124)
+        Me.SelectFX3OKButton.Location = New System.Drawing.Point(89, 124)
         Me.SelectFX3OKButton.Name = "SelectFX3OKButton"
         Me.SelectFX3OKButton.Size = New System.Drawing.Size(75, 23)
         Me.SelectFX3OKButton.TabIndex = 2

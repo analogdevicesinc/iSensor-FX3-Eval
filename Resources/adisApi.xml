@@ -391,6 +391,76 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:AdisApi.FakeSpi32Interface">
+            <summary>
+            This class is a fale implementation of the ISpi32Interface for unit testing.
+            </summary>
+        </member>
+        <member name="P:AdisApi.FakeSpi32Interface.DrActive">
+            <summary>
+            This property is used to get/set the data ready triggering for buffered streams. If set to true, each bufferd stream "packet"
+            will start on a data ready posedge. This is needed to implement the IRegInterface.
+            </summary>
+        </member>
+        <member name="P:AdisApi.FakeSpi32Interface.DrPin">
+            <summary>
+            This property is used to get or set the pin used to trigger data ready captures.
+            </summary>
+        </member>
+        <member name="P:AdisApi.FakeSpi32Interface.DrPolarity">
+            <summary>
+            This property is used to get or set the data ready polarity. True means data ready is triggered on
+            a rising edge of the data ready pin. False means that data ready is triggered on a falling edge of the data ready pin.
+            </summary>
+        </member>
+        <member name="P:AdisApi.FakeSpi32Interface.StreamTimeoutSeconds">
+            <summary>
+            This property is used to get/set the buffered stream timeout, in seconds. This is needed to implement the IRegInterface.
+            </summary>
+        </member>
+        <member name="M:AdisApi.FakeSpi32Interface.GetBufferedStreamDataPacket">
+            <summary>
+            Retrieve a Simulated data buffer produced by the StartBufferedStream function.
+            </summary>
+            <returns>The data packet, as a uint array. Should return nothing if there are no buffers available</returns>
+        </member>
+        <member name="M:AdisApi.FakeSpi32Interface.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+            <summary>
+            Emulates Transfer Functionality, utilizing fake read data and fake write data buffers.
+            </summary>
+            <param name="WriteData"></param>
+            <param name="numCaptures"></param>
+            <param name="numBuffers"></param>
+            <returns></returns>
+        </member>
+        <member name="P:AdisApi.FakeSpi32Interface.FakeReadData">
+            <summary>
+            Buffer of data to be returned by read commands.
+            </summary>
+        </member>
+        <member name="P:AdisApi.FakeSpi32Interface.FakeWriteData">
+            <summary>
+            Buffer of data that was written in last simulated write command call.
+            </summary>
+        </member>
+        <member name="M:AdisApi.FakeSpi32Interface.AddFakeWriteData(System.Collections.Generic.IEnumerable{System.UInt32})">
+            <summary>
+            Adds data to the buffer that tracks fals write data
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:AdisApi.FakeSpi32Interface.ClearFakeWriteData">
+            <summary>
+            Clears the buffer of accumulated data from write operations.
+            </summary>
+        </member>
+        <member name="M:AdisApi.FakeSpi32Interface.GetFakeReadData(System.Int32)">
+            <summary>
+            Gets specified number of words from the fake read data buffer and updates read data offset for next transfer
+            </summary>
+            <param name="dataLength"></param>
+            <returns></returns>
+        </member>
         <member name="T:AdisApi.IPinFcns">
             <summary>
             An inteface for pin functions. 

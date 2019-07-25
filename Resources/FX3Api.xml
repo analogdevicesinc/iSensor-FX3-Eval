@@ -48,8 +48,8 @@ FX3Api
 </member>
 <member name="T:FX3Api.FX3Connection">
  <summary>
- Class for interfacing with the FX3 based eval platform. Implements IRegInterface and IPinFcns, in addition
- to a superset of extra FX3 specific interfacing functions.
+ This is the primary class for interfacing with the FX3 based eval platform. Implements IRegInterface, ISpi32Interface, and IPinFcns,
+ in addition to a superset of extra interfacing functions specific to the FX3 platform.
  </summary>
 </member>
 <member name="E:FX3Api.FX3Connection.UnexpectedDisconnect">
@@ -299,13 +299,6 @@ FX3Api
  </summary>
  <returns>The current buffer read count</returns>
 </member>
-<member name="M:FX3Api.FX3Connection.IsFX3Pin(AdisApi.IPinObject)">
- <summary>
- This function determines if the pin object being passed is an FX3 version of the IPinObject (as opposed to a blackfin pin for the SDP).
- </summary>
- <param name="Pin">The pin to check</param>
- <returns>True if Pin is an FX3 pin, false if not</returns>
-</member>
 <member name="M:FX3Api.FX3Connection.calcCCITT16(System.Byte[])">
  <summary>
 Expecteds bytes in the order they are clocked out of ADcmXLx021
@@ -495,6 +488,30 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="pin">The FX3PinObject pin to read</param>
  <param name="value">The polarity to set the pin to, 1 - high, 0 - low</param>
 </member>
+<member name="M:FX3Api.FX3Connection.MeasureBusyPulse(AdisApi.IPinObject,System.UInt32,System.UInt32,AdisApi.IPinObject,System.UInt32,System.UInt32)">
+ <summary>
+ This function triggers a DUT action using a pulse drive, and then measures the following pulse width on a seperate busy line.
+ The pulse time on the busy pin is measured using a 10MHz timer with approx. 1us accuracy.
+ </summary>
+ <param name="TriggerPin">The pin to drive for the tigger condition (for example a sync pin)</param>
+ <param name="TriggerDriveTime">The time, in ms, to drive the trigger pin for</param>
+ <param name="TriggerDrivePolarity">The polarity to drive the trigger pin at (0 - low, 1 - high)</param>
+ <param name="BusyPin">The pin to measure a busy pulse on</param>
+ <param name="BusyPolarity">The polarity of the pulse being measured (0 will measure a low pulse, 1 will measure a high pulse)</param>
+ <param name="Timeout">The timeout, in ms, to wait before cancelling, if the pulse is never detected</param>
+ <returns>The pulse width, in ms. Accurate to approx. 1us</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.MeasureBusyPulse(System.UInt16,System.UInt16,AdisApi.IPinObject,System.UInt32,System.UInt32)">
+ <summary>
+ Overload of measure busy pulse which triggers the DUT event using a SPI write instead of a pin drive.
+ </summary>
+ <param name="TriggerRegAddr">The address of the DUT trigger register (For example, a COMMAND register)</param>
+ <param name="TriggerRegValue">The value to write to the DUT trigger register</param>
+ <param name="BusyPin">The pin to measure a busy pulse on</param>
+ <param name="BusyPolarity">The polarity of the pulse being measured (0 will measure a low pulse, 1 will measure a high pulse)</param>
+ <param name="Timeout">The timeout, in ms, to wait before cancelling, if the pulse is never detected</param>
+ <returns>The pulse width, in ms. Accurate to approx. 1us</returns>
+</member>
 <member name="M:FX3Api.FX3Connection.StartPWM(System.Double,System.Double,AdisApi.IPinObject)">
  <summary>
  This function configures the selected pin to drive a pulse width modulated output.
@@ -507,6 +524,20 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  This function call disables the PWM output from the FX3 and returns the pin to a tristated mode.
  </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.isPWMPin(AdisApi.IPinObject)">
+ <summary>
+ This function checks to see if the selected pin has already been configured to act as a PWM output pin.
+ </summary>
+ <param name="Pin">The pin to check. Must be an FX3PinObject pin</param>
+ <returns>True if the pin is configured as a PWM pin, false otherwise</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.IsFX3Pin(AdisApi.IPinObject)">
+ <summary>
+ This function determines if the pin object being passed is an FX3 version of the IPinObject (as opposed to a blackfin pin for the SDP).
+ </summary>
+ <param name="Pin">The pin to check</param>
+ <returns>True if Pin is an FX3 pin, false if not</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.ResetPin">
  <summary>
@@ -538,28 +569,28 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>Returns the DIO4 pin, as an IPinObject</returns>
 </member>
-<member name="P:FX3Api.FX3Connection.FX3_GPIO0">
+<member name="P:FX3Api.FX3Connection.FX3_GPIO1">
  <summary>
  Readonly property to get the FX3_GPIO0 pin (mapped to GPIO 5 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
-<member name="P:FX3Api.FX3Connection.FX3_GPIO1">
+<member name="P:FX3Api.FX3Connection.FX3_GPIO2">
  <summary>
  Readonly property to get the FX3_GPIO1 pin (mapped to GPIO 6 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
-<member name="P:FX3Api.FX3Connection.FX3_GPIO2">
+<member name="P:FX3Api.FX3Connection.FX3_GPIO3">
  <summary>
  Readonly property to get the FX3_GPIO2 pin (mapped to GPIO 7 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
-<member name="P:FX3Api.FX3Connection.FX3_GPIO3">
+<member name="P:FX3Api.FX3Connection.FX3_GPIO4">
  <summary>
  Readonly property to get the FX3_GPIO3 pin (mapped to GPIO 12 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing. This pin shares a complex GPIO block with DIO1. If DIO1 is being used
@@ -751,7 +782,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  End If
  myFX3.Connect(myFX3.AvailableFX3s(0))
  </summary>
- <param name="Timeout">The timeout to wait for a board to connect, in seconds</param>
+ <param name="TimeoutInSeconds">The timeout to wait for a board to connect, in seconds</param>
  <returns>If there is a board available (false indicates timeout occured)</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.ActiveFX3">
@@ -971,8 +1002,37 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  Performs a single 32 bit SPI data transfer.
  </summary>
+ <param name="WriteData">Data to send over the MOSI line</param>
+ <returns>The 32 bit data read back on the MISO line</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ 
+ </summary>
  <param name="WriteData"></param>
  <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="WriteData"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="WriteData"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ISpi32Interface_StopStream">
+ <summary>
+ 
+ </summary>
 </member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
@@ -1113,6 +1173,61 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  This class provides a collection of information about the FX3 API. All the fields are hardcoded into the DLL at compile time.
  To retrieve the FX3ApiInfo set during compile time, use the GetFX3ApiInfo call within FX3 connection.
  </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.Name">
+ <summary>
+ The project name (should be FX3Api)
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.Description">
+ <summary>
+ The project description
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.BuildDateTime">
+ <summary>
+ The date and time of the current FX3Api build in use.
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.BuildVersion">
+ <summary>
+ The build version of this FX3Api instance. Should match application firmware.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ApiInfo.#ctor">
+ <summary>
+ Constructor which initializes values to "Error: Not Set"
+ </summary>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitURL">
+ <summary>
+ The base git remote URL which this version of the FX3Api was build on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitBranch">
+ <summary>
+ The branch which this version of the FX3Api was built on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitCommitSHA1">
+ <summary>
+ The hast for the git commit which this version of the FX3Api was built on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitCommitURL">
+ <summary>
+ The URL of the git commit which this version of the FX3Api was built on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3ApiInfo.ToString">
+ <summary>
+ Overload of the toString function to allow for better formatting.
+ </summary>
+ <returns>A string representing all available FX3 API information.</returns>
 </member>
 <member name="T:FX3Api.FX3ConfigurationException">
  <summary>

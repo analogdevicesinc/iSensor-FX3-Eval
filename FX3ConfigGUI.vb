@@ -1,11 +1,21 @@
-﻿Imports FX3Api
+﻿'File:          FX3ConfigGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          7/25/2019
+'Description:   Allows user to set FX3 configuration.
 
-Public Class SpiSetupGUI
+Imports FX3Api
 
-    Private conn As Connection
+Public Class FX3ConfigGUI
+    Inherits FormBase
 
-    Public Sub SetConn(ByRef newConnection As Connection)
-        conn = newConnection
+    Private m_regmappath As String
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
 
         polarityInput.Items.Add("False: Idle Low")
         polarityInput.Items.Add("True: Idle High")
@@ -25,8 +35,6 @@ Public Class SpiSetupGUI
         lsbFirstInput.Items.Add("True: LSB comes first")
         lsbFirstInput.Items.Add("False: MSB comes first")
 
-        DutInput.DataSource = ([Enum].GetValues(GetType(DUTType)))
-
         dataReadyActiveInput.Items.Add("True: Data ready active")
         dataReadyActiveInput.Items.Add("False: Ignore data ready")
 
@@ -38,77 +46,80 @@ Public Class SpiSetupGUI
         dataReadyPinInput.Items.Add("DIO3")
         dataReadyPinInput.Items.Add("DIO4")
 
+        SelectedRegMap.Text = TopGUI.RegMapPath.Substring(TopGUI.RegMapPath.LastIndexOf("\") + 1)
+        SelectedRegMap.ReadOnly = True
+        m_regmappath = ""
+
         UpdateFields()
 
         StatusLabel.Text = "Waiting..."
         StatusLabel.BackColor = Color.Yellow
+
     End Sub
 
     Private Sub UpdateFields()
         ' Populate the combo boxes and set initial values
 
-        frequencyInput.Text = CStr(conn.FX3.SclkFrequency)
+        frequencyInput.Text = CStr(TopGUI.FX3.SclkFrequency)
 
-        If conn.FX3.Cpol Then
+        If TopGUI.FX3.Cpol Then
             polarityInput.SelectedItem = "True: Idle High"
         Else
             polarityInput.SelectedItem = "False: Idle Low"
         End If
 
-        If conn.FX3.Cpha Then
+        If TopGUI.FX3.Cpha Then
             phaseInput.SelectedItem = "True: Samples at active-idle edge"
         Else
             phaseInput.SelectedItem = "False: Samples at idle-active edge"
         End If
 
-        If conn.FX3.ChipSelectPolarity Then
+        If TopGUI.FX3.ChipSelectPolarity Then
             chipSelectPolarityInput.SelectedItem = "True: Active High"
         Else
             chipSelectPolarityInput.SelectedItem = "False: Active Low"
         End If
 
-        chipSelectControlInput.SelectedItem = conn.FX3.ChipSelectControl
+        chipSelectControlInput.SelectedItem = TopGUI.FX3.ChipSelectControl
 
-        leadTimeInput.SelectedItem = conn.FX3.ChipSelectLeadTime
+        leadTimeInput.SelectedItem = TopGUI.FX3.ChipSelectLeadTime
 
-        lagTimeInput.SelectedItem = conn.FX3.ChipSelectLagTime
+        lagTimeInput.SelectedItem = TopGUI.FX3.ChipSelectLagTime
 
-        wordLenInput.Text = CStr(conn.FX3.WordLength)
+        wordLenInput.Text = CStr(TopGUI.FX3.WordLength)
 
-        If conn.FX3.IsLSBFirst Then
+        If TopGUI.FX3.IsLSBFirst Then
             lsbFirstInput.SelectedItem = "True: LSB comes first"
         Else
             lsbFirstInput.SelectedItem = "False: MSB comes first"
         End If
 
-        stallTimeInput.Text = CStr(conn.FX3.StallTime)
-        StallCyclesInput.Text = CStr((conn.FX3.StallTime / 1000000) / (1 / conn.FX3.SclkFrequency))
+        stallTimeInput.Text = CStr(TopGUI.FX3.StallTime)
+        StallCyclesInput.Text = CStr((TopGUI.FX3.StallTime / 1000000) / (1 / TopGUI.FX3.SclkFrequency))
 
-        If conn.FX3.DrActive Then
+        If TopGUI.FX3.DrActive Then
             dataReadyActiveInput.SelectedItem = "True: Data ready active"
         Else
             dataReadyActiveInput.SelectedItem = "False: Ignore data ready"
         End If
 
-        If conn.FX3.DrPolarity Then
+        If TopGUI.FX3.DrPolarity Then
             dataReadyPolarityInput.SelectedItem = "Low-to-High: Trigger on rising edge"
         Else
             dataReadyPolarityInput.SelectedItem = "High-to-Low: Trigger on falling edge"
         End If
 
-        If conn.FX3.ReadyPin.ToString = conn.FX3.DIO1.ToString Then
+        If TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO1.ToString Then
             dataReadyPinInput.SelectedItem = "DIO1"
-        ElseIf conn.FX3.ReadyPin.ToString = conn.FX3.DIO2.ToString Then
+        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO2.ToString Then
             dataReadyPinInput.SelectedItem = "DIO2"
-        ElseIf conn.FX3.ReadyPin.ToString = conn.FX3.DIO3.ToString Then
+        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO3.ToString Then
             dataReadyPinInput.SelectedItem = "DIO3"
-        ElseIf conn.FX3.ReadyPin.ToString = conn.FX3.DIO4.ToString Then
+        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO4.ToString Then
             dataReadyPinInput.SelectedItem = "DIO4"
         End If
 
-        DutInput.SelectedItem = conn.FX3.PartType
-
-        TimerTickMultiplierDisplay.Text = conn.FX3.TimerTickScaleFactor.ToString
+        TimerTickMultiplierDisplay.Text = TopGUI.FX3.TimerTickScaleFactor.ToString
         TimerTickMultiplierDisplay.ReadOnly = True
 
     End Sub
@@ -116,26 +127,26 @@ Public Class SpiSetupGUI
     Private Sub SetConfig_Click(sender As Object, e As EventArgs) Handles SetConfig.Click
 
         'Get the current values from the form and check for validity
-        conn.FX3.ChipSelectControl = chipSelectControlInput.SelectedItem
-        conn.FX3.ChipSelectLagTime = lagTimeInput.SelectedItem
-        conn.FX3.ChipSelectLeadTime = leadTimeInput.SelectedItem
+        TopGUI.FX3.ChipSelectControl = chipSelectControlInput.SelectedItem
+        TopGUI.FX3.ChipSelectLagTime = lagTimeInput.SelectedItem
+        TopGUI.FX3.ChipSelectLeadTime = leadTimeInput.SelectedItem
 
         If phaseInput.SelectedItem.ToString().Substring(0, 1) = "T" Then
-            conn.FX3.Cpha = True
+            TopGUI.FX3.Cpha = True
         Else
-            conn.FX3.Cpha = False
+            TopGUI.FX3.Cpha = False
         End If
 
         If polarityInput.SelectedItem.ToString().Substring(0, 1) = "T" Then
-            conn.FX3.Cpol = True
+            TopGUI.FX3.Cpol = True
         Else
-            conn.FX3.Cpol = False
+            TopGUI.FX3.Cpol = False
         End If
 
         If chipSelectPolarityInput.SelectedItem.ToString().Substring(0, 1) = "T" Then
-            conn.FX3.ChipSelectPolarity = True
+            TopGUI.FX3.ChipSelectPolarity = True
         Else
-            conn.FX3.ChipSelectPolarity = False
+            TopGUI.FX3.ChipSelectPolarity = False
         End If
 
         Dim frequency As UInt32
@@ -155,7 +166,7 @@ Public Class SpiSetupGUI
             Exit Sub
         End If
 
-        conn.FX3.SclkFrequency = frequency
+        TopGUI.FX3.SclkFrequency = frequency
 
         Dim wordLen As Byte
         Try
@@ -174,7 +185,7 @@ Public Class SpiSetupGUI
             Exit Sub
         End If
 
-        conn.FX3.WordLength = wordLen
+        TopGUI.FX3.WordLength = wordLen
 
         Dim stallTime As UInt16
         Dim stallTimeSet As Boolean = False
@@ -197,41 +208,43 @@ Public Class SpiSetupGUI
             Exit Sub
         End Try
 
-        If Not stallTime = conn.FX3.StallTime Then
-            conn.FX3.StallTime = stallTime
-            stallCycles = (conn.FX3.StallTime / 1000000) / (1 / conn.FX3.SclkFrequency)
-        ElseIf Not stallCycles = (conn.FX3.StallTime / 1000000) / (1 / conn.FX3.SclkFrequency) Then
-            stallTime = (stallCycles * (1 / conn.FX3.SclkFrequency)) * 1000000
-            conn.FX3.StallTime = stallTime
+        If Not stallTime = TopGUI.FX3.StallTime Then
+            TopGUI.FX3.StallTime = stallTime
+            stallCycles = (TopGUI.FX3.StallTime / 1000000) / (1 / TopGUI.FX3.SclkFrequency)
+        ElseIf Not stallCycles = (TopGUI.FX3.StallTime / 1000000) / (1 / TopGUI.FX3.SclkFrequency) Then
+            stallTime = (stallCycles * (1 / TopGUI.FX3.SclkFrequency)) * 1000000
+            TopGUI.FX3.StallTime = stallTime
         End If
 
-        conn.FX3.PartType = DutInput.SelectedItem
-
         If dataReadyActiveInput.SelectedItem = "True: Data ready active" Then
-            conn.FX3.DrActive = True
+            TopGUI.FX3.DrActive = True
         ElseIf dataReadyActiveInput.SelectedItem = "False: Ignore data ready" Then
-            conn.FX3.DrActive = False
+            TopGUI.FX3.DrActive = False
         End If
 
         If dataReadyPolarityInput.SelectedItem = "Low-to-High: Trigger on rising edge" Then
-            conn.FX3.DrPolarity = True
+            TopGUI.FX3.DrPolarity = True
         ElseIf dataReadyPolarityInput.SelectedItem = "High-to-Low: Trigger on falling edge" Then
-            conn.FX3.DrPolarity = False
+            TopGUI.FX3.DrPolarity = False
         End If
 
         Dim dio As String = dataReadyPinInput.SelectedItem
         Select Case dio
             Case "DIO1"
-                conn.FX3.ReadyPin = conn.FX3.DIO1
+                TopGUI.FX3.ReadyPin = TopGUI.FX3.DIO1
             Case "DIO2"
-                conn.FX3.ReadyPin = conn.FX3.DIO2
+                TopGUI.FX3.ReadyPin = TopGUI.FX3.DIO2
             Case "DIO3"
-                conn.FX3.ReadyPin = conn.FX3.DIO3
+                TopGUI.FX3.ReadyPin = TopGUI.FX3.DIO3
             Case "DIO4"
-                conn.FX3.ReadyPin = conn.FX3.DIO4
+                TopGUI.FX3.ReadyPin = TopGUI.FX3.DIO4
             Case Else
-                conn.FX3.ReadyPin = conn.FX3.DIO1
+                TopGUI.FX3.ReadyPin = TopGUI.FX3.DIO1
         End Select
+
+        If Not m_regmappath = "" Then
+            TopGUI.RegMapPath = m_regmappath
+        End If
 
         StatusLabel.Text = "Done"
         StatusLabel.BackColor = Color.Green
@@ -241,7 +254,20 @@ Public Class SpiSetupGUI
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        TopLevelGUI.Show()
+        TopGUI.Show()
+    End Sub
+
+    Private Sub SelectedRegMap_TextChanged(sender As Object, e As EventArgs) Handles SelectedRegMap.Click
+        Dim m_searchpath As String
+        m_searchpath = System.Reflection.Assembly.GetExecutingAssembly.Location
+        m_searchpath = m_searchpath.Substring(0, m_searchpath.LastIndexOf("\") + 1)
+        Dim fileBrowser As New OpenFileDialog
+        fileBrowser.Title = "Please Select the Register Map File"
+        fileBrowser.InitialDirectory = m_searchpath
+        fileBrowser.Filter = "RegMap Files|*.csv"
+        fileBrowser.ShowDialog()
+        m_regmappath = fileBrowser.FileName
+        SelectedRegMap.Text = m_regmappath.Substring(m_regmappath.LastIndexOf("\") + 1)
     End Sub
 
 End Class

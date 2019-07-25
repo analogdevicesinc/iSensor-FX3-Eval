@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.FX3Gui.TopLevelGUI
+            Me.MainForm = Global.FX3ExampleGUI.TopGUI
         End Sub
     End Class
 End Namespace

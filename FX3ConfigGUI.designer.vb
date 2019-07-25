@@ -1,6 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class SpiSetupGUI
-    Inherits System.Windows.Forms.Form
+Partial Class FX3ConfigGUI
 
     'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
@@ -22,7 +21,6 @@ Partial Class SpiSetupGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(SpiSetupGUI))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -47,9 +45,7 @@ Partial Class SpiSetupGUI
         Me.Label11 = New System.Windows.Forms.Label()
         Me.stallTimeInput = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.StallCyclesInput = New System.Windows.Forms.TextBox()
-        Me.DutInput = New System.Windows.Forms.ComboBox()
         Me.dataReadyPinInput = New System.Windows.Forms.ComboBox()
         Me.dataReadyActiveInput = New System.Windows.Forms.ComboBox()
         Me.dataReadyPolarityInput = New System.Windows.Forms.ComboBox()
@@ -58,6 +54,8 @@ Partial Class SpiSetupGUI
         Me.Label16 = New System.Windows.Forms.Label()
         Me.TimerTickMultiplierDisplay = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.SelectedRegMap = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -263,29 +261,12 @@ Partial Class SpiSetupGUI
         Me.Label12.TabIndex = 23
         Me.Label12.Text = "Stall Cycles"
         '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(12, 391)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(57, 13)
-        Me.Label13.TabIndex = 24
-        Me.Label13.Text = "DUT Type"
-        '
         'StallCyclesInput
         '
         Me.StallCyclesInput.Location = New System.Drawing.Point(135, 281)
         Me.StallCyclesInput.Name = "StallCyclesInput"
         Me.StallCyclesInput.Size = New System.Drawing.Size(219, 20)
         Me.StallCyclesInput.TabIndex = 25
-        '
-        'DutInput
-        '
-        Me.DutInput.FormattingEnabled = True
-        Me.DutInput.Location = New System.Drawing.Point(135, 388)
-        Me.DutInput.Name = "DutInput"
-        Me.DutInput.Size = New System.Drawing.Size(219, 21)
-        Me.DutInput.TabIndex = 26
         '
         'dataReadyPinInput
         '
@@ -340,7 +321,7 @@ Partial Class SpiSetupGUI
         '
         'TimerTickMultiplierDisplay
         '
-        Me.TimerTickMultiplierDisplay.Location = New System.Drawing.Point(135, 415)
+        Me.TimerTickMultiplierDisplay.Location = New System.Drawing.Point(135, 414)
         Me.TimerTickMultiplierDisplay.Name = "TimerTickMultiplierDisplay"
         Me.TimerTickMultiplierDisplay.Size = New System.Drawing.Size(219, 20)
         Me.TimerTickMultiplierDisplay.TabIndex = 34
@@ -348,17 +329,35 @@ Partial Class SpiSetupGUI
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(12, 418)
+        Me.Label17.Location = New System.Drawing.Point(12, 391)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(88, 13)
+        Me.Label17.Size = New System.Drawing.Size(96, 13)
         Me.Label17.TabIndex = 33
-        Me.Label17.Text = "Timer Tick to ms:"
+        Me.Label17.Text = "Selected RegMap:"
         '
-        'SpiSetupGUI
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(12, 417)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(88, 13)
+        Me.Label13.TabIndex = 35
+        Me.Label13.Text = "Timer Tick to ms:"
+        '
+        'SelectedRegMap
+        '
+        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 388)
+        Me.SelectedRegMap.Name = "SelectedRegMap"
+        Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
+        Me.SelectedRegMap.TabIndex = 36
+        '
+        'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(441, 450)
+        Me.ClientSize = New System.Drawing.Size(441, 459)
+        Me.Controls.Add(Me.SelectedRegMap)
+        Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.TimerTickMultiplierDisplay)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.Label16)
@@ -367,9 +366,7 @@ Partial Class SpiSetupGUI
         Me.Controls.Add(Me.dataReadyPolarityInput)
         Me.Controls.Add(Me.dataReadyActiveInput)
         Me.Controls.Add(Me.dataReadyPinInput)
-        Me.Controls.Add(Me.DutInput)
         Me.Controls.Add(Me.StallCyclesInput)
-        Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.stallTimeInput)
         Me.Controls.Add(Me.Label11)
@@ -394,9 +391,8 @@ Partial Class SpiSetupGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Name = "SpiSetupGUI"
-        Me.Text = "SpiSetupGUI"
+        Me.Name = "FX3ConfigGUI"
+        Me.Text = "FX3 Configuration"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -426,9 +422,7 @@ Partial Class SpiSetupGUI
     Friend WithEvents Label11 As Label
     Friend WithEvents stallTimeInput As TextBox
     Friend WithEvents Label12 As Label
-    Friend WithEvents Label13 As Label
     Friend WithEvents StallCyclesInput As TextBox
-    Friend WithEvents DutInput As ComboBox
     Friend WithEvents dataReadyPinInput As ComboBox
     Friend WithEvents dataReadyActiveInput As ComboBox
     Friend WithEvents dataReadyPolarityInput As ComboBox
@@ -437,4 +431,6 @@ Partial Class SpiSetupGUI
     Friend WithEvents Label16 As Label
     Friend WithEvents TimerTickMultiplierDisplay As TextBox
     Friend WithEvents Label17 As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents SelectedRegMap As TextBox
 End Class

@@ -4,30 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CB0098AF-79CF-4114-81BA-FEC4695E34BE}</ProjectGuid>
+    <ProjectGuid>{A9BF8777-02E2-4429-82B0-99063E8EC9EF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>FX3Gui.My.MyApplication</StartupObject>
-    <RootNamespace>FX3Gui</RootNamespace>
-    <AssemblyName>FX3Gui</AssemblyName>
+    <StartupObject>FX3ExampleGUI.My.MyApplication</StartupObject>
+    <RootNamespace>FX3ExampleGUI</RootNamespace>
+    <AssemblyName>FX3ExampleGUI</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -36,19 +21,18 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>FX3Gui.xml</DocumentationFile>
+    <DocumentationFile>FX3ExampleGUI.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>FX3Gui.xml</DocumentationFile>
+    <DocumentationFile>FX3ExampleGUI.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -62,32 +46,24 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="adisApi">
       <HintPath>Resources\adisApi.dll</HintPath>
     </Reference>
-    <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="adisInterface">
       <HintPath>Resources\adisInterface.dll</HintPath>
     </Reference>
-    <Reference Include="CyUSB, Version=1.2.3.0, Culture=neutral, PublicKeyToken=01f1d2b6c851ae92, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
     <Reference Include="FX3Api, Version=1.0.6.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\FX3Api.dll</HintPath>
     </Reference>
-    <Reference Include="RegMapClasses, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
     </Reference>
-    <Reference Include="sdpApi1, Version=2.1.969.16, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="sdpApi1">
       <HintPath>Resources\sdpApi1.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -115,15 +91,25 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="Connection.vb" />
-    <Compile Include="helperFunctions.vb" />
-    <Compile Include="manualModeGUI.Designer.vb">
-      <DependentUpon>manualModeGUI.vb</DependentUpon>
+    <Compile Include="ApiInfoGUI.Designer.vb">
+      <DependentUpon>ApiInfoGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="manualModeGUI.vb">
+    <Compile Include="ApiInfoGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormBase.Designer.vb">
+      <DependentUpon>FormBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IMUStreamingGUI.designer.vb">
+      <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IMUStreamingGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="helperFunctions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -139,10 +125,28 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="registerAccessGUI.designer.vb">
-      <DependentUpon>registerAccessGUI.vb</DependentUpon>
+    <Compile Include="PinAccessGUI.Designer.vb">
+      <DependentUpon>PinAccessGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="registerAccessGUI.vb">
+    <Compile Include="PinAccessGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PWMSetupGUI.designer.vb">
+      <DependentUpon>PWMSetupGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PWMSetupGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegisterAccessGUI.designer.vb">
+      <DependentUpon>RegisterAccessGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterAccessGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectDUTGUI.Designer.vb">
+      <DependentUpon>SelectDUTGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SelectDUTGUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SelectFX3GUI.designer.vb">
@@ -151,28 +155,46 @@
     <Compile Include="SelectFX3GUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SpiSetupGUI.designer.vb">
-      <DependentUpon>SpiSetupGUI.vb</DependentUpon>
+    <Compile Include="SelectRegmapGUI.designer.vb">
+      <DependentUpon>SelectRegmapGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="SpiSetupGUI.vb">
+    <Compile Include="SelectRegmapGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TextFileStreamManagerStreaming.Designer.vb">
-      <DependentUpon>TextFileStreamManagerStreaming.vb</DependentUpon>
+    <Compile Include="FX3ConfigGUI.designer.vb">
+      <DependentUpon>FX3ConfigGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="TextFileStreamManagerStreaming.vb">
+    <Compile Include="FX3ConfigGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TopLevelGUI.Designer.vb">
-      <DependentUpon>TopLevelGUI.vb</DependentUpon>
+    <Compile Include="RegisterBulkReadGUI.designer.vb">
+      <DependentUpon>RegisterBulkReadGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="TopLevelGUI.vb">
+    <Compile Include="RegisterBulkReadGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADcmXLStreamingGUI.designer.vb">
+      <DependentUpon>ADcmXLStreamingGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ADcmXLStreamingGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TopGUI.designer.vb">
+      <DependentUpon>TopGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="TopGUI.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="manualModeGUI.resx">
-      <DependentUpon>manualModeGUI.vb</DependentUpon>
+    <EmbeddedResource Include="ApiInfoGUI.resx">
+      <DependentUpon>ApiInfoGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBase.resx">
+      <DependentUpon>FormBase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IMUStreamingGUI.resx">
+      <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -180,27 +202,46 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="registerAccessGUI.resx">
-      <DependentUpon>registerAccessGUI.vb</DependentUpon>
+    <EmbeddedResource Include="PWMSetupGUI.resx">
+      <DependentUpon>PWMSetupGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterAccessGUI.resx">
+      <DependentUpon>RegisterAccessGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectDUTGUI.resx">
+      <DependentUpon>SelectDUTGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectFX3GUI.resx">
       <DependentUpon>SelectFX3GUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SpiSetupGUI.resx">
-      <DependentUpon>SpiSetupGUI.vb</DependentUpon>
+    <EmbeddedResource Include="SelectRegmapGUI.resx">
+      <DependentUpon>SelectRegmapGUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TextFileStreamManagerStreaming.resx">
-      <DependentUpon>TextFileStreamManagerStreaming.vb</DependentUpon>
+    <EmbeddedResource Include="FX3ConfigGUI.resx">
+      <DependentUpon>FX3ConfigGUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TopLevelGUI.resx">
-      <DependentUpon>TopLevelGUI.vb</DependentUpon>
+    <EmbeddedResource Include="RegisterBulkReadGUI.resx">
+      <DependentUpon>RegisterBulkReadGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADcmXLStreamingGUI.resx">
+      <DependentUpon>ADcmXLStreamingGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TopGUI.resx">
+      <DependentUpon>TopGUI.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="adcmxl3021_regmap_adisAPI.csv" />
     <EmbeddedResource Include="FX3_Firmware.img" />
     <EmbeddedResource Include="boot_fw.img" />
-    <None Include="My Project\app.manifest" />
+    <None Include="ADcmXL3021_Regmap.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ADIS1647x_Regmap.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ADIS1649x_Regmap.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -213,38 +254,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\adisApi.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\CyUSB.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\RegMapClasses.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Analog.ICO" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\adisInterface.dll" />
-    <Content Include="Resources\FX3Api.dll" />
+    <Content Include="Analog.ICO" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
