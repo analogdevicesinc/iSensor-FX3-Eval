@@ -41,6 +41,9 @@ Partial Class TopGUI
         Me.btn_APIInfo = New System.Windows.Forms.Button()
         Me.btn_BoardInfo = New System.Windows.Forms.Button()
         Me.btn_PWMSetup = New System.Windows.Forms.Button()
+        Me.btn_PinAccess = New System.Windows.Forms.Button()
+        Me.btn_measurePulse = New System.Windows.Forms.Button()
+        Me.btn_test = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -57,7 +60,7 @@ Partial Class TopGUI
         Me.label_FX3Status.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.label_FX3Status.Location = New System.Drawing.Point(77, 82)
         Me.label_FX3Status.Name = "label_FX3Status"
-        Me.label_FX3Status.Size = New System.Drawing.Size(253, 16)
+        Me.label_FX3Status.Size = New System.Drawing.Size(334, 16)
         Me.label_FX3Status.TabIndex = 5
         Me.label_FX3Status.Text = "Ok"
         Me.label_FX3Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -85,9 +88,9 @@ Partial Class TopGUI
         Me.label_DUTStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.label_DUTStatus.Location = New System.Drawing.Point(77, 104)
         Me.label_DUTStatus.Name = "label_DUTStatus"
-        Me.label_DUTStatus.Size = New System.Drawing.Size(253, 16)
+        Me.label_DUTStatus.Size = New System.Drawing.Size(334, 16)
         Me.label_DUTStatus.TabIndex = 13
-        Me.label_DUTStatus.Text = "Label2"
+        Me.label_DUTStatus.Text = "Waiting for FX3"
         Me.label_DUTStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'btn_ResetDUT
@@ -101,7 +104,7 @@ Partial Class TopGUI
         '
         'btn_SelectDUT
         '
-        Me.btn_SelectDUT.Location = New System.Drawing.Point(12, 219)
+        Me.btn_SelectDUT.Location = New System.Drawing.Point(336, 9)
         Me.btn_SelectDUT.Name = "btn_SelectDUT"
         Me.btn_SelectDUT.Size = New System.Drawing.Size(75, 64)
         Me.btn_SelectDUT.TabIndex = 15
@@ -140,7 +143,7 @@ Partial Class TopGUI
         Me.label_DUTType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.label_DUTType.Location = New System.Drawing.Point(77, 127)
         Me.label_DUTType.Name = "label_DUTType"
-        Me.label_DUTType.Size = New System.Drawing.Size(253, 16)
+        Me.label_DUTType.Size = New System.Drawing.Size(334, 16)
         Me.label_DUTType.TabIndex = 19
         Me.label_DUTType.Text = "Ok"
         Me.label_DUTType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -174,29 +177,29 @@ Partial Class TopGUI
         '
         'btn_FX3Config
         '
-        Me.btn_FX3Config.Location = New System.Drawing.Point(92, 219)
+        Me.btn_FX3Config.Location = New System.Drawing.Point(12, 219)
         Me.btn_FX3Config.Name = "btn_FX3Config"
         Me.btn_FX3Config.Size = New System.Drawing.Size(75, 64)
         Me.btn_FX3Config.TabIndex = 23
-        Me.btn_FX3Config.Text = "Set FX3 Config"
+        Me.btn_FX3Config.Text = "FX3 Config. Options"
         Me.btn_FX3Config.UseVisualStyleBackColor = True
         '
         'btn_APIInfo
         '
-        Me.btn_APIInfo.Location = New System.Drawing.Point(255, 218)
+        Me.btn_APIInfo.Location = New System.Drawing.Point(173, 219)
         Me.btn_APIInfo.Name = "btn_APIInfo"
         Me.btn_APIInfo.Size = New System.Drawing.Size(75, 64)
         Me.btn_APIInfo.TabIndex = 24
-        Me.btn_APIInfo.Text = "FX3 API Info"
+        Me.btn_APIInfo.Text = "FX3 API Info."
         Me.btn_APIInfo.UseVisualStyleBackColor = True
         '
         'btn_BoardInfo
         '
-        Me.btn_BoardInfo.Location = New System.Drawing.Point(174, 219)
+        Me.btn_BoardInfo.Location = New System.Drawing.Point(92, 219)
         Me.btn_BoardInfo.Name = "btn_BoardInfo"
         Me.btn_BoardInfo.Size = New System.Drawing.Size(75, 64)
         Me.btn_BoardInfo.TabIndex = 26
-        Me.btn_BoardInfo.Text = "FX3 Board Info"
+        Me.btn_BoardInfo.Text = "FX3 Board Info."
         Me.btn_BoardInfo.UseVisualStyleBackColor = True
         '
         'btn_PWMSetup
@@ -205,14 +208,44 @@ Partial Class TopGUI
         Me.btn_PWMSetup.Name = "btn_PWMSetup"
         Me.btn_PWMSetup.Size = New System.Drawing.Size(75, 64)
         Me.btn_PWMSetup.TabIndex = 25
-        Me.btn_PWMSetup.Text = "PWM Setup"
+        Me.btn_PWMSetup.Text = "PWM Pin Setup"
         Me.btn_PWMSetup.UseVisualStyleBackColor = True
+        '
+        'btn_PinAccess
+        '
+        Me.btn_PinAccess.Location = New System.Drawing.Point(336, 149)
+        Me.btn_PinAccess.Name = "btn_PinAccess"
+        Me.btn_PinAccess.Size = New System.Drawing.Size(75, 64)
+        Me.btn_PinAccess.TabIndex = 27
+        Me.btn_PinAccess.Text = "Pin Read / Writes"
+        Me.btn_PinAccess.UseVisualStyleBackColor = True
+        '
+        'btn_measurePulse
+        '
+        Me.btn_measurePulse.Location = New System.Drawing.Point(255, 219)
+        Me.btn_measurePulse.Name = "btn_measurePulse"
+        Me.btn_measurePulse.Size = New System.Drawing.Size(75, 64)
+        Me.btn_measurePulse.TabIndex = 28
+        Me.btn_measurePulse.Text = "Measure Pulse"
+        Me.btn_measurePulse.UseVisualStyleBackColor = True
+        '
+        'btn_test
+        '
+        Me.btn_test.Location = New System.Drawing.Point(336, 219)
+        Me.btn_test.Name = "btn_test"
+        Me.btn_test.Size = New System.Drawing.Size(75, 64)
+        Me.btn_test.TabIndex = 29
+        Me.btn_test.Text = "Test Button"
+        Me.btn_test.UseVisualStyleBackColor = True
         '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(344, 291)
+        Me.ClientSize = New System.Drawing.Size(424, 291)
+        Me.Controls.Add(Me.btn_test)
+        Me.Controls.Add(Me.btn_measurePulse)
+        Me.Controls.Add(Me.btn_PinAccess)
         Me.Controls.Add(Me.btn_BoardInfo)
         Me.Controls.Add(Me.btn_PWMSetup)
         Me.Controls.Add(Me.btn_APIInfo)
@@ -232,8 +265,8 @@ Partial Class TopGUI
         Me.Controls.Add(Me.label_FX3Status)
         Me.Controls.Add(Me.text_FX3Status)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximumSize = New System.Drawing.Size(360, 330)
-        Me.MinimumSize = New System.Drawing.Size(360, 330)
+        Me.MaximumSize = New System.Drawing.Size(440, 330)
+        Me.MinimumSize = New System.Drawing.Size(440, 330)
         Me.Name = "TopGUI"
         Me.Text = "iSensor FX3 GUI"
         Me.ResumeLayout(False)
@@ -258,4 +291,7 @@ Partial Class TopGUI
     Friend WithEvents btn_APIInfo As Button
     Friend WithEvents btn_BoardInfo As Button
     Friend WithEvents btn_PWMSetup As Button
+    Friend WithEvents btn_PinAccess As Button
+    Friend WithEvents btn_measurePulse As Button
+    Friend WithEvents btn_test As Button
 End Class

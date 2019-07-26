@@ -30,10 +30,11 @@ Public Class SelectRegmapGUI
             If m_regmaps Is Nothing Or m_regmaps.Count = 0 Then
                 'If zero passed strings use file browser
                 Dim fileBrowser As New OpenFileDialog
+                Dim fileBrowseResult As DialogResult
                 fileBrowser.Title = "Please Select the Register Map File"
                 fileBrowser.InitialDirectory = m_searchpath
                 fileBrowser.Filter = "RegMap Files|*.csv"
-                fileBrowser.ShowDialog()
+                fileBrowseResult = fileBrowser.ShowDialog()
                 m_selectedpath = fileBrowser.FileName
                 ValidatePath()
             Else
@@ -56,17 +57,28 @@ Public Class SelectRegmapGUI
         ValidatePath()
     End Sub
 
-    Private Sub OKButton_Click(sender As Object, e As EventArgs) Handles OKButton.Click
-        m_selectedpath = SelectRegmapComboBox.SelectedItem
-        ValidatePath()
-    End Sub
-
     Private Sub ValidatePath()
         If Not File.Exists(m_selectedpath) Then
             Me.DialogResult = DialogResult.Cancel
         Else
             Me.DialogResult = DialogResult.OK
         End If
+    End Sub
+
+    Private Sub OKButton_Click(sender As Object, e As EventArgs) Handles OKButton.Click
+        m_selectedpath = SelectRegmapComboBox.SelectedItem
+        ValidatePath()
+    End Sub
+
+    Private Sub BrowseButton_Click(sender As Object, e As EventArgs) Handles BrowseButton.Click
+        'If zero passed strings use file browser
+        Dim fileBrowser As New OpenFileDialog
+        fileBrowser.Title = "Please Select the Register Map File"
+        fileBrowser.InitialDirectory = m_searchpath
+        fileBrowser.Filter = "RegMap Files|*.csv"
+        fileBrowser.ShowDialog()
+        m_selectedpath = fileBrowser.FileName
+        ValidatePath()
     End Sub
 
 End Class

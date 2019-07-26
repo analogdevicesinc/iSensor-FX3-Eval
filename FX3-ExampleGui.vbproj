@@ -131,6 +131,12 @@
     <Compile Include="PinAccessGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="PulseMeasureGUI.Designer.vb">
+      <DependentUpon>PulseMeasureGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PulseMeasureGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="PWMSetupGUI.designer.vb">
       <DependentUpon>PWMSetupGUI.vb</DependentUpon>
     </Compile>

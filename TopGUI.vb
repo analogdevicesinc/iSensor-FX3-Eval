@@ -57,7 +57,8 @@ Public Class TopGUI
         ElseIf regMapSelector.ShowDialog() = DialogResult.OK Then
             RegMapPath = regMapSelector.SelectedPath
         Else
-            Throw New Exception("ERROR: No valid register map file selected")
+            'Bad path will complain without breaking anything
+            RegMapPath = ""
         End If
         regMapSelector.Dispose()
 
@@ -96,8 +97,11 @@ Public Class TopGUI
                 'Set the regmap
                 RegMap = New RegMapCollection
                 RegMap.ReadFromCSV(m_RegMapPath)
+                If RegMap.Count() = 0 Then
+                    Throw New Exception("Regmap produced from selected file contains 0 registers")
+                End If
             Catch ex As Exception
-                MsgBox("ERROR: Invalid RegMap Selected!")
+                MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message())
             End Try
         End Set
     End Property
@@ -188,6 +192,24 @@ Public Class TopGUI
         Dim subGUI As New ApiInfoGUI()
         subGUI.Show()
         Me.Hide()
+    End Sub
+
+    Private Sub btn_measurePulse_Click(sender As Object, e As EventArgs) Handles btn_measurePulse.Click
+        Dim subGUI As New PulseMeasureGUI()
+        subGUI.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub btn_PinAccess_Click_1(sender As Object, e As EventArgs) Handles btn_PinAccess.Click
+        Dim subGUI As New PinAccessGUI()
+        subGUI.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
+        'Whatever code you want
+
+
     End Sub
 
 #End Region
@@ -313,6 +335,9 @@ Public Class TopGUI
         btn_RegAccess.Enabled = True
         btn_ResetDUT.Enabled = True
         btn_SelectDUT.Enabled = True
+        btn_measurePulse.Enabled = True
+        btn_PinAccess.Enabled = True
+        btn_test.Enabled = True
 
         label_FX3Status.Text = "FX3 Connected"
         label_FX3Status.BackColor = Color.Green
@@ -351,6 +376,9 @@ Public Class TopGUI
         btn_RegAccess.Enabled = False
         btn_ResetDUT.Enabled = False
         btn_SelectDUT.Enabled = False
+        btn_measurePulse.Enabled = False
+        btn_PinAccess.Enabled = False
+        btn_test.Enabled = False
     End Sub
 
     ''' <summary>

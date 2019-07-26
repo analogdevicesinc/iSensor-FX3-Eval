@@ -1,4 +1,4 @@
-﻿'File:          helpterFunctions.vb
+﻿'File:          helperFunctions.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Date:          7/25/2019
 'Description:   Module of generic helper functions for use in the GUI
