@@ -532,6 +532,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="Pin">The pin to check. Must be an FX3PinObject pin</param>
  <returns>True if the pin is configured as a PWM pin, false otherwise</returns>
 </member>
+<member name="M:FX3Api.FX3Connection.GetPinPWMInfo(AdisApi.IPinObject)">
+ <summary>
+ Allows the user to retrieve a set of information about the current pin PWM configuration.
+ </summary>
+ <param name="Pin">The pin to pull from the PinPWMInfo List</param>
+ <returns>The PinPWMInfo corresponding to the selected pin. If the pin is not found all fields will be -1</returns>
+</member>
 <member name="M:FX3Api.FX3Connection.IsFX3Pin(AdisApi.IPinObject)">
  <summary>
  This function determines if the pin object being passed is an FX3 version of the IPinObject (as opposed to a blackfin pin for the SDP).
@@ -1228,6 +1235,91 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Overload of the toString function to allow for better formatting.
  </summary>
  <returns>A string representing all available FX3 API information.</returns>
+</member>
+<member name="T:FX3Api.PinPWMInfo">
+ <summary>
+ Structure which contains all the info about the PWM status of a given pin
+ </summary>
+</member>
+<member name="M:FX3Api.PinPWMInfo.#ctor">
+ <summary>
+ Constructor sets defaults
+ </summary>
+</member>
+<member name="M:FX3Api.PinPWMInfo.ToString">
+ <summary>
+ Overload of toString for a PinPWMInfo
+ </summary>
+ <returns>String with all pertinent data about the pin PWM</returns>
+</member>
+<member name="P:FX3Api.PinPWMInfo.FX3GPIONumber">
+ <summary>
+ The FX3 GPIO number for the pin (0-63)
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.FX3TimerBlock">
+ <summary>
+ The associated complex timer block used to drive the PWM signal (0-7)
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.IdealFrequency">
+ <summary>
+ The selected frequency (in Hz)
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.RealFrequency">
+ <summary>
+ The actual frequency the PWM signal should be (in Hz).
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.IdealDutyCycle">
+ <summary>
+ The selected duty cycle
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.RealDutyCycle">
+ <summary>
+ The actual duty cycle of the PWM pin.
+ </summary>
+</member>
+<member name="T:FX3Api.PinList">
+ <summary>
+ Custom list class to reduce 
+ </summary>
+</member>
+<member name="M:FX3Api.PinList.AddReplace(FX3Api.PinPWMInfo)">
+ <summary>
+ Adds a pin to the list. Replaces any existing pin with the same FX3 GPIO number.
+ </summary>
+ <param name="Pin">The PinPWMInfo to add</param>
+</member>
+<member name="M:FX3Api.PinList.GetPinPWMInfo(AdisApi.IPinObject)">
+ <summary>
+ Gets the info for the selected pin
+ </summary>
+ <param name="Pin">The pin to get the info for, as an IPinObject</param>
+ <returns>The pin info, as PinPWMInfo. Will have -1 for all fields if not found</returns>
+</member>
+<member name="M:FX3Api.PinList.GetPinPWMInfo(System.UInt32)">
+ <summary>
+ Gets the info for the selected pin
+ </summary>
+ <param name="Pin">The pin to get the info for, as a UInteger (FX3 GPIO number)</param>
+ <returns>The pin info, as PinPWMInfo. Will have -1 for all fields if not found</returns>
+</member>
+<member name="M:FX3Api.PinList.Contains(AdisApi.IPinObject)">
+ <summary>
+ Overload of contains which checks if the list contains the given Pin
+ </summary>
+ <param name="Pin">The pin to look for (As IPinObject)</param>
+ <returns>If the pin is contained in the list</returns>
+</member>
+<member name="M:FX3Api.PinList.Contains(System.UInt32)">
+ <summary>
+ Overload of contains which checks if the list contains the given Pin
+ </summary>
+ <param name="Pin">The pin to look for (As Integer)</param>
+ <returns>If the pin is contained in the list</returns>
 </member>
 <member name="T:FX3Api.FX3ConfigurationException">
  <summary>
