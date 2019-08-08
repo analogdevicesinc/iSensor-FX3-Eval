@@ -41,9 +41,9 @@ Partial Class TopGUI
         Me.btn_APIInfo = New System.Windows.Forms.Button()
         Me.btn_BoardInfo = New System.Windows.Forms.Button()
         Me.btn_PWMSetup = New System.Windows.Forms.Button()
-        Me.btn_PinAccess = New System.Windows.Forms.Button()
         Me.btn_measurePulse = New System.Windows.Forms.Button()
         Me.btn_test = New System.Windows.Forms.Button()
+        Me.btn_PinAccess = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -211,41 +211,44 @@ Partial Class TopGUI
         Me.btn_PWMSetup.Text = "PWM Output Setup"
         Me.btn_PWMSetup.UseVisualStyleBackColor = True
         '
-        'btn_PinAccess
-        '
-        Me.btn_PinAccess.Location = New System.Drawing.Point(336, 149)
-        Me.btn_PinAccess.Name = "btn_PinAccess"
-        Me.btn_PinAccess.Size = New System.Drawing.Size(75, 64)
-        Me.btn_PinAccess.TabIndex = 27
-        Me.btn_PinAccess.Text = "Pin Read / Writes"
-        Me.btn_PinAccess.UseVisualStyleBackColor = True
-        '
         'btn_measurePulse
         '
-        Me.btn_measurePulse.Location = New System.Drawing.Point(255, 219)
+        Me.btn_measurePulse.Location = New System.Drawing.Point(254, 219)
         Me.btn_measurePulse.Name = "btn_measurePulse"
         Me.btn_measurePulse.Size = New System.Drawing.Size(75, 64)
-        Me.btn_measurePulse.TabIndex = 28
+        Me.btn_measurePulse.TabIndex = 27
         Me.btn_measurePulse.Text = "Measure Pulse"
         Me.btn_measurePulse.UseVisualStyleBackColor = True
+        Me.btn_measurePulse.Visible = False
         '
         'btn_test
         '
         Me.btn_test.Location = New System.Drawing.Point(336, 219)
         Me.btn_test.Name = "btn_test"
         Me.btn_test.Size = New System.Drawing.Size(75, 64)
-        Me.btn_test.TabIndex = 29
+        Me.btn_test.TabIndex = 28
         Me.btn_test.Text = "Test Button"
         Me.btn_test.UseVisualStyleBackColor = True
+        Me.btn_test.Visible = False
+        '
+        'btn_PinAccess
+        '
+        Me.btn_PinAccess.Location = New System.Drawing.Point(337, 149)
+        Me.btn_PinAccess.Name = "btn_PinAccess"
+        Me.btn_PinAccess.Size = New System.Drawing.Size(75, 64)
+        Me.btn_PinAccess.TabIndex = 29
+        Me.btn_PinAccess.Text = "Pin Access"
+        Me.btn_PinAccess.UseVisualStyleBackColor = True
+        Me.btn_PinAccess.Visible = False
         '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(424, 291)
+        Me.Controls.Add(Me.btn_PinAccess)
         Me.Controls.Add(Me.btn_test)
         Me.Controls.Add(Me.btn_measurePulse)
-        Me.Controls.Add(Me.btn_PinAccess)
         Me.Controls.Add(Me.btn_BoardInfo)
         Me.Controls.Add(Me.btn_PWMSetup)
         Me.Controls.Add(Me.btn_APIInfo)
@@ -291,7 +294,7 @@ Partial Class TopGUI
     Friend WithEvents btn_APIInfo As Button
     Friend WithEvents btn_BoardInfo As Button
     Friend WithEvents btn_PWMSetup As Button
-    Friend WithEvents btn_PinAccess As Button
     Friend WithEvents btn_measurePulse As Button
     Friend WithEvents btn_test As Button
+    Friend WithEvents btn_PinAccess As Button
 End Class
