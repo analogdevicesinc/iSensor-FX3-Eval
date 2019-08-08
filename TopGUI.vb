@@ -9,6 +9,7 @@ Imports RegMapClasses
 Imports System.IO
 Imports System.Reflection
 Imports System.Timers
+Imports AdisApi
 
 Public Class TopGUI
 
@@ -125,7 +126,6 @@ Public Class TopGUI
 
     Private Sub btn_Connect_Click(sender As Object, e As EventArgs) Handles btn_Connect.Click
         ConnectWork()
-        TestDUT()
     End Sub
 
     Private Sub btn_SelectDUT_Click(sender As Object, e As EventArgs) Handles btn_SelectDUT.Click
@@ -140,7 +140,7 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_RegAccess_Click(sender As Object, e As EventArgs) Handles btn_RegAccess.Click
-        Dim subGUI As New RegisterAccessGUI()
+        Dim subGUI As New registerAccessGUI()
         subGUI.Show()
         Me.Hide()
     End Sub
@@ -209,6 +209,14 @@ Public Class TopGUI
     Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
         'Whatever code you want
 
+        Dim timer As New Stopwatch()
+        timer.Start()
+        For i As Integer = 0 To 10000
+            Dut.ReadUnsigned(RegMap("MSC_CTRL"))
+        Next
+        timer.Stop()
+        MsgBox(timer.ElapsedMilliseconds() / 10000)
+
 
     End Sub
 
@@ -275,11 +283,20 @@ Public Class TopGUI
         label_DUTType.Text = FX3.PartType.ToString()
 
         'Set the DRactive property to true for IMU, false for ADcmXL
+        'Set the default SCLK and stall times for each
         If DutType = DUTType.IMU Then
             FX3.DrActive = True
+            FX3.SclkFrequency = 2000000
+            FX3.StallTime = 25
         Else
             FX3.DrActive = False
+            FX3.DrPin = FX3.DIO2
+            FX3.SclkFrequency = 14000000
+            FX3.StallTime = 25
         End If
+
+        TestDUT()
+
     End Sub
 
     Private Sub ConnectWork()
@@ -344,6 +361,9 @@ Public Class TopGUI
 
         'Select register access button initially
         btn_RegAccess.Select()
+
+        'Test the DUT
+        TestDUT()
 
     End Sub
 
@@ -412,6 +432,13 @@ Public Class TopGUI
         If Not m_FX3Connected Then
             label_DUTStatus.Text = "Waiting for FX3 to Connect"
             label_DUTStatus.BackColor = Color.Yellow
+        End If
+
+        'Check that the ready pin is high
+        If FX3.PulseWait(FX3.DrPin, 1, 0, 500) > 500 Then
+            label_DUTStatus.Text = "ERROR: DUT data ready pin not active"
+            label_DUTStatus.BackColor = Color.Red
+            Exit Sub
         End If
 
         Dim scratchReg As RegClass = Nothing

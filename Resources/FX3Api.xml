@@ -252,6 +252,12 @@ FX3Api
  </summary>
  <returns>Number of frames purged from data array</returns>
 </member>
+<member name="P:FX3Api.FX3Connection.NumFramesSkipped">
+ <summary>
+ Property to get the number of frame skips in an ADcmXL real time stream
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:FX3Api.FX3Connection.SensorType">
  <summary>
  Readonly property to get the device type the FX3Interface was initialized for
@@ -605,47 +611,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
-<member name="M:FX3Api.FX3Connection.StartStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
- <summary>
- This function is not currently implemented. Calling it will throw a NotImplementedException.
- </summary>
- <param name="addr"></param>
- <param name="numCaptures"></param>
-</member>
-<member name="M:FX3Api.FX3Connection.GetStreamDataPacketU16">
- <summary>
- This function is not currently implemented. Calling it will throw a NotImplementedException.
- </summary>
- <returns></returns>
-</member>
-<member name="M:FX3Api.FX3Connection.ReadRegArrayStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
- <summary>
- This function is not currently implemented. Calling it will throw a NotImplementedException.
- </summary>
- <param name="addrData"></param>
- <param name="numCaptures"></param>
- <param name="numBuffers"></param>
- <returns></returns>
-</member>
-<member name="M:FX3Api.FX3Connection.WriteRegWord(System.UInt32,System.UInt32)">
- <summary>
- This function is not currently implemented. Calling it will throw a NotImplementedException.
- </summary>
- <param name="addr"></param>
- <param name="data"></param>
-</member>
-<member name="M:FX3Api.FX3Connection.Start">
- <summary>
- This function is not currently implemented. Calling it will throw a NotImplementedException.
- </summary>
-</member>
 <member name="P:FX3Api.FX3Connection.DrActive">
  <summary>
  If the data ready is used for register reads
  </summary>
  <returns>The current data ready usage setting</returns>
 </member>
-<member name="P:FX3Api.FX3Connection.burstMode">
+<member name="P:FX3Api.FX3Connection.BurstMode">
  <summary>
  Switches burstMode on and off. Set burstMode to the number of burst read registers. 
  </summary>
@@ -657,10 +629,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>The timeout time, in seconds</returns>
 </member>
-<member name="M:FX3Api.FX3Connection.Reset">
+<member name="M:FX3Api.FX3Connection.StartStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
  <summary>
- Drives the Reset pin low for 500ms and then sleeps for another 500ms
+ Starts a buffered stream for only a single buffer. 
+ This is equivalent to StartBufferedStream(addr, numCaptures, 1, CurrentTimeout, Nothing)
  </summary>
+ <param name="addr">The address list to read from</param>
+ <param name="numCaptures">The number of times to capture that address list</param>
 </member>
 <member name="M:FX3Api.FX3Connection.StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
@@ -693,63 +668,11 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>The stream data packet, as a short</returns>
 </member>
-<member name="M:FX3Api.FX3Connection.ReadRegArrayStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+<member name="M:FX3Api.FX3Connection.GetStreamDataPacketU16">
  <summary>
- This function reads a set of registers using a streaming endpoint from the FX3.
+ This function does the same thing as GetBufferedStreamDataPacket()
  </summary>
- <param name="addr"></param>
- <param name="numCaptures"></param>
- <param name="numBuffers"></param>
- <returns></returns>
-</member>
-<member name="M:FX3Api.FX3Connection.WriteRegByte(AdisApi.AddrDataPair)">
- <summary>
- This function writes a single register byte, given as an Address / Data pair
- </summary>
- <param name="addrData">The AddrDataPair to be written</param>
-</member>
-<member name="M:FX3Api.FX3Connection.WriteRegByte(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair})">
- <summary>
- This function writes an enumerable list of data to the DUT as AddrDataPairs
- </summary>
- <param name="addrData">The list of AddrDataPair to be written to DUT</param>
-</member>
-<member name="M:FX3Api.FX3Connection.WriteRegByte(System.UInt32,System.UInt32)">
- <summary>
- This is the most general WriteRegByte, which the others are based on
- </summary>
- <param name="addr">The address to write to</param>
- <param name="data">The byte of data to write</param>
-</member>
-<member name="M:FX3Api.FX3Connection.WriteRegByte(System.Collections.Generic.IEnumerable{System.UInt32},System.Collections.Generic.IEnumerable{System.UInt32})">
- <summary>
- Overload of WriteRegByte which allows for multiple registers to be specified to write to, as an IEnumerable list of register addresses.
- </summary>
- <param name="addr">The list of register addresses to write to.</param>
- <param name="data">The data to write to each register in the address list.</param>
-</member>
-<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32})">
- <summary>
- Reads an array of 16 bit register values using the bulk in endpoint
- </summary>
- <param name="addr">The list of registers to read</param>
- <returns>The register values, as a UShort array</returns>
-</member>
-<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32)">
- <summary>
- ReadRegArray overload which includes register writes. Breaks the call into multiple calls of readRegByte and writeRegByte
- </summary>
- <param name="addrData">The data to read/write</param>
- <param name="numCaptures">The number of times to perform the read/write operation</param>
- <returns>The output data, as a UShort array</returns>
-</member>
-<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
- <summary>
- Overload of ReadRegArray which builds a new IEnumerable of addr and call the overload which takes an enumerable of addr
- </summary>
- <param name="addr">List of register address's to read</param>
- <param name="numCaptures">Number of captures to perform on the register list</param>
- <returns>The register values, as a short array</returns>
+ <returns>The last buffer read from the DUT</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.ReadRegByte(System.UInt32)">
  <summary>
@@ -764,6 +687,90 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <param name="addr">The address of the register to read</param>
  <returns>The 16 bit register value, as a UShort</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(System.UInt32,System.UInt32)">
+ <summary>
+ This is the most general WriteRegByte, which the others are based on
+ </summary>
+ <param name="addr">The address to write to</param>
+ <param name="data">The byte of data to write</param>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(AdisApi.AddrDataPair)">
+ <summary>
+ This function writes a single register byte, given as an Address / Data pair
+ </summary>
+ <param name="addrData">The AddrDataPair to be written</param>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegWord(System.UInt32,System.UInt32)">
+ <summary>
+ This function is not currently implemented. Calling it will throw a NotImplementedException.
+ </summary>
+ <param name="addr"></param>
+ <param name="data"></param>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArrayStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
+ <summary>
+ This is the most generic array register function. All other array read/write functions call down to this one.
+ </summary>
+ <param name="addrData">The list of register addresses and optional writedata for each capture</param>
+ <param name="numCaptures">The number of times to iterate through addrData per DUT data ready (if DrActive is set)</param>
+ <param name="numBuffers">The total number of buffers to read, where one buffer is considered numCaptures iterations through addrData</param>
+ <returns>An array of 16 bit values read back from the DUT. The size will be addrData.Count() * numCaptures * numBuffers</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArrayStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ Overload of ReadRegArray which builds a new IEnumerable of addr and call the overload which takes an enumerable of addr
+ </summary>
+ <param name="addr">List of register address's to read</param>
+ <param name="numCaptures">Number of captures to perform on the register list</param>
+ <returns>The register values, as a short array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair})">
+ <summary>
+ This function writes an enumerable list of data to the DUT as AddrDataPairs
+ </summary>
+ <param name="addrData">The list of AddrDataPair to be written to DUT</param>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(System.Collections.Generic.IEnumerable{System.UInt32},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Overload of WriteRegByte which allows for multiple registers to be specified to write to, as an IEnumerable list of register addresses.
+ </summary>
+ <param name="addr">The list of register addresses to write to.</param>
+ <param name="data">The data to write to each register in the address list.</param>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Reads an array of 16 bit register values.
+ </summary>
+ <param name="addr">The list of registers to read</param>
+ <returns>The register values, as a UShort array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32)">
+ <summary>
+ ReadRegArray overload which includes register writes. Breaks the call into multiple calls of readRegByte and writeRegByte
+ </summary>
+ <param name="addrData">The data to read/write</param>
+ <param name="numCaptures">The number of times to perform the read/write operation</param>
+ <returns>The output data, as a UShort array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.Reset">
+ <summary>
+ Drives the Reset pin low for 500ms and then sleeps for another 500ms
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.Start">
+ <summary>
+ This function is not currently implemented. Calling it will throw a NotImplementedException.
+ </summary>
 </member>
 <member name="M:FX3Api.FX3Connection.Connect(System.String)">
  <summary>
@@ -1007,34 +1014,30 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="M:FX3Api.FX3Connection.Transfer(System.UInt32)">
  <summary>
- Performs a single 32 bit SPI data transfer.
+ This function performs a single bi-directional 32 bit SPI transaction. If DrActive is set to false the transfer is performed asynchronously. If DrActive is set to true, 
+ the transfer should wait until a data ready condition (determined by DrPin and DrPolarity) is true.
  </summary>
- <param name="WriteData">Data to send over the MOSI line</param>
- <returns>The 32 bit data read back on the MISO line</returns>
+ <param name="WriteData">The 32 bit data to be send to the slave on the MOSI line</param>
+ <returns>The 32 bit data sent to the master over the MISO line during the SPI transaction</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32})">
  <summary>
- 
+ This function performs an array bi-directional SPI transfer. WriteData.Count() total SPI transfers are performed. If DrActive is set to true, the transfer should wait
+ until a data ready condition (determined by DrPin and DrPolarity) is true, and then perform all SPI transfers. If DrActive is false it is performed asynchronously.
  </summary>
- <param name="WriteData"></param>
- <returns></returns>
+ <param name="WriteData">The data to be written to the slave on the MOSI line in each SPI transaction. The total number of transfers performed is determined by the size of WriteData.</param>
+ <returns>The data received from the slave device on the MISO line, as an array</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
  <summary>
- 
+ This function performs an array bi-directional SPI transfer. This overload transfers all the data in WriteData numCaptures times. The total
+ number of SPI words transfered is WriteData.Count() * numCaptures.
+ If DrActive is set to true, the transfer should wait until a data ready condition (determined by DrPin and DrPolarity) is true, and
+ then perform all SPI transfers. If DrActive is false it is performed asynchronously.
  </summary>
- <param name="WriteData"></param>
- <param name="numCaptures"></param>
- <returns></returns>
-</member>
-<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
- <summary>
- 
- </summary>
- <param name="WriteData"></param>
- <param name="numCaptures"></param>
- <param name="numBuffers"></param>
- <returns></returns>
+ <param name="WriteData">The data to be written to the slave on the MOSI line in each SPI transaction.</param>
+ <param name="numCaptures">The number of transfers of the WriteData array performed.</param>
+ <returns>The data received from the slave device on the MISO line, as an array. The total size is WriteData.Count() * numCaptures</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_StopStream">
  <summary>
@@ -1043,70 +1046,55 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
- 
+ This is similar to the most general streaming function used by the IRegInterface, and all other buffered streaming functions can be derived from 
+ it with a little glue logic. When a stream is started, a second thread should be started to pull buffers from the interfacing board asynchronously.
+ Each buffer will consist of WriteData.count() * numCaptures 32-bit words, which are just the raw data read back from the DUT over the MISO line. 
+ The stream is expected to produce numBuffers total buffers.
  </summary>
- <param name="WriteData"></param>
- <param name="numCaptures"></param>
- <param name="numBuffers"></param>
- <param name="timeoutSeconds"></param>
- <param name="worker"></param>
+ <param name="WriteData">The data to send over the MOSI line</param>
+ <param name="numCaptures">The number of interations of the WriteData array to perform in a single buffer</param>
+ <param name="numBuffers">The total number of buffers to capture</param>
+ <param name="timeoutSeconds">The time to wait on the interfacing board before stopping the stream</param>
+ <param name="worker">A background worker used to notify the caller of progress made in the stream. You MUST check that this parameter has been initialized</param>
 </member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_GetBufferedStreamDataPacket">
  <summary>
- 
+ Gets a buffer from the TransferStreamData thread safe queue. Same implementation as GetBuffer.
  </summary>
  <returns></returns>
 </member>
 <member name="P:FX3Api.FX3Connection.ISpi32Interface_StreamTimeoutSeconds">
  <summary>
- 
+ Set the timeout period used for dequeuing a buffer from the thread safe queue.
  </summary>
  <returns></returns>
 </member>
 <member name="P:FX3Api.FX3Connection.ISpi32Interface_DrActive">
  <summary>
- 
+ Sets of data ready triggering is used for the ISpi32Interface
  </summary>
  <returns></returns>
 </member>
-<member name="T:FX3Api.FX3Board">
+<member name="P:FX3Api.FX3Connection.DrPin">
  <summary>
- This class contains information about the connected FX3 board
- </summary>
-</member>
-<member name="M:FX3Api.FX3Board.ToString">
- <summary>
- Override of the ToString function
+ This property is used to get or set the data ready pin. Is tied to the ReadyPin property
  </summary>
  <returns></returns>
 </member>
-<member name="P:FX3Api.FX3Board.Uptime">
+<member name="P:FX3Api.FX3Connection.ISpi32Interface_DrPolarity">
  <summary>
- Readonly property to get the current board uptime
+ Sets/Gets the data ready polarity for the ISpi32Interface.
  </summary>
- <returns>The board uptime, in ms, as a long</returns>
-</member>
-<member name="P:FX3Api.FX3Board.SerialNumber">
- <summary>
- Readonly property to get the active FX3 serial number
- </summary>
- <returns>The board serial number, as a string</returns>
-</member>
-<member name="P:FX3Api.FX3Board.FirmwareVersion">
- <summary>
- Readonly property to get the current application firmware version on the FX3
- </summary>
- <returns>The firmware version, as a string</returns>
-</member>
-<member name="M:FX3Api.FX3Board.SetFirmwareVersion(System.String)">
- <summary>
- Set the firmware version. Is friend so as to not be accessible to outside classes.
- </summary>
- <param name="FirmwareVersion">The firmware version to set, as a string</param>
+ <returns></returns>
 </member>
 <member name="T:FX3Api.EndpointAddresses">
  <summary>
  This enum lists all USB endpoints generated and used by the application firmware.
+ </summary>
+</member>
+<member name="T:FX3Api.StreamCommands">
+ <summary>
+ This enum lists all the available streaming commands which can be sent to the FX3 (in the endpoint index)
  </summary>
 </member>
 <member name="T:FX3Api.USBCommands">
@@ -1284,7 +1272,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="T:FX3Api.PinList">
  <summary>
- Custom list class to reduce 
+ Custom list class with some extra ease of use functions added.
  </summary>
 </member>
 <member name="M:FX3Api.PinList.AddReplace(FX3Api.PinPWMInfo)">
@@ -1320,6 +1308,41 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <param name="Pin">The pin to look for (As Integer)</param>
  <returns>If the pin is contained in the list</returns>
+</member>
+<member name="T:FX3Api.FX3Board">
+ <summary>
+ This class contains information about the connected FX3 board
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Board.ToString">
+ <summary>
+ Override of the ToString function
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Board.Uptime">
+ <summary>
+ Readonly property to get the current board uptime
+ </summary>
+ <returns>The board uptime, in ms, as a long</returns>
+</member>
+<member name="P:FX3Api.FX3Board.SerialNumber">
+ <summary>
+ Readonly property to get the active FX3 serial number
+ </summary>
+ <returns>The board serial number, as a string</returns>
+</member>
+<member name="P:FX3Api.FX3Board.FirmwareVersion">
+ <summary>
+ Readonly property to get the current application firmware version on the FX3
+ </summary>
+ <returns>The firmware version, as a string</returns>
+</member>
+<member name="M:FX3Api.FX3Board.SetFirmwareVersion(System.String)">
+ <summary>
+ Set the firmware version. Is friend so as to not be accessible to outside classes.
+ </summary>
+ <param name="FirmwareVersion">The firmware version to set, as a string</param>
 </member>
 <member name="T:FX3Api.FX3ConfigurationException">
  <summary>

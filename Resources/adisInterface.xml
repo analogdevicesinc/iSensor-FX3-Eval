@@ -217,7 +217,14 @@ adisInterface
  This function sets all the default values for the class
  </summary>
 </member>
-<member name="M:adisInterface.iSensorAutomotiveSpi.BuildCommandWord(System.UInt16,System.UInt32,System.Boolean)">
+<member name="M:adisInterface.iSensorAutomotiveSpi.CalcCRC28Bit(System.UInt32)">
+ <summary>
+ Calculates a 4 bit CRC on 28 bits of input data
+ </summary>
+ <param name="inData">The data to calculate the CRC of. Should be the 28 most significant bits of the SPI word</param>
+ <returns>The CRC value (0 - 15)</returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.BuildCommandWord(System.UInt32,System.UInt32,System.Boolean)">
  <summary>
  Builds a command word to send to the DUT, over the MOST line
  </summary>
@@ -240,6 +247,25 @@ adisInterface
  <param name="addr">The addresses to read from. Expects 1 address per MOSI word</param>
  <returns>An array of data to transmit on the MOSI line. Will be of size addr.Count() + 1</returns>
 </member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ValidateMISOData(System.Collections.Generic.IEnumerable{System.UInt32},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Validates an array of data received from the DUT, using the corresponding MOSI data as a reference for address checking
+ </summary>
+ <param name="MISOData">The data from the DUT to the master</param>
+ <param name="MOSIData">The data sent from the master to the DUT for the same sequence</param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ValidateMISOData(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Checks the CRC and state vector for an array of MOSI data
+ </summary>
+ <param name="MISOData">The DUT output data to check</param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ValidateMISOData(System.UInt32)">
+ <summary>
+ Checks the CRC and state vector for a single 32 bit word of MOSI data
+ </summary>
+ <param name="MISOData">The DUT output data to check</param>
+</member>
 <member name="M:adisInterface.iSensorAutomotiveSpi.ValidateCRC(System.UInt32)">
  <summary>
  This function validates that the four bit CRC appended to the given SPI word mathces the expected CRC. If the CRC does not match
@@ -253,6 +279,12 @@ adisInterface
  error condition, a StateVectorException is thrown.
  </summary>
  <param name="SpiWord">The SPI word to check (MISO data)</param>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.BurstMode">
+ <summary>
+ Burst mode property. Currently not supported for ADIS16550 (burst implementation not finalized)
+ </summary>
+ <returns></returns>
 </member>
 <member name="P:adisInterface.iSensorAutomotiveSpi.DrActive">
  <summary>
@@ -270,19 +302,109 @@ adisInterface
 </member>
 <member name="M:adisInterface.iSensorAutomotiveSpi.ReadRegArrayStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
  <summary>
- This is the most general interfacing function. All others call down to this implementation.
+ This is the most general interfacing function. All others call down to this implementation. Performs a blocking stream read/write to the DUT.
+ </summary>
+ <param name="addrData">The base list of registers/values to read or write from</param>
+ <param name="numCaptures">The number of times to interate through addrData in a single data ready, if DrActive is true</param>
+ <param name="numBuffers">The total number of sets of the addrData list iterated through numCaptures times to read.</param>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Builds a automotive SPI formatted MOSI data list and calls the ISpi32Interface start buffered stream function
  </summary>
  <param name="addrData"></param>
  <param name="numCaptures"></param>
  <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <param name="timeoutSeconds"></param>
+ <param name="worker"></param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.StartStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <param name="numCaptures"></param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.StopStream">
+ <summary>
+ Asynchronously stops any given stream.
+ </summary>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.WriteRegByte(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair})">
+ <summary>
+ Writes a list of bytes to the DUT. Bytes must come in sets of two with the same address, LSB first, to maintain compatibility with
+ the iSensor Automotive SPI protocol.
+ </summary>
+ <param name="addrData"></param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.WriteRegByte(System.Collections.Generic.IEnumerable{System.UInt32},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <param name="data"></param>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.GetBufferedStreamDataPacket">
+ <summary>
+ 
+ </summary>
  <returns></returns>
 </member>
-<member name="M:adisInterface.iSensorAutomotiveSpi.CalcCRC28Bit(System.UInt32)">
+<member name="M:adisInterface.iSensorAutomotiveSpi.GetStreamDataPacketU16">
  <summary>
- Calculates a 4 bit CRC on 28 bits of input data
+ 
  </summary>
- <param name="inData">The data to calculate the CRC of. Should be the 28 most significant bits of the SPI word</param>
- <returns>The CRC value (0 - 15)</returns>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ReadRegArray(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="addrData"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <param name="numCaptures"></param>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ReadRegArrayStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.ReadRegWord(System.UInt32)">
+ <summary>
+ Reads a single ADIS16550 register word (16 bits)
+ </summary>
+ <param name="addr">The word address to read from</param>
+ <returns>The 16 bit data field parsed from the Dut response</returns>
 </member>
 <member name="T:adisInterface.PagedDutBase">
  <summary>
@@ -294,14 +416,8 @@ adisInterface
  <summary>
  Create a new instance of a Dut interface class.
  </summary>
- <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="adis">Reg interface object to use for dut communication.</param>
  <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
-</member>
-<member name="M:adisInterface.PagedDutBase.#ctor(AdisApi.IRegInterface)">
- <summary>
- Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
- </summary>
- <param name="adis">Reg interface object to use for dut comminication.</param>
 </member>
 <member name="P:adisInterface.PagedDutBase.PageReg">
  <summary>
@@ -333,7 +449,7 @@ adisInterface
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:adisInterface.PagedDutBase.MakeAddrDataList(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
+<member name="M:adisInterface.PagedDutBase.MakeReadWriteAddrDataList(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
  <summary>
  Makes an address/data list for multi page reads.  Usable for streaming or non streaming reads.
  </summary>
@@ -418,12 +534,6 @@ adisInterface
  Adds ADcmXL specific burst functionality to paged register base class.
  </summary>
 </member>
-<member name="P:adisInterface.AdcmInterfaceBase.DeviceWriteWordSize">
- <summary>
- SPI data word size used to write to a device. ADCM devices only support 8 bit writes.
- </summary>
- <returns></returns>
-</member>
 <member name="P:adisInterface.AdcmInterfaceBase.StreamRawRealTimeSamplingData">
  <summary>
  Selects whether GetBufferedStreamDataPacket returns raw or translated data.  Default is False.
@@ -454,12 +564,6 @@ adisInterface
  </summary>
  <param name="adis">Reg interface object to use for dut comminication.</param>
  <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null for ADcmXL.</param>
-</member>
-<member name="M:adisInterface.AdcmInterfaceBase.#ctor(AdisApi.IRegInterface)">
- <summary>
- Create a new instance of a Dut interface class.
- </summary>
- <param name="adis">Reg interface object to use for dut comminication.</param>
 </member>
 <member name="M:adisInterface.AdcmInterfaceBase.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
@@ -499,18 +603,6 @@ adisInterface
  </summary>
  <param name="adis">Reg interface object to use for dut comminication.</param>
  <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
-</member>
-<member name="M:adisInterface.CpldInterface.#ctor(AdisApi.IRegInterface)">
- <summary>
- Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
- </summary>
- <param name="adis">Reg interface object to use for dut communication.</param>
-</member>
-<member name="P:adisInterface.CpldInterface.DeviceWriteWordSize">
- <summary>
- SPI data word size used to write to a device. CPLD devices only support 8 bit writes.
- </summary>
- <returns></returns>
 </member>
 <member name="M:adisInterface.CpldInterface.StartBufferedStream(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
@@ -608,18 +700,6 @@ adisInterface
  <param name="adis">Reg interface object to use for dut comminication.</param>
  <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
 </member>
-<member name="M:adisInterface.aducInterface.#ctor(AdisApi.IRegInterface)">
- <summary>
- Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
- </summary>
- <param name="adis">Reg interface object to use for dut comminication.</param>
-</member>
-<member name="P:adisInterface.aducInterface.DeviceWriteWordSize">
- <summary>
- SPI data word size used to write to a device. ADUC devices only support 8 bit writes.
- </summary>
- <returns></returns>
-</member>
 <member name="M:adisInterface.aducInterface.WriteUnsigned(System.Collections.Generic.IEnumerable{adisInterface.RegDataU32})">
  <summary>
  This overload requires an IEnumerable(Of RegDataU32 pairs) 
@@ -692,7 +772,7 @@ adisInterface
 </member>
 <member name="T:adisInterface.adbfInterface">
  <summary>
- Interface for devices with paged register access and IMU result streaming.
+ Interface for devices with paged register access with 16 bit write and 8 bit read operations.
  </summary>
 </member>
 <member name="M:adisInterface.adbfInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
@@ -704,15 +784,9 @@ adisInterface
 </member>
 <member name="M:adisInterface.adbfInterface.#ctor(AdisApi.IRegInterface)">
  <summary>
- Create a new instance of a Dut interface class.  Burst mode hardcoded to aducBurst.
+ Create a new instance of a Dut interface class.
  </summary>
  <param name="adis">Reg interface object to use for dut comminication.</param>
-</member>
-<member name="P:adisInterface.adbfInterface.DeviceWriteWordSize">
- <summary>
- SPI data word size used to write to a device. ADBF devices only support 8 bit writes.
- </summary>
- <returns></returns>
 </member>
 <member name="T:adisInterface.BurstBase">
  <summary>
@@ -885,8 +959,14 @@ adisInterface
 </member>
 <member name="T:adisInterface.DutBase">
  <summary>
- Base Class for Eut Interface Implementations
+ Base Class for Dut Interface Implementations
  </summary>
+</member>
+<member name="P:adisInterface.DutBase.DeviceAddressIncrement">
+ <summary>
+ Number of bytes that are represented by the LSB of the register address
+ </summary>
+ <returns></returns>
 </member>
 <member name="P:adisInterface.DutBase.DeviceReadWordSize">
  <summary>
@@ -1424,9 +1504,18 @@ adisInterface
  <returns></returns>
  <remarks></remarks>
 </member>
+<member name="M:adisInterface.DutBase.GetAddrDataPairs(RegMapClasses.RegClass,System.UInt32)">
+ <summary>
+ Returns a list of address data pairs necessary to write the specified register.
+ </summary>
+ <param name="reg"></param>
+ <param name="dat"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
 <member name="M:adisInterface.DutBase.MakeReadAddressList(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
  <summary>
- Creates an array of 16 bit addresses for 16/32 bit register reads.
+ Creates an array of 16 bit addresses for 16/32 bit register reads, limited to registers on a single page.
  </summary>
  <param name="regList"></param>
  <returns></returns>
@@ -1836,25 +1925,6 @@ adisInterface
  <returns></returns>
  <remarks></remarks>
 </member>
-<member name="M:adisInterface.Functions.GetAddrDataPair(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
- <summary>
- Returns an address data pair necessary to write to the specified byte of a specified register.
- </summary>
- <param name="reg"></param>
- <param name="index"></param>
- <param name="dat"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
-<member name="M:adisInterface.Functions.GetAddrDataPairs(RegMapClasses.RegClass,System.UInt32,System.UInt32)">
- <summary>
- Returns a list of address data pairs necessary to write the specified register.
- </summary>
- <param name="reg"></param>
- <param name="dat"></param>
- <returns></returns>
- <remarks></remarks>
-</member>
 <member name="T:adisInterface.gpioBit">
  <summary>
  Methods to configure, read, and write a single SDP GPIO bit.
@@ -1868,6 +1938,12 @@ adisInterface
  <param name="gpio">Reference to sdp gpio object.</param>
  <param name="bitMask">Bit Mask of the gpio bit being used.</param>
  <remarks></remarks>
+</member>
+<member name="P:adisInterface.IDutInterface.DeviceAddressIncrement">
+ <summary>
+ Number of bytes that are represented by the LSB of the register address
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:adisInterface.IDutInterface.ScaleRegData(RegMapClasses.RegClass,System.UInt32)">
  <summary>
@@ -2340,6 +2416,18 @@ adisInterface
  <param name="u16data"></param>
  <returns></returns>
  <remarks></remarks>
+</member>
+<member name="T:adisInterface.ZeusInterface">
+ <summary>
+ Interface for devices with paged register access with 16 bit write read operations.
+ </summary>
+</member>
+<member name="M:adisInterface.ZeusInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
 </member>
 </members>
 </doc>

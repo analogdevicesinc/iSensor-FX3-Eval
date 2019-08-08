@@ -208,7 +208,7 @@ Partial Class TopGUI
         Me.btn_PWMSetup.Name = "btn_PWMSetup"
         Me.btn_PWMSetup.Size = New System.Drawing.Size(75, 64)
         Me.btn_PWMSetup.TabIndex = 25
-        Me.btn_PWMSetup.Text = "PWM Pin Setup"
+        Me.btn_PWMSetup.Text = "PWM Output Setup"
         Me.btn_PWMSetup.UseVisualStyleBackColor = True
         '
         'btn_PinAccess
