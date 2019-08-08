@@ -219,7 +219,6 @@ Partial Class TopGUI
         Me.btn_measurePulse.TabIndex = 27
         Me.btn_measurePulse.Text = "Measure Pulse"
         Me.btn_measurePulse.UseVisualStyleBackColor = True
-        Me.btn_measurePulse.Visible = False
         '
         'btn_test
         '
@@ -229,7 +228,6 @@ Partial Class TopGUI
         Me.btn_test.TabIndex = 28
         Me.btn_test.Text = "Test Button"
         Me.btn_test.UseVisualStyleBackColor = True
-        Me.btn_test.Visible = False
         '
         'btn_PinAccess
         '
@@ -239,7 +237,6 @@ Partial Class TopGUI
         Me.btn_PinAccess.TabIndex = 29
         Me.btn_PinAccess.Text = "Pin Access"
         Me.btn_PinAccess.UseVisualStyleBackColor = True
-        Me.btn_PinAccess.Visible = False
         '
         'TopGUI
         '
