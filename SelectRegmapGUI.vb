@@ -42,6 +42,8 @@ Public Class SelectRegmapGUI
                 For Each item In m_regmaps
                     SelectRegmapComboBox.Items.Add(item)
                 Next
+                ' default option
+                SelectRegmapComboBox.SelectedIndex = 1
             End If
         End If
 
