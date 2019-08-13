@@ -21,122 +21,166 @@ Partial Class registerAccessGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.currentLabel = New System.Windows.Forms.Label()
         Me.newLabel = New System.Windows.Forms.Label()
-        Me.selectBox = New System.Windows.Forms.ComboBox()
-        Me.readButton = New System.Windows.Forms.Button()
+        Me.selectPage = New System.Windows.Forms.ComboBox()
         Me.WriteButton = New System.Windows.Forms.Button()
-        Me.currentValueBox = New System.Windows.Forms.Label()
-        Me.NewInputBox = New System.Windows.Forms.TextBox()
-        Me.DRFreq = New System.Windows.Forms.Label()
-        Me.ReadDRFreq = New System.Windows.Forms.Button()
+        Me.curVal = New System.Windows.Forms.TextBox()
+        Me.regView = New System.Windows.Forms.ListView()
+        Me.readBtn = New System.Windows.Forms.Button()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.refreshBtn = New System.Windows.Forms.CheckBox()
+        Me.pageReadBtn = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.newVal = New System.Windows.Forms.TextBox()
+        Me.regLabel = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
-        '
-        'currentLabel
-        '
-        Me.currentLabel.AutoSize = True
-        Me.currentLabel.Location = New System.Drawing.Point(139, 16)
-        Me.currentLabel.Name = "currentLabel"
-        Me.currentLabel.Size = New System.Drawing.Size(74, 13)
-        Me.currentLabel.TabIndex = 0
-        Me.currentLabel.Text = "Current Value:"
         '
         'newLabel
         '
         Me.newLabel.AutoSize = True
-        Me.newLabel.Location = New System.Drawing.Point(139, 43)
+        Me.newLabel.Location = New System.Drawing.Point(437, 107)
         Me.newLabel.Name = "newLabel"
         Me.newLabel.Size = New System.Drawing.Size(62, 13)
         Me.newLabel.TabIndex = 1
         Me.newLabel.Text = "New Value:"
         '
-        'selectBox
+        'selectPage
         '
-        Me.selectBox.FormattingEnabled = True
-        Me.selectBox.Location = New System.Drawing.Point(9, 12)
-        Me.selectBox.Name = "selectBox"
-        Me.selectBox.Size = New System.Drawing.Size(124, 21)
-        Me.selectBox.TabIndex = 2
-        '
-        'readButton
-        '
-        Me.readButton.Location = New System.Drawing.Point(142, 72)
-        Me.readButton.Name = "readButton"
-        Me.readButton.Size = New System.Drawing.Size(75, 36)
-        Me.readButton.TabIndex = 3
-        Me.readButton.Text = "Read Register"
-        Me.readButton.UseVisualStyleBackColor = True
+        Me.selectPage.FormattingEnabled = True
+        Me.selectPage.Location = New System.Drawing.Point(86, 8)
+        Me.selectPage.Name = "selectPage"
+        Me.selectPage.Size = New System.Drawing.Size(123, 21)
+        Me.selectPage.TabIndex = 2
         '
         'WriteButton
         '
-        Me.WriteButton.Location = New System.Drawing.Point(223, 72)
+        Me.WriteButton.Location = New System.Drawing.Point(547, 134)
         Me.WriteButton.Name = "WriteButton"
         Me.WriteButton.Size = New System.Drawing.Size(75, 36)
         Me.WriteButton.TabIndex = 4
-        Me.WriteButton.Text = "Write Register"
+        Me.WriteButton.Text = "Write Selected"
         Me.WriteButton.UseVisualStyleBackColor = True
         '
-        'currentValueBox
+        'curVal
         '
-        Me.currentValueBox.BackColor = System.Drawing.SystemColors.ControlLightLight
-        Me.currentValueBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.currentValueBox.Location = New System.Drawing.Point(220, 13)
-        Me.currentValueBox.Name = "currentValueBox"
-        Me.currentValueBox.Size = New System.Drawing.Size(78, 20)
-        Me.currentValueBox.TabIndex = 5
+        Me.curVal.Location = New System.Drawing.Point(521, 74)
+        Me.curVal.Name = "curVal"
+        Me.curVal.Size = New System.Drawing.Size(101, 20)
+        Me.curVal.TabIndex = 6
         '
-        'NewInputBox
+        'regView
         '
-        Me.NewInputBox.Location = New System.Drawing.Point(220, 40)
-        Me.NewInputBox.Name = "NewInputBox"
-        Me.NewInputBox.Size = New System.Drawing.Size(78, 20)
-        Me.NewInputBox.TabIndex = 6
+        Me.regView.Location = New System.Drawing.Point(12, 48)
+        Me.regView.Name = "regView"
+        Me.regView.Size = New System.Drawing.Size(419, 300)
+        Me.regView.TabIndex = 7
+        Me.regView.UseCompatibleStateImageBehavior = False
         '
-        'DRFreq
+        'readBtn
         '
-        Me.DRFreq.AutoSize = True
-        Me.DRFreq.Location = New System.Drawing.Point(6, 47)
-        Me.DRFreq.Name = "DRFreq"
-        Me.DRFreq.Size = New System.Drawing.Size(0, 13)
-        Me.DRFreq.TabIndex = 7
+        Me.readBtn.Location = New System.Drawing.Point(440, 134)
+        Me.readBtn.Name = "readBtn"
+        Me.readBtn.Size = New System.Drawing.Size(75, 36)
+        Me.readBtn.TabIndex = 8
+        Me.readBtn.Text = "Read Selected"
+        Me.readBtn.UseVisualStyleBackColor = True
         '
-        'ReadDRFreq
+        'Label1
         '
-        Me.ReadDRFreq.Location = New System.Drawing.Point(9, 72)
-        Me.ReadDRFreq.Name = "ReadDRFreq"
-        Me.ReadDRFreq.Size = New System.Drawing.Size(62, 35)
-        Me.ReadDRFreq.TabIndex = 8
-        Me.ReadDRFreq.Text = "Read DR Freq"
-        Me.ReadDRFreq.UseVisualStyleBackColor = True
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(12, 11)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(68, 13)
+        Me.Label1.TabIndex = 9
+        Me.Label1.Text = "Select Page:"
+        '
+        'refreshBtn
+        '
+        Me.refreshBtn.AutoSize = True
+        Me.refreshBtn.Location = New System.Drawing.Point(308, 10)
+        Me.refreshBtn.Name = "refreshBtn"
+        Me.refreshBtn.Size = New System.Drawing.Size(104, 17)
+        Me.refreshBtn.TabIndex = 10
+        Me.refreshBtn.Text = "Periodic Refresh"
+        Me.refreshBtn.UseVisualStyleBackColor = True
+        '
+        'pageReadBtn
+        '
+        Me.pageReadBtn.Location = New System.Drawing.Point(215, 6)
+        Me.pageReadBtn.Name = "pageReadBtn"
+        Me.pageReadBtn.Size = New System.Drawing.Size(75, 23)
+        Me.pageReadBtn.TabIndex = 11
+        Me.pageReadBtn.Text = "Read Page"
+        Me.pageReadBtn.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(437, 81)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(74, 13)
+        Me.Label2.TabIndex = 12
+        Me.Label2.Text = "Current Value:"
+        '
+        'newVal
+        '
+        Me.newVal.Location = New System.Drawing.Point(521, 100)
+        Me.newVal.Name = "newVal"
+        Me.newVal.Size = New System.Drawing.Size(101, 20)
+        Me.newVal.TabIndex = 13
+        '
+        'regLabel
+        '
+        Me.regLabel.Location = New System.Drawing.Point(521, 48)
+        Me.regLabel.Name = "regLabel"
+        Me.regLabel.Size = New System.Drawing.Size(101, 20)
+        Me.regLabel.TabIndex = 14
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(437, 55)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(49, 13)
+        Me.Label3.TabIndex = 15
+        Me.Label3.Text = "Register:"
         '
         'registerAccessGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(310, 118)
-        Me.Controls.Add(Me.ReadDRFreq)
-        Me.Controls.Add(Me.DRFreq)
-        Me.Controls.Add(Me.NewInputBox)
-        Me.Controls.Add(Me.currentValueBox)
+        Me.ClientSize = New System.Drawing.Size(634, 362)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.regLabel)
+        Me.Controls.Add(Me.newVal)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.pageReadBtn)
+        Me.Controls.Add(Me.refreshBtn)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.readBtn)
+        Me.Controls.Add(Me.regView)
+        Me.Controls.Add(Me.curVal)
         Me.Controls.Add(Me.WriteButton)
-        Me.Controls.Add(Me.readButton)
-        Me.Controls.Add(Me.selectBox)
+        Me.Controls.Add(Me.selectPage)
         Me.Controls.Add(Me.newLabel)
-        Me.Controls.Add(Me.currentLabel)
         Me.Name = "registerAccessGUI"
         Me.Text = "Register Access"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-
-    Friend WithEvents currentLabel As Label
     Friend WithEvents newLabel As Label
-    Friend WithEvents selectBox As ComboBox
-    Friend WithEvents readButton As Button
+    Friend WithEvents selectPage As ComboBox
     Friend WithEvents WriteButton As Button
-    Friend WithEvents currentValueBox As Label
-    Friend WithEvents NewInputBox As TextBox
-    Friend WithEvents DRFreq As Label
-    Friend WithEvents ReadDRFreq As Button
+    Friend WithEvents curVal As TextBox
+    Friend WithEvents regView As ListView
+    Friend WithEvents readBtn As Button
+    Friend WithEvents Label1 As Label
+    Friend WithEvents refreshBtn As CheckBox
+    Friend WithEvents pageReadBtn As Button
+    Friend WithEvents Label2 As Label
+    Friend WithEvents newVal As TextBox
+    Friend WithEvents regLabel As TextBox
+    Friend WithEvents Label3 As Label
 End Class
