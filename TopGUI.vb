@@ -22,6 +22,7 @@ Public Class TopGUI
     Private m_FX3Connected As Boolean
     Private WithEvents m_disconnectTimer As Timer
     Private m_RegMapPath As String
+    Private m_AutoSpi As iSensorAutomotiveSpi
 
     Public Sub New()
 
@@ -280,20 +281,7 @@ Public Class TopGUI
 
     Friend Sub UpdateDutLabel(DutType As DUTType)
         label_DUTType.BackColor = Color.Green
-        label_DUTType.Text = FX3.PartType.ToString()
-
-        'Set the DRactive property to true for IMU, false for ADcmXL
-        'Set the default SCLK and stall times for each
-        If DutType = DUTType.IMU Then
-            FX3.DrActive = True
-            FX3.SclkFrequency = 2000000
-            FX3.StallTime = 25
-        Else
-            FX3.DrActive = False
-            FX3.DrPin = FX3.DIO2
-            FX3.SclkFrequency = 14000000
-            FX3.StallTime = 25
-        End If
+        label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
 
         TestDUT()
 

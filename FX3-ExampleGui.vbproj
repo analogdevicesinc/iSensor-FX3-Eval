@@ -56,10 +56,6 @@
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Api, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\FX3Api.dll</HintPath>
-    </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
     </Reference>
@@ -264,6 +260,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Analog.ICO" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iSensor-FX3-API\FX3Api.vbproj">
+      <Project>{a553cac3-91bb-4ed1-914b-f55f1468b0c6}</Project>
+      <Name>FX3Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

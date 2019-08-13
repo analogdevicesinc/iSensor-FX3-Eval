@@ -35,48 +35,43 @@ Partial Class registerAccessGUI
         'currentLabel
         '
         Me.currentLabel.AutoSize = True
-        Me.currentLabel.Location = New System.Drawing.Point(185, 20)
-        Me.currentLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.currentLabel.Location = New System.Drawing.Point(139, 16)
         Me.currentLabel.Name = "currentLabel"
-        Me.currentLabel.Size = New System.Drawing.Size(99, 17)
+        Me.currentLabel.Size = New System.Drawing.Size(74, 13)
         Me.currentLabel.TabIndex = 0
         Me.currentLabel.Text = "Current Value:"
         '
         'newLabel
         '
         Me.newLabel.AutoSize = True
-        Me.newLabel.Location = New System.Drawing.Point(185, 53)
-        Me.newLabel.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.newLabel.Location = New System.Drawing.Point(139, 43)
         Me.newLabel.Name = "newLabel"
-        Me.newLabel.Size = New System.Drawing.Size(79, 17)
+        Me.newLabel.Size = New System.Drawing.Size(62, 13)
         Me.newLabel.TabIndex = 1
         Me.newLabel.Text = "New Value:"
         '
         'selectBox
         '
         Me.selectBox.FormattingEnabled = True
-        Me.selectBox.Location = New System.Drawing.Point(12, 15)
-        Me.selectBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.selectBox.Location = New System.Drawing.Point(9, 12)
         Me.selectBox.Name = "selectBox"
-        Me.selectBox.Size = New System.Drawing.Size(164, 24)
+        Me.selectBox.Size = New System.Drawing.Size(124, 21)
         Me.selectBox.TabIndex = 2
         '
         'readButton
         '
-        Me.readButton.Location = New System.Drawing.Point(189, 89)
-        Me.readButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.readButton.Location = New System.Drawing.Point(142, 72)
         Me.readButton.Name = "readButton"
-        Me.readButton.Size = New System.Drawing.Size(100, 44)
+        Me.readButton.Size = New System.Drawing.Size(75, 36)
         Me.readButton.TabIndex = 3
         Me.readButton.Text = "Read Register"
         Me.readButton.UseVisualStyleBackColor = True
         '
         'WriteButton
         '
-        Me.WriteButton.Location = New System.Drawing.Point(297, 89)
-        Me.WriteButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.WriteButton.Location = New System.Drawing.Point(223, 72)
         Me.WriteButton.Name = "WriteButton"
-        Me.WriteButton.Size = New System.Drawing.Size(100, 44)
+        Me.WriteButton.Size = New System.Drawing.Size(75, 36)
         Me.WriteButton.TabIndex = 4
         Me.WriteButton.Text = "Write Register"
         Me.WriteButton.UseVisualStyleBackColor = True
@@ -85,44 +80,40 @@ Partial Class registerAccessGUI
         '
         Me.currentValueBox.BackColor = System.Drawing.SystemColors.ControlLightLight
         Me.currentValueBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.currentValueBox.Location = New System.Drawing.Point(293, 16)
-        Me.currentValueBox.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.currentValueBox.Location = New System.Drawing.Point(220, 13)
         Me.currentValueBox.Name = "currentValueBox"
-        Me.currentValueBox.Size = New System.Drawing.Size(103, 24)
+        Me.currentValueBox.Size = New System.Drawing.Size(78, 20)
         Me.currentValueBox.TabIndex = 5
         '
         'NewInputBox
         '
-        Me.NewInputBox.Location = New System.Drawing.Point(293, 49)
-        Me.NewInputBox.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.NewInputBox.Location = New System.Drawing.Point(220, 40)
         Me.NewInputBox.Name = "NewInputBox"
-        Me.NewInputBox.Size = New System.Drawing.Size(103, 22)
+        Me.NewInputBox.Size = New System.Drawing.Size(78, 20)
         Me.NewInputBox.TabIndex = 6
         '
         'DRFreq
         '
         Me.DRFreq.AutoSize = True
-        Me.DRFreq.Location = New System.Drawing.Point(8, 58)
-        Me.DRFreq.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.DRFreq.Location = New System.Drawing.Point(6, 47)
         Me.DRFreq.Name = "DRFreq"
-        Me.DRFreq.Size = New System.Drawing.Size(0, 17)
+        Me.DRFreq.Size = New System.Drawing.Size(0, 13)
         Me.DRFreq.TabIndex = 7
         '
         'ReadDRFreq
         '
-        Me.ReadDRFreq.Location = New System.Drawing.Point(12, 89)
-        Me.ReadDRFreq.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ReadDRFreq.Location = New System.Drawing.Point(9, 72)
         Me.ReadDRFreq.Name = "ReadDRFreq"
-        Me.ReadDRFreq.Size = New System.Drawing.Size(83, 43)
+        Me.ReadDRFreq.Size = New System.Drawing.Size(62, 35)
         Me.ReadDRFreq.TabIndex = 8
         Me.ReadDRFreq.Text = "Read DR Freq"
         Me.ReadDRFreq.UseVisualStyleBackColor = True
         '
         'registerAccessGUI
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(407, 146)
+        Me.ClientSize = New System.Drawing.Size(310, 118)
         Me.Controls.Add(Me.ReadDRFreq)
         Me.Controls.Add(Me.DRFreq)
         Me.Controls.Add(Me.NewInputBox)
@@ -132,7 +123,6 @@ Partial Class registerAccessGUI
         Me.Controls.Add(Me.selectBox)
         Me.Controls.Add(Me.newLabel)
         Me.Controls.Add(Me.currentLabel)
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "registerAccessGUI"
         Me.Text = "Register Access"
         Me.ResumeLayout(False)
