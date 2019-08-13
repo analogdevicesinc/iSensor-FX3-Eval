@@ -85,6 +85,10 @@ Public Class TopGUI
         'Add exception handler
         AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf GeneralErrorHandler
 
+        'Set up autospi
+        m_AutoSpi = New iSensorAutomotiveSpi(FX3)
+        m_AutoSpi.IgnoreExceptions = True
+
     End Sub
 
 #Region "Properties"
@@ -210,15 +214,6 @@ Public Class TopGUI
     Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
         'Whatever code you want
 
-        Dim timer As New Stopwatch()
-        timer.Start()
-        For i As Integer = 0 To 10000
-            Dut.ReadUnsigned(RegMap("MSC_CTRL"))
-        Next
-        timer.Stop()
-        MsgBox(timer.ElapsedMilliseconds() / 10000)
-
-
     End Sub
 
 #End Region
@@ -282,6 +277,19 @@ Public Class TopGUI
     Friend Sub UpdateDutLabel(DutType As DUTType)
         label_DUTType.BackColor = Color.Green
         label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
+
+        'Set the DUT
+        If FX3.PartType = DUTType.ADcmXL3021 Then
+            Dut = New AdcmInterface3Axis(FX3)
+        ElseIf FX3.PartType = DUTType.ADcmXL2021 Then
+            Dut = New AdcmInterface2Axis(FX3)
+        ElseIf FX3.PartType = DUTType.ADcmXL1021 Then
+            Dut = New AdcmInterface1Axis(FX3)
+        ElseIf FX3.SensorType = DeviceType.AutomotiveSpi Then
+            Dut = New ZeusInterface(m_AutoSpi, Nothing)
+        Else
+            Dut = New adbfInterface(FX3, Nothing)
+        End If
 
         TestDUT()
 
@@ -351,13 +359,13 @@ Public Class TopGUI
         btn_RegAccess.Select()
 
         'Test the DUT
-        TestDUT()
+        UpdateDutLabel(FX3.PartType)
 
     End Sub
 
     Private Function ResetAllFX3s() As Boolean
         Dim answer = MsgBox("This will reset all " + FX3.BusyFX3s.Count.ToString() + " connected FX3 board(s). Are you sure you want to continue?", MsgBoxStyle.OkCancel)
-        If answer = MsgBoxResult.Cancel Then
+        If answer <> MsgBoxResult.Ok Then
             Return False
         End If
         btn_Connect.Enabled = False
@@ -398,7 +406,7 @@ Public Class TopGUI
         label_FX3Status.Text = "Not Connected"
         label_FX3Status.BackColor = Color.Yellow
         label_DUTType.BackColor = Color.Green
-        label_DUTType.Text = FX3.PartType.ToString()
+        label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
     End Sub
 
     ''' <summary>
@@ -446,16 +454,6 @@ Public Class TopGUI
             End Try
         End If
         Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
-
-        If FX3.PartType = DUTType.ADcmXL3021 Then
-            Dut = New AdcmInterface3Axis(FX3)
-        ElseIf FX3.PartType = DUTType.ADcmXL2021 Then
-            Dut = New AdcmInterface2Axis(FX3)
-        ElseIf FX3.PartType = DUTType.ADcmXL1021 Then
-            Dut = New AdcmInterface1Axis(FX3)
-        Else
-            Dut = New adbfInterface(FX3, Nothing)
-        End If
 
         Dut.WriteUnsigned(scratchReg, randomValue)
         If Not Dut.ReadUnsigned(scratchReg) = randomValue Then
