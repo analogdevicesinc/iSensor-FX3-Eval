@@ -23,15 +23,15 @@ Public Class PinAccessGUI
         dgvPinList.Columns.Clear()
 
         col = New DataGridViewTextBoxColumn
-        col.DataPropertyName = "PinLabel"
-        col.Name = "Pin"
-        col.Width = 120
+        col.HeaderText = "Pin"
+        col.SortMode = DataGridViewColumnSortMode.NotSortable
+        col.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         dgvPinList.Columns.Add(col)
 
         col = New DataGridViewTextBoxColumn
-        col.DataPropertyName = "State"
-        col.Name = "High/Low"
+        col.HeaderText = "High/Low"
         col.Width = 60
+        col.SortMode = DataGridViewColumnSortMode.NotSortable
         col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         dgvPinList.Columns.Add(col)
 
@@ -55,12 +55,20 @@ Public Class PinAccessGUI
         Next
 
         ' makes the width of the dgv the same as the width of the columns
-        'dgvPinList.Width = dgvPinList.Columns.GetColumnsWidth(DataGridViewElementStates.Visible) + 1
-        'dgvPinList.Height = dgvPinList.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + 1
+        dgvPinList.Height = dgvPinList.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + dgvPinList.ColumnHeadersHeight + 2
         ' prevent it from auto selecting a pin
         dgvPinList.ClearSelection()
         ' allows the chart to update
         dgvPinList.ResumeLayout()
+
+        ' set up pulse drive stuff
+        ComboBoxHighLow.Items.Add("High")
+        ComboBoxHighLow.Items.Add("Low")
+        ComboBoxHighLow.DropDownStyle = ComboBoxStyle.DropDownList
+        ComboBoxMode.Items.Add("Not implemented")
+        ComboBoxMode.DropDownStyle = ComboBoxStyle.DropDownList
+        ComboBoxMode.SelectedIndex = 0
+        ' TODO: add options for mode selection
     End Sub
 
     Private Sub updatePinGrid()
@@ -119,5 +127,45 @@ Public Class PinAccessGUI
 
     Private Sub ButtonReadAll_Click(sender As Object, e As EventArgs) Handles ButtonReadAll.Click
         updatePinGrid()
+    End Sub
+
+    Private Sub ButtonPulseDrive_Click(sender As Object, e As EventArgs) Handles ButtonPulseDrive.Click
+        Dim period As Double = 0
+        Dim level As Boolean
+        Dim mode As UInteger = 0
+        Dim pin As IPinObject
+
+        If dgvPinList.SelectedRows.Count = 0 Then
+            MsgBox("No pin selected.", MsgBoxStyle.Exclamation)
+            Exit Sub
+        End If
+
+        Try
+            pin = pins(dgvPinList.SelectedRows(0).Cells(0).Value.ToUpper)
+        Catch
+            MsgBox("Key not found in dictionary", MsgBoxStyle.Exclamation)
+            Exit Sub
+        End Try
+
+        ' get period
+        Try
+            period = Convert.ToDouble(TextBoxPeriod.Text)
+        Catch
+            MsgBox("Invalid entry in Period box. Must be a double or integer.", MsgBoxStyle.Exclamation)
+            Exit Sub
+        End Try
+
+        ' get level
+        If ComboBoxHighLow.Text = "High" Then
+            level = 1
+        ElseIf ComboBoxHighLow.Text = "Low" Then
+            level = 0
+        Else
+            MsgBox("No level selected.", MsgBoxStyle.Exclamation)
+        End If
+        ' get mode
+        ' TODO: get mode once it is implemented
+
+        TopGUI.FX3.PulseDrive(pin, level, period, mode)
     End Sub
 End Class
