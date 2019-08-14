@@ -56,7 +56,7 @@
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Api, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="FX3Api, Version=2.0.1.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\FX3Api.dll</HintPath>
     </Reference>
@@ -103,6 +103,12 @@
     <Compile Include="FormBase.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FormRegisters.designer.vb">
+      <DependentUpon>FormRegisters.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FormRegisters.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="IMUStreamingGUI.designer.vb">
       <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
     </Compile>
@@ -141,12 +147,6 @@
       <DependentUpon>PWMSetupGUI.vb</DependentUpon>
     </Compile>
     <Compile Include="PWMSetupGUI.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RegisterAccessGUI.designer.vb">
-      <DependentUpon>RegisterAccessGUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="RegisterAccessGUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SelectDUTGUI.Designer.vb">
@@ -199,6 +199,9 @@
     <EmbeddedResource Include="FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormRegisters.resx">
+      <DependentUpon>FormRegisters.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="IMUStreamingGUI.resx">
       <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
     </EmbeddedResource>
@@ -213,9 +216,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PWMSetupGUI.resx">
       <DependentUpon>PWMSetupGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RegisterAccessGUI.resx">
-      <DependentUpon>RegisterAccessGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectDUTGUI.resx">
       <DependentUpon>SelectDUTGUI.vb</DependentUpon>

@@ -260,7 +260,8 @@ FX3Api
 </member>
 <member name="P:FX3Api.FX3Connection.SensorType">
  <summary>
- Readonly property to get the device type the FX3Interface was initialized for
+ Property to get the device family type the FX3 was initialized for. Setting this property restores all SPI settings to the
+ default for the selected device family.
  </summary>
  <returns>The current device mode, as an FX3Interface.DeviceType</returns>
 </member>
@@ -380,6 +381,20 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <remarks></remarks>
  <exception cref="T:System.InvalidOperationException">Thrown if word count has not been set.</exception>
+</member>
+<member name="M:FX3Api.FX3Connection.WaitForStreamCompletion">
+ <summary>
+ Overload of WaitForStreamCompletion which blocks forever
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.WaitForStreamCompletion(System.Int32)">
+ <summary>
+ Blocks until the streaming endpoint mutex can be aquired. Allows a user to synchronize external application
+ the completion of a stream. Returns false if there is not a stream running, or if the timeout is reached without
+ the stream mutex being aquired.
+ </summary>
+ <param name="MillisecondsTimeout">The time to wait trying to aquire the stream mutex</param>
+ <returns>If the stream wait was successful</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.StartBurstStream(System.UInt32)">
  <summary>
@@ -783,6 +798,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  This function sends a reset command to the specified FX3 board, or does nothing if no board is connected
  </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.Disconnect(System.String)">
+ <summary>
+ Overload of Disconnect which lets you specify the FX3 serial number to disconnect. Returns a boolean
+ indicating if the board was disconnected.
+ </summary>
+ <param name="FX3SerialNumber"></param>
 </member>
 <member name="M:FX3Api.FX3Connection.WaitForBoard(System.Int32)">
  <summary>
