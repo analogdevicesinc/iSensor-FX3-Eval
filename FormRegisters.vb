@@ -66,7 +66,7 @@ Public Class FormRegisters
 
         Dim regIndex As Integer = 0
         For Each value In DutValues
-            regView.Item("Contents", regIndex).Value = "0x" + value.ToString("x")
+            regView.Item("Contents", regIndex).Value = value.ToString("x")
             regIndex += 1
         Next
 
@@ -136,7 +136,7 @@ Public Class FormRegisters
         Try
             regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
             value = TopGUI.Dut.ReadUnsigned(TopGUI.RegMap(regLabel))
-            CurrentValue.Text = "0x" + value.ToString("x")
+            CurrentValue.Text = value.ToString("x")
         Catch ex As Exception
             CurrentValue.Text = "ERROR"
         End Try
