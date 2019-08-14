@@ -145,7 +145,7 @@ Partial Class TopGUI
         Me.label_DUTType.Name = "label_DUTType"
         Me.label_DUTType.Size = New System.Drawing.Size(334, 16)
         Me.label_DUTType.TabIndex = 19
-        Me.label_DUTType.Text = "Ok"
+        Me.label_DUTType.Text = "Not Set"
         Me.label_DUTType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'btn_RealTime
