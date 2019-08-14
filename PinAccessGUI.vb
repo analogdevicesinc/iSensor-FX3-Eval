@@ -90,14 +90,13 @@ Public Class PinAccessGUI
     Private Sub writeLevel(level As Boolean)
         Dim currPin As IPinObject
         Dim pinName As String
-        If dgvPinList.SelectedRows.Count = 0 Then
-            MsgBox("No pin selected.", MsgBoxStyle.Exclamation)
+        If Not PinSelected() Then
             Exit Sub
-        Else
-            ' grid is set up to only allow one row selection
-            Dim selectedRow As DataGridViewRow = dgvPinList.SelectedRows(0)
-            pinName = selectedRow.Cells(0).Value
         End If
+        ' grid is set up to only allow one row selection
+        Dim selectedRow As DataGridViewRow = dgvPinList.SelectedRows(0)
+            pinName = selectedRow.Cells(0).Value
+
         Try
             currPin = pins(pinName.ToUpper)
         Catch
@@ -135,8 +134,7 @@ Public Class PinAccessGUI
         Dim mode As UInteger = 0
         Dim pin As IPinObject
 
-        If dgvPinList.SelectedRows.Count = 0 Then
-            MsgBox("No pin selected.", MsgBoxStyle.Exclamation)
+        If Not PinSelected() Then
             Exit Sub
         End If
 
@@ -150,8 +148,11 @@ Public Class PinAccessGUI
         ' get period
         Try
             period = Convert.ToDouble(TextBoxPeriod.Text)
+            If period < 0 Then
+                Throw New Exception("Negative values are invalid")
+            End If
         Catch
-            MsgBox("Invalid entry in Period box. Must be a double or integer.", MsgBoxStyle.Exclamation)
+            MsgBox("Invalid entry in Period box. Must be a positive double or integer.", MsgBoxStyle.Exclamation)
             Exit Sub
         End Try
 
@@ -168,4 +169,30 @@ Public Class PinAccessGUI
 
         TopGUI.FX3.PulseDrive(pin, level, period, mode)
     End Sub
+
+    Private Sub ButtonReadSelected_Click(sender As Object, e As EventArgs) Handles ButtonReadSelected.Click
+        If Not PinSelected() Then
+            Exit Sub
+        End If
+        Dim currPin As IPinObject = pins(dgvPinList.SelectedRows(0).Cells(0).Value.ToString.ToUpper)
+        Dim state As String
+        If TopGUI.FX3.isPWMPin(currPin) Then
+            ' only throw a message on first load, doing it repeatedly would be annoying
+            state = "PWM"
+        ElseIf TopGUI.FX3.ReadPin(currPin) = 0 Then
+            state = "Low"
+        Else
+            state = "High"
+        End If
+        dgvPinList.SelectedRows(0).Cells(1).Value = state
+    End Sub
+
+    Private Function PinSelected() As Boolean
+        If dgvPinList.SelectedRows.Count = 0 Then
+            MsgBox("No pin selected.", MsgBoxStyle.Exclamation)
+            Return False
+        Else
+            Return True
+        End If
+    End Function
 End Class

@@ -33,6 +33,7 @@ Partial Class PinAccessGUI
         Me.LabelPeriod = New System.Windows.Forms.Label()
         Me.TextBoxPeriod = New System.Windows.Forms.TextBox()
         Me.LabelHighLow = New System.Windows.Forms.Label()
+        Me.ButtonReadSelected = New System.Windows.Forms.Button()
         CType(Me.dgvPinList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -152,11 +153,21 @@ Partial Class PinAccessGUI
         Me.LabelHighLow.TabIndex = 11
         Me.LabelHighLow.Text = "High/Low"
         '
+        'ButtonReadSelected
+        '
+        Me.ButtonReadSelected.Location = New System.Drawing.Point(216, 241)
+        Me.ButtonReadSelected.Name = "ButtonReadSelected"
+        Me.ButtonReadSelected.Size = New System.Drawing.Size(75, 64)
+        Me.ButtonReadSelected.TabIndex = 18
+        Me.ButtonReadSelected.Text = "Read Selected"
+        Me.ButtonReadSelected.UseVisualStyleBackColor = True
+        '
         'PinAccessGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(525, 327)
+        Me.Controls.Add(Me.ButtonReadSelected)
         Me.Controls.Add(Me.ButtonPulseDrive)
         Me.Controls.Add(Me.ComboBoxMode)
         Me.Controls.Add(Me.ComboBoxHighLow)
@@ -188,4 +199,5 @@ Partial Class PinAccessGUI
     Friend WithEvents LabelPeriod As Label
     Friend WithEvents TextBoxPeriod As TextBox
     Friend WithEvents LabelHighLow As Label
+    Friend WithEvents ButtonReadSelected As Button
 End Class
