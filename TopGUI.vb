@@ -26,7 +26,8 @@ Public Class TopGUI
 
     Public Sub New()
 
-        ' This call is required by the designer.
+        ' This call is required by the designer.]]'
+
         InitializeComponent()
 
         Dim firmwarePath As String
@@ -88,6 +89,7 @@ Public Class TopGUI
         'Set up autospi
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
+        'm_AutoSpi.IgnoreCRCExceptions = False
 
     End Sub
 
@@ -210,6 +212,35 @@ Public Class TopGUI
         subGUI.Show()
         Me.Hide()
     End Sub
+
+    Private Function CaptureSignedRegisters(reglist As IEnumerable(Of RegClass), numBuffers As UInteger) As String()
+
+        Dim regValues As Long()
+        Dim Index As Integer
+        Dim tempStr As String
+        Dim valuesStr As New List(Of String)
+
+        regValues = Dut.ReadSigned(reglist, 1UI, numBuffers)
+
+        valuesStr = New List(Of String)
+        valuesStr.Add("")
+        For Each reg In reglist
+            valuesStr(0) = valuesStr(0) + reg.Label + ","
+        Next
+
+        Index = 0
+        For buf As Integer = 0 To numBuffers - 1
+            tempStr = ""
+            For Each reg In reglist
+                tempStr = tempStr + regValues(Index).ToString() + ","
+                Index += 1
+            Next
+            valuesStr.Add(tempStr)
+        Next
+
+        Return valuesStr.ToArray()
+
+    End Function
 
     Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
         'Whatever code you want
@@ -438,21 +469,21 @@ Public Class TopGUI
         End If
 
         Dim scratchReg As RegClass = Nothing
+        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1"}
 
-        Try
-            scratchReg = RegMap("USER_SCRATCH")
-        Catch ex As Exception
-        End Try
+        For Each regName In scratchRegNames
+            If RegMap.Contains(regName) Then
+                scratchReg = RegMap(regName)
+                Exit For
+            End If
+        Next
 
         If IsNothing(scratchReg) Then
-            Try
-                scratchReg = RegMap("USER_SCR_2")
-            Catch ex As Exception
-                label_DUTStatus.Text = "ERROR: No Scratch Register in RegMap"
-                label_DUTStatus.BackColor = Color.Red
-                Exit Sub
-            End Try
+            label_DUTStatus.Text = "ERROR: No Scratch Register in RegMap"
+            label_DUTStatus.BackColor = Color.Red
+            Exit Sub
         End If
+
         Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
 
         Dut.WriteUnsigned(scratchReg, randomValue)

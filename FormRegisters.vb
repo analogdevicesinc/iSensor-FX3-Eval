@@ -172,4 +172,25 @@ Public Class FormRegisters
             End If
         Next
     End Sub
+
+    Private Sub btn_DumpRegmap_Click(sender As Object, e As EventArgs) Handles btn_DumpRegmap.Click
+        Dim readableRegMap As New List(Of RegClass)
+        For Each reg In TopGUI.RegMap
+            If reg.IsReadable Then
+                readableRegMap.Add(reg)
+            End If
+        Next
+
+        Dim values() As UInteger
+        values = TopGUI.Dut.ReadUnsigned(readableRegMap)
+        Dim strValues As New List(Of String)
+
+        strValues.Add("Register, Value")
+        Dim index As Integer = 0
+        For Each reg In readableRegMap
+            strValues.Add(reg.Label + "," + values(index).ToString())
+            index += 1
+        Next
+        saveCSV("RegDump", strValues.ToArray())
+    End Sub
 End Class

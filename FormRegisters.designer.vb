@@ -44,6 +44,7 @@ Partial Class FormRegisters
         Me.measureDr = New System.Windows.Forms.CheckBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.btn_DumpRegmap = New System.Windows.Forms.Button()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -262,11 +263,21 @@ Partial Class FormRegisters
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Control"
         '
+        'btn_DumpRegmap
+        '
+        Me.btn_DumpRegmap.Location = New System.Drawing.Point(479, 481)
+        Me.btn_DumpRegmap.Name = "btn_DumpRegmap"
+        Me.btn_DumpRegmap.Size = New System.Drawing.Size(83, 47)
+        Me.btn_DumpRegmap.TabIndex = 30
+        Me.btn_DumpRegmap.Text = "Dump RegMap"
+        Me.btn_DumpRegmap.UseVisualStyleBackColor = True
+        '
         'FormRegisters
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(622, 540)
+        Me.Controls.Add(Me.btn_DumpRegmap)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox3)
@@ -309,4 +320,5 @@ Partial Class FormRegisters
     Friend WithEvents GroupBox5 As System.Windows.Forms.GroupBox
     Friend WithEvents scaledData As CheckBox
     Friend WithEvents measureDr As CheckBox
+    Friend WithEvents btn_DumpRegmap As Button
 End Class

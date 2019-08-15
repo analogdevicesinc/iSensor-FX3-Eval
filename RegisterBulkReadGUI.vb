@@ -39,6 +39,7 @@ Public Class RegisterBulkReadGUI
         End If
 
         MeasureDR.Enabled = TopGUI.FX3.DrActive
+        DrActiveBox.Checked = TopGUI.FX3.DrActive
 
     End Sub
 
@@ -247,6 +248,11 @@ Public Class RegisterBulkReadGUI
 
     Private Sub NumberDRToCapture_TextChanged(sender As Object, e As EventArgs) Handles NumberDRToCapture.TextChanged
         UpdateGUI()
+    End Sub
+
+    Private Sub DrActiveBox_CheckedChanged(sender As Object, e As EventArgs) Handles DrActiveBox.CheckedChanged
+        TopGUI.FX3.DrActive = DrActiveBox.Checked
+        MeasureDR.Enabled = TopGUI.FX3.DrActive
     End Sub
 
 End Class

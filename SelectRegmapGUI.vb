@@ -43,7 +43,7 @@ Public Class SelectRegmapGUI
                     SelectRegmapComboBox.Items.Add(item)
                 Next
                 ' default option
-                SelectRegmapComboBox.SelectedIndex = 1
+                SelectRegmapComboBox.SelectedIndex = 0
             End If
         End If
 

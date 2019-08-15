@@ -177,7 +177,7 @@ Partial Class TopGUI
         '
         'btn_FX3Config
         '
-        Me.btn_FX3Config.Location = New System.Drawing.Point(12, 219)
+        Me.btn_FX3Config.Location = New System.Drawing.Point(11, 219)
         Me.btn_FX3Config.Name = "btn_FX3Config"
         Me.btn_FX3Config.Size = New System.Drawing.Size(75, 64)
         Me.btn_FX3Config.TabIndex = 23
@@ -213,7 +213,7 @@ Partial Class TopGUI
         '
         'btn_measurePulse
         '
-        Me.btn_measurePulse.Location = New System.Drawing.Point(254, 219)
+        Me.btn_measurePulse.Location = New System.Drawing.Point(255, 219)
         Me.btn_measurePulse.Name = "btn_measurePulse"
         Me.btn_measurePulse.Size = New System.Drawing.Size(75, 64)
         Me.btn_measurePulse.TabIndex = 27
