@@ -149,14 +149,14 @@ Partial Class FormRegisters
         '
         'CurrentValue
         '
-        Me.CurrentValue.AutoSize = True
         Me.CurrentValue.BackColor = System.Drawing.Color.White
         Me.CurrentValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CurrentValue.Location = New System.Drawing.Point(13, 39)
+        Me.CurrentValue.Location = New System.Drawing.Point(13, 34)
         Me.CurrentValue.Name = "CurrentValue"
-        Me.CurrentValue.Size = New System.Drawing.Size(80, 15)
+        Me.CurrentValue.Size = New System.Drawing.Size(72, 20)
         Me.CurrentValue.TabIndex = 16
-        Me.CurrentValue.Text = "lblCurrentValue"
+        Me.CurrentValue.Text = "Not Read"
+        Me.CurrentValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ButtonRead
         '
@@ -265,7 +265,7 @@ Partial Class FormRegisters
         '
         'btn_DumpRegmap
         '
-        Me.btn_DumpRegmap.Location = New System.Drawing.Point(479, 481)
+        Me.btn_DumpRegmap.Location = New System.Drawing.Point(470, 481)
         Me.btn_DumpRegmap.Name = "btn_DumpRegmap"
         Me.btn_DumpRegmap.Size = New System.Drawing.Size(83, 47)
         Me.btn_DumpRegmap.TabIndex = 30

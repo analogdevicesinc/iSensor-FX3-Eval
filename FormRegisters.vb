@@ -7,6 +7,7 @@ Public Class FormRegisters
 
     Private pageList As List(Of Integer)
     Private pageReadTimer As Timer
+    Private drReadTimer As Timer
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
 
@@ -31,7 +32,13 @@ Public Class FormRegisters
 
         pageReadTimer = New Timer(500)
         pageReadTimer.Enabled = False
-        AddHandler pageReadTimer.Elapsed, New ElapsedEventHandler(AddressOf TimerCallback)
+        AddHandler pageReadTimer.Elapsed, New ElapsedEventHandler(AddressOf PageReadCallback)
+
+        drReadTimer = New Timer(500)
+        drReadTimer.Enabled = False
+        AddHandler drReadTimer.Elapsed, New ElapsedEventHandler(AddressOf DrReadCallBack)
+
+        measureDr.Enabled = TopGUI.FX3.DrActive
     End Sub
 
     Private Sub FormRegisters_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -68,12 +75,13 @@ Public Class FormRegisters
                 readRegList.Add(New RegClass With {.Page = 0, .Address = 0})
             End If
         Next
+
         If scaleData Then
             Dim DutValuesDoub() As Double
             DutValuesDoub = TopGUI.Dut.ReadScaledValue(readRegList)
             Dim regIndex As Integer = 0
             For Each value In DutValuesDoub
-                regView.Item("Contents", regIndex).Value = value.ToString("X")
+                regView.Item("Contents", regIndex).Value = value.ToString()
                 regIndex += 1
             Next
         Else
@@ -88,18 +96,47 @@ Public Class FormRegisters
 
     End Sub
 
-    Private Sub TimerCallback()
+    Private Sub regView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles regView.CellClick
+        Dim regLabel As String
+        Try
+            regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
+            If scaleData Then
+                Dim value As Double
+                value = TopGUI.Dut.ReadScaledValue(TopGUI.RegMap(regLabel))
+                CurrentValue.Text = value.ToString()
+                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString()
+            Else
+                Dim value As UInteger
+                value = TopGUI.Dut.ReadUnsigned(TopGUI.RegMap(regLabel))
+                CurrentValue.Text = value.ToString("X")
+                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("X")
+            End If
+        Catch ex As Exception
+            CurrentValue.Text = "ERROR"
+        End Try
+    End Sub
+
+    Private Sub PageReadCallback()
         Me.BeginInvoke(New MethodInvoker(AddressOf ReadPage))
     End Sub
 
+    Private Sub DrReadCallBack()
+        Me.BeginInvoke(New MethodInvoker(AddressOf ReadDrFreq))
+    End Sub
+
+    Private Sub ReadDrFreq()
+        DrFreq.Text = TopGUI.FX3.ReadDRFreq(TopGUI.FX3.DrPin, 1, 10000).ToString() + "Hz"
+    End Sub
+
     Private Sub closingTimerKill() Handles Me.FormClosing
+        'Kill any running timers
         pageReadTimer.Enabled = False
+        drReadTimer.Enabled = False
     End Sub
 
     Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged
 
         'Load all the the registers on the given page into the data grid view
-        currentRegList = New List(Of RegClass)
         initializedDataGrid()
 
         While regView.RowCount > currentRegList.Count()
@@ -113,32 +150,7 @@ Public Class FormRegisters
     End Sub
 
     Private Sub contRead_CheckedChanged(sender As Object, e As EventArgs) Handles contRead.CheckedChanged
-        If contRead.Checked Then
-            'start a timer to read the selected page every 250ms
-            pageReadTimer.Enabled = True
-        Else
-            'stop the timer
-            pageReadTimer.Enabled = False
-        End If
-    End Sub
-
-    Private Sub regView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles regView.CellClick
-        Dim value As UInteger = 0
-        Dim regLabel As String
-
-        Try
-            regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
-            If scaleData Then
-                value = TopGUI.Dut.ReadScaledValue(TopGUI.RegMap(regLabel))
-            Else
-                value = TopGUI.Dut.ReadUnsigned(TopGUI.RegMap(regLabel))
-            End If
-
-            CurrentValue.Text = value.ToString("X")
-            regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("X")
-        Catch ex As Exception
-            CurrentValue.Text = "ERROR"
-        End Try
+        pageReadTimer.Enabled = contRead.Checked
     End Sub
 
     Private Sub scaledData_CheckedChanged(sender As Object, e As EventArgs) Handles scaledData.CheckedChanged
@@ -151,6 +163,7 @@ Public Class FormRegisters
         Dim regStr(3) As String
         Dim readStr As String
         Dim regIndex As Integer = 0
+        currentRegList = New List(Of RegClass)
         For Each reg In TopGUI.RegMap
             If reg.Page = selectPage.SelectedItem Then
                 currentRegList.Add(reg)
@@ -193,4 +206,9 @@ Public Class FormRegisters
         Next
         saveCSV("RegDump", strValues.ToArray())
     End Sub
+
+    Private Sub measureDr_CheckedChanged(sender As Object, e As EventArgs) Handles measureDr.CheckedChanged
+        drReadTimer.Enabled = measureDr.Checked
+    End Sub
+
 End Class
