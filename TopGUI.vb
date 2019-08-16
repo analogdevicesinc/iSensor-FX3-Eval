@@ -261,8 +261,15 @@ Public Class TopGUI
     End Sub
 
     Private Sub Cleanup(sender As Object, e As EventArgs) Handles Me.Closing
+
+        'Save settings
+        My.Settings.DeviceType = FX3.PartType
+        My.Settings.SensorType = FX3.SensorType
+        My.Settings.Save()
+
         'Disconnect the FX3 (does nothing if not already connected)
         FX3.Disconnect()
+
     End Sub
 
     'General exception handeler
@@ -388,6 +395,10 @@ Public Class TopGUI
 
         'Select register access button initially
         btn_RegAccess.Select()
+
+        'Load settings
+        FX3.SensorType = My.Settings.SensorType
+        FX3.PartType = My.Settings.DeviceType
 
         'Test the DUT
         UpdateDutLabel(FX3.PartType)
