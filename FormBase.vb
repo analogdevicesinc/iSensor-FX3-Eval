@@ -11,9 +11,6 @@ Public Class FormBase
         Me.Left = My.Forms.TopGUI.Left
         Me.Top = My.Forms.TopGUI.Top
 
-        'Fix the size
-        Me.MaximumSize = Me.Size
-        Me.MinimumSize = Me.Size
     End Sub
 
     Public Sub Cleanup() Handles Me.Closing
