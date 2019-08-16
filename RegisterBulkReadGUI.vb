@@ -41,10 +41,21 @@ Public Class RegisterBulkReadGUI
         MeasureDR.Enabled = TopGUI.FX3.DrActive
         DrActiveBox.Checked = TopGUI.FX3.DrActive
 
+        ListView1.Items.Clear()
+        For Each item In TopGUI.BulkRegList
+            ListView1.Items.Add(item)
+        Next
+
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        TopGUI.Show()
+        'Save the listview contents
+
+        TopGUI.BulkRegList.Clear()
+        For Each item In ListView1.Items
+            TopGUI.BulkRegList.Add(item)
+        Next
+
     End Sub
 
     Private Sub StreamingAVAR_Load(sender As Object, e As EventArgs) Handles MyBase.Load

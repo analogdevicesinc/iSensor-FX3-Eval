@@ -43,10 +43,20 @@ Public Class SelectRegmapGUI
                     SelectRegmapComboBox.Items.Add(item)
                 Next
                 ' default option
-                SelectRegmapComboBox.SelectedIndex = 0
+                Try
+                    SelectRegmapComboBox.SelectedIndex = My.Settings.SelectedRegMapIndex
+                Catch ex As Exception
+                    SelectRegmapComboBox.SelectedIndex = 0
+                End Try
+
             End If
         End If
 
+    End Sub
+
+    Public Sub Setup() Handles Me.Load
+        Me.Top = My.Settings.LastTop
+        Me.Left = My.Settings.LastLeft
     End Sub
 
     Public ReadOnly Property SelectedPath() As String
@@ -68,6 +78,7 @@ Public Class SelectRegmapGUI
     End Sub
 
     Private Sub OKButton_Click(sender As Object, e As EventArgs) Handles OKButton.Click
+        My.Settings.SelectedRegMapIndex = SelectRegmapComboBox.SelectedIndex
         m_selectedpath = SelectRegmapComboBox.SelectedItem
         ValidatePath()
     End Sub

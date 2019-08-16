@@ -77,6 +77,42 @@ Namespace My
                 Me("DeviceType") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property SelectedRegMapIndex() As Integer
+            Get
+                Return CType(Me("SelectedRegMapIndex"),Integer)
+            End Get
+            Set
+                Me("SelectedRegMapIndex") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+        Public Property LastTop() As Integer
+            Get
+                Return CType(Me("LastTop"),Integer)
+            End Get
+            Set
+                Me("LastTop") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+        Public Property LastLeft() As Integer
+            Get
+                Return CType(Me("LastLeft"),Integer)
+            End Get
+            Set
+                Me("LastLeft") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

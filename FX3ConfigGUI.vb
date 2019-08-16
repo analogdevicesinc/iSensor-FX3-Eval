@@ -47,8 +47,9 @@ Public Class FX3ConfigGUI
         dataReadyPinInput.Items.Add("DIO4")
 
         SelectedRegMap.Text = TopGUI.RegMapPath.Substring(TopGUI.RegMapPath.LastIndexOf("\") + 1)
-        SelectedRegMap.ReadOnly = True
         m_regmappath = ""
+
+        StallCyclesInput.ReadOnly = True
 
         UpdateFields()
 
@@ -211,9 +212,6 @@ Public Class FX3ConfigGUI
         If Not stallTime = TopGUI.FX3.StallTime Then
             TopGUI.FX3.StallTime = stallTime
             stallCycles = (TopGUI.FX3.StallTime / 1000000) / (1 / TopGUI.FX3.SclkFrequency)
-        ElseIf Not stallCycles = (TopGUI.FX3.StallTime / 1000000) / (1 / TopGUI.FX3.SclkFrequency) Then
-            stallTime = (stallCycles * (1 / TopGUI.FX3.SclkFrequency)) * 1000000
-            TopGUI.FX3.StallTime = stallTime
         End If
 
         If dataReadyActiveInput.SelectedItem = "True: Data ready active" Then
@@ -251,10 +249,6 @@ Public Class FX3ConfigGUI
 
         UpdateFields()
 
-    End Sub
-
-    Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        TopGUI.Show()
     End Sub
 
     Private Sub SelectedRegMap_TextChanged(sender As Object, e As EventArgs) Handles SelectedRegMap.Click

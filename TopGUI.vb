@@ -18,6 +18,9 @@ Public Class TopGUI
     Public RegMap As RegMapCollection
     Public Dut As IDutInterface
 
+    'List of listviewitems for bulk register read
+    Public BulkRegList As List(Of ListViewItem)
+
     'Private member variables
     Private m_FX3Connected As Boolean
     Private WithEvents m_disconnectTimer As Timer
@@ -67,6 +70,9 @@ Public Class TopGUI
 
         'Set FX3 connection (defaults to ADcmXL)
         FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Api.DeviceType.IMU)
+
+        'Set bulk reg list
+        BulkRegList = New List(Of ListViewItem)
 
         'Seed random number generator
         Randomize()
@@ -260,11 +266,18 @@ Public Class TopGUI
         Me.BeginInvoke(New MethodInvoker(AddressOf updateTimeoutLabels))
     End Sub
 
+    Public Sub Setup() Handles Me.Load
+        Me.Top = My.Settings.LastTop
+        Me.Left = My.Settings.LastLeft
+    End Sub
+
     Private Sub Cleanup(sender As Object, e As EventArgs) Handles Me.Closing
 
         'Save settings
         My.Settings.DeviceType = FX3.PartType
         My.Settings.SensorType = FX3.SensorType
+        My.Settings.LastLeft = Me.Left
+        My.Settings.LastTop = Me.Top
         My.Settings.Save()
 
         'Disconnect the FX3 (does nothing if not already connected)
