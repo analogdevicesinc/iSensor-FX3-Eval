@@ -6,6 +6,8 @@ Public Class FormRegisters
     Inherits FormBase
 
     Private pageList As List(Of Integer)
+    Private pagePosition As List(Of Integer)
+    Private lastPageIndex As Integer
     Private pageReadTimer As Timer
     Private drReadTimer As Timer
     Private currentRegList As List(Of RegClass)
@@ -20,15 +22,18 @@ Public Class FormRegisters
 
         'get list of pages
         pageList = New List(Of Integer)
+        pagePosition = New List(Of Integer)
         For Each reg In TopGUI.RegMap
             If Not pageList.Contains(reg.Page) Then
                 pageList.Add(reg.Page)
+                pagePosition.Add(0) 'Start at top
                 selectPage.Items.Add(reg.Page)
             End If
         Next
 
         'Set the selected index
         selectPage.SelectedIndex = 0
+        lastPageIndex = 0
 
         pageReadTimer = New Timer(500)
         pageReadTimer.Enabled = False
@@ -121,11 +126,13 @@ Public Class FormRegisters
     End Sub
 
     Private Sub DrReadCallBack()
+        drReadTimer.Enabled = False
         Me.BeginInvoke(New MethodInvoker(AddressOf ReadDrFreq))
     End Sub
 
     Private Sub ReadDrFreq()
-        DrFreq.Text = TopGUI.FX3.ReadDRFreq(TopGUI.FX3.DrPin, 1, 10000).ToString() + "Hz"
+        DrFreq.Text = FormatNumber(TopGUI.FX3.ReadDRFreq(TopGUI.FX3.DrPin, 1, 5000)).ToString() + "Hz"
+        drReadTimer.Enabled = measureDr.Checked
     End Sub
 
     Private Sub closingTimerKill() Handles Me.FormClosing
@@ -155,11 +162,16 @@ Public Class FormRegisters
 
     Private Sub scaledData_CheckedChanged(sender As Object, e As EventArgs) Handles scaledData.CheckedChanged
         scaleData = scaledData.Checked
-        ' reset contents to "Not Read" because the values will change
-        initializedDataGrid()
     End Sub
 
     Private Sub initializedDataGrid()
+
+        'Save the scroll position for old page
+        If regView.FirstDisplayedScrollingRowIndex <> -1 Then
+            pagePosition(lastPageIndex) = regView.FirstDisplayedScrollingRowIndex
+        End If
+
+        'Repopulate new page
         Dim regStr(3) As String
         Dim readStr As String
         Dim regIndex As Integer = 0
@@ -184,6 +196,10 @@ Public Class FormRegisters
                 regIndex += 1
             End If
         Next
+
+        'set the start position
+        regView.FirstDisplayedScrollingRowIndex = pagePosition(selectPage.SelectedIndex)
+        lastPageIndex = selectPage.SelectedIndex
     End Sub
 
     Private Sub btn_DumpRegmap_Click(sender As Object, e As EventArgs) Handles btn_DumpRegmap.Click

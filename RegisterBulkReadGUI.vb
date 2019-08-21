@@ -45,6 +45,7 @@ Public Class RegisterBulkReadGUI
         For Each item In TopGUI.BulkRegList
             ListView1.Items.Add(item)
         Next
+        NumberDRToCapture.Text = TopGUI.numRegSamples.ToString()
 
     End Sub
 
@@ -55,6 +56,7 @@ Public Class RegisterBulkReadGUI
         For Each item In ListView1.Items
             TopGUI.BulkRegList.Add(item)
         Next
+        TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
 
     End Sub
 
@@ -63,7 +65,6 @@ Public Class RegisterBulkReadGUI
         ListView1.Columns.Add("Register", 182, HorizontalAlignment.Left)
         Label4.Text = ""
         StreamingAVARCancelButton.Enabled = False
-        NumberDRToCapture.Text = "1000"
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
     End Sub

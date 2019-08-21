@@ -20,6 +20,7 @@ Public Class TopGUI
 
     'List of listviewitems for bulk register read
     Public BulkRegList As List(Of ListViewItem)
+    Public numRegSamples As Integer
 
     'Private member variables
     Private m_FX3Connected As Boolean
@@ -73,6 +74,7 @@ Public Class TopGUI
 
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
+        numRegSamples = 10000
 
         'Seed random number generator
         Randomize()
