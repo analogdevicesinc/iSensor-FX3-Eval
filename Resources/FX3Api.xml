@@ -277,15 +277,6 @@ FX3Api
  </summary>
  <returns>Pin start configuration (0 = Pin Start Disabled, 1 = Pin Start Enabled</returns>
 </member>
-<member name="M:FX3Api.FX3Connection.ReadDRFreq(AdisApi.IPinObject,System.UInt32,System.UInt32)">
- <summary>
- Reads the measured DR value
- </summary>
- <param name="pin">The DR pin to measure</param>
- <param name="polarity">The edge to measure from. 1 - low to high, 0 - high to low</param>
- <param name="timeoutInMs">The timeout from when the pin measurement starts to when the function returns if the signal cannot be found</param>
- <returns>The DR frequency in Hz</returns>
-</member>
 <member name="P:FX3Api.FX3Connection.BufferAvailable">
  <summary>
  Checks if a streaming frame is available, or will be available soon in thread safe queue. If there is no data in the queue
@@ -508,6 +499,25 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <param name="pin">The FX3PinObject pin to read</param>
  <param name="value">The polarity to set the pin to, 1 - high, 0 - low</param>
+</member>
+<member name="M:FX3Api.FX3Connection.MeasurePinFreq(AdisApi.IPinObject,System.UInt32,System.UInt32,System.UInt16)">
+ <summary>
+ Measures the frequency of an input signal to the selected pin.
+ </summary>
+ <param name="pin">The pin to measure. Must be an FX3 pin object</param>
+ <param name="polarity">THe edge to measure from. 0 - falling edge, 1 - rising edge</param>
+ <param name="timeoutInMs">The time to wait for the FX3 to return values before defaulting to infinity (in ms)</param>
+ <param name="numPeriods">THe number of periods to sample for. Minimum value of 1</param>
+ <returns>The signal frequency, in Hz. Goes to infinity if no signal found.</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadDRFreq(AdisApi.IPinObject,System.UInt32,System.UInt32)">
+ <summary>
+ Reads the measured DR value
+ </summary>
+ <param name="pin">The DR pin to measure</param>
+ <param name="polarity">The edge to measure from. 1 - low to high, 0 - high to low</param>
+ <param name="timeoutInMs">The timeout from when the pin measurement starts to when the function returns if the signal cannot be found</param>
+ <returns>The DR frequency in Hz</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.MeasureBusyPulse(AdisApi.IPinObject,System.UInt32,System.UInt32,AdisApi.IPinObject,System.UInt32,System.UInt32)">
  <summary>
