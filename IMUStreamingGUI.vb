@@ -110,7 +110,7 @@ Public Class IMUStreamingGUI
         fileManager.Captures = 1 'Number of times to read each register in the reg map
         fileManager.FileMaxDataRows = 1000000 'Keep this under 1M samples to open in Excel
         fileManager.BufferTimeout = 3 'Timeout in seconds
-        fileManager.BuffersPerWrite = 10 * drFreq 'Dynamic byffers per write to avoid storing too much data in RAM
+        fileManager.BuffersPerWrite = 10 * drFreq 'Dynamic buffers per write to avoid storing too much data in RAM
         fileManager.IncludeSampleNumberColumn = False
         fileManager.ScaleData = False
 
@@ -147,7 +147,7 @@ Public Class IMUStreamingGUI
         MainButton.Enabled = True
         If fileManager.IsBusy Then
             fileManager.CancelAsync()
-            statusLabel.Text = "Cancelling"
+            statusLabel.Text = "Canceling"
             statusLabel.BackColor = Color.Red
         End If
     End Sub

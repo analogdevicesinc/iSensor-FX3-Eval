@@ -84,7 +84,7 @@ Module helperFunctions
     End Sub
 
     Function calcCCITT16(byt() As Byte) As UInteger
-        ' byt() values are expected to be swaped as required by ADUC3021 data format
+        ' byte() values are expected to be swapped as required by ADUC3021 data format
         ' CRC-16-CCITT, initialized with crc = 0xFFFF, No final XOR.
         ' Limit crc accumulation to 16 bits to prevent U32 overflow.
         Dim crc As UInteger = &HFFFF

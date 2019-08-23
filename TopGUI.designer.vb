@@ -226,7 +226,7 @@ Partial Class TopGUI
         Me.btn_test.Name = "btn_test"
         Me.btn_test.Size = New System.Drawing.Size(75, 64)
         Me.btn_test.TabIndex = 28
-        Me.btn_test.Text = "Test Button"
+        Me.btn_test.Text = "Burst Test"
         Me.btn_test.UseVisualStyleBackColor = True
         '
         'btn_PinAccess

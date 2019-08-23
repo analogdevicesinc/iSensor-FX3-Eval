@@ -262,12 +262,12 @@ Public Class ADcmXLStreamingGUI
         fileManager.BufferTimeout = 5
         fileManager.BuffersPerWrite = 15625 'Note: This is # frames, but TFSM counts this as samples. Multiply this number * 32 '15625 = 500k samples
         fileManager.IncludeSampleNumberColumn = WriteFrameNumber.Checked
-        'Extra properties to make filemanager happy - do nothing
+        'Extra properties to make file manager happy - do nothing
         fileManager.Captures = 1
         fileManager.RegList = regListDUT.RealTimeSamplingRegList
         fileManager.RunAsync()
 
-        statusLabel.Text = "Begining Sample"
+        statusLabel.Text = "Beginning Sample"
         statusLabel.BackColor = Color.White
     End Sub
 
@@ -289,7 +289,7 @@ Public Class ADcmXLStreamingGUI
         CancelCapture = True
         If fileManager.IsBusy Then
             fileManager.CancelAsync()
-            statusLabel.Text = "Cancelling in capture"
+            statusLabel.Text = "Canceling in capture"
             statusLabel.BackColor = Color.Red
         End If
     End Sub

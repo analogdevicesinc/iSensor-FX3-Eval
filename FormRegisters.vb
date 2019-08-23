@@ -143,7 +143,7 @@ Public Class FormRegisters
 
     Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged
 
-        'Load all the the registers on the given page into the data grid view
+        'Load all the registers on the given page into the data grid view
         initializedDataGrid()
 
         While regView.RowCount > currentRegList.Count()

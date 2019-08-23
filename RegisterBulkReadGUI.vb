@@ -50,7 +50,7 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        'Save the listview contents
+        'Save the list-view contents
 
         TopGUI.BulkRegList.Clear()
         For Each item In ListView1.Items
@@ -169,7 +169,7 @@ Public Class RegisterBulkReadGUI
         fileManager.Captures = 1 'Number of times to read each register in the reg map
         fileManager.FileMaxDataRows = 1000000 'Keep this under 1M samples to open in Excel
         fileManager.BufferTimeout = 10 'Timeout in seconds
-        fileManager.BuffersPerWrite = 40000 'Dynamic byffers per write to avoid storing too much data in RAM
+        fileManager.BuffersPerWrite = 40000 'Dynamic buffers per write to avoid storing too much data in RAM
         fileManager.IncludeSampleNumberColumn = False
         fileManager.ScaleData = False
 
@@ -211,7 +211,7 @@ Public Class RegisterBulkReadGUI
         MainButton.Enabled = True
         If fileManager.IsBusy Then
             fileManager.CancelAsync()
-            statusLabel.Text = "Cancelling"
+            statusLabel.Text = "Canceling"
             statusLabel.BackColor = Color.Red
         End If
     End Sub

@@ -13,7 +13,7 @@ Imports AdisApi
 
 Public Class TopGUI
 
-    'Public member variables accessable to all forms
+    'Public member variables accessible to all forms
     Public WithEvents FX3 As FX3Connection
     Public RegMap As RegMapCollection
     Public Dut As IDutInterface
@@ -200,7 +200,7 @@ Public Class TopGUI
 
     Private Sub btn_BoardInfo_Click(sender As Object, e As EventArgs) Handles btn_BoardInfo.Click
         Dim fx3info As FX3Api.FX3Board = FX3.ActiveFX3
-        MsgBox("Firmware Version: " + fx3info.FirmwareVersion + Environment.NewLine + "Serial Number: " + fx3info.SerialNumber + Environment.NewLine + "Uptime: " + fx3info.Uptime.ToString() + "ms")
+        MsgBox(fx3info.ToString())
     End Sub
 
     Private Sub btn_APIInfo_Click(sender As Object, e As EventArgs) Handles btn_APIInfo.Click
@@ -251,7 +251,9 @@ Public Class TopGUI
     End Function
 
     Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
-        'Whatever code you want
+        Dim subGUI As New BurstTest()
+        subGUI.Show()
+        Me.Hide()
 
     End Sub
 
@@ -264,7 +266,7 @@ Public Class TopGUI
     ''' </summary>
     Private Sub timeoutHandler()
         m_disconnectTimer.Enabled = False
-        'Timers run in a seperate thread from GUI
+        'Timers run in a separate thread from GUI
         Me.BeginInvoke(New MethodInvoker(AddressOf updateTimeoutLabels))
     End Sub
 
@@ -287,7 +289,7 @@ Public Class TopGUI
 
     End Sub
 
-    'General exception handeler
+    'General exception handler
     Public Sub GeneralErrorHandler(sender As Object, e As UnhandledExceptionEventArgs)
     End Sub
 
@@ -467,7 +469,7 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Sets the lables when a timeout event occurs
+    ''' Sets the labels when a timeout event occurs
     ''' </summary>
     Private Sub updateTimeoutLabels()
         ResetButtons()

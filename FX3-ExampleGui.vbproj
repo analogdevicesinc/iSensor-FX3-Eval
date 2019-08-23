@@ -60,7 +60,7 @@
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Api, Version=2.0.3.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="FX3Api, Version=2.0.4.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\FX3Api.dll</HintPath>
     </Reference>
@@ -99,6 +99,12 @@
       <DependentUpon>ApiInfoGUI.vb</DependentUpon>
     </Compile>
     <Compile Include="ApiInfoGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BurstTest.Designer.vb">
+      <DependentUpon>BurstTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BurstTest.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBase.Designer.vb">
@@ -199,6 +205,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ApiInfoGUI.resx">
       <DependentUpon>ApiInfoGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BurstTest.resx">
+      <DependentUpon>BurstTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
