@@ -101,10 +101,10 @@
     <Compile Include="ApiInfoGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BurstTest.Designer.vb">
-      <DependentUpon>BurstTest.vb</DependentUpon>
+    <Compile Include="BurstTestGUI.Designer.vb">
+      <DependentUpon>BurstTestGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="BurstTest.vb">
+    <Compile Include="BurstTestGUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormBase.Designer.vb">
@@ -113,10 +113,10 @@
     <Compile Include="FormBase.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormRegisters.designer.vb">
-      <DependentUpon>FormRegisters.vb</DependentUpon>
+    <Compile Include="RegisterGUI.designer.vb">
+      <DependentUpon>RegisterGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="FormRegisters.vb">
+    <Compile Include="RegisterGUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IMUStreamingGUI.designer.vb">
@@ -206,14 +206,14 @@
     <EmbeddedResource Include="ApiInfoGUI.resx">
       <DependentUpon>ApiInfoGUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BurstTest.resx">
-      <DependentUpon>BurstTest.vb</DependentUpon>
+    <EmbeddedResource Include="BurstTestGUI.resx">
+      <DependentUpon>BurstTestGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormRegisters.resx">
-      <DependentUpon>FormRegisters.vb</DependentUpon>
+    <EmbeddedResource Include="RegisterGUI.resx">
+      <DependentUpon>RegisterGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IMUStreamingGUI.resx">
       <DependentUpon>IMUStreamingGUI.vb</DependentUpon>

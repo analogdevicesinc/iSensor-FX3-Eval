@@ -1,6 +1,6 @@
 ﻿Imports FX3Api
 
-Public Class BurstTest
+Public Class BurstTestGUI
     Inherits FormBase
 
     Private numWords As Integer

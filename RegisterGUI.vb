@@ -2,7 +2,7 @@
 Imports RegMapClasses
 Imports System.Timers
 
-Public Class FormRegisters
+Public Class RegisterGUI
     Inherits FormBase
 
     Private pageList As List(Of Integer)

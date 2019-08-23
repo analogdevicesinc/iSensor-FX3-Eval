@@ -155,7 +155,7 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_RegAccess_Click(sender As Object, e As EventArgs) Handles btn_RegAccess.Click
-        Dim subGUI As New FormRegisters()
+        Dim subGUI As New RegisterGUI()
         subGUI.Show()
         Me.Hide()
     End Sub
@@ -251,7 +251,7 @@ Public Class TopGUI
     End Function
 
     Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
-        Dim subGUI As New BurstTest()
+        Dim subGUI As New BurstTestGUI()
         subGUI.Show()
         Me.Hide()
 
