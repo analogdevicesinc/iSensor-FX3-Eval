@@ -20,6 +20,9 @@ Public Class IMUStreamingGUI
         ' This call is required by the designer.
         InitializeComponent()
 
+    End Sub
+
+    Public Sub FormSetup() Handles Me.Load
         UpdateRegmap()
 
         DRDIO.Items.Add("DIO1")
@@ -27,28 +30,25 @@ Public Class IMUStreamingGUI
         DRDIO.Items.Add("DIO3")
         DRDIO.Items.Add("DIO4")
 
-        If TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO1.ToString Then
+        If m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO1.ToString Then
             DRDIO.SelectedItem = "DIO1"
-        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO2.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO2.ToString Then
             DRDIO.SelectedItem = "DIO2"
-        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO3.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO3.ToString Then
             DRDIO.SelectedItem = "DIO3"
-        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO4.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO4.ToString Then
             DRDIO.SelectedItem = "DIO4"
         End If
 
-    End Sub
-
-    Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        TopGUI.Show()
-    End Sub
-
-    Private Sub StreamingAVAR_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Label4.Text = ""
         BurstStreamCancelButton.Enabled = False
         NumberDRToCapture.Text = "10000"
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
+    End Sub
+
+    Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
+        m_TopGUI.Show()
     End Sub
 
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
@@ -67,7 +67,7 @@ Public Class IMUStreamingGUI
         End If
 
         'Check whether the measured DR is valid
-        If TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
+        If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
             MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
             Exit Sub
         End If
@@ -84,7 +84,7 @@ Public Class IMUStreamingGUI
         Dim numCaptures As UInteger
         Dim numBuffers As UInteger
 
-        drFreq = TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
+        drFreq = m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
         If totalDRCaptures < drFreq Then
             numCaptures = totalDRCaptures
             numBuffers = 1
@@ -97,12 +97,12 @@ Public Class IMUStreamingGUI
             End If
         End If
 
-        TopGUI.FX3.WordCount() = regListCount
-        TopGUI.FX3.TriggerReg = TopGUI.RegMap.BurstReadTrig
-        TopGUI.FX3.SetupBurstMode()
+        m_TopGUI.FX3.WordCount() = regListCount
+        m_TopGUI.FX3.TriggerReg = m_TopGUI.RegMap.BurstReadTrig
+        m_TopGUI.FX3.SetupBurstMode()
 
         'Set up file manager to pass over to TFSM
-        fileManager.DutInterface = TopGUI.Dut
+        fileManager.DutInterface = m_TopGUI.Dut
         fileManager.RegList = tempRegList
         fileManager.FileBaseName = "BURST" + timeString
         fileManager.FilePath = savePath
@@ -140,7 +140,7 @@ Public Class IMUStreamingGUI
         MainButton.Enabled = True
 
         'Clear burst mode
-        TopGUI.FX3.ClearBurstMode()
+        m_TopGUI.FX3.ClearBurstMode()
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles BurstStreamCancelButton.Click
@@ -154,7 +154,7 @@ Public Class IMUStreamingGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
-        Label4.Text = FormatNumber(TopGUI.FX3.ReadDRFreq(pin, 1, 2000), 3).ToString + "  Hz"
+        Label4.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000), 3).ToString + "  Hz"
     End Sub
 
     Private Sub UpdateDRPin()
@@ -162,15 +162,15 @@ Public Class IMUStreamingGUI
         dio = DRDIO.SelectedItem
         Select Case dio
             Case "DIO1"
-                pin = TopGUI.FX3.DIO1
+                pin = m_TopGUI.FX3.DIO1
             Case "DIO2"
-                pin = TopGUI.FX3.DIO2
+                pin = m_TopGUI.FX3.DIO2
             Case "DIO3"
-                pin = TopGUI.FX3.DIO3
+                pin = m_TopGUI.FX3.DIO3
             Case "DIO4"
-                pin = TopGUI.FX3.DIO4
+                pin = m_TopGUI.FX3.DIO4
             Case Else
-                pin = TopGUI.FX3.DIO1
+                pin = m_TopGUI.FX3.DIO1
         End Select
     End Sub
 
@@ -191,10 +191,10 @@ Public Class IMUStreamingGUI
     Private Sub UpdateRegmap()
         If BitModeCheckbox.Checked Then
             'Handle 16-bit registers
-            tempRegList = TopGUI.RegMap.BurstReadList
-            regListCount = TopGUI.RegMap.BurstReadList.Count
+            tempRegList = m_TopGUI.RegMap.BurstReadList
+            regListCount = m_TopGUI.RegMap.BurstReadList.Count
             'Loop through each register and check for 32-bit locations
-            For Each item As RegMapClasses.RegClass In TopGUI.RegMap.BurstReadList
+            For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
                 'If a register is listed as a 32-bit register
                 If item.ReadLen > 16 Then
                     'Remove its upper counterpart from the list (we're only capturing 16-bit registers)
@@ -213,10 +213,10 @@ Public Class IMUStreamingGUI
             Next
         Else
             'Handle 32-bit registers
-            tempRegList = TopGUI.RegMap.BurstReadList
-            regListCount = TopGUI.RegMap.BurstReadList.Count
+            tempRegList = m_TopGUI.RegMap.BurstReadList
+            regListCount = m_TopGUI.RegMap.BurstReadList.Count
             'Loop through each register and check for 32-bit locations
-            For Each item As RegMapClasses.RegClass In TopGUI.RegMap.BurstReadList
+            For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
                 'If a register is listed as a 32-bit register
                 If item.ReadLen > 16 Then
                     'Remove its lower counterpart from the list (it'll get added to the transfer later anyway)

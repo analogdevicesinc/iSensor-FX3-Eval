@@ -8,24 +8,20 @@ Imports FX3Api
 Public Class SelectDUTGUI
     Inherits FormBase
 
-    Public Sub New()
-
-        ' This call is required by the designer.
-        InitializeComponent()
-
+    Public Sub FormSetup() Handles Me.Load
         ' Add any initialization after the InitializeComponent() call.
         DutInput.DataSource = ([Enum].GetValues(GetType(DUTType)))
         sensorInput.DataSource = ([Enum].GetValues(GetType(DeviceType)))
 
-        DutInput.SelectedItem = TopGUI.FX3.PartType
-        sensorInput.SelectedItem = TopGUI.FX3.SensorType
+        DutInput.SelectedItem = m_TopGUI.FX3.PartType
+        sensorInput.SelectedItem = m_TopGUI.FX3.SensorType
     End Sub
 
     Private Sub btn_ApplySetting_Click(sender As Object, e As EventArgs) Handles btn_ApplySetting.Click
 
-        TopGUI.FX3.SensorType = sensorInput.SelectedItem
-        TopGUI.FX3.PartType = DutInput.SelectedItem
-        TopGUI.UpdateDutLabel(DutInput.SelectedItem)
+        m_TopGUI.FX3.SensorType = sensorInput.SelectedItem
+        m_TopGUI.FX3.PartType = DutInput.SelectedItem
+        m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
         Me.Close()
     End Sub
 

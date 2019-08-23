@@ -14,11 +14,8 @@ Public Class RegisterBulkReadGUI
     Private totalDRCaptures As Integer = 0
     Private pin As IPinObject
 
-    Sub New()
-        ' This call is required by the designer.
-        InitializeComponent()
-
-        For Each reg In TopGUI.RegMap
+    Public Sub FormSetup() Handles Me.Load
+        For Each reg In m_TopGUI.RegMap
             RegisterList.Items.Add(reg.Label)
         Next
         RegisterList.SelectedIndex = 0
@@ -28,35 +25,34 @@ Public Class RegisterBulkReadGUI
         DRDIO.Items.Add("DIO3")
         DRDIO.Items.Add("DIO4")
 
-        If TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO1.ToString Then
+        If m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO1.ToString Then
             DRDIO.SelectedItem = "DIO1"
-        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO2.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO2.ToString Then
             DRDIO.SelectedItem = "DIO2"
-        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO3.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO3.ToString Then
             DRDIO.SelectedItem = "DIO3"
-        ElseIf TopGUI.FX3.ReadyPin.ToString = TopGUI.FX3.DIO4.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO4.ToString Then
             DRDIO.SelectedItem = "DIO4"
         End If
 
-        MeasureDR.Enabled = TopGUI.FX3.DrActive
-        DrActiveBox.Checked = TopGUI.FX3.DrActive
+        MeasureDR.Enabled = m_TopGUI.FX3.DrActive
+        DrActiveBox.Checked = m_TopGUI.FX3.DrActive
 
         ListView1.Items.Clear()
-        For Each item In TopGUI.BulkRegList
+        For Each item In m_TopGUI.BulkRegList
             ListView1.Items.Add(item)
         Next
-        NumberDRToCapture.Text = TopGUI.numRegSamples.ToString()
-
+        NumberDRToCapture.Text = m_TopGUI.numRegSamples.ToString()
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
         'Save the list-view contents
 
-        TopGUI.BulkRegList.Clear()
+        m_TopGUI.BulkRegList.Clear()
         For Each item In ListView1.Items
-            TopGUI.BulkRegList.Add(item)
+            m_TopGUI.BulkRegList.Add(item)
         Next
-        TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
+        m_TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
 
     End Sub
 
@@ -113,7 +109,7 @@ Public Class RegisterBulkReadGUI
         End If
 
         'Check whether the measured DR is valid
-        If TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
+        If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
             MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
             Exit Sub
         End If
@@ -121,12 +117,12 @@ Public Class RegisterBulkReadGUI
         'Build list of registers to stream
         Dim regList As New List(Of RegMapClasses.RegClass)
         For Each item As ListViewItem In Me.ListView1.Items
-            regList.Add(TopGUI.RegMap(item.Text))
+            regList.Add(m_TopGUI.RegMap(item.Text))
         Next
 
         'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
-        Dim drPeriod As Double = 1 / TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
-        Dim calcPeriod As Double = (((TopGUI.FX3.StallTime + 12) / 1000000) * regList.Count)
+        Dim drPeriod As Double = 1 / m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
+        Dim calcPeriod As Double = (((m_TopGUI.FX3.StallTime + 12) / 1000000) * regList.Count)
 
         If calcPeriod > drPeriod Then
             Dim result1 As DialogResult = MessageBox.Show("Register capture time exceeds data ready period. Would you like to continue?", "Data will take too long to read!", MessageBoxButtons.YesNo)
@@ -147,7 +143,7 @@ Public Class RegisterBulkReadGUI
         Dim numCaptures As UInteger
         Dim numBuffers As UInteger
 
-        drFreq = TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
+        drFreq = m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
         If totalDRCaptures < drFreq Then
             numCaptures = totalDRCaptures
             numBuffers = 1
@@ -161,7 +157,7 @@ Public Class RegisterBulkReadGUI
         End If
 
         'Set up file manager to pass over to TFSM
-        fileManager.DutInterface = TopGUI.Dut
+        fileManager.DutInterface = m_TopGUI.Dut
         fileManager.RegList = regList
         fileManager.FileBaseName = "AVAR" + timeString
         fileManager.FilePath = savePath
@@ -198,7 +194,7 @@ Public Class RegisterBulkReadGUI
         StreamingAVARCancelButton.Enabled = False
         DRDIO.Enabled = True
         NumberDRToCapture.Enabled = True
-        MeasureDR.Enabled = TopGUI.FX3.DrActive
+        MeasureDR.Enabled = m_TopGUI.FX3.DrActive
         AddRegisterButton.Enabled = True
         RemoveRegisterButton.Enabled = True
         ClearAllButton.Enabled = True
@@ -218,7 +214,7 @@ Public Class RegisterBulkReadGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
-        Label4.Text = FormatNumber(TopGUI.FX3.ReadDRFreq(pin, 1, 2000), 3).ToString + "  Hz"
+        Label4.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000), 3).ToString + "  Hz"
     End Sub
 
     Private Sub UpdateDRPin()
@@ -226,15 +222,15 @@ Public Class RegisterBulkReadGUI
         dio = DRDIO.SelectedItem
         Select Case dio
             Case "DIO1"
-                pin = TopGUI.FX3.DIO1
+                pin = m_TopGUI.FX3.DIO1
             Case "DIO2"
-                pin = TopGUI.FX3.DIO2
+                pin = m_TopGUI.FX3.DIO2
             Case "DIO3"
-                pin = TopGUI.FX3.DIO3
+                pin = m_TopGUI.FX3.DIO3
             Case "DIO4"
-                pin = TopGUI.FX3.DIO4
+                pin = m_TopGUI.FX3.DIO4
             Case Else
-                pin = TopGUI.FX3.DIO1
+                pin = m_TopGUI.FX3.DIO1
         End Select
     End Sub
 
@@ -263,8 +259,8 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub DrActiveBox_CheckedChanged(sender As Object, e As EventArgs) Handles DrActiveBox.CheckedChanged
-        TopGUI.FX3.DrActive = DrActiveBox.Checked
-        MeasureDR.Enabled = TopGUI.FX3.DrActive
+        m_TopGUI.FX3.DrActive = DrActiveBox.Checked
+        MeasureDR.Enabled = m_TopGUI.FX3.DrActive
     End Sub
 
 End Class

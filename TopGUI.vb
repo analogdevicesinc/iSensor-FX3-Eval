@@ -9,7 +9,6 @@ Imports RegMapClasses
 Imports System.IO
 Imports System.Reflection
 Imports System.Timers
-Imports AdisApi
 
 Public Class TopGUI
 
@@ -30,7 +29,7 @@ Public Class TopGUI
 
     Public Sub New()
 
-        ' This call is required by the designer.]]'
+        ' This call is required by the designer.'
 
         InitializeComponent()
 
@@ -97,7 +96,9 @@ Public Class TopGUI
         'Set up autospi
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
-        'm_AutoSpi.IgnoreCRCExceptions = False
+
+        'Set the API version and build date
+        label_apiVersion.Text = "Analog Devices iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
 
     End Sub
 
@@ -125,7 +126,12 @@ Public Class TopGUI
 #End Region
 
 #Region "Button Event Handlers"
-    Private Sub btn_DisconnectFX3_Click(sender As Object, e As EventArgs) Handles btn_DisconnectFX3.Click
+
+    Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
+
+    End Sub
+
+    Private Sub RebootFX3()
 
         'Send disconnect command
         FX3.Disconnect()
@@ -140,13 +146,23 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_Connect_Click(sender As Object, e As EventArgs) Handles btn_Connect.Click
-        ConnectWork()
+
+        Select Case btn_Connect.Text
+            Case "Connect to FX3"
+                ConnectWork()
+                btn_Connect.Text = "Reboot FX3"
+            Case "Reboot FX3"
+                RebootFX3()
+                btn_Connect.Text = "Connect to FX3"
+        End Select
+
     End Sub
 
     Private Sub btn_SelectDUT_Click(sender As Object, e As EventArgs) Handles btn_SelectDUT.Click
         Dim subGUI As New SelectDUTGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
+        Hide()
     End Sub
 
     Private Sub btn_ResetDUT_Click(sender As Object, e As EventArgs) Handles btn_ResetDUT.Click
@@ -156,6 +172,7 @@ Public Class TopGUI
 
     Private Sub btn_RegAccess_Click(sender As Object, e As EventArgs) Handles btn_RegAccess.Click
         Dim subGUI As New RegisterGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
     End Sub
@@ -165,11 +182,13 @@ Public Class TopGUI
         If FX3.PartType = DUTType.IMU Then
             'For IMU's create a new IMU streaming GUI
             Dim subGUI As New IMUStreamingGUI()
+            subGUI.SetTopGUI(Me)
             subGUI.Show()
             Me.Hide()
         Else
             'For machine health create a ADcmXLStreamingGUI
             Dim subGUI As New ADcmXLStreamingGUI()
+            subGUI.SetTopGUI(Me)
             subGUI.Show()
             Me.Hide()
         End If
@@ -178,18 +197,21 @@ Public Class TopGUI
 
     Private Sub btn_BulkRegRead_Click(sender As Object, e As EventArgs) Handles btn_BulkRegRead.Click
         Dim subGUI As New RegisterBulkReadGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
     End Sub
 
     Private Sub btn_PinAccess_Click(sender As Object, e As EventArgs) Handles btn_PWMSetup.Click
         Dim subGUI As New PWMSetupGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
     End Sub
 
     Private Sub btn_FX3Config_Click(sender As Object, e As EventArgs) Handles btn_FX3Config.Click
         Dim subGUI As New FX3ConfigGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
     End Sub
@@ -205,18 +227,21 @@ Public Class TopGUI
 
     Private Sub btn_APIInfo_Click(sender As Object, e As EventArgs) Handles btn_APIInfo.Click
         Dim subGUI As New ApiInfoGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
     End Sub
 
     Private Sub btn_measurePulse_Click(sender As Object, e As EventArgs) Handles btn_measurePulse.Click
         Dim subGUI As New PulseMeasureGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
     End Sub
 
     Private Sub btn_PinAccess_Click_1(sender As Object, e As EventArgs) Handles btn_PinAccess.Click
         Dim subGUI As New PinAccessGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
     End Sub
@@ -250,11 +275,18 @@ Public Class TopGUI
 
     End Function
 
-    Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
+    Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_Bursttest.Click
         Dim subGUI As New BurstTestGUI()
+        subGUI.SetTopGUI(Me)
         subGUI.Show()
         Me.Hide()
+    End Sub
 
+    Private Sub btn_plotData_Click(sender As Object, e As EventArgs) Handles btn_plotData.Click
+        Dim subGUI As New DataPlotGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        Me.Hide()
     End Sub
 
 #End Region
@@ -395,8 +427,7 @@ Public Class TopGUI
         btn_BoardInfo.Enabled = True
         btn_BulkRegRead.Enabled = True
         btn_CheckDUTConnection.Enabled = True
-        btn_Connect.Enabled = False 'Disable connect
-        btn_DisconnectFX3.Enabled = True
+        btn_Connect.Enabled = True
         btn_FX3Config.Enabled = True
         btn_PWMSetup.Enabled = True
         btn_RealTime.Enabled = True
@@ -405,9 +436,11 @@ Public Class TopGUI
         btn_SelectDUT.Enabled = True
         btn_measurePulse.Enabled = True
         btn_PinAccess.Enabled = True
+        btn_Bursttest.Enabled = True
         btn_test.Enabled = True
+        btn_plotData.Enabled = True
 
-        label_FX3Status.Text = "FX3 Connected"
+        label_FX3Status.Text = "Connected to " + FX3.ActiveFX3SerialNumber
         label_FX3Status.BackColor = Color.Green
 
         'Select register access button initially
@@ -444,7 +477,6 @@ Public Class TopGUI
         btn_BulkRegRead.Enabled = False
         btn_CheckDUTConnection.Enabled = False
         btn_Connect.Enabled = True 'Connect should be enabled by default
-        btn_DisconnectFX3.Enabled = False
         btn_FX3Config.Enabled = False
         btn_PWMSetup.Enabled = False
         btn_RealTime.Enabled = False
@@ -453,7 +485,9 @@ Public Class TopGUI
         btn_SelectDUT.Enabled = False
         btn_measurePulse.Enabled = False
         btn_PinAccess.Enabled = False
+        btn_Bursttest.Enabled = False
         btn_test.Enabled = False
+        btn_plotData.Enabled = False
     End Sub
 
     ''' <summary>
@@ -514,6 +548,8 @@ Public Class TopGUI
 
         Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
 
+        Dim orignalScratch As UInteger = Dut.ReadUnsigned(scratchReg)
+
         Dut.WriteUnsigned(scratchReg, randomValue)
         If Not Dut.ReadUnsigned(scratchReg) = randomValue Then
             label_DUTStatus.Text = "ERROR: DUT Read/Write Failed"
@@ -522,6 +558,8 @@ Public Class TopGUI
             label_DUTStatus.Text = "DUT Connected"
             label_DUTStatus.BackColor = Color.Green
         End If
+
+        Dut.WriteUnsigned(scratchReg, orignalScratch)
 
     End Sub
 

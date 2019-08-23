@@ -41,23 +41,23 @@ Public Class ADcmXLStreamingGUI
     Sub New()
         ' This call is required by the designer.
         InitializeComponent()
+    End Sub
 
-        If TopGUI.FX3.PartType = DUTType.ADcmXL3021 Then
-            TopGUI.Dut = New adisInterface.AdcmInterface3Axis(TopGUI.FX3)
-        ElseIf TopGUI.FX3.PartType = DUTType.ADcmXL2021 Then
-            TopGUI.Dut = New adisInterface.AdcmInterface2Axis(TopGUI.FX3)
-        ElseIf TopGUI.FX3.PartType = DUTType.ADcmXL1021 Then
-            TopGUI.Dut = New adisInterface.AdcmInterface1Axis(TopGUI.FX3)
+    Private Sub TextFileStreamManagerStreaming_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If m_TopGUI.FX3.PartType = DUTType.ADcmXL3021 Then
+            m_TopGUI.Dut = New adisInterface.AdcmInterface3Axis(m_TopGUI.FX3)
+        ElseIf m_TopGUI.FX3.PartType = DUTType.ADcmXL2021 Then
+            m_TopGUI.Dut = New adisInterface.AdcmInterface2Axis(m_TopGUI.FX3)
+        ElseIf m_TopGUI.FX3.PartType = DUTType.ADcmXL1021 Then
+            m_TopGUI.Dut = New adisInterface.AdcmInterface1Axis(m_TopGUI.FX3)
         Else
             Throw New Exception("ERROR: This form is only usable with machine health parts")
         End If
 
         'Set the device type
-        DeviceType.Text = TopGUI.FX3.PartType.ToString()
+        DeviceType.Text = m_TopGUI.FX3.PartType.ToString()
 
-    End Sub
-
-    Private Sub TextFileStreamManagerStreaming_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         TotalFramesInput.Text = 6897
         LinesPerCSVInput.Text = 1000000
         CaptureExitMethod.Text = "Pin Exit"
@@ -78,7 +78,7 @@ Public Class ADcmXLStreamingGUI
         For Each prop In FX3Api.GetProperties()
             If prop.PropertyType = GetType(IPinObject) Then
                 startPinBox.Items.Add(prop.Name)
-                PinList.Add(TopGUI.FX3.GetType().GetProperty(prop.Name).GetValue(TopGUI.FX3))
+                PinList.Add(m_TopGUI.FX3.GetType().GetProperty(prop.Name).GetValue(m_TopGUI.FX3))
             End If
         Next
         If startPinBox.Items.Count > 0 Then
@@ -168,7 +168,7 @@ Public Class ADcmXLStreamingGUI
             If pinCaptureStart Then
                 'Pin mode
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Pin Wait"))
-                pinWaitTime = TopGUI.FX3.PulseWait(startPin, pinCapturePolarity, 0, captureTime)
+                pinWaitTime = m_TopGUI.FX3.PulseWait(startPin, pinCapturePolarity, 0, captureTime)
                 If pinWaitTime >= captureTime Then
                     Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Pin wait timed out, exiting capture loop"))
                     Exit While
@@ -224,37 +224,37 @@ Public Class ADcmXLStreamingGUI
         timeString = timeString.Replace(":", "-")
 
         Dim regListDUT As AdcmInterfaceBase
-        If TopGUI.FX3.PartType = DUTType.ADcmXL3021 Then
-            regListDUT = New adisInterface.AdcmInterface3Axis(TopGUI.FX3)
-        ElseIf TopGUI.FX3.PartType = DUTType.ADcmXL2021 Then
-            regListDUT = New adisInterface.AdcmInterface2Axis(TopGUI.FX3)
-        ElseIf TopGUI.FX3.PartType = DUTType.ADcmXL1021 Then
-            regListDUT = New adisInterface.AdcmInterface1Axis(TopGUI.FX3)
+        If m_TopGUI.FX3.PartType = DUTType.ADcmXL3021 Then
+            regListDUT = New adisInterface.AdcmInterface3Axis(m_TopGUI.FX3)
+        ElseIf m_TopGUI.FX3.PartType = DUTType.ADcmXL2021 Then
+            regListDUT = New adisInterface.AdcmInterface2Axis(m_TopGUI.FX3)
+        ElseIf m_TopGUI.FX3.PartType = DUTType.ADcmXL1021 Then
+            regListDUT = New adisInterface.AdcmInterface1Axis(m_TopGUI.FX3)
         Else
             Throw New Exception("ERROR: This form is only usable with machine health parts")
         End If
 
         'Set REC_CTRL
         If timeoutEnable = 1 Then
-            TopGUI.Dut.WriteUnsigned(TopGUI.RegMap("REC_CTRL1"), &H8103)
+            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("REC_CTRL1"), &H8103)
         ElseIf timeoutEnable = 0 Then
-            TopGUI.Dut.WriteUnsigned(TopGUI.RegMap("REC_CTRL1"), &H103)
+            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("REC_CTRL1"), &H103)
         End If
 
         'Start stream
         If pinExitEnable = 1 Then
-            TopGUI.FX3.PinExit = True
+            m_TopGUI.FX3.PinExit = True
         ElseIf pinExitEnable = 0 Then
-            TopGUI.FX3.PinExit = False
+            m_TopGUI.FX3.PinExit = False
         End If
 
         If pinStartEnable = 1 Then
-            TopGUI.FX3.PinStart = True
+            m_TopGUI.FX3.PinStart = True
         Else
-            TopGUI.FX3.PinStart = False
+            m_TopGUI.FX3.PinStart = False
         End If
 
-        fileManager.DutInterface = TopGUI.Dut
+        fileManager.DutInterface = m_TopGUI.Dut
         fileManager.FileBaseName = "Real_Time_Data" + timeString
         fileManager.FilePath = savePath
         fileManager.Buffers = totalFrames

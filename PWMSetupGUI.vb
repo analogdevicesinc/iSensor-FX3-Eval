@@ -27,7 +27,7 @@ Public Class PWMSetupGUI
             If prop.PropertyType = GetType(IPinObject) Then
                 If Not prop.Name = "Reset" Then
                     pinSelect.Items.Add(prop.Name)
-                    PinList.Add(TopGUI.FX3.GetType().GetProperty(prop.Name).GetValue(TopGUI.FX3))
+                    PinList.Add(m_TopGUI.FX3.GetType().GetProperty(prop.Name).GetValue(m_TopGUI.FX3))
                 End If
             End If
         Next
@@ -47,8 +47,8 @@ Public Class PWMSetupGUI
     Private Sub UpdateButton(SelectedIndex As Integer)
         Dim PWMInfo As PinPWMInfo
         Try
-            If TopGUI.FX3.isPWMPin(PinList(SelectedIndex)) Then
-                PWMInfo = TopGUI.FX3.GetPinPWMInfo(PinList(SelectedIndex))
+            If m_TopGUI.FX3.isPWMPin(PinList(SelectedIndex)) Then
+                PWMInfo = m_TopGUI.FX3.GetPinPWMInfo(PinList(SelectedIndex))
                 startBtn.Text = "Stop Pin PWM"
                 StartPWM = False
                 Freq.ReadOnly = True
@@ -71,9 +71,9 @@ Public Class PWMSetupGUI
     Private Sub startBtn_Click(sender As Object, e As EventArgs) Handles startBtn.Click
         Try
             If StartPWM Then
-                TopGUI.FX3.StartPWM(Convert.ToDouble(Freq.Text), Convert.ToDouble(DutyCycle.Text), PinList(pinSelect.SelectedIndex))
+                m_TopGUI.FX3.StartPWM(Convert.ToDouble(Freq.Text), Convert.ToDouble(DutyCycle.Text), PinList(pinSelect.SelectedIndex))
             Else
-                TopGUI.FX3.StopPWM(PinList(pinSelect.SelectedIndex))
+                m_TopGUI.FX3.StopPWM(PinList(pinSelect.SelectedIndex))
             End If
         Catch ex As Exception
             MsgBox("ERROR: Caught exception " + ex.ToString())

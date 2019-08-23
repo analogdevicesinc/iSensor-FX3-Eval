@@ -86,6 +86,24 @@ adisInterface
  <param name="rtsFrame"></param>
  <param name="list"></param>
 </member>
+<member name="M:adisInterface.SpiException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:adisInterface.SpiException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:adisInterface.SpiException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previos exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
 <member name="T:adisInterface.InvalidCRCException">
  <summary>
  This exception type is thrown when the SPI data received from the DUT has an invalid CRC appended.

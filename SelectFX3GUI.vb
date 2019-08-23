@@ -8,12 +8,8 @@ Public Class SelectFX3GUI
 
     Private blinkingDictionary As New Dictionary(Of String, Boolean)
 
-    Sub New()
-
-        ' This call is required by the designer.
-        InitializeComponent()
-
-        For Each item In TopGUI.FX3.AvailableFX3s
+    Public Sub FormSetup() Handles Me.Load
+        For Each item In m_TopGUI.FX3.AvailableFX3s
             'Build combo box list using board serial numbers
             SelectFX3ComboBox.Items.Add(item)
             'Build dictionary by storing serial number and blinking state together
@@ -22,7 +18,6 @@ Public Class SelectFX3GUI
 
         'Set combo box to read-only
         SelectFX3ComboBox.DropDownStyle = ComboBoxStyle.DropDownList
-
     End Sub
 
     Private Sub SelectFX3ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SelectFX3ComboBox.SelectedIndexChanged
@@ -34,26 +29,26 @@ Public Class SelectFX3GUI
 
         'Turn off all other blinking LEDs
         'For each FX3 board that was detected
-        For Each item In TopGUI.FX3.AvailableFX3s
+        For Each item In m_TopGUI.FX3.AvailableFX3s
             'If the board currently being checked isn't the one selected
             If Not String.Equals(item, SelectFX3ComboBox.Text) Then
                 'If the board currently being checked is flagged as blinking
                 If blinkingDictionary.Item(item) Then
                     'Turn off the LED
-                    TopGUI.FX3.BootloaderTurnOffLED(item)
+                    m_TopGUI.FX3.BootloaderTurnOffLED(item)
                 End If
             End If
         Next
 
         'Enable blinking the selected board and set the led state in the dictionary
-        TopGUI.FX3.BootloaderBlinkLED(SelectFX3ComboBox.Text)
+        m_TopGUI.FX3.BootloaderBlinkLED(SelectFX3ComboBox.Text)
         blinkingDictionary.Item(SelectFX3ComboBox.Text) = True
 
     End Sub
 
     Private Sub SelectFX3OKButton_Click(sender As Object, e As EventArgs) Handles SelectFX3OKButton.Click
         'Set the active serial number in the FX3 Interface
-        TopGUI.FX3.ActiveFX3SerialNumber = SelectFX3ComboBox.SelectedItem
+        m_TopGUI.FX3.ActiveFX3SerialNumber = SelectFX3ComboBox.SelectedItem
         'Close the window. Also calls ClosingWindow to clean up the blinking boards
         Close()
     End Sub
@@ -62,11 +57,11 @@ Public Class SelectFX3GUI
 
         'Turn off all blinking LEDs
         'For each FX3 board that was detected
-        For Each item In TopGUI.FX3.AvailableFX3s
+        For Each item In m_TopGUI.FX3.AvailableFX3s
             'If the board currently being checked is flagged as blinking
             If blinkingDictionary.Item(item) Then
                 'Turn off the LED
-                TopGUI.FX3.BootloaderTurnOffLED(item)
+                m_TopGUI.FX3.BootloaderTurnOffLED(item)
             End If
         Next
     End Sub

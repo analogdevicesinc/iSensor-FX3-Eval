@@ -39,13 +39,13 @@ Public Class PinAccessGUI
         Dim FX3Api = GetType(FX3Connection)
         For Each prop In FX3Api.GetProperties()
             If prop.PropertyType = GetType(IPinObject) And Not prop.Name = "Reset" Then
-                Dim currPin As IPinObject = TopGUI.FX3.GetType().GetProperty(prop.Name).GetValue(TopGUI.FX3)
+                Dim currPin As IPinObject = m_TopGUI.FX3.GetType().GetProperty(prop.Name).GetValue(m_TopGUI.FX3)
                 pins.Add(prop.Name.ToUpper, currPin)
                 Dim state As String
-                If TopGUI.FX3.isPWMPin(currPin) Then
+                If m_TopGUI.FX3.isPWMPin(currPin) Then
                     state = "PWM"
                     MsgBox(prop.Name & " is in PWM mode, cannot read", MsgBoxStyle.DefaultButton1)
-                ElseIf TopGUI.FX3.ReadPin(currPin) = 0 Then
+                ElseIf m_TopGUI.FX3.ReadPin(currPin) = 0 Then
                     state = "Low"
                 Else
                     state = "High"
@@ -75,10 +75,10 @@ Public Class PinAccessGUI
         For Each row As DataGridViewRow In dgvPinList.Rows
             Dim currPin As IPinObject = pins(row.Cells(0).Value.ToUpper)
             Dim state As String
-            If TopGUI.FX3.isPWMPin(currPin) Then
+            If m_TopGUI.FX3.isPWMPin(currPin) Then
                 ' only throw a message on first load, doing it repeatedly would be annoying
                 state = "PWM"
-            ElseIf TopGUI.FX3.ReadPin(currPin) = 0 Then
+            ElseIf m_TopGUI.FX3.ReadPin(currPin) = 0 Then
                 state = "Low"
             Else
                 state = "High"
@@ -95,7 +95,7 @@ Public Class PinAccessGUI
         End If
         ' grid is set up to only allow one row selection
         Dim selectedRow As DataGridViewRow = dgvPinList.SelectedRows(0)
-            pinName = selectedRow.Cells(0).Value
+        pinName = selectedRow.Cells(0).Value
 
         Try
             currPin = pins(pinName.ToUpper)
@@ -104,14 +104,14 @@ Public Class PinAccessGUI
             Exit Sub
         End Try
         Dim answer As Integer
-        If TopGUI.FX3.isPWMPin(currPin) Then
+        If m_TopGUI.FX3.isPWMPin(currPin) Then
             Dim message As String = pinName & " is in PWM mode, writing to it will terminate that. Do you wish to perform the write?"
             answer = MsgBox(message, vbQuestion + vbYesNo + vbDefaultButton2)
             If answer = vbYes Then
-                TopGUI.FX3.SetPin(currPin, level)
+                m_TopGUI.FX3.SetPin(currPin, level)
             End If
         Else
-            TopGUI.FX3.SetPin(currPin, level)
+            m_TopGUI.FX3.SetPin(currPin, level)
         End If
         ' reading after performing the write will clear the values so don't do it
     End Sub
@@ -167,7 +167,7 @@ Public Class PinAccessGUI
         ' get mode
         ' TODO: get mode once it is implemented
 
-        TopGUI.FX3.PulseDrive(pin, level, period, mode)
+        m_TopGUI.FX3.PulseDrive(pin, level, period, mode)
     End Sub
 
     Private Sub ButtonReadSelected_Click(sender As Object, e As EventArgs) Handles ButtonReadSelected.Click
@@ -176,10 +176,10 @@ Public Class PinAccessGUI
         End If
         Dim currPin As IPinObject = pins(dgvPinList.SelectedRows(0).Cells(0).Value.ToString.ToUpper)
         Dim state As String
-        If TopGUI.FX3.isPWMPin(currPin) Then
+        If m_TopGUI.FX3.isPWMPin(currPin) Then
             ' only throw a message on first load, doing it repeatedly would be annoying
             state = "PWM"
-        ElseIf TopGUI.FX3.ReadPin(currPin) = 0 Then
+        ElseIf m_TopGUI.FX3.ReadPin(currPin) = 0 Then
             state = "Low"
         Else
             state = "High"

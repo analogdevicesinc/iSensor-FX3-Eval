@@ -1,4 +1,9 @@
-﻿Imports System.ComponentModel
+﻿'File:          RegisterGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          8/23/2019
+'Description:   Form for read/writing values to a DUT.
+
+Imports System.ComponentModel
 Imports RegMapClasses
 Imports System.Timers
 
@@ -13,17 +18,13 @@ Public Class RegisterGUI
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
 
-    Public Sub New()
-
-        ' This call is required by the designer.
-        InitializeComponent()
-
+    Public Sub FormSetup() Handles Me.Load
         scaleData = False
 
         'get list of pages
         pageList = New List(Of Integer)
         pagePosition = New List(Of Integer)
-        For Each reg In TopGUI.RegMap
+        For Each reg In m_TopGUI.RegMap
             If Not pageList.Contains(reg.Page) Then
                 pageList.Add(reg.Page)
                 pagePosition.Add(0) 'Start at top
@@ -43,7 +44,7 @@ Public Class RegisterGUI
         drReadTimer.Enabled = False
         AddHandler drReadTimer.Elapsed, New ElapsedEventHandler(AddressOf DrReadCallBack)
 
-        measureDr.Enabled = TopGUI.FX3.DrActive
+        measureDr.Enabled = m_TopGUI.FX3.DrActive
     End Sub
 
     Private Sub FormRegisters_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -62,7 +63,7 @@ Public Class RegisterGUI
 
         Try
             regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
-            TopGUI.Dut.WriteUnsigned(TopGUI.RegMap(regLabel), writeValue)
+            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap(regLabel), writeValue)
         Catch ex As Exception
             MsgBox("ERROR: Invalid write - " + ex.ToString())
         End Try
@@ -83,7 +84,7 @@ Public Class RegisterGUI
 
         If scaleData Then
             Dim DutValuesDoub() As Double
-            DutValuesDoub = TopGUI.Dut.ReadScaledValue(readRegList)
+            DutValuesDoub = m_TopGUI.Dut.ReadScaledValue(readRegList)
             Dim regIndex As Integer = 0
             For Each value In DutValuesDoub
                 regView.Item("Contents", regIndex).Value = value.ToString()
@@ -91,7 +92,7 @@ Public Class RegisterGUI
             Next
         Else
             Dim DutValuesUInt() As UInteger
-            DutValuesUInt = TopGUI.Dut.ReadUnsigned(readRegList)
+            DutValuesUInt = m_TopGUI.Dut.ReadUnsigned(readRegList)
             Dim regIndex As Integer = 0
             For Each value In DutValuesUInt
                 regView.Item("Contents", regIndex).Value = value.ToString("X")
@@ -107,12 +108,12 @@ Public Class RegisterGUI
             regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
             If scaleData Then
                 Dim value As Double
-                value = TopGUI.Dut.ReadScaledValue(TopGUI.RegMap(regLabel))
+                value = m_TopGUI.Dut.ReadScaledValue(m_TopGUI.RegMap(regLabel))
                 CurrentValue.Text = value.ToString()
                 regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString()
             Else
                 Dim value As UInteger
-                value = TopGUI.Dut.ReadUnsigned(TopGUI.RegMap(regLabel))
+                value = m_TopGUI.Dut.ReadUnsigned(m_TopGUI.RegMap(regLabel))
                 CurrentValue.Text = value.ToString("X")
                 regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("X")
             End If
@@ -131,7 +132,7 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub ReadDrFreq()
-        DrFreq.Text = FormatNumber(TopGUI.FX3.ReadDRFreq(TopGUI.FX3.DrPin, 1, 5000)).ToString() + "Hz"
+        DrFreq.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 5000)).ToString() + "Hz"
         drReadTimer.Enabled = measureDr.Checked
     End Sub
 
@@ -176,7 +177,7 @@ Public Class RegisterGUI
         Dim readStr As String
         Dim regIndex As Integer = 0
         currentRegList = New List(Of RegClass)
-        For Each reg In TopGUI.RegMap
+        For Each reg In m_TopGUI.RegMap
             If reg.Page = selectPage.SelectedItem Then
                 currentRegList.Add(reg)
                 If reg.IsReadable Then
@@ -204,14 +205,14 @@ Public Class RegisterGUI
 
     Private Sub btn_DumpRegmap_Click(sender As Object, e As EventArgs) Handles btn_DumpRegmap.Click
         Dim readableRegMap As New List(Of RegClass)
-        For Each reg In TopGUI.RegMap
+        For Each reg In m_TopGUI.RegMap
             If reg.IsReadable Then
                 readableRegMap.Add(reg)
             End If
         Next
 
         Dim values() As UInteger
-        values = TopGUI.Dut.ReadUnsigned(readableRegMap)
+        values = m_TopGUI.Dut.ReadUnsigned(readableRegMap)
         Dim strValues As New List(Of String)
 
         strValues.Add("Register, Value")
