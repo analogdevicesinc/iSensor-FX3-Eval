@@ -140,6 +140,21 @@ Public Class TopGUI
 
     Private Sub btn_bit_bang_Click(sender As Object, e As EventArgs) Handles btn_bit_bang.Click
 
+        FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
+        FX3.SetBitBangSpiFreq(500000)
+
+        Dim running As Boolean = True
+
+        While running
+            Try
+                MsgBox(FX3.BitBangReadReg16(Convert.ToUInt32(InputBox("Read Address: "))).ToString("X4"))
+            Catch ex As Exception
+                running = False
+            End Try
+
+        End While
+
+        FX3.RestoreHardwareSpi()
 
     End Sub
 
