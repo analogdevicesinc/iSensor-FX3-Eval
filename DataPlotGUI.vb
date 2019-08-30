@@ -1,12 +1,7 @@
 ﻿Imports RegMapClasses
 Imports System.Timers
-
-Structure RegOffsetPair
-    Public Offset As Double
-    Public Reg As RegClass
-    Public Index As Integer
-    Public Color As Color
-End Structure
+Imports System.Windows.Forms.DataVisualization.Charting
+Imports System.Data
 
 Public Class DataPlotGUI
     Inherits FormBase
@@ -19,6 +14,7 @@ Public Class DataPlotGUI
     Private plotYMin As Integer
     Private plotYMax As Integer
     Private plotColors As List(Of Color)
+    Private numSamples As UInteger
 
     Public Sub FormSetup() Handles Me.Load
         PopulateRegView()
@@ -27,24 +23,30 @@ Public Class DataPlotGUI
         plotting = False
         samplePeriodMs = 100
         selectedRegList = New List(Of RegOffsetPair)
-        sampleFreq.Text = "10"
+        sampleFreq.Text = "20"
 
         'Set color list
         plotColors = New List(Of Color)
-        'plotColors.Add(Color.FromArgb(&HFC5C65))
-        'plotColors.Add(Color.FromArgb(&HFD9644))
-        'plotColors.Add(Color.FromArgb(&HFED330))
-        'plotColors.Add(Color.FromArgb(&H26DE81))
-        'plotColors.Add(Color.FromArgb(&H2BCBBA))
-        'plotColors.Add(Color.FromArgb(&H45AAF2))
-        'plotColors.Add(Color.FromArgb(&H4B7BEC))
-        'plotColors.Add(Color.FromArgb(&HA55EEA))
-        'plotColors.Add(Color.FromArgb(&H778CA3))
 
         'Set up timer
         plotTimer = New Timer(500)
         plotTimer.Enabled = False
         AddHandler plotTimer.Elapsed, New ElapsedEventHandler(AddressOf PlotTimerCallback)
+
+        samplesRendered.Text = "200"
+    End Sub
+
+    Private Sub ResizeHandler() Handles Me.Resize
+        regView.Height = Me.Height - 122
+        dataPlot.Top = 6
+        dataPlot.Left = 511
+        dataPlot.Width = Me.Width - 532
+        dataPlot.Height = Me.Height - 50
+        dataPlot.ResetAutoValues()
+    End Sub
+
+    Private Sub ShutDown() Handles Me.Closing
+        plotTimer.Enabled = False
     End Sub
 
     Private Sub PlotTimerCallback()
@@ -70,6 +72,18 @@ Public Class DataPlotGUI
             plotValues.Add(regValues(index) - item.Offset)
             index += 1
         Next
+
+        'Update the series for the plot area
+        For i As Integer = 0 To selectedRegList.Count() - 1
+            'remove leading point if it exists
+            If dataPlot.Series(i).Points.Count() = numSamples Then
+                dataPlot.Series(i).Points.RemoveAt(0)
+                dataPlot.ResetAutoValues()
+            End If
+            dataPlot.Series(i).Points.AddXY(plotXPosition, plotValues(i))
+        Next
+
+        plotXPosition = plotXPosition + 1
 
     End Sub
 
@@ -142,6 +156,42 @@ Public Class DataPlotGUI
             samplePeriodMs = 100
         End Try
 
+        Try
+            numSamples = Convert.ToInt32(samplesRendered.Text)
+        Catch ex As Exception
+            MsgBox("Invalid number of samples")
+            samplesRendered.Text = "500"
+            ConfigurePlot()
+            Exit Sub
+        End Try
+
+        'Reset the chart area
+        dataPlot.ChartAreas.Clear()
+        dataPlot.ChartAreas.Add(New ChartArea)
+
+        'configure chart
+        dataPlot.ChartAreas(0).AxisY.MajorGrid.Enabled = True
+        dataPlot.ChartAreas(0).AxisX.MajorGrid.Enabled = True
+        dataPlot.ChartAreas(0).AxisX.Title = "Sample Number"
+        dataPlot.ChartAreas(0).AxisY.Title = "Scaled Value"
+
+        'Set plotter position
+        plotXPosition = 0
+
+        'Remove all existing series
+        dataPlot.Series.Clear()
+
+        'Add series for each register
+        Dim temp As Series
+        For Each reg In selectedRegList
+            temp = New Series
+            temp.ChartType = SeriesChartType.Line
+            temp.Color = reg.Color
+            temp.BorderWidth = 2
+            temp.Name = reg.Reg.Label
+            dataPlot.Series.Add(temp)
+        Next
+
     End Sub
 
     Private Sub StopPlot()
@@ -152,4 +202,25 @@ Public Class DataPlotGUI
         selectedRegList.Clear()
     End Sub
 
+    Private Sub btn_autonull_Click(sender As Object, e As EventArgs) Handles btn_autonull.Click
+        Dim regValues() As Double
+        Dim plotValues As New List(Of Double)
+
+        If selectedRegList.Count() = 0 Then
+            Exit Sub
+        End If
+
+        'Read the registers
+        Dim regs As New List(Of RegClass)
+        For Each reg In selectedRegList
+            regs.Add(reg.Reg)
+        Next
+        regValues = m_TopGUI.Dut.ReadScaledValue(regs)
+
+        For i As Integer = 0 To selectedRegList.Count() - 1
+            selectedRegList(i).Offset = regValues(i)
+            regView.Item("Offset", selectedRegList(i).Index).Value = regValues(i).ToString()
+        Next
+
+    End Sub
 End Class

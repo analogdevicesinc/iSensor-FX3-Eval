@@ -153,9 +153,8 @@ Public Class ADcmXLStreamingGUI
             temp.Start()
         Else
             runOnce = True
-            StartSample()
+            CaptureSample()
         End If
-
 
     End Sub
 
@@ -168,27 +167,39 @@ Public Class ADcmXLStreamingGUI
             If pinCaptureStart Then
                 'Pin mode
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Pin Wait"))
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
                 pinWaitTime = m_TopGUI.FX3.PulseWait(startPin, pinCapturePolarity, 0, captureTime)
                 If pinWaitTime >= captureTime Then
                     Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Pin wait timed out, exiting capture loop"))
                     Exit While
                 End If
-                SampleDone = False
-                Me.Invoke(New MethodInvoker(AddressOf StartSample))
-                sampleCounter += 1
-                Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+
+                'Perform sample
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
+                CaptureSample()
+
+                'Wait for sample completion
                 While Not SampleDone
                     System.Threading.Thread.Sleep(100)
                 End While
+                sampleCounter += 1
+                Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
             Else
-                SampleDone = False
-                Me.Invoke(New MethodInvoker(AddressOf StartSample))
-                sampleCounter += 1
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
+                CaptureSample()
+
+                'wait for sample completion
                 While Not SampleDone
                     System.Threading.Thread.Sleep(100)
                 End While
+                sampleCounter += 1
                 Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+
+                'Perform sleep
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Sleep for capture period"))
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
                 System.Threading.Thread.Sleep(captureTime)
             End If
         End While
@@ -218,7 +229,7 @@ Public Class ADcmXLStreamingGUI
         StopBtn.Enabled = False
     End Sub
 
-    Private Sub StartSample()
+    Private Sub CaptureSample()
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
@@ -240,6 +251,7 @@ Public Class ADcmXLStreamingGUI
         ElseIf timeoutEnable = 0 Then
             m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("REC_CTRL1"), &H103)
         End If
+        System.Threading.Thread.Sleep(100)
 
         'Start stream
         If pinExitEnable = 1 Then
@@ -254,21 +266,20 @@ Public Class ADcmXLStreamingGUI
             m_TopGUI.FX3.PinStart = False
         End If
 
+        fileManager = New TextFileStreamManager()
         fileManager.DutInterface = m_TopGUI.Dut
         fileManager.FileBaseName = "Real_Time_Data" + timeString
         fileManager.FilePath = savePath
         fileManager.Buffers = totalFrames
         fileManager.FileMaxDataRows = linesPerFile
-        fileManager.BufferTimeout = 5
-        fileManager.BuffersPerWrite = 15625 'Note: This is # frames, but TFSM counts this as samples. Multiply this number * 32 '15625 = 500k samples
+        fileManager.BufferTimeout = 10
+        fileManager.BuffersPerWrite = 1000 'Note: This is # frames, but TFSM counts this as samples. Multiply this number * 32 '15625 = 500k samples
         fileManager.IncludeSampleNumberColumn = WriteFrameNumber.Checked
         'Extra properties to make file manager happy - do nothing
         fileManager.Captures = 1
         fileManager.RegList = regListDUT.RealTimeSamplingRegList
         fileManager.RunAsync()
-
-        statusLabel.Text = "Beginning Sample"
-        statusLabel.BackColor = Color.White
+        SampleDone = False
     End Sub
 
     Private Sub progressUpdate(sender As Object, e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
@@ -276,13 +287,17 @@ Public Class ADcmXLStreamingGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        statusLabel.Text = "Done with sample"
-        statusLabel.BackColor = Color.Green
-        SampleProgress.Value = 0
+        Me.Invoke(New MethodInvoker(AddressOf SampleDoneLabels))
         SampleDone = True
         If runOnce Then
             UpdateLabelsStop()
         End If
+    End Sub
+
+    Private Sub SampleDoneLabels()
+        statusLabel.Text = "Done with sample"
+        statusLabel.BackColor = Color.LightGreen
+        SampleProgress.Value = 0
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StopBtn.Click

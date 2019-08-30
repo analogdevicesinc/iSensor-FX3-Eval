@@ -30,8 +30,8 @@ Partial Class RegisterGUI
         Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.newValue = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
+        Me.writeLabel = New System.Windows.Forms.Label()
+        Me.readLabel = New System.Windows.Forms.Label()
         Me.CurrentValue = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.ButtonRead = New System.Windows.Forms.Button()
@@ -45,6 +45,7 @@ Partial Class RegisterGUI
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.btn_DumpRegmap = New System.Windows.Forms.Button()
+        Me.drActive = New System.Windows.Forms.CheckBox()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -53,10 +54,9 @@ Partial Class RegisterGUI
         '
         'ButtonWrite
         '
-        Me.ButtonWrite.Location = New System.Drawing.Point(267, 191)
-        Me.ButtonWrite.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.ButtonWrite.Location = New System.Drawing.Point(100, 80)
         Me.ButtonWrite.Name = "ButtonWrite"
-        Me.ButtonWrite.Size = New System.Drawing.Size(163, 50)
+        Me.ButtonWrite.Size = New System.Drawing.Size(61, 21)
         Me.ButtonWrite.TabIndex = 7
         Me.ButtonWrite.Text = "WRITE"
         Me.ButtonWrite.UseVisualStyleBackColor = True
@@ -68,8 +68,8 @@ Partial Class RegisterGUI
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents})
-        Me.regView.Location = New System.Drawing.Point(29, 100)
-        Me.regView.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.regView.Location = New System.Drawing.Point(11, 42)
+        Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
         Me.regView.Name = "regView"
         Me.regView.ReadOnly = True
@@ -78,7 +78,7 @@ Partial Class RegisterGUI
         Me.regView.RowTemplate.Height = 24
         Me.regView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.regView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.regView.Size = New System.Drawing.Size(1027, 1161)
+        Me.regView.Size = New System.Drawing.Size(385, 487)
         Me.regView.TabIndex = 2
         '
         'Label
@@ -122,53 +122,48 @@ Partial Class RegisterGUI
         '
         'newValue
         '
-        Me.newValue.Location = New System.Drawing.Point(35, 191)
-        Me.newValue.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.newValue.Location = New System.Drawing.Point(13, 80)
         Me.newValue.Name = "newValue"
-        Me.newValue.Size = New System.Drawing.Size(185, 38)
+        Me.newValue.Size = New System.Drawing.Size(72, 20)
         Me.newValue.TabIndex = 10
         Me.newValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label3
+        'writeLabel
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(27, 153)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(222, 32)
-        Me.Label3.TabIndex = 11
-        Me.Label3.Text = "New Hex Value"
+        Me.writeLabel.AutoSize = True
+        Me.writeLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.writeLabel.Location = New System.Drawing.Point(10, 64)
+        Me.writeLabel.Name = "writeLabel"
+        Me.writeLabel.Size = New System.Drawing.Size(94, 13)
+        Me.writeLabel.TabIndex = 11
+        Me.writeLabel.Text = "New Hex Value"
         '
-        'Label5
+        'readLabel
         '
-        Me.Label5.AutoSize = True
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(27, 38)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(264, 32)
-        Me.Label5.TabIndex = 15
-        Me.Label5.Text = "Current Hex Value"
+        Me.readLabel.AutoSize = True
+        Me.readLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.readLabel.Location = New System.Drawing.Point(10, 16)
+        Me.readLabel.Name = "readLabel"
+        Me.readLabel.Size = New System.Drawing.Size(110, 13)
+        Me.readLabel.TabIndex = 15
+        Me.readLabel.Text = "Current Hex Value"
         '
         'CurrentValue
         '
         Me.CurrentValue.BackColor = System.Drawing.Color.White
         Me.CurrentValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CurrentValue.Location = New System.Drawing.Point(35, 81)
-        Me.CurrentValue.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
+        Me.CurrentValue.Location = New System.Drawing.Point(13, 34)
         Me.CurrentValue.Name = "CurrentValue"
-        Me.CurrentValue.Size = New System.Drawing.Size(189, 45)
+        Me.CurrentValue.Size = New System.Drawing.Size(72, 20)
         Me.CurrentValue.TabIndex = 16
         Me.CurrentValue.Text = "Not Read"
         Me.CurrentValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ButtonRead
         '
-        Me.ButtonRead.Location = New System.Drawing.Point(320, 45)
-        Me.ButtonRead.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.ButtonRead.Location = New System.Drawing.Point(120, 19)
         Me.ButtonRead.Name = "ButtonRead"
-        Me.ButtonRead.Size = New System.Drawing.Size(213, 141)
+        Me.ButtonRead.Size = New System.Drawing.Size(80, 59)
         Me.ButtonRead.TabIndex = 17
         Me.ButtonRead.Text = "Read"
         Me.ButtonRead.UseVisualStyleBackColor = True
@@ -176,10 +171,9 @@ Partial Class RegisterGUI
         'scaledData
         '
         Me.scaledData.AutoSize = True
-        Me.scaledData.Location = New System.Drawing.Point(24, 122)
-        Me.scaledData.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.scaledData.Location = New System.Drawing.Point(9, 51)
         Me.scaledData.Name = "scaledData"
-        Me.scaledData.Size = New System.Drawing.Size(192, 36)
+        Me.scaledData.Size = New System.Drawing.Size(79, 17)
         Me.scaledData.TabIndex = 20
         Me.scaledData.Text = "Scale Data"
         Me.scaledData.UseVisualStyleBackColor = True
@@ -188,10 +182,9 @@ Partial Class RegisterGUI
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(21, 29)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
+        Me.Label6.Location = New System.Drawing.Point(8, 12)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(205, 32)
+        Me.Label6.Size = New System.Drawing.Size(87, 13)
         Me.Label6.TabIndex = 22
         Me.Label6.Text = "Select a Page"
         '
@@ -199,29 +192,27 @@ Partial Class RegisterGUI
         '
         Me.selectPage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.selectPage.FormattingEnabled = True
-        Me.selectPage.Location = New System.Drawing.Point(267, 21)
-        Me.selectPage.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.selectPage.Location = New System.Drawing.Point(100, 9)
+        Me.selectPage.Margin = New System.Windows.Forms.Padding(2)
         Me.selectPage.Name = "selectPage"
-        Me.selectPage.Size = New System.Drawing.Size(417, 39)
+        Me.selectPage.Size = New System.Drawing.Size(159, 21)
         Me.selectPage.TabIndex = 21
         '
         'DrFreq
         '
         Me.DrFreq.AutoSize = True
-        Me.DrFreq.Location = New System.Drawing.Point(16, 93)
-        Me.DrFreq.Margin = New System.Windows.Forms.Padding(8, 0, 8, 0)
+        Me.DrFreq.Location = New System.Drawing.Point(6, 39)
         Me.DrFreq.Name = "DrFreq"
-        Me.DrFreq.Size = New System.Drawing.Size(296, 32)
+        Me.DrFreq.Size = New System.Drawing.Size(112, 13)
         Me.DrFreq.TabIndex = 25
         Me.DrFreq.Text = "Analyzing Data Ready"
         '
         'contRead
         '
         Me.contRead.AutoSize = True
-        Me.contRead.Location = New System.Drawing.Point(24, 72)
-        Me.contRead.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.contRead.Location = New System.Drawing.Point(9, 30)
         Me.contRead.Name = "contRead"
-        Me.contRead.Size = New System.Drawing.Size(287, 36)
+        Me.contRead.Size = New System.Drawing.Size(113, 17)
         Me.contRead.TabIndex = 26
         Me.contRead.Text = "Continuous Reads"
         Me.contRead.UseVisualStyleBackColor = True
@@ -230,11 +221,9 @@ Partial Class RegisterGUI
         '
         Me.GroupBox3.Controls.Add(Me.measureDr)
         Me.GroupBox3.Controls.Add(Me.DrFreq)
-        Me.GroupBox3.Location = New System.Drawing.Point(1069, 568)
-        Me.GroupBox3.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.GroupBox3.Location = New System.Drawing.Point(401, 238)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.GroupBox3.Size = New System.Drawing.Size(563, 150)
+        Me.GroupBox3.Size = New System.Drawing.Size(211, 63)
         Me.GroupBox3.TabIndex = 27
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Data Ready"
@@ -242,26 +231,23 @@ Partial Class RegisterGUI
         'measureDr
         '
         Me.measureDr.AutoSize = True
-        Me.measureDr.Location = New System.Drawing.Point(24, 45)
-        Me.measureDr.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.measureDr.Location = New System.Drawing.Point(9, 19)
         Me.measureDr.Name = "measureDr"
-        Me.measureDr.Size = New System.Drawing.Size(319, 36)
+        Me.measureDr.Size = New System.Drawing.Size(127, 17)
         Me.measureDr.TabIndex = 27
         Me.measureDr.Text = "Measure Data Ready"
         Me.measureDr.UseVisualStyleBackColor = True
         '
         'GroupBox4
         '
-        Me.GroupBox4.Controls.Add(Me.Label5)
+        Me.GroupBox4.Controls.Add(Me.readLabel)
         Me.GroupBox4.Controls.Add(Me.CurrentValue)
-        Me.GroupBox4.Controls.Add(Me.Label3)
+        Me.GroupBox4.Controls.Add(Me.writeLabel)
         Me.GroupBox4.Controls.Add(Me.newValue)
         Me.GroupBox4.Controls.Add(Me.ButtonWrite)
-        Me.GroupBox4.Location = New System.Drawing.Point(1069, 262)
-        Me.GroupBox4.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.GroupBox4.Location = New System.Drawing.Point(401, 110)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.GroupBox4.Size = New System.Drawing.Size(563, 291)
+        Me.GroupBox4.Size = New System.Drawing.Size(211, 122)
         Me.GroupBox4.TabIndex = 28
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Selected Register"
@@ -271,30 +257,38 @@ Partial Class RegisterGUI
         Me.GroupBox5.Controls.Add(Me.ButtonRead)
         Me.GroupBox5.Controls.Add(Me.contRead)
         Me.GroupBox5.Controls.Add(Me.scaledData)
-        Me.GroupBox5.Location = New System.Drawing.Point(1069, 29)
-        Me.GroupBox5.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.GroupBox5.Location = New System.Drawing.Point(401, 12)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Padding = New System.Windows.Forms.Padding(8, 7, 8, 7)
-        Me.GroupBox5.Size = New System.Drawing.Size(557, 219)
+        Me.GroupBox5.Size = New System.Drawing.Size(209, 92)
         Me.GroupBox5.TabIndex = 29
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Control"
         '
         'btn_DumpRegmap
         '
-        Me.btn_DumpRegmap.Location = New System.Drawing.Point(1253, 1147)
-        Me.btn_DumpRegmap.Margin = New System.Windows.Forms.Padding(8, 7, 8, 7)
+        Me.btn_DumpRegmap.Location = New System.Drawing.Point(470, 481)
         Me.btn_DumpRegmap.Name = "btn_DumpRegmap"
-        Me.btn_DumpRegmap.Size = New System.Drawing.Size(221, 112)
+        Me.btn_DumpRegmap.Size = New System.Drawing.Size(83, 47)
         Me.btn_DumpRegmap.TabIndex = 30
         Me.btn_DumpRegmap.Text = "Dump RegMap"
         Me.btn_DumpRegmap.UseVisualStyleBackColor = True
         '
+        'drActive
+        '
+        Me.drActive.AutoSize = True
+        Me.drActive.Location = New System.Drawing.Point(410, 307)
+        Me.drActive.Name = "drActive"
+        Me.drActive.Size = New System.Drawing.Size(145, 17)
+        Me.drActive.TabIndex = 31
+        Me.drActive.Text = "DR Sync Register Reads"
+        Me.drActive.UseVisualStyleBackColor = True
+        '
         'RegisterGUI
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(16.0!, 31.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1659, 1288)
+        Me.ClientSize = New System.Drawing.Size(622, 540)
+        Me.Controls.Add(Me.drActive)
         Me.Controls.Add(Me.btn_DumpRegmap)
         Me.Controls.Add(Me.GroupBox5)
         Me.Controls.Add(Me.GroupBox4)
@@ -303,7 +297,7 @@ Partial Class RegisterGUI
         Me.Controls.Add(Me.selectPage)
         Me.Controls.Add(Me.regView)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(5, 5, 5, 5)
+        Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "RegisterGUI"
         Me.Text = "Register Access"
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
@@ -320,8 +314,8 @@ Partial Class RegisterGUI
     Friend WithEvents ButtonWrite As System.Windows.Forms.Button
     Friend WithEvents regView As System.Windows.Forms.DataGridView
     Friend WithEvents newValue As System.Windows.Forms.TextBox
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents writeLabel As System.Windows.Forms.Label
+    Friend WithEvents readLabel As System.Windows.Forms.Label
     Friend WithEvents CurrentValue As System.Windows.Forms.Label
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents ButtonRead As System.Windows.Forms.Button
@@ -339,4 +333,5 @@ Partial Class RegisterGUI
     Friend WithEvents scaledData As CheckBox
     Friend WithEvents measureDr As CheckBox
     Friend WithEvents btn_DumpRegmap As Button
+    Friend WithEvents drActive As CheckBox
 End Class

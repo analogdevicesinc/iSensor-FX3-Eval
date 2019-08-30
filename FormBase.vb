@@ -6,7 +6,7 @@
 Public Class FormBase
     Inherits System.Windows.Forms.Form
 
-    Protected m_TopGUI As TopGUI
+    Protected WithEvents m_TopGUI As TopGUI
 
     Public Sub Setup() Handles Me.Load
         'Set the start position
@@ -16,11 +16,15 @@ Public Class FormBase
     End Sub
 
     Public Sub Cleanup() Handles Me.Closing
-        TopGUI.Show()
+        m_TopGUI.Show()
     End Sub
 
     Public Sub SetTopGUI(ByRef instance As TopGUI)
         m_TopGUI = instance
+    End Sub
+
+    Public Sub DisconnectHandler(FX3SerialNumber As String) Handles m_TopGUI.UnexpectedDisconnect
+        m_TopGUI.Show()
     End Sub
 
 End Class

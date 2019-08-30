@@ -4,10 +4,18 @@
 'Description:   Module of generic helper functions for use in the GUI
 
 Imports System.IO
+Imports RegMapClasses
+
+Class RegOffsetPair
+    Public Offset As Double
+    Public Reg As RegClass
+    Public Index As Integer
+    Public Color As Color
+End Class
 
 Module helperFunctions
 
-    Public Sub saveCSV(ByVal fileHeader As String, ByVal inputData() As String)
+    Public Sub saveCSV(ByVal fileHeader As String, ByVal inputData() As String, Optional ByRef Path As String = "")
         Dim currentTime As Date = Date.Now()
         Dim outputStream As StreamWriter
         Dim saveData As New SaveFileDialog
@@ -15,8 +23,13 @@ Module helperFunctions
         fileName = fileName.Replace(":", "-")
         saveData.FileName = fileName
         saveData.Filter = "Output data file | .csv"
-        saveData.InitialDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location
+        If Path <> "" Then
+            saveData.InitialDirectory = Path
+        Else
+            saveData.InitialDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location
+        End If
         If saveData.ShowDialog() = DialogResult.OK Then
+            Path = saveData.FileName
             outputStream = New StreamWriter(saveData.OpenFile)
             For Each line In inputData
                 outputStream.WriteLine(line)
@@ -25,11 +38,17 @@ Module helperFunctions
         End If
     End Sub
 
-    Function setSaveLocation()
+    Function setSaveLocation(Optional ByRef Path As String = "")
         Dim dialog As New FolderBrowserDialog
         Dim savePath As String
+        Try
+            dialog.SelectedPath = Path
+        Catch ex As Exception
+            Path = ""
+        End Try
         If dialog.ShowDialog() = DialogResult.OK Then
             savePath = dialog.SelectedPath
+            Path = savePath
             Return (savePath)
         Else
             Return Nothing
@@ -49,28 +68,38 @@ Module helperFunctions
         outputStream.Close()
     End Sub
 
-    Public Sub saveText(ByVal fileHeader As String, ByRef inputData As String)
+    Public Sub saveText(ByVal fileHeader As String, ByRef inputData As String, Optional ByRef Path As String = "")
         Dim currentTime As Date = Date.Now()
         Dim fileName As String = fileHeader + "_" + currentTime.ToString("s") + ".csv"
         fileName = fileName.Replace(":", "-")
         Dim saveData As New SaveFileDialog
         saveData.FileName = fileName
         saveData.Filter = "Output data file | .csv"
-        saveData.InitialDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location
+        If Path <> "" Then
+            saveData.InitialDirectory = Path
+        Else
+            saveData.InitialDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location
+        End If
         If saveData.ShowDialog() = DialogResult.OK Then
+            Path = saveData.FileName
             File.WriteAllText(saveData.FileName, inputData)
         End If
     End Sub
 
-    Public Sub saveBinaryFile(ByVal fileHeader As String, ByRef inputData As Byte())
+    Public Sub saveBinaryFile(ByVal fileHeader As String, ByRef inputData As Byte(), Optional ByRef Path As String = "")
         Dim currentTime As Date = Date.Now()
         Dim fileName As String = fileHeader + "_" + currentTime.ToString("s") + ".bin"
         fileName = fileName.Replace(":", "-")
         Dim saveData As New SaveFileDialog
         saveData.FileName = fileName
         saveData.Filter = "Output data file | .bin"
-        saveData.InitialDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location
+        If Path <> "" Then
+            saveData.InitialDirectory = Path
+        Else
+            saveData.InitialDirectory = System.Reflection.Assembly.GetExecutingAssembly().Location
+        End If
         If saveData.ShowDialog() = DialogResult.OK Then
+            Path = saveData.FileName
             File.WriteAllBytes(saveData.FileName, inputData)
         End If
     End Sub

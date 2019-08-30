@@ -21,11 +21,20 @@ Public Class TopGUI
     Public BulkRegList As List(Of ListViewItem)
     Public numRegSamples As Integer
 
+    'Last browsed to file location
+    Public lastFilePath As String
+
     'Private member variables
     Private m_FX3Connected As Boolean
     Private WithEvents m_disconnectTimer As Timer
     Private m_RegMapPath As String
     Private m_AutoSpi As iSensorAutomotiveSpi
+
+    ''' <summary>
+    ''' This event is raised when the active board is disconnected unexpectedly (IE unplugged)
+    ''' </summary>
+    ''' <param name="FX3SerialNum">Serial number of the board which was disconnected</param>
+    Event UnexpectedDisconnect(ByVal FX3SerialNum As String)
 
     Public Sub New()
 
@@ -100,6 +109,8 @@ Public Class TopGUI
         'Set the API version and build date
         label_apiVersion.Text = "Analog Devices iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
 
+        lastFilePath = My.Settings.LastFilePath
+
     End Sub
 
 #Region "Properties"
@@ -127,7 +138,8 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
-    Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
+    Private Sub btn_bit_bang_Click(sender As Object, e As EventArgs) Handles btn_bit_bang.Click
+
 
     End Sub
 
@@ -149,8 +161,8 @@ Public Class TopGUI
 
         Select Case btn_Connect.Text
             Case "Connect to FX3"
-                ConnectWork()
                 btn_Connect.Text = "Reboot FX3"
+                ConnectWork()
             Case "Reboot FX3"
                 RebootFX3()
                 btn_Connect.Text = "Connect to FX3"
@@ -246,35 +258,6 @@ Public Class TopGUI
         Me.Hide()
     End Sub
 
-    Private Function CaptureSignedRegisters(reglist As IEnumerable(Of RegClass), numBuffers As UInteger) As String()
-
-        Dim regValues As Long()
-        Dim Index As Integer
-        Dim tempStr As String
-        Dim valuesStr As New List(Of String)
-
-        regValues = Dut.ReadSigned(reglist, 1UI, numBuffers)
-
-        valuesStr = New List(Of String)
-        valuesStr.Add("")
-        For Each reg In reglist
-            valuesStr(0) = valuesStr(0) + reg.Label + ","
-        Next
-
-        Index = 0
-        For buf As Integer = 0 To numBuffers - 1
-            tempStr = ""
-            For Each reg In reglist
-                tempStr = tempStr + regValues(Index).ToString() + ","
-                Index += 1
-            Next
-            valuesStr.Add(tempStr)
-        Next
-
-        Return valuesStr.ToArray()
-
-    End Function
-
     Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_Bursttest.Click
         Dim subGUI As New BurstTestGUI()
         subGUI.SetTopGUI(Me)
@@ -286,7 +269,6 @@ Public Class TopGUI
         Dim subGUI As New DataPlotGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
     End Sub
 
 #End Region
@@ -314,6 +296,7 @@ Public Class TopGUI
         My.Settings.SensorType = FX3.SensorType
         My.Settings.LastLeft = Me.Left
         My.Settings.LastTop = Me.Top
+        My.Settings.LastFilePath = lastFilePath
         My.Settings.Save()
 
         'Disconnect the FX3 (does nothing if not already connected)
@@ -342,6 +325,8 @@ Public Class TopGUI
         label_FX3Status.BackColor = Color.Red
         label_DUTStatus.Text = "ERROR: FX3 Connection Lost"
         label_DUTStatus.BackColor = Color.Red
+
+        RaiseEvent UnexpectedDisconnect(FX3SerialNumber)
 
     End Sub
 
@@ -393,6 +378,7 @@ Public Class TopGUI
         ElseIf FX3.AvailableFX3s.Count > 1 Then
             'Get the serial number from the selectFX3 GUI (sets the active FX3 serial number)
             Dim subGUI As New SelectFX3GUI()
+            subGUI.SetTopGUI(Me)
             subGUI.ShowDialog()
             selectedFX3SN = FX3.ActiveFX3SerialNumber
         ElseIf FX3.BusyFX3s.Count > 0 Then
@@ -406,10 +392,12 @@ Public Class TopGUI
             Else
                 label_FX3Status.BackColor = Color.Red
                 label_FX3Status.Text = "ERROR: All FX3s in Use"
+                btn_Connect.Text = "Connect to FX3"
             End If
         Else
             label_FX3Status.BackColor = Color.Red
             label_FX3Status.Text = "ERROR: No FX3 connected"
+            btn_Connect.Text = "Connect to FX3"
             Exit Sub
         End If
 
@@ -437,7 +425,7 @@ Public Class TopGUI
         btn_measurePulse.Enabled = True
         btn_PinAccess.Enabled = True
         btn_Bursttest.Enabled = True
-        btn_test.Enabled = True
+        btn_bit_bang.Enabled = True
         btn_plotData.Enabled = True
 
         label_FX3Status.Text = "Connected to " + FX3.ActiveFX3SerialNumber
@@ -477,6 +465,7 @@ Public Class TopGUI
         btn_BulkRegRead.Enabled = False
         btn_CheckDUTConnection.Enabled = False
         btn_Connect.Enabled = True 'Connect should be enabled by default
+        btn_Connect.Text = "Connect to FX3"
         btn_FX3Config.Enabled = False
         btn_PWMSetup.Enabled = False
         btn_RealTime.Enabled = False
@@ -486,7 +475,7 @@ Public Class TopGUI
         btn_measurePulse.Enabled = False
         btn_PinAccess.Enabled = False
         btn_Bursttest.Enabled = False
-        btn_test.Enabled = False
+        btn_bit_bang.Enabled = False
         btn_plotData.Enabled = False
     End Sub
 
@@ -561,6 +550,10 @@ Public Class TopGUI
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
 
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        FX3.RestoreHardwareSpi()
     End Sub
 
 #End Region

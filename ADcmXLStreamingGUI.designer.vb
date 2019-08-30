@@ -43,6 +43,11 @@ Partial Class ADcmXLStreamingGUI
         Me.Label9 = New System.Windows.Forms.Label()
         Me.captureCounter = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.framesSkipped = New System.Windows.Forms.Label()
+        Me.framesPurged = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.purgeFrames = New System.Windows.Forms.CheckBox()
         Me.WriteFrameNumber = New System.Windows.Forms.CheckBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.DeviceType = New System.Windows.Forms.Label()
@@ -58,11 +63,6 @@ Partial Class ADcmXLStreamingGUI
         Me.TimerTriggerRadioBtn = New System.Windows.Forms.RadioButton()
         Me.numSamples = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.purgeFrames = New System.Windows.Forms.CheckBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.framesPurged = New System.Windows.Forms.Label()
-        Me.framesSkipped = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
@@ -286,6 +286,58 @@ Partial Class ADcmXLStreamingGUI
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Sample Configuration"
         '
+        'framesSkipped
+        '
+        Me.framesSkipped.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.framesSkipped.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.framesSkipped.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.framesSkipped.Location = New System.Drawing.Point(266, 199)
+        Me.framesSkipped.Name = "framesSkipped"
+        Me.framesSkipped.Size = New System.Drawing.Size(79, 20)
+        Me.framesSkipped.TabIndex = 50
+        Me.framesSkipped.Text = "0"
+        Me.framesSkipped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'framesPurged
+        '
+        Me.framesPurged.BackColor = System.Drawing.SystemColors.ButtonHighlight
+        Me.framesPurged.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.framesPurged.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.framesPurged.Location = New System.Drawing.Point(95, 199)
+        Me.framesPurged.Name = "framesPurged"
+        Me.framesPurged.Size = New System.Drawing.Size(73, 20)
+        Me.framesPurged.TabIndex = 49
+        Me.framesPurged.Text = "0"
+        Me.framesPurged.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(174, 203)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(86, 13)
+        Me.Label15.TabIndex = 47
+        Me.Label15.Text = "Frames Skipped:"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(8, 203)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(81, 13)
+        Me.Label14.TabIndex = 46
+        Me.Label14.Text = "Frames Purged:"
+        '
+        'purgeFrames
+        '
+        Me.purgeFrames.AutoSize = True
+        Me.purgeFrames.Location = New System.Drawing.Point(154, 98)
+        Me.purgeFrames.Name = "purgeFrames"
+        Me.purgeFrames.Size = New System.Drawing.Size(113, 17)
+        Me.purgeFrames.TabIndex = 45
+        Me.purgeFrames.Text = "Purge Bad Frames"
+        Me.purgeFrames.UseVisualStyleBackColor = True
+        '
         'WriteFrameNumber
         '
         Me.WriteFrameNumber.AutoSize = True
@@ -381,7 +433,7 @@ Partial Class ADcmXLStreamingGUI
         Me.timeSelect.Name = "timeSelect"
         Me.timeSelect.Size = New System.Drawing.Size(132, 20)
         Me.timeSelect.TabIndex = 49
-        Me.timeSelect.Text = "1000"
+        Me.timeSelect.Text = "10000"
         '
         'startPinBox
         '
@@ -438,58 +490,6 @@ Partial Class ADcmXLStreamingGUI
         Me.Label7.Size = New System.Drawing.Size(102, 13)
         Me.Label7.TabIndex = 39
         Me.Label7.Text = "Number of Samples:"
-        '
-        'purgeFrames
-        '
-        Me.purgeFrames.AutoSize = True
-        Me.purgeFrames.Location = New System.Drawing.Point(154, 98)
-        Me.purgeFrames.Name = "purgeFrames"
-        Me.purgeFrames.Size = New System.Drawing.Size(113, 17)
-        Me.purgeFrames.TabIndex = 45
-        Me.purgeFrames.Text = "Purge Bad Frames"
-        Me.purgeFrames.UseVisualStyleBackColor = True
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(8, 203)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(81, 13)
-        Me.Label14.TabIndex = 46
-        Me.Label14.Text = "Frames Purged:"
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(174, 203)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(86, 13)
-        Me.Label15.TabIndex = 47
-        Me.Label15.Text = "Frames Skipped:"
-        '
-        'framesPurged
-        '
-        Me.framesPurged.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.framesPurged.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.framesPurged.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.framesPurged.Location = New System.Drawing.Point(95, 199)
-        Me.framesPurged.Name = "framesPurged"
-        Me.framesPurged.Size = New System.Drawing.Size(73, 20)
-        Me.framesPurged.TabIndex = 49
-        Me.framesPurged.Text = "0"
-        Me.framesPurged.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'framesSkipped
-        '
-        Me.framesSkipped.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.framesSkipped.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.framesSkipped.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.framesSkipped.Location = New System.Drawing.Point(266, 199)
-        Me.framesSkipped.Name = "framesSkipped"
-        Me.framesSkipped.Size = New System.Drawing.Size(79, 20)
-        Me.framesSkipped.TabIndex = 50
-        Me.framesSkipped.Text = "0"
-        Me.framesSkipped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'ADcmXLStreamingGUI
         '

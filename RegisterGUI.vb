@@ -32,6 +32,8 @@ Public Class RegisterGUI
             End If
         Next
 
+        drActive.Checked = m_TopGUI.FX3.DrActive
+
         'Set the selected index
         selectPage.SelectedIndex = 0
         lastPageIndex = 0
@@ -44,7 +46,6 @@ Public Class RegisterGUI
         drReadTimer.Enabled = False
         AddHandler drReadTimer.Elapsed, New ElapsedEventHandler(AddressOf DrReadCallBack)
 
-        measureDr.Enabled = m_TopGUI.FX3.DrActive
     End Sub
 
     Private Sub FormRegisters_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -55,11 +56,15 @@ Public Class RegisterGUI
         Dim writeValue As UInteger
         Dim regLabel As String
         Try
-            writeValue = Convert.ToUInt32(newValue.Text, 16)
+            If scaleData Then
+                writeValue = Convert.ToUInt32(newValue.Text, 10)
+            Else
+                writeValue = Convert.ToUInt32(newValue.Text, 16)
+            End If
+
         Catch ex As Exception
             MsgBox("ERROR: Invalid write value")
         End Try
-
 
         Try
             regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
@@ -132,7 +137,7 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub ReadDrFreq()
-        DrFreq.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 5000)).ToString() + "Hz"
+        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)).ToString() + "Hz"
         drReadTimer.Enabled = measureDr.Checked
     End Sub
 
@@ -163,6 +168,13 @@ Public Class RegisterGUI
 
     Private Sub scaledData_CheckedChanged(sender As Object, e As EventArgs) Handles scaledData.CheckedChanged
         scaleData = scaledData.Checked
+        If scaleData Then
+            readLabel.Text = "Current Value (Decimal)"
+            writeLabel.Text = "New Value (Decimal)"
+        Else
+            readLabel.Text = "Current Value (Hex)"
+            writeLabel.Text = "New Value (Hex)"
+        End If
     End Sub
 
     Private Sub initializedDataGrid()
@@ -221,11 +233,14 @@ Public Class RegisterGUI
             strValues.Add(reg.Label + "," + values(index).ToString())
             index += 1
         Next
-        saveCSV("RegDump", strValues.ToArray())
+        saveCSV("RegDump", strValues.ToArray(), m_TopGUI.lastFilePath)
     End Sub
 
     Private Sub measureDr_CheckedChanged(sender As Object, e As EventArgs) Handles measureDr.CheckedChanged
         drReadTimer.Enabled = measureDr.Checked
     End Sub
 
+    Private Sub drActive_CheckedChanged(sender As Object, e As EventArgs) Handles drActive.CheckedChanged
+        m_TopGUI.FX3.DrActive = drActive.Checked
+    End Sub
 End Class

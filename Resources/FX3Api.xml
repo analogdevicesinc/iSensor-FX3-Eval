@@ -326,6 +326,49 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="frame">The frame to check</param>
  <returns>A boolean indicating if the accelerometer data CRC matches the frame CRC</returns>
 </member>
+<member name="P:FX3Api.FX3Connection.BitBangSpiConfig">
+ <summary>
+ Property to get or set the bit bang SPI configuration. Can select pins, timings, etc
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BitBangSpi(System.UInt32,System.UInt32,System.Byte[],System.UInt32)">
+ <summary>
+ Perform a bit banged SPI transfer, using the config set in BitBangSpiConfig.
+ </summary>
+ <param name="BitsPerTransfer">The total number of bits to clock in a single transfer. Can be any number greater than 0.</param>
+ <param name="NumTransfers">The number of separate SPI transfers to clock out</param>
+ <param name="MOSIData">The MOSI data to clock out. Each SPI transfer must be byte aligned. Data is clocked out MSB first</param>
+ <param name="TimeoutInMs">The time to wait on the bulk endpoint for a return transfer (in ms)</param>
+ <returns>The data received over the selected MISO line</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BitBangReadReg16(System.UInt32)">
+ <summary>
+ Read a standard iSensors 16-bit register using a bitbang SPI connection
+ </summary>
+ <param name="addr">The address of the register to read</param>
+ <returns>The register value</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BitBangWriteRegByte(System.Byte,System.Byte)">
+ <summary>
+ Write a byte to an iSensor register using a bitbang SPI connection
+ </summary>
+ <param name="addr">The address of the register to write to</param>
+ <param name="data">The data to write to the register</param>
+</member>
+<member name="M:FX3Api.FX3Connection.RestoreHardwareSpi">
+ <summary>
+ Resets the hardware SPI pins to their default operating mode. Can be used to recover the SPI functionality after a bit-bang SPI transaction over the hardware SPI pins
+ without having to reboot the FX3.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.SetBitBangSpiFreq(System.UInt32)">
+ <summary>
+ Set the SCLK frequency for a bit banged SPI connection.
+ </summary>
+ <param name="Freq">The SPI frequency, in Hz</param>
+ <returns>A boolean indicating if the frequency could be set.</returns>
+</member>
 <member name="P:FX3Api.FX3Connection.CrcFirstIndex">
  <summary>
  Gets or sets the index of the first burst data word used in CRC calculations.
@@ -558,7 +601,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  This function configures the selected pin to drive a pulse width modulated output.
  </summary>
- <param name="Frequency">The desired PWM frequency, in Hz. Valid values are in the range of 0.1Hz (0.1) - 1MHz (1000000.0)</param>
+ <param name="Frequency">The desired PWM frequency, in Hz. Valid values are in the range of 0.05Hz (0.05) - 10MHz (10000000.0)</param>
  <param name="DutyCycle">The PWM duty cycle. Valid values are in the range 0.0 - 1.0. To achieve a "clock" signal set the duty cycle to 0.5</param>
  <param name="Pin">The pin to configure as a PWM signal.</param>
 </member>
@@ -620,28 +663,28 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO1">
  <summary>
- Read-only property to get the FX3_GPIO0 pin (mapped to GPIO 5 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO1 pin (mapped to GPIO 5 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO2">
  <summary>
- Read-only property to get the FX3_GPIO1 pin (mapped to GPIO 6 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO2 pin (mapped to GPIO 6 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO3">
  <summary>
- Read-only property to get the FX3_GPIO2 pin (mapped to GPIO 7 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO3 pin (mapped to GPIO 7 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO4">
  <summary>
- Read-only property to get the FX3_GPIO3 pin (mapped to GPIO 12 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO4 pin (mapped to GPIO 12 on FX3). This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing. This pin shares a complex GPIO block with DIO1. If DIO1 is being used
  as a clock source, via the StartPWM function, then this pin cannot be used as a clock source.
  </summary>
@@ -1164,6 +1207,23 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  Enum of the possible DUT types for the ADcmXLx021
  </summary>
+</member>
+<member name="T:FX3Api.BitBangSpiConfig">
+ <summary>
+ This class stores all the relevant information about a given bit bang SPI connection.
+ </summary>
+</member>
+<member name="M:FX3Api.BitBangSpiConfig.#ctor(System.Boolean)">
+ <summary>
+ Constructor which lets you specify set of default pins to use as bit bang SPI pins
+ </summary>
+ <param name="OverrideHardwareSpi">If the constructed BitBangSpiConfig should use hardware SPI pins, or FX3GPIO</param>
+</member>
+<member name="M:FX3Api.BitBangSpiConfig.GetParameterArray">
+ <summary>
+ Get a parameters array for the current bit bang SPI configuration
+ </summary>
+ <returns>The parameter array to send to the FX3 for a bit bang vendor command</returns>
 </member>
 <member name="T:FX3Api.FX3SPIConfig">
  <summary>

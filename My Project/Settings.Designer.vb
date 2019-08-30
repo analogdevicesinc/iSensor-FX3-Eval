@@ -113,6 +113,18 @@ Namespace My
                 Me("LastLeft") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\")>  _
+        Public Property LastFilePath() As String
+            Get
+                Return CType(Me("LastFilePath"),String)
+            End Get
+            Set
+                Me("LastFilePath") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -21,6 +21,9 @@ Partial Class DataPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.regView = New System.Windows.Forms.DataGridView()
         Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -31,7 +34,12 @@ Partial Class DataPlotGUI
         Me.Label1 = New System.Windows.Forms.Label()
         Me.sampleFreq = New System.Windows.Forms.TextBox()
         Me.btn_startStop = New System.Windows.Forms.Button()
+        Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.samplesRendered = New System.Windows.Forms.TextBox()
+        Me.btn_autonull = New System.Windows.Forms.Button()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'regView
@@ -41,7 +49,7 @@ Partial Class DataPlotGUI
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Plot, Me.Offset})
-        Me.regView.Location = New System.Drawing.Point(11, 52)
+        Me.regView.Location = New System.Drawing.Point(11, 72)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
         Me.regView.Name = "regView"
@@ -116,18 +124,63 @@ Partial Class DataPlotGUI
         '
         'btn_startStop
         '
-        Me.btn_startStop.Location = New System.Drawing.Point(400, 6)
+        Me.btn_startStop.Location = New System.Drawing.Point(417, 6)
         Me.btn_startStop.Name = "btn_startStop"
-        Me.btn_startStop.Size = New System.Drawing.Size(105, 41)
+        Me.btn_startStop.Size = New System.Drawing.Size(88, 41)
         Me.btn_startStop.TabIndex = 6
         Me.btn_startStop.Text = "Start Plotting"
         Me.btn_startStop.UseVisualStyleBackColor = True
+        '
+        'dataPlot
+        '
+        ChartArea1.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend1)
+        Me.dataPlot.Location = New System.Drawing.Point(511, 6)
+        Me.dataPlot.Name = "dataPlot"
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.dataPlot.Series.Add(Series1)
+        Me.dataPlot.Size = New System.Drawing.Size(867, 479)
+        Me.dataPlot.TabIndex = 7
+        Me.dataPlot.Text = "Data Plot"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(12, 35)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(103, 13)
+        Me.Label2.TabIndex = 8
+        Me.Label2.Text = "Samples Rendered :"
+        '
+        'samplesRendered
+        '
+        Me.samplesRendered.Location = New System.Drawing.Point(141, 32)
+        Me.samplesRendered.Name = "samplesRendered"
+        Me.samplesRendered.Size = New System.Drawing.Size(143, 20)
+        Me.samplesRendered.TabIndex = 9
+        '
+        'btn_autonull
+        '
+        Me.btn_autonull.Location = New System.Drawing.Point(323, 6)
+        Me.btn_autonull.Name = "btn_autonull"
+        Me.btn_autonull.Size = New System.Drawing.Size(88, 41)
+        Me.btn_autonull.TabIndex = 10
+        Me.btn_autonull.Text = "Auto-Null"
+        Me.btn_autonull.UseVisualStyleBackColor = True
         '
         'DataPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1260, 479)
+        Me.ClientSize = New System.Drawing.Size(1390, 497)
+        Me.Controls.Add(Me.btn_autonull)
+        Me.Controls.Add(Me.samplesRendered)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.dataPlot)
         Me.Controls.Add(Me.btn_startStop)
         Me.Controls.Add(Me.sampleFreq)
         Me.Controls.Add(Me.Label1)
@@ -136,6 +189,7 @@ Partial Class DataPlotGUI
         Me.Name = "DataPlotGUI"
         Me.Text = "DataPlotGUI"
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -151,4 +205,8 @@ Partial Class DataPlotGUI
     Friend WithEvents Label1 As Label
     Friend WithEvents sampleFreq As TextBox
     Friend WithEvents btn_startStop As Button
+    Friend WithEvents dataPlot As DataVisualization.Charting.Chart
+    Friend WithEvents Label2 As Label
+    Friend WithEvents samplesRendered As TextBox
+    Friend WithEvents btn_autonull As Button
 End Class

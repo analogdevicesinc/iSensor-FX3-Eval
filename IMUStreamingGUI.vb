@@ -73,7 +73,7 @@ Public Class IMUStreamingGUI
         End If
 
         'Get data output save location
-        savePath = setSaveLocation()
+        savePath = setSaveLocation(m_TopGUI.lastFilePath)
         If savePath Is Nothing Then
             MessageBox.Show("Please select a folder to save the stream data.", "Invalid save path!", MessageBoxButtons.OK)
             Exit Sub

@@ -44,7 +44,7 @@ Partial Class TopGUI
         Me.btn_Bursttest = New System.Windows.Forms.Button()
         Me.btn_PinAccess = New System.Windows.Forms.Button()
         Me.label_apiVersion = New System.Windows.Forms.Label()
-        Me.btn_test = New System.Windows.Forms.Button()
+        Me.btn_bit_bang = New System.Windows.Forms.Button()
         Me.btn_plotData = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
@@ -240,14 +240,14 @@ Partial Class TopGUI
         Me.label_apiVersion.TabIndex = 30
         Me.label_apiVersion.Text = "apiVersion"
         '
-        'btn_test
+        'btn_bit_bang
         '
-        Me.btn_test.Location = New System.Drawing.Point(336, 79)
-        Me.btn_test.Name = "btn_test"
-        Me.btn_test.Size = New System.Drawing.Size(75, 64)
-        Me.btn_test.TabIndex = 31
-        Me.btn_test.Text = "Test Button"
-        Me.btn_test.UseVisualStyleBackColor = True
+        Me.btn_bit_bang.Location = New System.Drawing.Point(336, 79)
+        Me.btn_bit_bang.Name = "btn_bit_bang"
+        Me.btn_bit_bang.Size = New System.Drawing.Size(75, 64)
+        Me.btn_bit_bang.TabIndex = 31
+        Me.btn_bit_bang.Text = "Bit Bang SPI"
+        Me.btn_bit_bang.UseVisualStyleBackColor = True
         '
         'btn_plotData
         '
@@ -264,7 +264,7 @@ Partial Class TopGUI
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(424, 306)
         Me.Controls.Add(Me.btn_plotData)
-        Me.Controls.Add(Me.btn_test)
+        Me.Controls.Add(Me.btn_bit_bang)
         Me.Controls.Add(Me.label_apiVersion)
         Me.Controls.Add(Me.btn_PinAccess)
         Me.Controls.Add(Me.btn_Bursttest)
@@ -316,6 +316,6 @@ Partial Class TopGUI
     Friend WithEvents btn_Bursttest As Button
     Friend WithEvents btn_PinAccess As Button
     Friend WithEvents label_apiVersion As Label
-    Friend WithEvents btn_test As Button
+    Friend WithEvents btn_bit_bang As Button
     Friend WithEvents btn_plotData As Button
 End Class
