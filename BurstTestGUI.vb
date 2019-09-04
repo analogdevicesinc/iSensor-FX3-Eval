@@ -16,7 +16,6 @@ Public Class BurstTestGUI
     End Sub
 
     Private Sub captureData_Click(sender As Object, e As EventArgs) Handles captureData.Click
-        applySettings_Click(Nothing, Nothing)
         Dim addr As New List(Of AdisApi.AddrDataPair)
         m_TopGUI.FX3.TriggerReg = New RegMapClasses.RegClass With {.Address = 0}
         m_TopGUI.FX3.WordCount = numWords
@@ -25,7 +24,7 @@ Public Class BurstTestGUI
         m_TopGUI.FX3.WaitForStreamCompletion(1000)
         Dim buf() As UShort
         buf = m_TopGUI.FX3.GetBuffer()
-        result.Text = "0xXXXX"
+        result.Text = "0x"
         For Each value In buf
             result.Text = result.Text + value.ToString("x4")
         Next
