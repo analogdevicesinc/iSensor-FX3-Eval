@@ -257,7 +257,8 @@ Public Class DataPlotGUI
     Private Sub saveChart_Click(sender As Object, e As EventArgs) Handles saveChart.Click
         Dim filebrowser As New SaveFileDialog
         Try
-            filebrowser.FileName = m_TopGUI.lastFilePath
+            filebrowser.FileName = m_TopGUI.lastFilePath.Substring(0, m_TopGUI.lastFilePath.LastIndexOf("\") + 1) + "PLOT.png"
+            filebrowser.Filter = "Image Files (*.png) | *.png"
         Catch ex As Exception
             filebrowser.FileName = "C:\PLOT.png"
         End Try
