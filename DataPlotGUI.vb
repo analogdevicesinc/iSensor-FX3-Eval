@@ -1,7 +1,6 @@
 ﻿Imports RegMapClasses
 Imports System.Timers
 Imports System.Windows.Forms.DataVisualization.Charting
-Imports System.Data
 
 Public Class DataPlotGUI
     Inherits FormBase
@@ -15,6 +14,9 @@ Public Class DataPlotGUI
     Private plotYMax As Integer
     Private plotColors As List(Of Color)
     Private numSamples As UInteger
+    Private log As Boolean
+    Private logData As List(Of String)
+    Private logTimer As Stopwatch
 
     Public Sub FormSetup() Handles Me.Load
         PopulateRegView()
@@ -34,6 +36,8 @@ Public Class DataPlotGUI
         AddHandler plotTimer.Elapsed, New ElapsedEventHandler(AddressOf PlotTimerCallback)
 
         samplesRendered.Text = "200"
+
+        logTimer = New Stopwatch()
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
@@ -56,6 +60,7 @@ Public Class DataPlotGUI
     Private Sub PlotWork()
         Dim regValues() As Double
         Dim plotValues As New List(Of Double)
+        Dim logStr As String = ""
 
         'Read the registers
         Dim regs As New List(Of RegClass)
@@ -64,14 +69,26 @@ Public Class DataPlotGUI
         Next
         regValues = m_TopGUI.Dut.ReadScaledValue(regs)
 
+        If log Then
+            logStr = logTimer.ElapsedMilliseconds().ToString()
+        End If
+
         'Update reg view and scale plot values
         Dim index As Integer = 0
         For Each item In selectedRegList
             regView.Item("Contents", item.Index).Value = regValues(index).ToString()
             regView.Item("Contents", item.Index).Style = New DataGridViewCellStyle With {.BackColor = item.Color}
             plotValues.Add(regValues(index) - item.Offset)
+            'Log if needed
+            If log Then
+                logStr = logStr + "," + regValues(index).ToString()
+            End If
             index += 1
         Next
+
+        If log Then
+            logData.Add(logStr)
+        End If
 
         'Update the series for the plot area
         For i As Integer = 0 To selectedRegList.Count() - 1
@@ -115,8 +132,13 @@ Public Class DataPlotGUI
             plotting = False
             plotTimer.Enabled = False
             StopPlot()
+            If log Then
+                saveCSV("PLOT_LOG", logData.ToArray(), m_TopGUI.lastFilePath)
+                logData.Clear()
+            End If
             btn_startStop.Text = "Start Plotting"
         Else
+            log = logToCSV.Checked
             BuildPlotRegList()
             If selectedRegList.Count() = 0 Then
                 MsgBox("ERROR: Must select at least one register to plot")
@@ -127,10 +149,12 @@ Public Class DataPlotGUI
             plotTimer.Interval = samplePeriodMs
             plotTimer.Enabled = True
             btn_startStop.Text = "Stop Plotting"
+            logTimer.Restart()
         End If
     End Sub
 
     Private Sub BuildPlotRegList()
+        Dim headers As String
         For index As Integer = 0 To regView.RowCount() - 1
             If regView.Item("Plot", index).Value = True Then
                 If plotColors.Count() <= selectedRegList.Count() Then
@@ -139,6 +163,12 @@ Public Class DataPlotGUI
                 selectedRegList.Add(New RegOffsetPair With {.Reg = m_TopGUI.RegMap(regView.Item("Label", index).Value), .Offset = Convert.ToDouble(regView.Item("Offset", index).Value), .Index = index, .Color = plotColors(selectedRegList.Count())})
             End If
         Next
+        logData = New List(Of String)
+        headers = "TIMESTAMP"
+        For Each reg In selectedRegList
+            headers = headers + "," + reg.Reg.Label
+        Next
+        logData.Add(headers)
     End Sub
 
     Private Sub ConfigurePlot()
@@ -223,4 +253,21 @@ Public Class DataPlotGUI
         Next
 
     End Sub
+
+    Private Sub saveChart_Click(sender As Object, e As EventArgs) Handles saveChart.Click
+        Dim filebrowser As New SaveFileDialog
+        Try
+            filebrowser.FileName = m_TopGUI.lastFilePath
+        Catch ex As Exception
+            filebrowser.FileName = "C:\PLOT.png"
+        End Try
+
+        If filebrowser.ShowDialog() = DialogResult.OK Then
+            m_TopGUI.lastFilePath = filebrowser.FileName
+            dataPlot.SaveImage(filebrowser.FileName, ChartImageFormat.Png)
+        Else
+            Exit Sub
+        End If
+    End Sub
+
 End Class

@@ -361,6 +361,10 @@ Public Class TopGUI
 
 #Region "Helper Functions"
 
+    ''' <summary>
+    ''' Update the DUT (and lavels) after chanign the part 
+    ''' </summary>
+    ''' <param name="DutType"></param>
     Friend Sub UpdateDutLabel(DutType As DUTType)
         label_DUTType.BackColor = Color.Green
         label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
@@ -382,6 +386,9 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Perform all work to connect to and program an FX3
+    ''' </summary>
     Private Sub ConnectWork()
         Dim selectedFX3SN As String = Nothing
         m_FX3Connected = False
@@ -458,6 +465,10 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Reset all connected FX3 boards
+    ''' </summary>
+    ''' <returns>The success of the reset operation</returns>
     Private Function ResetAllFX3s() As Boolean
         Dim answer = MsgBox("This will reset all " + FX3.BusyFX3s.Count.ToString() + " connected FX3 board(s). Are you sure you want to continue?", MsgBoxStyle.OkCancel)
         If answer <> MsgBoxResult.Ok Then
@@ -565,10 +576,6 @@ Public Class TopGUI
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
 
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
-        FX3.RestoreHardwareSpi()
     End Sub
 
 #End Region
