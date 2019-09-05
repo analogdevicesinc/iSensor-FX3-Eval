@@ -40,6 +40,7 @@ Partial Class DataPlotGUI
         Me.btn_autonull = New System.Windows.Forms.Button()
         Me.logToCSV = New System.Windows.Forms.CheckBox()
         Me.saveChart = New System.Windows.Forms.Button()
+        Me.playFromCSV = New System.Windows.Forms.Button()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -51,7 +52,7 @@ Partial Class DataPlotGUI
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Plot, Me.Offset})
-        Me.regView.Location = New System.Drawing.Point(12, 73)
+        Me.regView.Location = New System.Drawing.Point(11, 89)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
         Me.regView.Name = "regView"
@@ -128,7 +129,7 @@ Partial Class DataPlotGUI
         '
         Me.btn_startStop.Location = New System.Drawing.Point(323, 6)
         Me.btn_startStop.Name = "btn_startStop"
-        Me.btn_startStop.Size = New System.Drawing.Size(88, 28)
+        Me.btn_startStop.Size = New System.Drawing.Size(88, 35)
         Me.btn_startStop.TabIndex = 6
         Me.btn_startStop.Text = "Start Plotting"
         Me.btn_startStop.UseVisualStyleBackColor = True
@@ -145,7 +146,7 @@ Partial Class DataPlotGUI
         Series1.Legend = "Legend1"
         Series1.Name = "Series1"
         Me.dataPlot.Series.Add(Series1)
-        Me.dataPlot.Size = New System.Drawing.Size(867, 480)
+        Me.dataPlot.Size = New System.Drawing.Size(867, 496)
         Me.dataPlot.TabIndex = 7
         Me.dataPlot.Text = "Data Plot"
         '
@@ -169,7 +170,7 @@ Partial Class DataPlotGUI
         '
         Me.btn_autonull.Location = New System.Drawing.Point(417, 6)
         Me.btn_autonull.Name = "btn_autonull"
-        Me.btn_autonull.Size = New System.Drawing.Size(88, 28)
+        Me.btn_autonull.Size = New System.Drawing.Size(88, 35)
         Me.btn_autonull.TabIndex = 10
         Me.btn_autonull.Text = "Auto-Null"
         Me.btn_autonull.UseVisualStyleBackColor = True
@@ -177,27 +178,37 @@ Partial Class DataPlotGUI
         'logToCSV
         '
         Me.logToCSV.AutoSize = True
-        Me.logToCSV.Location = New System.Drawing.Point(323, 40)
+        Me.logToCSV.Location = New System.Drawing.Point(15, 58)
         Me.logToCSV.Name = "logToCSV"
-        Me.logToCSV.Size = New System.Drawing.Size(80, 17)
+        Me.logToCSV.Size = New System.Drawing.Size(127, 17)
         Me.logToCSV.TabIndex = 11
-        Me.logToCSV.Text = "Log to CSV"
+        Me.logToCSV.Text = "Log Plot Data to CSV"
         Me.logToCSV.UseVisualStyleBackColor = True
         '
         'saveChart
         '
-        Me.saveChart.Location = New System.Drawing.Point(417, 40)
+        Me.saveChart.Location = New System.Drawing.Point(417, 47)
         Me.saveChart.Name = "saveChart"
-        Me.saveChart.Size = New System.Drawing.Size(88, 28)
+        Me.saveChart.Size = New System.Drawing.Size(88, 35)
         Me.saveChart.TabIndex = 12
         Me.saveChart.Text = "Save Plot"
         Me.saveChart.UseVisualStyleBackColor = True
+        '
+        'playFromCSV
+        '
+        Me.playFromCSV.Location = New System.Drawing.Point(323, 47)
+        Me.playFromCSV.Name = "playFromCSV"
+        Me.playFromCSV.Size = New System.Drawing.Size(88, 35)
+        Me.playFromCSV.TabIndex = 13
+        Me.playFromCSV.Text = "Play From CSV"
+        Me.playFromCSV.UseVisualStyleBackColor = True
         '
         'DataPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1390, 497)
+        Me.ClientSize = New System.Drawing.Size(1390, 513)
+        Me.Controls.Add(Me.playFromCSV)
         Me.Controls.Add(Me.saveChart)
         Me.Controls.Add(Me.logToCSV)
         Me.Controls.Add(Me.btn_autonull)
@@ -234,4 +245,5 @@ Partial Class DataPlotGUI
     Friend WithEvents btn_autonull As Button
     Friend WithEvents logToCSV As CheckBox
     Friend WithEvents saveChart As Button
+    Friend WithEvents playFromCSV As Button
 End Class

@@ -1,6 +1,7 @@
 ﻿Imports RegMapClasses
 Imports System.Timers
 Imports System.Windows.Forms.DataVisualization.Charting
+Imports System.Threading
 
 Public Class DataPlotGUI
     Inherits FormBase
@@ -8,7 +9,7 @@ Public Class DataPlotGUI
     Private samplePeriodMs As Integer
     Private plotting As Boolean
     Private selectedRegList As List(Of RegOffsetPair)
-    Private plotTimer As Timer
+    Private plotTimer As System.Timers.Timer
     Private plotXPosition As Integer
     Private plotYMin As Integer
     Private plotYMax As Integer
@@ -17,6 +18,8 @@ Public Class DataPlotGUI
     Private log As Boolean
     Private logData As List(Of String)
     Private logTimer As Stopwatch
+    Private playBackRunning As Boolean
+    Private CSVRegData As List(Of String())
 
     Public Sub FormSetup() Handles Me.Load
         PopulateRegView()
@@ -31,7 +34,7 @@ Public Class DataPlotGUI
         plotColors = New List(Of Color)
 
         'Set up timer
-        plotTimer = New Timer(500)
+        plotTimer = New System.Timers.Timer(500)
         plotTimer.Enabled = False
         AddHandler plotTimer.Elapsed, New ElapsedEventHandler(AddressOf PlotTimerCallback)
 
@@ -41,7 +44,7 @@ Public Class DataPlotGUI
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
-        regView.Height = Me.Height - 122
+        regView.Height = Me.Height - 130
         dataPlot.Top = 6
         dataPlot.Left = 511
         dataPlot.Width = Me.Width - 532
@@ -62,12 +65,7 @@ Public Class DataPlotGUI
         Dim plotValues As New List(Of Double)
         Dim logStr As String = ""
 
-        'Read the registers
-        Dim regs As New List(Of RegClass)
-        For Each reg In selectedRegList
-            regs.Add(reg.Reg)
-        Next
-        regValues = m_TopGUI.Dut.ReadScaledValue(regs)
+        regValues = GetPlotRegValues()
 
         If log Then
             logStr = logTimer.ElapsedMilliseconds().ToString()
@@ -103,6 +101,27 @@ Public Class DataPlotGUI
         plotXPosition = plotXPosition + 1
 
     End Sub
+
+    Private Function GetPlotRegValues() As Double()
+        'Read the registers
+        If playBackRunning Then
+            Dim doubleVals As New List(Of Double)
+            If CSVRegData.Count() > 0 Then
+                For i As Integer = 1 To CSVRegData(0).Count() - 1
+                    doubleVals.Add(Convert.ToDouble(CSVRegData(0)(i)))
+                Next
+                CSVRegData.RemoveAt(0)
+            End If
+            Return doubleVals.ToArray()
+        Else
+            Dim regs As New List(Of RegClass)
+            For Each reg In selectedRegList
+                regs.Add(reg.Reg)
+            Next
+            Return m_TopGUI.Dut.ReadScaledValue(regs)
+        End If
+
+    End Function
 
     Private Sub PopulateRegView()
         Dim regIndex As Integer = 0
@@ -164,7 +183,7 @@ Public Class DataPlotGUI
             End If
         Next
         logData = New List(Of String)
-        headers = "TIMESTAMP"
+        headers = "TIMESTAMP_MS"
         For Each reg In selectedRegList
             headers = headers + "," + reg.Reg.Label
         Next
@@ -270,5 +289,89 @@ Public Class DataPlotGUI
             Exit Sub
         End If
     End Sub
+
+    Private Sub playFromCSV_Click(sender As Object, e As EventArgs) Handles playFromCSV.Click
+        Dim fileBrowser As New OpenFileDialog
+        Dim fileBrowseResult As DialogResult
+        Dim filePath As String
+        fileBrowser.Title = "Please Select the CSV log File"
+        fileBrowser.InitialDirectory = m_TopGUI.lastFilePath
+        fileBrowser.Filter = "Log Files|*.csv"
+        fileBrowseResult = fileBrowser.ShowDialog()
+        If fileBrowseResult = DialogResult.OK Then
+            filePath = fileBrowser.FileName
+            CSVRegData = LoadFromCSV(filePath)
+        Else
+            Exit Sub
+        End If
+
+        If Not SetupCSVRegs() Then
+            MsgBox("ERROR: Invalid Log CSV")
+            Exit Sub
+        End If
+        BuildPlotRegList()
+        ConfigurePlot()
+
+        playBackRunning = True
+
+        Dim temp As New Thread(AddressOf PlayCSVWorker)
+        temp.Start()
+
+    End Sub
+
+    Private Function SetupCSVRegs() As Boolean
+        Dim headers() As String
+        Dim regFound As Boolean
+        Dim regCnt As Integer
+        If CSVRegData.Count() > 0 Then
+            headers = CSVRegData(0)
+            CSVRegData.RemoveAt(0)
+        Else
+            Return False
+        End If
+        'CHeck that timestamp values are included
+        If Not headers(0) = "TIMESTAMP_MS" Then
+            Return False
+        End If
+        'Check each box in the reg list
+        regCnt = 0
+        For j As Integer = 0 To regView.RowCount() - 1
+            regFound = headers.Contains(regView.Item("Label", j).Value)
+            regView.Item("Plot", j).Value = regFound
+            If regFound Then
+                regCnt += 1
+            End If
+        Next
+        Return regCnt = headers.Count() - 1
+    End Function
+
+    Private Sub PlayCSVWorker()
+        Dim waitTime As Long
+        logTimer.Restart()
+
+        While CSVRegData.Count() > 0 And playBackRunning
+            waitTime = Convert.ToDouble(CSVRegData(0)(0))
+            While logTimer.ElapsedMilliseconds() < waitTime
+                System.Threading.Thread.Sleep(1)
+            End While
+            Me.Invoke(New MethodInvoker(AddressOf PlotWork))
+        End While
+
+    End Sub
+
+    Private Function LoadFromCSV(fileName As String) As List(Of String())
+        Dim reader As New IO.StreamReader(fileName)
+        Dim result As New List(Of String())
+        Dim line As String
+        Dim lineValues() As String
+
+        While Not reader.EndOfStream()
+            line = reader.ReadLine()
+            lineValues = line.Split(",")
+            result.Add(lineValues)
+        End While
+
+        Return result
+    End Function
 
 End Class
