@@ -502,7 +502,7 @@ Public Class TopGUI
         btn_PinAccess.Enabled = False
         btn_Bursttest.Enabled = False
         btn_bit_bang.Enabled = False
-        btn_plotData.Enabled = True
+        btn_plotData.Enabled = False
     End Sub
 
     ''' <summary>
