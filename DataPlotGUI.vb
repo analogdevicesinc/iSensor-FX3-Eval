@@ -41,19 +41,24 @@ Public Class DataPlotGUI
         samplesRendered.Text = "200"
 
         logTimer = New Stopwatch()
+
+        stopPlayback.Enabled = False
+        stopPlayback.Visible = False
+        axis_autoscale.Checked = True
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
-        regView.Height = Me.Height - 130
+        regView.Height = Me.Height - 157
         dataPlot.Top = 6
         dataPlot.Left = 511
-        dataPlot.Width = Me.Width - 532
-        dataPlot.Height = Me.Height - 50
+        dataPlot.Width = Me.Width - 528
+        dataPlot.Height = Me.Height - 55
         dataPlot.ResetAutoValues()
     End Sub
 
     Private Sub ShutDown() Handles Me.Closing
         plotTimer.Enabled = False
+        playBackRunning = False
     End Sub
 
     Private Sub PlotTimerCallback()
@@ -98,6 +103,25 @@ Public Class DataPlotGUI
             dataPlot.Series(i).Points.AddXY(plotXPosition, plotValues(i))
         Next
 
+        'Set scale (if needed)
+        Dim yMin, yMax As Double
+        Dim goodscale As Boolean = False
+        If Not axis_autoscale.Checked Then
+            Try
+                yMin = Convert.ToDouble(minScale.Text())
+                yMax = Convert.ToDouble(maxscale.Text())
+                goodscale = True
+            Catch ex As Exception
+                goodscale = False
+            End Try
+        End If
+
+        If goodscale Then
+            'Value must be good
+            dataPlot.ChartAreas(0).AxisY.Maximum = yMax
+            dataPlot.ChartAreas(0).AxisY.Minimum = yMin
+        End If
+
         plotXPosition = plotXPosition + 1
 
     End Sub
@@ -113,12 +137,16 @@ Public Class DataPlotGUI
                 CSVRegData.RemoveAt(0)
             End If
             Return doubleVals.ToArray()
-        Else
+        ElseIf plotting Then
             Dim regs As New List(Of RegClass)
             For Each reg In selectedRegList
                 regs.Add(reg.Reg)
             Next
             Return m_TopGUI.Dut.ReadScaledValue(regs)
+        Else
+            'return 0
+            Dim doubles(selectedRegList.Count() - 1) As Double
+            Return doubles
         End If
 
     End Function
@@ -260,11 +288,7 @@ Public Class DataPlotGUI
         End If
 
         'Read the registers
-        Dim regs As New List(Of RegClass)
-        For Each reg In selectedRegList
-            regs.Add(reg.Reg)
-        Next
-        regValues = m_TopGUI.Dut.ReadScaledValue(regs)
+        regValues = GetPlotRegValues()
 
         For i As Integer = 0 To selectedRegList.Count() - 1
             selectedRegList(i).Offset = regValues(i)
@@ -311,7 +335,7 @@ Public Class DataPlotGUI
         End If
         BuildPlotRegList()
         ConfigurePlot()
-
+        DisablePlaybackButtons()
         playBackRunning = True
 
         Dim temp As New Thread(AddressOf PlayCSVWorker)
@@ -323,6 +347,7 @@ Public Class DataPlotGUI
         Dim headers() As String
         Dim regFound As Boolean
         Dim regCnt As Integer
+        selectedRegList.Clear()
         If CSVRegData.Count() > 0 Then
             headers = CSVRegData(0)
             CSVRegData.RemoveAt(0)
@@ -351,11 +376,16 @@ Public Class DataPlotGUI
 
         While CSVRegData.Count() > 0 And playBackRunning
             waitTime = Convert.ToDouble(CSVRegData(0)(0))
-            While logTimer.ElapsedMilliseconds() < waitTime
+            While logTimer.ElapsedMilliseconds() < waitTime And playBackRunning
                 System.Threading.Thread.Sleep(1)
             End While
+            If Not playBackRunning Then
+                Exit While
+            End If
             Me.Invoke(New MethodInvoker(AddressOf PlotWork))
         End While
+
+        Me.Invoke(New MethodInvoker(AddressOf EnablePlaybackButtons))
 
     End Sub
 
@@ -374,4 +404,42 @@ Public Class DataPlotGUI
         Return result
     End Function
 
+    Private Sub stopPlayback_Click(sender As Object, e As EventArgs) Handles stopPlayback.Click
+        playBackRunning = False
+    End Sub
+
+    Private Sub EnablePlaybackButtons()
+        playFromCSV.Visible = True
+        playFromCSV.Enabled = True
+        stopPlayback.Visible = False
+        stopPlayback.Enabled = False
+        btn_startStop.Enabled = True
+    End Sub
+
+    Private Sub DisablePlaybackButtons()
+        playFromCSV.Visible = False
+        playFromCSV.Enabled = False
+        stopPlayback.Visible = True
+        stopPlayback.Enabled = True
+        btn_startStop.Enabled = False
+    End Sub
+
+    Private Sub axis_autoscale_CheckedChanged(sender As Object, e As EventArgs) Handles axis_autoscale.CheckedChanged
+        If axis_autoscale.Checked Then
+            minScale.Enabled = False
+            maxscale.Enabled = False
+            dataPlot.ChartAreas(0).AxisY.Minimum = Double.NaN
+            dataPlot.ChartAreas(0).AxisY.Maximum = Double.NaN
+        Else
+            minScale.Enabled = True
+            maxscale.Enabled = True
+            Try
+                minScale.Text = dataPlot.ChartAreas(0).AxisY.Minimum.ToString()
+                maxscale.Text = dataPlot.ChartAreas(0).AxisY.Maximum.ToString()
+            Catch ex As Exception
+                minScale.Text = "-1000"
+                maxscale.Text = "1000"
+            End Try
+        End If
+    End Sub
 End Class

@@ -41,6 +41,12 @@ Partial Class DataPlotGUI
         Me.logToCSV = New System.Windows.Forms.CheckBox()
         Me.saveChart = New System.Windows.Forms.Button()
         Me.playFromCSV = New System.Windows.Forms.Button()
+        Me.stopPlayback = New System.Windows.Forms.Button()
+        Me.axis_autoscale = New System.Windows.Forms.CheckBox()
+        Me.maxscale = New System.Windows.Forms.TextBox()
+        Me.minScale = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -52,7 +58,7 @@ Partial Class DataPlotGUI
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Plot, Me.Offset})
-        Me.regView.Location = New System.Drawing.Point(11, 89)
+        Me.regView.Location = New System.Drawing.Point(11, 113)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
         Me.regView.Name = "regView"
@@ -61,7 +67,7 @@ Partial Class DataPlotGUI
         Me.regView.RowTemplate.Height = 24
         Me.regView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.regView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.regView.Size = New System.Drawing.Size(494, 413)
+        Me.regView.Size = New System.Drawing.Size(494, 389)
         Me.regView.TabIndex = 3
         '
         'Label
@@ -112,7 +118,7 @@ Partial Class DataPlotGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Location = New System.Drawing.Point(8, 9)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(123, 13)
         Me.Label1.TabIndex = 4
@@ -153,7 +159,7 @@ Partial Class DataPlotGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 35)
+        Me.Label2.Location = New System.Drawing.Point(8, 35)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(103, 13)
         Me.Label2.TabIndex = 8
@@ -178,7 +184,7 @@ Partial Class DataPlotGUI
         'logToCSV
         '
         Me.logToCSV.AutoSize = True
-        Me.logToCSV.Location = New System.Drawing.Point(15, 58)
+        Me.logToCSV.Location = New System.Drawing.Point(11, 57)
         Me.logToCSV.Name = "logToCSV"
         Me.logToCSV.Size = New System.Drawing.Size(127, 17)
         Me.logToCSV.TabIndex = 11
@@ -203,11 +209,68 @@ Partial Class DataPlotGUI
         Me.playFromCSV.Text = "Play From CSV"
         Me.playFromCSV.UseVisualStyleBackColor = True
         '
+        'stopPlayback
+        '
+        Me.stopPlayback.Location = New System.Drawing.Point(323, 47)
+        Me.stopPlayback.Name = "stopPlayback"
+        Me.stopPlayback.Size = New System.Drawing.Size(88, 35)
+        Me.stopPlayback.TabIndex = 14
+        Me.stopPlayback.Text = "Stop Playback"
+        Me.stopPlayback.UseVisualStyleBackColor = True
+        '
+        'axis_autoscale
+        '
+        Me.axis_autoscale.AutoSize = True
+        Me.axis_autoscale.Location = New System.Drawing.Point(11, 91)
+        Me.axis_autoscale.Name = "axis_autoscale"
+        Me.axis_autoscale.Size = New System.Drawing.Size(107, 17)
+        Me.axis_autoscale.TabIndex = 15
+        Me.axis_autoscale.Text = "AutoScale Y-Axis"
+        Me.axis_autoscale.UseVisualStyleBackColor = True
+        '
+        'maxscale
+        '
+        Me.maxscale.Location = New System.Drawing.Point(394, 88)
+        Me.maxscale.Name = "maxscale"
+        Me.maxscale.Size = New System.Drawing.Size(111, 20)
+        Me.maxscale.TabIndex = 17
+        '
+        'minScale
+        '
+        Me.minScale.Location = New System.Drawing.Point(173, 88)
+        Me.minScale.Name = "minScale"
+        Me.minScale.Size = New System.Drawing.Size(111, 20)
+        Me.minScale.TabIndex = 18
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(140, 92)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(27, 13)
+        Me.Label3.TabIndex = 19
+        Me.Label3.Text = "Min:"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(361, 92)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(30, 13)
+        Me.Label4.TabIndex = 20
+        Me.Label4.Text = "Max:"
+        '
         'DataPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1390, 513)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.minScale)
+        Me.Controls.Add(Me.maxscale)
+        Me.Controls.Add(Me.axis_autoscale)
+        Me.Controls.Add(Me.stopPlayback)
         Me.Controls.Add(Me.playFromCSV)
         Me.Controls.Add(Me.saveChart)
         Me.Controls.Add(Me.logToCSV)
@@ -246,4 +309,10 @@ Partial Class DataPlotGUI
     Friend WithEvents logToCSV As CheckBox
     Friend WithEvents saveChart As Button
     Friend WithEvents playFromCSV As Button
+    Friend WithEvents stopPlayback As Button
+    Friend WithEvents axis_autoscale As CheckBox
+    Friend WithEvents maxscale As TextBox
+    Friend WithEvents minScale As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
 End Class
