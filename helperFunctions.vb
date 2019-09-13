@@ -15,6 +15,21 @@ End Class
 
 Module helperFunctions
 
+    ''' <summary>
+    ''' Converts an unsigned integer to signed
+    ''' </summary>
+    ''' <param name="number">The unsigned number to convert</param>
+    ''' <returns>The number, as an integer</returns>
+    Function ConvertToInt(number As UShort) As Short
+        If number > Int16.MaxValue Then
+            'negative case, perform 2s complement conversion
+            Return ((UInt16.MaxValue - number) + 1) * -1
+        Else
+            'positive
+            Return CShort(number)
+        End If
+    End Function
+
     Public Sub saveCSV(ByVal fileHeader As String, ByVal inputData() As String, Optional ByRef Path As String = "")
         Dim currentTime As Date = Date.Now()
         Dim outputStream As StreamWriter

@@ -46,6 +46,7 @@ Partial Class TopGUI
         Me.label_apiVersion = New System.Windows.Forms.Label()
         Me.btn_bit_bang = New System.Windows.Forms.Button()
         Me.btn_plotData = New System.Windows.Forms.Button()
+        Me.regMapPath_Label = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -258,11 +259,21 @@ Partial Class TopGUI
         Me.btn_plotData.Text = "Data Plotting"
         Me.btn_plotData.UseVisualStyleBackColor = True
         '
+        'regMapPath_Label
+        '
+        Me.regMapPath_Label.AutoSize = True
+        Me.regMapPath_Label.Location = New System.Drawing.Point(8, 304)
+        Me.regMapPath_Label.Name = "regMapPath_Label"
+        Me.regMapPath_Label.Size = New System.Drawing.Size(70, 13)
+        Me.regMapPath_Label.TabIndex = 33
+        Me.regMapPath_Label.Text = "RegMapPath"
+        '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(424, 306)
+        Me.ClientSize = New System.Drawing.Size(424, 326)
+        Me.Controls.Add(Me.regMapPath_Label)
         Me.Controls.Add(Me.btn_plotData)
         Me.Controls.Add(Me.btn_bit_bang)
         Me.Controls.Add(Me.label_apiVersion)
@@ -287,8 +298,8 @@ Partial Class TopGUI
         Me.Controls.Add(Me.label_FX3Status)
         Me.Controls.Add(Me.text_FX3Status)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximumSize = New System.Drawing.Size(440, 345)
-        Me.MinimumSize = New System.Drawing.Size(440, 345)
+        Me.MaximumSize = New System.Drawing.Size(440, 365)
+        Me.MinimumSize = New System.Drawing.Size(440, 365)
         Me.Name = "TopGUI"
         Me.Text = "iSensor FX3 GUI"
         Me.ResumeLayout(False)
@@ -318,4 +329,5 @@ Partial Class TopGUI
     Friend WithEvents label_apiVersion As Label
     Friend WithEvents btn_bit_bang As Button
     Friend WithEvents btn_plotData As Button
+    Friend WithEvents regMapPath_Label As Label
 End Class

@@ -53,26 +53,28 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub ButtonWrite_Click(sender As Object, e As EventArgs) Handles ButtonWrite.Click
-        Dim writeValue As UInteger
+
         Dim regLabel As String
-        Try
-            If scaleData Then
-                writeValue = Convert.ToUInt32(newValue.Text, 10)
-            Else
+
+        If scaleData Then
+            Dim writeValue As Integer
+            Try
+                writeValue = Convert.ToInt32(newValue.Text, 10)
+                regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
+                m_TopGUI.Dut.WriteSigned(m_TopGUI.RegMap(regLabel), writeValue)
+            Catch ex As Exception
+                MsgBox("ERROR: Invalid write - " + ex.ToString())
+            End Try
+        Else
+            Dim writeValue As UInteger
+            Try
                 writeValue = Convert.ToUInt32(newValue.Text, 16)
-            End If
-
-        Catch ex As Exception
-            MsgBox("ERROR: Invalid write value")
-        End Try
-
-        Try
-            regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
-            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap(regLabel), writeValue)
-        Catch ex As Exception
-            MsgBox("ERROR: Invalid write - " + ex.ToString())
-        End Try
-
+                regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
+                m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap(regLabel), writeValue)
+            Catch ex As Exception
+                MsgBox("ERROR: Invalid write - " + ex.ToString())
+            End Try
+        End If
     End Sub
 
     Private Sub ReadPage()

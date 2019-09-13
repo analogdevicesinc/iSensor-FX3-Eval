@@ -80,13 +80,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property SelectedRegMapIndex() As Integer
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property SelectedRegMap() As String
             Get
-                Return CType(Me("SelectedRegMapIndex"),Integer)
+                Return CType(Me("SelectedRegMap"),String)
             End Get
             Set
-                Me("SelectedRegMapIndex") = value
+                Me("SelectedRegMap") = value
             End Set
         End Property
         

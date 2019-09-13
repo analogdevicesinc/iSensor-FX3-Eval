@@ -19,6 +19,7 @@ Public Class DataPlotGUI
     Private logData As List(Of String)
     Private logTimer As Stopwatch
     Private playBackRunning As Boolean
+    Private playBackMutex As Mutex
     Private CSVRegData As List(Of String())
 
     Public Sub FormSetup() Handles Me.Load
@@ -45,6 +46,8 @@ Public Class DataPlotGUI
         stopPlayback.Enabled = False
         stopPlayback.Visible = False
         axis_autoscale.Checked = True
+
+        playBackMutex = New Mutex()
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
@@ -59,6 +62,7 @@ Public Class DataPlotGUI
     Private Sub ShutDown() Handles Me.Closing
         plotTimer.Enabled = False
         playBackRunning = False
+        playBackMutex.WaitOne()
     End Sub
 
     Private Sub PlotTimerCallback()
@@ -371,6 +375,7 @@ Public Class DataPlotGUI
     End Function
 
     Private Sub PlayCSVWorker()
+        playBackMutex.WaitOne()
         Dim waitTime As Long
         logTimer.Restart()
 
@@ -386,7 +391,7 @@ Public Class DataPlotGUI
         End While
 
         Me.Invoke(New MethodInvoker(AddressOf EnablePlaybackButtons))
-
+        playBackMutex.ReleaseMutex()
     End Sub
 
     Private Function LoadFromCSV(fileName As String) As List(Of String())

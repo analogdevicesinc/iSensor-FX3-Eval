@@ -8,8 +8,8 @@
     <Setting Name="DeviceType" Type="FX3Api.DUTType" Scope="User">
       <Value Profile="(Default)">IMU</Value>
     </Setting>
-    <Setting Name="SelectedRegMapIndex" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="SelectedRegMap" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastTop" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>

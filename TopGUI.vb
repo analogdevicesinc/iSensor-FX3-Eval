@@ -66,16 +66,20 @@ Public Class TopGUI
         outputStream.Close()
 
         'Set the regmap path using the SelectRegMap GUI
-        Dim regMapSelector As New SelectRegmapGUI()
-        If Not IsNothing(regMapSelector.SelectedPath) Then
-            RegMapPath = regMapSelector.SelectedPath
-        ElseIf regMapSelector.ShowDialog() = DialogResult.OK Then
-            RegMapPath = regMapSelector.SelectedPath
+        If Not File.Exists(My.Settings.SelectedRegMap) Then
+            Dim regMapSelector As New SelectRegmapGUI()
+            If Not IsNothing(regMapSelector.SelectedPath) Then
+                RegMapPath = regMapSelector.SelectedPath
+            ElseIf regMapSelector.ShowDialog() = DialogResult.OK Then
+                RegMapPath = regMapSelector.SelectedPath
+            Else
+                'Bad path will complain without breaking anything
+                RegMapPath = ""
+            End If
+            regMapSelector.Dispose()
         Else
-            'Bad path will complain without breaking anything
-            RegMapPath = ""
+            RegMapPath = My.Settings.SelectedRegMap
         End If
-        regMapSelector.Dispose()
 
         'Set FX3 connection (defaults to ADcmXL)
         FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Api.DeviceType.IMU)
@@ -128,6 +132,7 @@ Public Class TopGUI
                 If RegMap.Count() = 0 Then
                     Throw New Exception("Regmap produced from selected file contains 0 registers")
                 End If
+                regMapPath_Label.Text = value.Substring(value.LastIndexOf("\") + 1)
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message())
             End Try
@@ -141,7 +146,8 @@ Public Class TopGUI
     Private Sub btn_bit_bang_Click(sender As Object, e As EventArgs) Handles btn_bit_bang.Click
 
         FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
-        FX3.SetBitBangSpiFreq(500000)
+        FX3.StreamTimeoutSeconds = 100000
+        FX3.SetBitBangSpiFreq(0.9)
 
         Dim running As Boolean = True
 
@@ -155,20 +161,6 @@ Public Class TopGUI
         End While
 
         FX3.RestoreHardwareSpi()
-
-    End Sub
-
-    Private Sub RebootFX3()
-
-        'Send disconnect command
-        FX3.Disconnect()
-        ResetButtons()
-        ResetLabels()
-        btn_Connect.Enabled = False
-        label_FX3Status.Text = "FX3 Rebooting"
-
-        'Start a timeout counter
-        m_disconnectTimer.Enabled = True
 
     End Sub
 
@@ -312,6 +304,7 @@ Public Class TopGUI
         My.Settings.LastLeft = Me.Left
         My.Settings.LastTop = Me.Top
         My.Settings.LastFilePath = lastFilePath
+        My.Settings.SelectedRegMap = m_RegMapPath
         My.Settings.Save()
 
         'Disconnect the FX3 (does nothing if not already connected)
@@ -360,6 +353,20 @@ Public Class TopGUI
 #End Region
 
 #Region "Helper Functions"
+
+    Private Sub RebootFX3()
+
+        'Send disconnect command
+        FX3.Disconnect()
+        ResetButtons()
+        ResetLabels()
+        btn_Connect.Enabled = False
+        label_FX3Status.Text = "FX3 Rebooting"
+
+        'Start a timeout counter
+        m_disconnectTimer.Enabled = True
+
+    End Sub
 
     ''' <summary>
     ''' Update the DUT (and lavels) after chanign the part 
@@ -575,6 +582,14 @@ Public Class TopGUI
         End If
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
+
+    End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs)
+        Dim subGUI As New ADXl375GUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        Hide()
 
     End Sub
 

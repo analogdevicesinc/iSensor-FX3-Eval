@@ -364,10 +364,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="M:FX3Api.FX3Connection.SetBitBangSpiFreq(System.UInt32)">
  <summary>
- Set the SCLK frequency for a bit banged SPI connection.
+ Set the SCLK frequency for a bit banged SPI connection. Overloaded to allow for a UInt
  </summary>
  <param name="Freq">The SPI frequency, in Hz</param>
  <returns>A boolean indicating if the frequency could be set.</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.SetBitBangSpiFreq(System.Double)">
+ <summary>
+ Sets the SCLK frequency for a bit bang SPI connection. 
+ </summary>
+ <param name="Freq">The desired SPI frequency. Can go from 800KHz to approx 0.001Hz</param>
+ <returns></returns>
 </member>
 <member name="P:FX3Api.FX3Connection.CrcFirstIndex">
  <summary>
@@ -446,6 +453,12 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  Stops a burst stream by setting the stream state variables
  </summary>
+</member>
+<member name="P:FX3Api.FX3Connection.StripBurstTriggerWord">
+ <summary>
+ Property to choose if the readback from the 16 bit trigger word at the start of each burst is discarded or not
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:FX3Api.FX3Connection.BurstStreamManager">
  <summary>

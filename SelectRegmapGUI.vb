@@ -43,12 +43,7 @@ Public Class SelectRegmapGUI
                     SelectRegmapComboBox.Items.Add(item)
                 Next
                 ' default option
-                Try
-                    SelectRegmapComboBox.SelectedIndex = My.Settings.SelectedRegMapIndex
-                Catch ex As Exception
-                    SelectRegmapComboBox.SelectedIndex = 0
-                End Try
-
+                SelectRegmapComboBox.SelectedIndex = 0
             End If
         End If
 
@@ -78,7 +73,6 @@ Public Class SelectRegmapGUI
     End Sub
 
     Private Sub OKButton_Click(sender As Object, e As EventArgs) Handles OKButton.Click
-        My.Settings.SelectedRegMapIndex = SelectRegmapComboBox.SelectedIndex
         m_selectedpath = SelectRegmapComboBox.SelectedItem
         ValidatePath()
     End Sub
