@@ -147,6 +147,7 @@ Public Class RegisterGUI
         'Kill any running timers
         pageReadTimer.Enabled = False
         drReadTimer.Enabled = False
+        m_TopGUI.btn_RegAccess.Enabled = True
     End Sub
 
     Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged

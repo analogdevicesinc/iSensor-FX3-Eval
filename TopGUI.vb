@@ -204,6 +204,7 @@ Public Class TopGUI
         Dim subGUI As New RegisterGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
+        btn_RegAccess.Enabled = False
     End Sub
 
     Private Sub btn_RealTime_Click(sender As Object, e As EventArgs) Handles btn_RealTime.Click
@@ -378,7 +379,7 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Update the DUT (and lavels) after chanign the part 
+    ''' Update the DUT (and labels) after changing the part 
     ''' </summary>
     ''' <param name="DutType"></param>
     Friend Sub UpdateDutLabel(DutType As DUTType)
@@ -589,18 +590,6 @@ Public Class TopGUI
         End If
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
-
-    End Sub
-
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs)
-        Dim subGUI As New ADXl375GUI()
-        subGUI.SetTopGUI(Me)
-        subGUI.Show()
-        Hide()
-
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
 
     End Sub
 
