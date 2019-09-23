@@ -10,7 +10,7 @@ Imports System.ComponentModel
 Public Class RegisterBulkReadGUI
     Inherits FormBase
 
-    Private WithEvents fileManager As New TextFileStreamManager
+    Private WithEvents fileManager As StreamDataLogger.StreamDataLogger
     Private totalDRCaptures As Integer = 0
     Private pin As IPinObject
 
@@ -38,9 +38,16 @@ Public Class RegisterBulkReadGUI
         MeasureDR.Enabled = m_TopGUI.FX3.DrActive
         DrActiveBox.Checked = m_TopGUI.FX3.DrActive
 
-        ListView1.Items.Clear()
+        selectedRegview.View = View.Details
+        selectedRegview.Columns.Add("Register", selectedRegview.Width - 1, HorizontalAlignment.Left)
+        Label4.Text = ""
+        StreamingAVARCancelButton.Enabled = False
+        statusLabel.Text = "Waiting"
+        statusLabel.BackColor = Color.White
+
+        selectedRegview.Items.Clear()
         For Each item In m_TopGUI.BulkRegList
-            ListView1.Items.Add(item)
+            selectedRegview.Items.Add(item)
         Next
         NumberDRToCapture.Text = m_TopGUI.numRegSamples.ToString()
     End Sub
@@ -49,33 +56,24 @@ Public Class RegisterBulkReadGUI
         'Save the list-view contents
 
         m_TopGUI.BulkRegList.Clear()
-        For Each item In ListView1.Items
+        For Each item In selectedRegview.Items
             m_TopGUI.BulkRegList.Add(item)
         Next
         m_TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
 
     End Sub
 
-    Private Sub StreamingAVAR_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ListView1.View = View.Details
-        ListView1.Columns.Add("Register", 182, HorizontalAlignment.Left)
-        Label4.Text = ""
-        StreamingAVARCancelButton.Enabled = False
-        statusLabel.Text = "Waiting"
-        statusLabel.BackColor = Color.White
-    End Sub
-
     Private Sub AddRegisterButton_Click(sender As Object, e As EventArgs) Handles AddRegisterButton.Click
         Dim newItem As New ListViewItem()
         newItem.SubItems(0).Text = RegisterList.SelectedItem
-        ListView1.Items.Add(newItem)
+        selectedRegview.Items.Add(newItem)
     End Sub
 
     Private Sub RemoveRegisterButton_Click(sender As Object, e As EventArgs) Handles RemoveRegisterButton.Click
-        If IsNothing(Me.ListView1.FocusedItem) Then
+        If IsNothing(Me.selectedRegview.FocusedItem) Then
             MessageBox.Show("Please select an Item to Delete", "Remove register warning", MessageBoxButtons.OK)
         Else
-            Me.ListView1.Items.RemoveAt(Me.ListView1.FocusedItem.Index)
+            Me.selectedRegview.Items.RemoveAt(Me.selectedRegview.FocusedItem.Index)
         End If
     End Sub
 
@@ -83,21 +81,22 @@ Public Class RegisterBulkReadGUI
         Dim result As Integer
         result = MessageBox.Show("Are you sure you want to clear all registers?", "Clear all registers?", MessageBoxButtons.YesNo)
         If result = DialogResult.Yes Then
-            ListView1.Items.Clear()
+            selectedRegview.Items.Clear()
         End If
     End Sub
 
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
 
-        Dim timeString As String = "_" + DateTime.Now().ToString("s")
         Dim savePath As String
+
+        Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
 
         'Update the data ready pin and measurement
         UpdateDRPin()
 
         'Check whether user selected registers to stream
-        If ListView1.Items.Count <= 0 Then
+        If selectedRegview.Items.Count <= 0 Then
             MessageBox.Show("Please select registers to stream before starting", "No registers selected!", MessageBoxButtons.OK)
             Exit Sub
         End If
@@ -116,7 +115,7 @@ Public Class RegisterBulkReadGUI
 
         'Build list of registers to stream
         Dim regList As New List(Of RegMapClasses.RegClass)
-        For Each item As ListViewItem In Me.ListView1.Items
+        For Each item As ListViewItem In Me.selectedRegview.Items
             regList.Add(m_TopGUI.RegMap(item.Text))
         Next
 
@@ -156,18 +155,21 @@ Public Class RegisterBulkReadGUI
             End If
         End If
 
-        'Set up file manager to pass over to TFSM
-        fileManager.DutInterface = m_TopGUI.Dut
+        'Set up file manager
+        fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.RegList = regList
-        fileManager.FileBaseName = "AVAR" + timeString
-        fileManager.FilePath = savePath
+        fileManager.FileBaseName = "RegStream" + timeString
+        fileManager.FilePath = savePath + "\"
         fileManager.Buffers = totalDRCaptures 'Number of times to read all the registers in the reg map
         fileManager.Captures = 1 'Number of times to read each register in the reg map
-        fileManager.FileMaxDataRows = 1000000 'Keep this under 1M samples to open in Excel
-        fileManager.BufferTimeout = 10 'Timeout in seconds
-        fileManager.BuffersPerWrite = 40000 'Dynamic buffers per write to avoid storing too much data in RAM
-        fileManager.IncludeSampleNumberColumn = False
-        fileManager.ScaleData = False
+        Try
+            fileManager.FileMaxDataRows = Convert.ToInt32(linesPerFile.Text()) 'Keep this under 1M samples to open in Excel
+        Catch ex As Exception
+            fileManager.FileMaxDataRows = 1000000
+            linesPerFile.Text = "1000000"
+        End Try
+        fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
+        fileManager.BuffersPerWrite = 10000 'Dynamic buffers per write to avoid storing too much data in RAM
 
         fileManager.RunAsync()
 
@@ -183,12 +185,16 @@ Public Class RegisterBulkReadGUI
         RemoveRegisterButton.Enabled = False
         ClearAllButton.Enabled = False
         RegisterList.Enabled = False
-        ListView1.Enabled = False
+        selectedRegview.Enabled = False
         MainButton.Enabled = False
 
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
+        Me.Invoke(New MethodInvoker(AddressOf DoneWork))
+    End Sub
+
+    Private Sub DoneWork()
         statusLabel.Text = "Done"
         statusLabel.BackColor = Color.Green
         StreamingAVARCancelButton.Enabled = False
@@ -199,13 +205,13 @@ Public Class RegisterBulkReadGUI
         RemoveRegisterButton.Enabled = True
         ClearAllButton.Enabled = True
         RegisterList.Enabled = True
-        ListView1.Enabled = True
+        selectedRegview.Enabled = True
         MainButton.Enabled = True
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StreamingAVARCancelButton.Click
         MainButton.Enabled = True
-        If fileManager.IsBusy Then
+        If fileManager.Busy Then
             fileManager.CancelAsync()
             statusLabel.Text = "Canceling"
             statusLabel.BackColor = Color.Red
@@ -234,11 +240,8 @@ Public Class RegisterBulkReadGUI
         End Select
     End Sub
 
-    Private Sub progressUpdate(sender As Object, e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        CaptureProgressStreaming.Value = e.ProgressPercentage
-        If CaptureProgressStreaming.Value = CaptureProgressStreaming.Maximum Then
-            CaptureProgressStreaming.Value = CaptureProgressStreaming.Minimum
-        End If
+    Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
+        Me.Invoke(New MethodInvoker(Sub() CaptureProgressStreaming.Value = e.ProgressPercentage))
     End Sub
 
     Private Sub UpdateGUI()

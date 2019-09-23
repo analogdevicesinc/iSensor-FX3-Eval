@@ -77,6 +77,7 @@ Public Class ADXl375GUI
         m_TopGUI.FX3.WordCount = 3
         m_TopGUI.FX3.StripBurstTriggerWord = False
         m_TopGUI.FX3.SetupBurstMode()
+        Dim numBufPerRead As UInteger = 16000
 
         'grab number of FIFO buffers
         Dim numBuf As Integer
@@ -85,26 +86,43 @@ Public Class ADXl375GUI
         Dim logData As New List(Of String)
         logData.Add("x, y, z")
 
+        Dim lastBuf As UShort()
+        Dim sameData As Boolean
         For i As Integer = 0 To numBuf - 1
             'wait for interrupt
             m_TopGUI.FX3.PulseWait(m_TopGUI.FX3.DIO1, 1, 0, 1000)
             'stream data
-            m_TopGUI.FX3.StartBufferedStream(addr, Nothing, 16UI, 10, Nothing)
-            For j As Integer = 1 To 16
+            m_TopGUI.FX3.StartBufferedStream(addr, Nothing, numBufPerRead, 10, Nothing)
+            For j As Integer = 1 To numBufPerRead
+                lastBuf = buf
                 buf = Nothing
                 While IsNothing(buf)
                     buf = m_TopGUI.FX3.GetBuffer()
                 End While
-                byteBuf = UShortToByteArray(buf)
-                'parse x, y, z
-                result = ""
-                For k As Integer = 1 To 5 Step 2
-                    tempShort = byteBuf(k + 1)
-                    tempShort = tempShort << 8
-                    tempShort += byteBuf(k)
-                    result = result + ConvertToInt(tempShort).ToString() + ","
-                Next
-                logData.Add(result)
+                'skip if idetical
+
+                sameData = True
+                If IsNothing(lastBuf) Then sameData = False
+                If sameData Then
+                    For p As Integer = 0 To buf.Count() - 1
+                        If buf(p) <> lastBuf(p) Then
+                            sameData = False
+                            Exit For
+                        End If
+                    Next
+                End If
+                If Not sameData Then
+                    byteBuf = UShortToByteArray(buf)
+                    'parse x, y, z
+                    result = ""
+                    For k As Integer = 1 To 5 Step 2
+                        tempShort = byteBuf(k + 1)
+                        tempShort = tempShort << 8
+                        tempShort += byteBuf(k)
+                        result = result + ConvertToInt(tempShort).ToString() + ","
+                    Next
+                    logData.Add(result)
+                End If
             Next
         Next
 
@@ -140,12 +158,12 @@ Public Class ADXl375GUI
             currentSample = CSVReader.ReadFields()
 
             'check if the sample value is "F2" trigger word for FIFO read
-            If currentSample(3) = "F2" Then
+            If currentSample(2) = "0xF2" Then
                 rawIndex = 0
                 'grab all XL data
                 While rawIndex < 6
                     currentSample = CSVReader.ReadFields()
-                    rawXLData(rawIndex) = currentSample(2)
+                    rawXLData(rawIndex) = currentSample(3)
                     rawIndex += 1
                 End While
 

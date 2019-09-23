@@ -66,13 +66,24 @@ FX3Api
  <param name="FX3SerialNum">Serial number of the board</param>
  <param name="DisconnectTime">Time (in ms) elapsed between the disconnect call and board re-enumeration</param>
 </member>
-<member name="M:FX3Api.FX3Connection.#ctor(System.String,System.String,FX3Api.DeviceType)">
+<member name="E:FX3Api.FX3Connection.NewBufferAvailable">
+ <summary>
+ This event is raised when there is a new buffer available from a buffered stream
+ </summary>
+</member>
+<member name="E:FX3Api.FX3Connection.StreamFinished">
+ <summary>
+ This event is raised when a stream is finished
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.#ctor(System.String,System.String,System.String,FX3Api.DeviceType)">
  <summary>
  Class Constructor. Loads SPI settings and default values for the interface, and starts a background thread to manage programming newly
  connected boards with the ADI bootloader.
  </summary>
  <param name="FX3FirmwarePath">The path to the FX3 application firmware image file.</param>
- <param name="FX3BlinkFirmwarePath">The path to the ADI FX3 bootloader image file.</param>
+ <param name="FX3BootloaderPath">The path to the ADI FX3 bootloader image file.</param>
+ <param name="FX3ProgrammerPath">The path to the flash programmer application image file.</param>
  <param name="SensorType">The sensor type. Valid inputs are IMU and ADcmXL. Default is IMU.</param>
 </member>
 <member name="M:FX3Api.FX3Connection.SetDefaultValues(FX3Api.DeviceType)">
@@ -442,6 +453,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <param name="MillisecondsTimeout">The time to wait trying to acquire the stream mutex</param>
  <returns>If the stream wait was successful</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.EnqueueStreamData(System.UInt16[]@)">
+ <summary>
+ Place data in the thread safe queue and raise a buffer available event
+ </summary>
+ <param name="buf"></param>
+</member>
+<member name="M:FX3Api.FX3Connection.CancelStreamAsync">
+ <summary>
+ Cancel a any running stream
+ </summary>
 </member>
 <member name="M:FX3Api.FX3Connection.StartBurstStream(System.UInt32)">
  <summary>
@@ -1006,11 +1028,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>A string, representing the path</returns>
 </member>
-<member name="P:FX3Api.FX3Connection.BlinkFirmwarePath">
+<member name="P:FX3Api.FX3Connection.BootloaderPath">
  <summary>
  Set/get the blink firmware .img file used for multi-board identification
  </summary>
  <returns>A string representing the path to the firmware on the user machine</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FlashProgrammerPath">
+ <summary>
+ Path to the programmer firmware which is loaded in RAM to allow flashing the EEPROM.
+ </summary>
+ <returns></returns>
 </member>
 <member name="P:FX3Api.FX3Connection.GetBootStatus">
  <summary>
@@ -1092,6 +1120,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  Checks that the board is enumerated and connected via USB 2.0 or 3.0. Throws general exceptions for an invalid speed.
  </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GetBootloaderVersion(System.String)">
+ <summary>
+ Read bootloader image and pull the version number
+ </summary>
+ <param name="Path">Path to the image</param>
+ <returns>The version image string</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.BootloaderBlinkLED(System.String)">
  <summary>
@@ -1185,6 +1220,11 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Sets/Gets the data ready polarity for the ISpi32Interface.
  </summary>
  <returns></returns>
+</member>
+<member name="T:FX3Api.StreamType">
+ <summary>
+ Enum of all possible stream types which can be running
+ </summary>
 </member>
 <member name="T:FX3Api.EndpointAddresses">
  <summary>

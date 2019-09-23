@@ -1,0 +1,7 @@
+﻿Public Class BitBangSpiGUI
+    Inherits FormBase
+
+    Private Sub BitBangSpiGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+End Class

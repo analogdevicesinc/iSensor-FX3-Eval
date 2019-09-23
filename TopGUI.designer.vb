@@ -41,10 +41,9 @@ Partial Class TopGUI
         Me.btn_BoardInfo = New System.Windows.Forms.Button()
         Me.btn_PWMSetup = New System.Windows.Forms.Button()
         Me.btn_measurePulse = New System.Windows.Forms.Button()
-        Me.btn_Bursttest = New System.Windows.Forms.Button()
+        Me.btn_OtherApps = New System.Windows.Forms.Button()
         Me.btn_PinAccess = New System.Windows.Forms.Button()
         Me.label_apiVersion = New System.Windows.Forms.Label()
-        Me.btn_bit_bang = New System.Windows.Forms.Button()
         Me.btn_plotData = New System.Windows.Forms.Button()
         Me.regMapPath_Label = New System.Windows.Forms.Label()
         Me.SuspendLayout()
@@ -63,7 +62,7 @@ Partial Class TopGUI
         Me.label_FX3Status.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.label_FX3Status.Location = New System.Drawing.Point(77, 79)
         Me.label_FX3Status.Name = "label_FX3Status"
-        Me.label_FX3Status.Size = New System.Drawing.Size(253, 16)
+        Me.label_FX3Status.Size = New System.Drawing.Size(334, 16)
         Me.label_FX3Status.TabIndex = 5
         Me.label_FX3Status.Text = "Ok"
         Me.label_FX3Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -91,7 +90,7 @@ Partial Class TopGUI
         Me.label_DUTStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.label_DUTStatus.Location = New System.Drawing.Point(77, 103)
         Me.label_DUTStatus.Name = "label_DUTStatus"
-        Me.label_DUTStatus.Size = New System.Drawing.Size(253, 16)
+        Me.label_DUTStatus.Size = New System.Drawing.Size(334, 16)
         Me.label_DUTStatus.TabIndex = 13
         Me.label_DUTStatus.Text = "Waiting for FX3"
         Me.label_DUTStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -137,7 +136,7 @@ Partial Class TopGUI
         Me.label_DUTType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.label_DUTType.Location = New System.Drawing.Point(77, 127)
         Me.label_DUTType.Name = "label_DUTType"
-        Me.label_DUTType.Size = New System.Drawing.Size(253, 16)
+        Me.label_DUTType.Size = New System.Drawing.Size(334, 16)
         Me.label_DUTType.TabIndex = 19
         Me.label_DUTType.Text = "Not Set"
         Me.label_DUTType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -148,7 +147,7 @@ Partial Class TopGUI
         Me.btn_RealTime.Name = "btn_RealTime"
         Me.btn_RealTime.Size = New System.Drawing.Size(75, 64)
         Me.btn_RealTime.TabIndex = 20
-        Me.btn_RealTime.Text = "Real Time Data Capture"
+        Me.btn_RealTime.Text = "Burst Data Capture"
         Me.btn_RealTime.UseVisualStyleBackColor = True
         '
         'btn_BulkRegRead
@@ -157,7 +156,7 @@ Partial Class TopGUI
         Me.btn_BulkRegRead.Name = "btn_BulkRegRead"
         Me.btn_BulkRegRead.Size = New System.Drawing.Size(75, 64)
         Me.btn_BulkRegRead.TabIndex = 21
-        Me.btn_BulkRegRead.Text = "Bulk Register Logging"
+        Me.btn_BulkRegRead.Text = "Register Logging"
         Me.btn_BulkRegRead.UseVisualStyleBackColor = True
         '
         'btn_CheckDUTConnection
@@ -214,14 +213,14 @@ Partial Class TopGUI
         Me.btn_measurePulse.Text = "Measure Signal Pulse Width"
         Me.btn_measurePulse.UseVisualStyleBackColor = True
         '
-        'btn_Bursttest
+        'btn_OtherApps
         '
-        Me.btn_Bursttest.Location = New System.Drawing.Point(336, 149)
-        Me.btn_Bursttest.Name = "btn_Bursttest"
-        Me.btn_Bursttest.Size = New System.Drawing.Size(75, 64)
-        Me.btn_Bursttest.TabIndex = 28
-        Me.btn_Bursttest.Text = "Burst Mode Test"
-        Me.btn_Bursttest.UseVisualStyleBackColor = True
+        Me.btn_OtherApps.Location = New System.Drawing.Point(336, 149)
+        Me.btn_OtherApps.Name = "btn_OtherApps"
+        Me.btn_OtherApps.Size = New System.Drawing.Size(75, 64)
+        Me.btn_OtherApps.TabIndex = 28
+        Me.btn_OtherApps.Text = "Other Applications"
+        Me.btn_OtherApps.UseVisualStyleBackColor = True
         '
         'btn_PinAccess
         '
@@ -240,15 +239,6 @@ Partial Class TopGUI
         Me.label_apiVersion.Size = New System.Drawing.Size(401, 13)
         Me.label_apiVersion.TabIndex = 30
         Me.label_apiVersion.Text = "apiVersion"
-        '
-        'btn_bit_bang
-        '
-        Me.btn_bit_bang.Location = New System.Drawing.Point(336, 79)
-        Me.btn_bit_bang.Name = "btn_bit_bang"
-        Me.btn_bit_bang.Size = New System.Drawing.Size(75, 64)
-        Me.btn_bit_bang.TabIndex = 31
-        Me.btn_bit_bang.Text = "Bit Bang SPI"
-        Me.btn_bit_bang.UseVisualStyleBackColor = True
         '
         'btn_plotData
         '
@@ -275,10 +265,9 @@ Partial Class TopGUI
         Me.ClientSize = New System.Drawing.Size(424, 326)
         Me.Controls.Add(Me.regMapPath_Label)
         Me.Controls.Add(Me.btn_plotData)
-        Me.Controls.Add(Me.btn_bit_bang)
         Me.Controls.Add(Me.label_apiVersion)
         Me.Controls.Add(Me.btn_PinAccess)
-        Me.Controls.Add(Me.btn_Bursttest)
+        Me.Controls.Add(Me.btn_OtherApps)
         Me.Controls.Add(Me.btn_measurePulse)
         Me.Controls.Add(Me.btn_BoardInfo)
         Me.Controls.Add(Me.btn_PWMSetup)
@@ -324,10 +313,9 @@ Partial Class TopGUI
     Friend WithEvents btn_BoardInfo As Button
     Friend WithEvents btn_PWMSetup As Button
     Friend WithEvents btn_measurePulse As Button
-    Friend WithEvents btn_Bursttest As Button
+    Friend WithEvents btn_OtherApps As Button
     Friend WithEvents btn_PinAccess As Button
     Friend WithEvents label_apiVersion As Label
-    Friend WithEvents btn_bit_bang As Button
     Friend WithEvents btn_plotData As Button
     Friend WithEvents regMapPath_Label As Label
 End Class

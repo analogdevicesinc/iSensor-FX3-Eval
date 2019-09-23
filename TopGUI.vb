@@ -44,6 +44,7 @@ Public Class TopGUI
 
         Dim firmwarePath As String
         Dim blinkFirmwarePath As String
+        Dim flashProgrammerPath As String
 
         'Create a local copy of embedded firmware file
         Dim firmwareResource As String = "FX3ExampleGUI.FX3_Firmware.img"
@@ -65,6 +66,16 @@ Public Class TopGUI
         assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
         outputStream.Close()
 
+        'Create a local copy of the flash programmer
+        firmwareResource = "FX3ExampleGUI.USBFlashProg.img"
+        flashProgrammerPath = System.Reflection.Assembly.GetExecutingAssembly.Location
+        flashProgrammerPath = flashProgrammerPath.Substring(0, flashProgrammerPath.LastIndexOf("\") + 1)
+        flashProgrammerPath = flashProgrammerPath + "USBFlashProg.img"
+        assembly = System.Reflection.Assembly.GetExecutingAssembly()
+        outputStream = New FileStream(flashProgrammerPath, FileMode.Create)
+        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
+        outputStream.Close()
+
         'Set the regmap path using the SelectRegMap GUI
         If Not File.Exists(My.Settings.SelectedRegMap) Then
             Dim regMapSelector As New SelectRegmapGUI()
@@ -82,7 +93,7 @@ Public Class TopGUI
         End If
 
         'Set FX3 connection (defaults to ADcmXL)
-        FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, FX3Api.DeviceType.IMU)
+        FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, flashProgrammerPath, FX3Api.DeviceType.IMU)
 
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
@@ -143,7 +154,7 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
-    Private Sub btn_bit_bang_Click(sender As Object, e As EventArgs) Handles btn_bit_bang.Click
+    Private Sub btn_bit_bang_Click(sender As Object, e As EventArgs)
 
         FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
         FX3.StreamTimeoutSeconds = 100000
@@ -193,7 +204,6 @@ Public Class TopGUI
         Dim subGUI As New RegisterGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
     End Sub
 
     Private Sub btn_RealTime_Click(sender As Object, e As EventArgs) Handles btn_RealTime.Click
@@ -265,11 +275,10 @@ Public Class TopGUI
         Me.Hide()
     End Sub
 
-    Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_Bursttest.Click
-        Dim subGUI As New BurstTestGUI()
+    Private Sub btn_OtherApps_Click(sender As Object, e As EventArgs) Handles btn_OtherApps.Click
+        Dim subGUI As New AppBrowseGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
     End Sub
 
     Private Sub btn_plotData_Click(sender As Object, e As EventArgs) Handles btn_plotData.Click
@@ -453,8 +462,7 @@ Public Class TopGUI
         btn_SelectDUT.Enabled = True
         btn_measurePulse.Enabled = True
         btn_PinAccess.Enabled = True
-        btn_Bursttest.Enabled = True
-        btn_bit_bang.Enabled = True
+        btn_OtherApps.Enabled = True
         btn_plotData.Enabled = True
 
         label_FX3Status.Text = "Connected to " + FX3.ActiveFX3SerialNumber
@@ -507,8 +515,7 @@ Public Class TopGUI
         btn_SelectDUT.Enabled = False
         btn_measurePulse.Enabled = False
         btn_PinAccess.Enabled = False
-        btn_Bursttest.Enabled = False
-        btn_bit_bang.Enabled = False
+        btn_OtherApps.Enabled = False
         btn_plotData.Enabled = False
     End Sub
 
@@ -590,6 +597,10 @@ Public Class TopGUI
         subGUI.SetTopGUI(Me)
         subGUI.Show()
         Hide()
+
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
 
     End Sub
 

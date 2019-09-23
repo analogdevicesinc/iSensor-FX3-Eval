@@ -13,6 +13,7 @@ Public Class BurstTestGUI
         numBytes.Text = "20"
         numWords = 10
         result.Text = ""
+        m_TopGUI.FX3.StripBurstTriggerWord = False
     End Sub
 
     Private Sub captureData_Click(sender As Object, e As EventArgs) Handles captureData.Click
@@ -21,7 +22,7 @@ Public Class BurstTestGUI
         m_TopGUI.FX3.WordCount = numWords
         m_TopGUI.FX3.SetupBurstMode()
         m_TopGUI.FX3.StartBufferedStream(addr, Nothing, 1UI, 10, Nothing)
-        m_TopGUI.FX3.WaitForStreamCompletion(1000)
+        m_TopGUI.FX3.WaitForStreamCompletion(250)
         Dim buf() As UShort
         buf = m_TopGUI.FX3.GetBuffer()
         result.Text = "0x"
@@ -35,6 +36,10 @@ Public Class BurstTestGUI
         m_TopGUI.FX3.DrActive = drActive.Checked
         m_TopGUI.FX3.ChipSelectLeadTime = csDelay.SelectedItem
         numWords = (Convert.ToInt32(numBytes.Text) / 2) - 1
+    End Sub
+
+    Private Sub Shutdown() Handles Me.Closing
+        m_TopGUI.FX3.StripBurstTriggerWord = True
     End Sub
 
 End Class

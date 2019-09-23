@@ -71,6 +71,10 @@
     <Reference Include="sdpApi1">
       <HintPath>Resources\sdpApi1.dll</HintPath>
     </Reference>
+    <Reference Include="StreamDataLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\StreamDataLogger.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -107,6 +111,18 @@
       <DependentUpon>ApiInfoGUI.vb</DependentUpon>
     </Compile>
     <Compile Include="ApiInfoGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AppBrowseGUI.Designer.vb">
+      <DependentUpon>AppBrowseGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AppBrowseGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BitBangSpiGUI.Designer.vb">
+      <DependentUpon>BitBangSpiGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BitBangSpiGUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BurstTestGUI.Designer.vb">
@@ -223,6 +239,12 @@
     <EmbeddedResource Include="ApiInfoGUI.resx">
       <DependentUpon>ApiInfoGUI.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AppBrowseGUI.resx">
+      <DependentUpon>AppBrowseGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BitBangSpiGUI.resx">
+      <DependentUpon>BitBangSpiGUI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BurstTestGUI.resx">
       <DependentUpon>BurstTestGUI.vb</DependentUpon>
     </EmbeddedResource>
@@ -298,6 +320,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <EmbeddedResource Include="USBFlashProg.img" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Analog.ICO" />
