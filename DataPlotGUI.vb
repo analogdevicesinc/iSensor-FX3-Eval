@@ -20,6 +20,7 @@ Public Class DataPlotGUI
     Private logTimer As Stopwatch
     Private playBackRunning As Boolean
     Private playBackMutex As Mutex
+    Private plotMutex As Mutex
     Private CSVRegData As List(Of String())
 
     Public Sub FormSetup() Handles Me.Load
@@ -40,6 +41,8 @@ Public Class DataPlotGUI
         AddHandler plotTimer.Elapsed, New ElapsedEventHandler(AddressOf PlotTimerCallback)
 
         samplesRendered.Text = "200"
+        minScale.Text = "-1000"
+        maxscale.Text = "1000"
 
         logTimer = New Stopwatch()
 
@@ -48,14 +51,15 @@ Public Class DataPlotGUI
         axis_autoscale.Checked = True
 
         playBackMutex = New Mutex()
+        plotMutex = New Mutex()
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
         regView.Height = Me.Height - 157
         dataPlot.Top = 6
         dataPlot.Left = 511
-        dataPlot.Width = Me.Width - 528
-        dataPlot.Height = Me.Height - 55
+        dataPlot.Width = Me.Width - 534
+        dataPlot.Height = Me.Height - 56
         dataPlot.ResetAutoValues()
     End Sub
 
@@ -63,6 +67,7 @@ Public Class DataPlotGUI
         plotTimer.Enabled = False
         playBackRunning = False
         playBackMutex.WaitOne()
+        plotMutex.WaitOne()
     End Sub
 
     Private Sub PlotTimerCallback()
@@ -73,6 +78,11 @@ Public Class DataPlotGUI
         Dim regValues() As Double
         Dim plotValues As New List(Of Double)
         Dim logStr As String = ""
+
+        'get the plot mutex (exit if cannot)
+        If Not plotMutex.WaitOne(100) Then
+            Exit Sub
+        End If
 
         regValues = GetPlotRegValues()
 
@@ -127,6 +137,9 @@ Public Class DataPlotGUI
         End If
 
         plotXPosition = plotXPosition + 1
+
+        'release plot mutex
+        plotMutex.ReleaseMutex()
 
     End Sub
 
@@ -438,13 +451,6 @@ Public Class DataPlotGUI
         Else
             minScale.Enabled = True
             maxscale.Enabled = True
-            Try
-                minScale.Text = dataPlot.ChartAreas(0).AxisY.Minimum.ToString()
-                maxscale.Text = dataPlot.ChartAreas(0).AxisY.Maximum.ToString()
-            Catch ex As Exception
-                minScale.Text = "-1000"
-                maxscale.Text = "1000"
-            End Try
         End If
     End Sub
 End Class
