@@ -192,19 +192,8 @@ Public Class FX3ConfigGUI
             Exit Sub
         End Try
 
-        Dim stallCycles As UInt16
-        Try
-            stallCycles = Convert.ToUInt16(StallCyclesInput.Text)
-        Catch ex As Exception
-            MsgBox("ERROR: Invalid stall cycles")
-            StatusLabel.Text = "ERROR"
-            StatusLabel.BackColor = Color.Red
-            Exit Sub
-        End Try
-
         If Not stallTime = m_TopGUI.FX3.StallTime Then
             m_TopGUI.FX3.StallTime = stallTime
-            stallCycles = (m_TopGUI.FX3.StallTime / 1000000) / (1 / m_TopGUI.FX3.SclkFrequency)
         End If
 
         If dataReadyActiveInput.SelectedItem = "True: Data ready active" Then
