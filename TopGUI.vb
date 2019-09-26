@@ -9,6 +9,7 @@ Imports RegMapClasses
 Imports System.IO
 Imports System.Reflection
 Imports System.Timers
+Imports System.Threading
 
 Public Class TopGUI
 
@@ -26,7 +27,7 @@ Public Class TopGUI
 
     'Private member variables
     Private m_FX3Connected As Boolean
-    Private WithEvents m_disconnectTimer As Timer
+    Private WithEvents m_disconnectTimer As Timers.Timer
     Private m_RegMapPath As String
     Private m_AutoSpi As iSensorAutomotiveSpi
 
@@ -110,7 +111,7 @@ Public Class TopGUI
         m_FX3Connected = False
 
         'register timeout event handler
-        m_disconnectTimer = New Timer(10000)
+        m_disconnectTimer = New Timers.Timer(10000)
         m_disconnectTimer.Enabled = False
         AddHandler m_disconnectTimer.Elapsed, New ElapsedEventHandler(AddressOf timeoutHandler)
 
@@ -125,6 +126,11 @@ Public Class TopGUI
         label_apiVersion.Text = "Analog Devices iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
 
         lastFilePath = My.Settings.LastFilePath
+
+        'Register exception handlers
+        Dim myApp As AppDomain = AppDomain.CurrentDomain
+        AddHandler myApp.UnhandledException, AddressOf GeneralErrorHandler
+        AddHandler Application.ThreadException, AddressOf ThreadErrorHandler
 
     End Sub
 
@@ -324,6 +330,16 @@ Public Class TopGUI
 
     'General exception handler
     Public Sub GeneralErrorHandler(sender As Object, e As UnhandledExceptionEventArgs)
+        MsgBox("ERROR: Un-handled exception has occurred. " + e.ExceptionObject.ToString())
+    End Sub
+
+    ''' <summary>
+    ''' Thread exception handler
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Sub ThreadErrorHandler(sender As Object, e As ThreadExceptionEventArgs)
+        MsgBox("ERROR: Un-handled thread exception has occurred. " + e.Exception.ToString())
     End Sub
 
     ''' <summary>

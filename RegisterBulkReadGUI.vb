@@ -157,6 +157,8 @@ Public Class RegisterBulkReadGUI
 
         'Set up file manager
         fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
+        'Dim test As New StreamDataLogger.FakeStreamProducer()
+        'fileManager = New StreamDataLogger.StreamDataLogger(test, test)
         fileManager.RegList = regList
         fileManager.FileBaseName = "RegStream" + timeString
         fileManager.FilePath = savePath + "\"

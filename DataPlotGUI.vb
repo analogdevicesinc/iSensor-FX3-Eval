@@ -371,7 +371,7 @@ Public Class DataPlotGUI
         Else
             Return False
         End If
-        'CHeck that timestamp values are included
+        'Check that time stamp values are included
         If Not headers(0) = "TIMESTAMP_MS" Then
             Return False
         End If
