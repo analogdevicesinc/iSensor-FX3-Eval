@@ -76,7 +76,7 @@ Public Class ADXl375GUI
         m_TopGUI.FX3.WordCount = 3
         m_TopGUI.FX3.StripBurstTriggerWord = False
         m_TopGUI.FX3.SetupBurstMode()
-        Dim numBufPerRead As UInteger = 16000
+        Dim numBufPerRead As UInteger = 16
 
         'grab number of FIFO buffers
         Dim numBuf As Integer
