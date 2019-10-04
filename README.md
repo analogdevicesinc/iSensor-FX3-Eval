@@ -1,4 +1,4 @@
-# iSensor ADcmXL FX3Gui Example 
+# iSensor FX3 Example GUI (ADcmXL/IMU)
 
 ## Overview
 
@@ -10,9 +10,9 @@ Using both the FX3 firmware and the FX3Interface libraries enables you to acquir
 
 The firmware is designed to be built and run on a Cypress SuperSpeed Explorer Kit (CYUSB3KIT-003). A breakout board designed to convert the Explorer Kit's pins to a standard, 16-pin, 2mm connector used on most iSensor evaluation should be available soon. A schematic showing how to connect iSensor products to the Explorer Kit can be found in the Documentation folder of the iSensor FX3 firmware repository [here](https://github.com/juchong/iSensor-FX3-Firmware/tree/master/Documentation). 
 
-The Explorer Kit requires two jumpers to be installed before the interface library will communicate. The image below shows where the jumpers must be installed.
+The Explorer Kit requires two jumpers to be installed before the interface library will communicate. The image below shows where the jumpers must be installed. The other two jumpers must be left open.
 
- ![FX3 Jumper Locations](https://raw.githubusercontent.com/juchong/iSensor-FX3-Firmware/master/Documentation/pictures/JumperLocations.jpg)
+ ![FX3 Jumper Locations](https://raw.githubusercontent.com/juchong/iSensor-FX3-Firmware/master/hardware/pictures/JumperLocations.jpg)
 
 ## Getting Started
 
@@ -44,8 +44,8 @@ Additional functions such as resetting the FX3, resetting the DUT (using the har
 
 # Additional Repositories
 
-Two additional repositories are required for this example to operate. The FX3Interface where all FX3-related functions are implemented and the FX3 firmware are both essential for managing the USB -> SPI bridge the FX3 offers, and should serve as a good starting point for your application.
+Two additional repositories are required for this example to operate. The FX3 API, where all FX3-related functions are implemented, and the FX3 firmware are both essential for managing the USB -> SPI bridge the FX3 offers, and should serve as a good starting point for your application.
 
 1. [FX3 Firmware](https://github.com/juchong/iSensor-FX3-Firmware)
 
-2. [FX3Interface](https://github.com/juchong/iSensor-FX3-Interface)
+2. [FX3API](https://github.com/juchong/iSensor-FX3-API)

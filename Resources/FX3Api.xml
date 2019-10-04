@@ -1173,6 +1173,29 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="numCaptures">The number of transfers of the WriteData array performed.</param>
  <returns>The data received from the slave device on the MISO line, as an array. The total size is WriteData.Count() * numCaptures</returns>
 </member>
+<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ This function performs an array bi-directional SPI transfer. If DrActive is set to true, this overload transfers all the data in WriteData
+ numCaptures times per data ready condition being met. It captures data from numBuffers data ready signals. If DrActive is set to false, all the
+ transfers are performed asynchronously. The total number of SPI transfers is WriteData.Count()*numCaptures*numBuffers.
+ 
+ The following pseduo-code snippet would perform 400 total SPI transfers, across 100 data ready conditions. 
+ 
+ MOSI = {0x1234, 0x5678}
+ myISpi32.DrActive = True
+ MISO = myISpi32.TransferArray(MOSI, 2, 100)
+ 
+ During the transfers, the SPI bus would look like the following:
+ 
+ MOSI: ---(0x1234)---(0x5678)---(0x1234)---(0x5678)-----------------(0x1234)---(0x5678)---(0x1234)---(0x5678)--...-----(0x1234)-----(0x5678)-----(0x1234)-----(0x5678)--
+ MISO:----MISO(0)----MISO(1)----MISO(2)----MISO(3)------------------MISO(4)----MISO(5)----MISO(6)----MISO(7)---...-----MISO(196)----MISO(197)----MISO(198)----MISO(199)-
+ DR:   ___|¯¯¯|_____________________________________________________|¯¯¯|______________________________________..._____|¯¯¯|____________________________________________
+ </summary>
+ <param name="WriteData">The data to be written to the slave over the MOSI line in each SPI transaction</param>
+ <param name="numCaptures">The number of transfers of the WriteData array performed on each data ready (if enabled).</param>
+ <param name="numBuffers">The total number of data ready's to capture.</param>
+ <returns></returns>
+</member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_StopStream">
  <summary>
  
@@ -1259,6 +1282,11 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 <member name="T:FX3Api.DUTType">
  <summary>
  Enum of the possible DUT types for the ADcmXLx021
+ </summary>
+</member>
+<member name="T:FX3Api.PowerSupply">
+ <summary>
+ Enum for DUT power supply modes
  </summary>
 </member>
 <member name="T:FX3Api.BitBangSpiConfig">

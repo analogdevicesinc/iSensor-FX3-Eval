@@ -15,7 +15,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
@@ -50,14 +50,30 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\adisApi.dll</HintPath>
+    </Reference>
+    <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\adisInterface.dll</HintPath>
+    </Reference>
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
+    </Reference>
+    <Reference Include="FX3Api, Version=2.1.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\FX3Api.dll</HintPath>
     </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
     </Reference>
     <Reference Include="sdpApi1">
       <HintPath>Resources\sdpApi1.dll</HintPath>
+    </Reference>
+    <Reference Include="StreamDataLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\StreamDataLogger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -308,24 +324,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Analog.ICO" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AdisApi\app\adisApi.csproj">
-      <Project>{e2508753-9afb-4402-b755-a750ed23bd76}</Project>
-      <Name>adisApi</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AdisInterface\src\app\adisInterface.vbproj">
-      <Project>{8aa35bb5-c7dc-4809-aec7-e8299f084228}</Project>
-      <Name>adisInterface</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\iSensor-FX3-API\FX3Api.vbproj">
-      <Project>{a553cac3-91bb-4ed1-914b-f55f1468b0c6}</Project>
-      <Name>FX3Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StreamDataLogger\StreamDataLogger.vbproj">
-      <Project>{6c4fda58-8972-43a9-9452-d76e54f8f0fb}</Project>
-      <Name>StreamDataLogger</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

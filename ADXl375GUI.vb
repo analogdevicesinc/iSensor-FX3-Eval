@@ -7,7 +7,6 @@ Public Class ADXl375GUI
     Private Sub writeBtn_Click(sender As Object, e As EventArgs) Handles writeBtn.Click
         Dim writeVal As UInteger
         Dim writeAddr As UInteger
-        Dim mask As UInteger
         Try
             writeAddr = Convert.ToUInt32(addr.Text, 16)
             writeVal = Convert.ToUInt32(value.Text, 16)
@@ -68,7 +67,7 @@ Public Class ADXl375GUI
 
     Private Sub readFIFO_Click(sender As Object, e As EventArgs) Handles readFIFO.Click
 
-        Dim buf() As UShort
+        Dim buf() As UShort = Nothing
         Dim byteBuf() As Byte
         Dim tempShort As UShort
         Dim addr As New List(Of AdisApi.AddrDataPair)
@@ -99,7 +98,7 @@ Public Class ADXl375GUI
                 While IsNothing(buf)
                     buf = m_TopGUI.FX3.GetBuffer()
                 End While
-                'skip if idetical
+                'skip if identical
 
                 sameData = True
                 If IsNothing(lastBuf) Then sameData = False
