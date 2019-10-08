@@ -42,4 +42,8 @@ Public Class BitBangSpiGUI
     Private Sub btn_restoreSpi_Click(sender As Object, e As EventArgs) Handles btn_restoreSpi.Click
         m_TopGUI.FX3.RestoreHardwareSpi()
     End Sub
+
+    Private Sub RestoreSPI() Handles Me.LostFocus
+        m_TopGUI.FX3.RestoreHardwareSpi()
+    End Sub
 End Class
