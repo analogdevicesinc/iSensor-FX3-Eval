@@ -157,7 +157,7 @@ Public Class ADXl375GUI
             currentSample = CSVReader.ReadFields()
 
             'check if the sample value is "F2" trigger word for FIFO read
-            If currentSample(2) = "0xF2" Then
+            If currentSample(2) = "0xF2" Or currentSample(2) = "F2" Then
                 rawIndex = 0
                 'grab all XL data
                 While rawIndex < 6
