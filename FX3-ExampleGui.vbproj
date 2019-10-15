@@ -60,6 +60,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\adisInterface.dll</HintPath>
     </Reference>
+    <Reference Include="CCES_JTAG_Wrapper">
+      <HintPath>Resources\CCES_JTAG_Wrapper.dll</HintPath>
+    </Reference>
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
@@ -69,9 +72,6 @@
     </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
-    </Reference>
-    <Reference Include="sdpApi1">
-      <HintPath>Resources\sdpApi1.dll</HintPath>
     </Reference>
     <Reference Include="StreamDataLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -328,6 +328,9 @@
     <Content Include="Analog.ICO" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY /y "$(TargetDir)*" "T:\~Lab_SW_Tools\iSensor-FX3-Gui\iSensor-FX3-Gui-Build"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

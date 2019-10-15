@@ -86,115 +86,76 @@ adisInterface
  <param name="rtsFrame"></param>
  <param name="list"></param>
 </member>
-<member name="M:adisInterface.SpiException.#ctor">
+<member name="P:adisInterface.SpiException.ExpectedFieldValue">
  <summary>
- Create a new exception
+ The expected value for that field.
  </summary>
+ <returns></returns>
 </member>
-<member name="M:adisInterface.SpiException.#ctor(System.String)">
+<member name="P:adisInterface.SpiException.InvalidFieldValue">
  <summary>
- Create a new exception with a specified message
+ The invalid field value (SV, TC, CRC, Address) in the SPI word which triggered the exception.
  </summary>
- <param name="message">The message to pass with the exception</param>
+ <returns></returns>
 </member>
-<member name="M:adisInterface.SpiException.#ctor(System.String,System.Exception)">
+<member name="M:adisInterface.SpiException.#ctor(System.String,System.UInt32,System.UInt32)">
  <summary>
- Create a new exception with a specified message and the previos exception from down the stack
+ Create a new exception with a specified message, the invalid field, and the expected field for a given SPI exception.
  </summary>
- <param name="message">The message to pass with the exception</param>
- <param name="innerException">The lower level exception to pass up</param>
+ <param name="message">The message to pass up with the exception</param>
+ <param name="invalidFieldValue">The field value (SV, TC, etc) in the SPI word which triggered the exception</param>
+ <param name="expectedFieldValue">The expected value for that field</param>
 </member>
 <member name="T:adisInterface.InvalidCRCException">
  <summary>
  This exception type is thrown when the SPI data received from the DUT has an invalid CRC appended.
  </summary>
 </member>
-<member name="M:adisInterface.InvalidCRCException.#ctor">
+<member name="M:adisInterface.InvalidCRCException.#ctor(System.String,System.UInt32,System.UInt32)">
  <summary>
- Create a new exception
+ Creates a new InvalidCRCException with a message and data about the invalid CRC which was received.
  </summary>
-</member>
-<member name="M:adisInterface.InvalidCRCException.#ctor(System.String)">
- <summary>
- Create a new exception with a specified message
- </summary>
- <param name="message">The message to pass with the exception</param>
-</member>
-<member name="M:adisInterface.InvalidCRCException.#ctor(System.String,System.Exception)">
- <summary>
- Create a new exception with a specified message and the previos exception from down the stack
- </summary>
- <param name="message">The message to pass with the exception</param>
- <param name="innerException">The lower level exception to pass up</param>
+ <param name="message">The message to pass up with the exception</param>
+ <param name="invalidCRC">The CRC field value which triggered the exception</param>
+ <param name="expectedCRC">The expected CRC field value</param>
 </member>
 <member name="T:adisInterface.StateVectorException">
  <summary>
- This exception is thrown when the state vector in the automotive SPI protocol indicates that an error has occured.
+ This exception is thrown when the state vector in the automotive SPI protocol indicates that an error has occurred.
  </summary>
 </member>
-<member name="M:adisInterface.StateVectorException.#ctor">
+<member name="M:adisInterface.StateVectorException.#ctor(System.String,System.UInt32)">
  <summary>
- Create a new exception
+ Creates a new StateVectorException with a message and the invalid state vector field. The expected value will always be 1 (device OK)
  </summary>
-</member>
-<member name="M:adisInterface.StateVectorException.#ctor(System.String)">
- <summary>
- Create a new exception with a specified message
- </summary>
- <param name="message">The message to pass with the exception</param>
-</member>
-<member name="M:adisInterface.StateVectorException.#ctor(System.String,System.Exception)">
- <summary>
- Create a new exception with a specified message and the previos exception from down the stack
- </summary>
- <param name="message">The message to pass with the exception</param>
- <param name="innerException">The lower level exception to pass up</param>
+ <param name="message">The message to pass up with the exception</param>
+ <param name="stateVector">The state vector value which triggered the exception</param>
 </member>
 <member name="T:adisInterface.SpiAddressException">
  <summary>
- This exception is thrown when the address recieved back from the DUT does not match the expected address.
+ This exception is thrown when the address received back from the DUT does not match the expected address.
  </summary>
 </member>
-<member name="M:adisInterface.SpiAddressException.#ctor">
+<member name="M:adisInterface.SpiAddressException.#ctor(System.String,System.UInt32,System.UInt32)">
  <summary>
- Create a new exception
+ Creates a new SpiAddressException
  </summary>
-</member>
-<member name="M:adisInterface.SpiAddressException.#ctor(System.String)">
- <summary>
- Create a new exception with a specified message
- </summary>
- <param name="message">The message to pass with the exception</param>
-</member>
-<member name="M:adisInterface.SpiAddressException.#ctor(System.String,System.Exception)">
- <summary>
- Create a new exception with a specified message and the previos exception from down the stack
- </summary>
- <param name="message">The message to pass with the exception</param>
- <param name="innerException">The lower level exception to pass up</param>
+ <param name="message">The message to pass up with the exception</param>
+ <param name="receivedAddress">The address received back from the DUT</param>
+ <param name="expectedAddress">The expected address to receive (from the previous SPI word)</param>
 </member>
 <member name="T:adisInterface.TransactionCounterException">
  <summary>
- This exception is thrown when the transaction counter value recieved in the last SPI transaction does not match the expected transaction counter.
+ This exception is thrown when the transaction counter value received in the last SPI transaction does not match the expected transaction counter.
  </summary>
 </member>
-<member name="M:adisInterface.TransactionCounterException.#ctor">
+<member name="M:adisInterface.TransactionCounterException.#ctor(System.String,System.UInt32,System.UInt32)">
  <summary>
- Create a new exception
+ Creates a new TransactionCounterException
  </summary>
-</member>
-<member name="M:adisInterface.TransactionCounterException.#ctor(System.String)">
- <summary>
- Create a new exception with a specified message
- </summary>
- <param name="message">The message to pass with the exception</param>
-</member>
-<member name="M:adisInterface.TransactionCounterException.#ctor(System.String,System.Exception)">
- <summary>
- Create a new exception with a specified message and the previos exception from down the stack
- </summary>
- <param name="message">The message to pass with the exception</param>
- <param name="innerException">The lower level exception to pass up</param>
+ <param name="message">The message to pass up with the exception</param>
+ <param name="receivedTransactionCounter">The transaction counter value received</param>
+ <param name="expectedTransactionCounter">The expected transaction counter value</param>
 </member>
 <member name="T:adisInterface.DataFormatArray">
  <summary>
@@ -204,7 +165,7 @@ adisInterface
 <member name="T:adisInterface.iSensorAutomotiveSpi">
  <summary>
  This class allows for interfacing with parts using the ADI robust automotive SPI protocol. The automotive SPI protocol is designed to interface with
- 16 bit registers, with an additional 16 bits of metadata appended to each SPI word. 
+ 16 bit registers, with an additional 16 bits of meta data appended to each SPI word. 
  
  The general protocol is described below:
  
@@ -286,14 +247,14 @@ adisInterface
 </member>
 <member name="M:adisInterface.iSensorAutomotiveSpi.ValidateCRC(System.UInt32)">
  <summary>
- This function validates that the four bit CRC appended to the given SPI word mathces the expected CRC. If the CRC does not match
+ This function validates that the four bit CRC appended to the given SPI word matches the expected CRC. If the CRC does not match
  the expected value, an InvalidCRCException is thrown.
  </summary>
  <param name="SpiWord">The SPI word to check (MISO data)</param>
 </member>
 <member name="M:adisInterface.iSensorAutomotiveSpi.ValidateStateVector(System.UInt32)">
  <summary>
- This function validates that the state vector of the given SPI word does not indicate an error condition. If the state vecotor indicates an
+ This function validates that the state vector of the given SPI word does not indicate an error condition. If the state vector indicates an
  error condition, a StateVectorException is thrown.
  </summary>
  <param name="SpiWord">The SPI word to check (MISO data)</param>
@@ -314,7 +275,7 @@ adisInterface
 <member name="P:adisInterface.iSensorAutomotiveSpi.StreamTimeoutSeconds">
  <summary>
  This property controls the number of seconds which a stream will wait without data before timing out. This implementation
- acts as a wrapper for the ISpi32Interface implementation of streamtimeoutseconds.
+ acts as a wrapper for the ISpi32Interface implementation of stream timeout seconds.
  </summary>
  <returns></returns>
 </member>
@@ -323,7 +284,7 @@ adisInterface
  This is the most general interfacing function. All others call down to this implementation. Performs a blocking stream read/write to the DUT.
  </summary>
  <param name="addrData">The base list of registers/values to read or write from</param>
- <param name="numCaptures">The number of times to interate through addrData in a single data ready, if DrActive is true</param>
+ <param name="numCaptures">The number of times to iterate through addrData in a single data ready, if DrActive is true</param>
  <param name="numBuffers">The total number of sets of the addrData list iterated through numCaptures times to read.</param>
  <returns></returns>
 </member>

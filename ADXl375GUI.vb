@@ -56,9 +56,14 @@ Public Class ADXl375GUI
         'set FIFO control
         'writeReg(&H38, &H54)
         writeReg(&H38, &H4F)
+        'Disable FIFO
+        'writeReg(&H38, &H0)
 
         'set interrupt enable for watermark only
         writeReg(&H2E, &H3)
+
+        'int enable for data ready
+        'writeReg(&H2E, &H80)
 
         'set power control
         writeReg(&H2D, &H8)
@@ -87,6 +92,8 @@ Public Class ADXl375GUI
 
         Dim lastBuf As UShort()
         Dim sameData As Boolean
+        'm_TopGUI.FX3.DrActive = True
+        m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
         For i As Integer = 0 To numBuf - 1
             'wait for interrupt
             m_TopGUI.FX3.PulseWait(m_TopGUI.FX3.DIO1, 1, 0, 1000)
@@ -100,16 +107,17 @@ Public Class ADXl375GUI
                 End While
                 'skip if identical
 
-                sameData = True
-                If IsNothing(lastBuf) Then sameData = False
-                If sameData Then
-                    For p As Integer = 0 To buf.Count() - 1
-                        If buf(p) <> lastBuf(p) Then
-                            sameData = False
-                            Exit For
-                        End If
-                    Next
-                End If
+                sameData = False
+                'sameData = True
+                'If IsNothing(lastBuf) Then sameData = False
+                'If sameData Then
+                '    For p As Integer = 0 To buf.Count() - 1
+                '        If buf(p) <> lastBuf(p) Then
+                '            sameData = False
+                '            Exit For
+                '        End If
+                '    Next
+                'End If
                 If Not sameData Then
                     byteBuf = UShortToByteArray(buf)
                     'parse x, y, z

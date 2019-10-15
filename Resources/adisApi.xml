@@ -1219,9 +1219,19 @@
             Buffer of data that was written in last simulated write command call.
             </summary>
         </member>
-        <member name="M:AdisApi.iSensorSim.ClearSimWriteData">
+        <member name="M:AdisApi.iSensorSim.SimClear">
             <summary>
-            Clears the accumulated write data.
+            Clears the accumulated write data and method call counts.
+            </summary>
+        </member>
+        <member name="P:AdisApi.iSensorSim.SimResetMethodCallCount">
+            <summary>
+            Returns the number of calls made to the Reset method since counts were cleared.
+            </summary>
+        </member>
+        <member name="P:AdisApi.iSensorSim.SimStartMethodCallCount">
+            <summary>
+            Returns the number of calls made to the Start method since counts were cleared.
             </summary>
         </member>
         <member name="M:AdisApi.iSensorSim.ReadRegArrayStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
@@ -1608,26 +1618,6 @@
             Basic SPI configuration, reads, and writes using ADiS spi code on Blackfin.
             </summary>    
         </member>
-        <member name="T:AdisApi.iSensorSpi.frameProtocolType">
-            <summary>
-            SPI frame protocol identifiers.
-            </summary>
-        </member>
-        <member name="F:AdisApi.iSensorSpi.frameProtocolType.adis16bit">
-            <summary>
-            Standard legacy 16 bit frame.
-            </summary>
-        </member>
-        <member name="F:AdisApi.iSensorSpi.frameProtocolType.xc32bit">
-            <summary>
-            A 32 bit SPI frame used by the adxc1500 sensor.
-            </summary>
-        </member>
-        <member name="F:AdisApi.iSensorSpi.frameProtocol">
-            <summary>
-            To specify an SPI frame protocol
-            </summary>
-        </member>
         <member name="M:AdisApi.iSensorSpi.setDefaultProperties">
             <summary>
             Set properties to values appropriate for an isensor SPI interface.
@@ -1798,6 +1788,26 @@
         <member name="P:AdisApi.iSensorSpi.sampleRate">
             <summary>
             Used to controll data rate when DR is Not active. iSensorActive must be set to false.
+            </summary>
+        </member>
+        <member name="T:AdisApi.iSensorSpi.frameProtocolType">
+            <summary>
+            SPI frame protocol identifiers.
+            </summary>
+        </member>
+        <member name="F:AdisApi.iSensorSpi.frameProtocolType.adis16bit">
+            <summary>
+            Standard legacy 16 bit frame.
+            </summary>
+        </member>
+        <member name="F:AdisApi.iSensorSpi.frameProtocolType.xc32bit">
+            <summary>
+            A 32 bit SPI frame used by the adxc1500 sensor.
+            </summary>
+        </member>
+        <member name="P:AdisApi.iSensorSpi.frameProtocol">
+            <summary>
+            Sets the WordSize and Cpha per selected protocol. 
             </summary>
         </member>
         <member name="M:AdisApi.iSensorSpi.Loopback(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
@@ -2247,6 +2257,43 @@
             Inserts parameters for configuration into header based on instance properties.
             </summary>
             <param name="header"></param>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.Transfer(System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="WriteData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32})">
+            <summary>
+            
+            </summary>
+            <param name="WriteData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="WriteData"></param>
+            <param name="numCaptures"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="WriteData"></param>
+            <param name="numCaptures"></param>
+            <param name="numBuffers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AdisApi.iSensorSpi.AdisApi#ISpi32Interface#GetBufferedStreamDataPacket">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:AdisApi.OTPFcns">
             <summary>

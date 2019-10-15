@@ -1,4 +1,6 @@
-﻿Public Class AppBrowseGUI
+﻿Imports CCES_JTAG_Wrapper
+
+Public Class AppBrowseGUI
     Inherits FormBase
 
     Private Sub AppBrowseGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -22,4 +24,13 @@
         subGUI.SetTopGUI(Me.m_TopGUI)
         subGUI.Show()
     End Sub
+
+    Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
+        Dim runner As New CCES_runner
+        runner.TimeoutSeconds = 1
+        Dim result = runner.RunCommand("--list")
+
+
+    End Sub
+
 End Class

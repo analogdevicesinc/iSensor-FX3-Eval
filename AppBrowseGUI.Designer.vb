@@ -24,6 +24,7 @@ Partial Class AppBrowseGUI
         Me.btn_BurstTest = New System.Windows.Forms.Button()
         Me.btn_BitBangSpi = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
+        Me.btn_test = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btn_BurstTest
@@ -53,11 +54,21 @@ Partial Class AppBrowseGUI
         Me.btn_ADXL375.Text = "ADXL375 Data Capture"
         Me.btn_ADXL375.UseVisualStyleBackColor = True
         '
+        'btn_test
+        '
+        Me.btn_test.Location = New System.Drawing.Point(255, 12)
+        Me.btn_test.Name = "btn_test"
+        Me.btn_test.Size = New System.Drawing.Size(75, 64)
+        Me.btn_test.TabIndex = 32
+        Me.btn_test.Text = "Test Button"
+        Me.btn_test.UseVisualStyleBackColor = True
+        '
         'AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(266, 89)
+        Me.ClientSize = New System.Drawing.Size(347, 92)
+        Me.Controls.Add(Me.btn_test)
         Me.Controls.Add(Me.btn_ADXL375)
         Me.Controls.Add(Me.btn_BitBangSpi)
         Me.Controls.Add(Me.btn_BurstTest)
@@ -70,4 +81,5 @@ Partial Class AppBrowseGUI
     Friend WithEvents btn_BurstTest As Button
     Friend WithEvents btn_BitBangSpi As Button
     Friend WithEvents btn_ADXL375 As Button
+    Friend WithEvents btn_test As Button
 End Class
