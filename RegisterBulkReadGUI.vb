@@ -108,9 +108,11 @@ Public Class RegisterBulkReadGUI
         End If
 
         'Check whether the measured DR is valid
-        If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
-            MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
-            Exit Sub
+        If m_TopGUI.FX3.DrActive Then
+            If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
+                MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
+                Exit Sub
+            End If
         End If
 
         'Build list of registers to stream
@@ -120,13 +122,25 @@ Public Class RegisterBulkReadGUI
         Next
 
         'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
-        Dim drPeriod As Double = 1 / m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
-        Dim calcPeriod As Double = (((m_TopGUI.FX3.StallTime + 12) / 1000000) * regList.Count)
+        If m_TopGUI.FX3.DrActive Then
+            Dim drPeriod As Double = 1 / m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
+            Dim num16bitregs As Integer = 0
+            For Each reg In regList
+                If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
+                    num16bitregs += 1
+                Else
+                    num16bitregs += 2
+                End If
+            Next
+            Dim calcPeriod As Double = ((m_TopGUI.FX3.StallTime / 1000000) + 17 / m_TopGUI.FX3.SclkFrequency) * num16bitregs
+            'remove last stall time
+            calcPeriod = calcPeriod - (m_TopGUI.FX3.StallTime / 1000000)
 
-        If calcPeriod > drPeriod Then
-            Dim result1 As DialogResult = MessageBox.Show("Register capture time exceeds data ready period. Would you like to continue?", "Data will take too long to read!", MessageBoxButtons.YesNo)
-            If result1 = DialogResult.No Then
-                Exit Sub
+            If calcPeriod > drPeriod Then
+                Dim result1 As DialogResult = MessageBox.Show("Register capture time exceeds data ready period. Would you like to continue?", "Data will take too long to read!", MessageBoxButtons.YesNo)
+                If result1 = DialogResult.No Then
+                    Exit Sub
+                End If
             End If
         End If
 
@@ -157,8 +171,6 @@ Public Class RegisterBulkReadGUI
 
         'Set up file manager
         fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
-        'Dim test As New StreamDataLogger.FakeStreamProducer()
-        'fileManager = New StreamDataLogger.StreamDataLogger(test, test)
         fileManager.RegList = regList
         fileManager.FileBaseName = "RegStream" + timeString
         fileManager.FilePath = savePath + "\"
