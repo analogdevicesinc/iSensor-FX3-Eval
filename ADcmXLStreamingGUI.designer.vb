@@ -1,8 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class ADcmXLStreamingGUI
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -19,7 +19,7 @@ Partial Class ADcmXLStreamingGUI
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ADcmXLStreamingGUI))
         Me.Label1 = New System.Windows.Forms.Label()
@@ -43,12 +43,6 @@ Partial Class ADcmXLStreamingGUI
         Me.Label9 = New System.Windows.Forms.Label()
         Me.captureCounter = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.framesSkipped = New System.Windows.Forms.Label()
-        Me.framesPurged = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.purgeFrames = New System.Windows.Forms.CheckBox()
-        Me.WriteFrameNumber = New System.Windows.Forms.CheckBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.DeviceType = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
@@ -103,7 +97,7 @@ Partial Class ADcmXLStreamingGUI
         '
         'startButton
         '
-        Me.startButton.Location = New System.Drawing.Point(12, 411)
+        Me.startButton.Location = New System.Drawing.Point(15, 362)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(75, 64)
         Me.startButton.TabIndex = 20
@@ -112,7 +106,7 @@ Partial Class ADcmXLStreamingGUI
         '
         'SampleProgress
         '
-        Me.SampleProgress.Location = New System.Drawing.Point(101, 170)
+        Me.SampleProgress.Location = New System.Drawing.Point(101, 150)
         Me.SampleProgress.Name = "SampleProgress"
         Me.SampleProgress.Size = New System.Drawing.Size(244, 18)
         Me.SampleProgress.TabIndex = 22
@@ -120,7 +114,7 @@ Partial Class ADcmXLStreamingGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 172)
+        Me.Label4.Location = New System.Drawing.Point(6, 152)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(89, 13)
         Me.Label4.TabIndex = 23
@@ -128,7 +122,7 @@ Partial Class ADcmXLStreamingGUI
         '
         'StopBtn
         '
-        Me.StopBtn.Location = New System.Drawing.Point(93, 411)
+        Me.StopBtn.Location = New System.Drawing.Point(96, 362)
         Me.StopBtn.Name = "StopBtn"
         Me.StopBtn.Size = New System.Drawing.Size(75, 64)
         Me.StopBtn.TabIndex = 24
@@ -138,7 +132,7 @@ Partial Class ADcmXLStreamingGUI
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(18, 490)
+        Me.Label5.Location = New System.Drawing.Point(21, 441)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(43, 13)
         Me.Label5.TabIndex = 25
@@ -149,7 +143,7 @@ Partial Class ADcmXLStreamingGUI
         Me.statusLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.statusLabel.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.statusLabel.Location = New System.Drawing.Point(113, 486)
+        Me.statusLabel.Location = New System.Drawing.Point(116, 437)
         Me.statusLabel.Name = "statusLabel"
         Me.statusLabel.Size = New System.Drawing.Size(256, 20)
         Me.statusLabel.TabIndex = 26
@@ -192,7 +186,7 @@ Partial Class ADcmXLStreamingGUI
         '
         Me.CaptureExitMethod.FormattingEnabled = True
         Me.CaptureExitMethod.Items.AddRange(New Object() {"Pin Exit", "Timeout", "No Exit"})
-        Me.CaptureExitMethod.Location = New System.Drawing.Point(152, 139)
+        Me.CaptureExitMethod.Location = New System.Drawing.Point(152, 119)
         Me.CaptureExitMethod.Name = "CaptureExitMethod"
         Me.CaptureExitMethod.Size = New System.Drawing.Size(137, 21)
         Me.CaptureExitMethod.TabIndex = 33
@@ -201,7 +195,7 @@ Partial Class ADcmXLStreamingGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(149, 123)
+        Me.Label6.Location = New System.Drawing.Point(149, 103)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(101, 13)
         Me.Label6.TabIndex = 34
@@ -210,7 +204,7 @@ Partial Class ADcmXLStreamingGUI
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 123)
+        Me.Label8.Location = New System.Drawing.Point(6, 103)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(106, 13)
         Me.Label8.TabIndex = 35
@@ -221,7 +215,7 @@ Partial Class ADcmXLStreamingGUI
         '
         Me.CaptureStartMethod.FormattingEnabled = True
         Me.CaptureStartMethod.Items.AddRange(New Object() {"GLOB_CMD Start", "Pin Start"})
-        Me.CaptureStartMethod.Location = New System.Drawing.Point(9, 139)
+        Me.CaptureStartMethod.Location = New System.Drawing.Point(9, 119)
         Me.CaptureStartMethod.Name = "CaptureStartMethod"
         Me.CaptureStartMethod.Size = New System.Drawing.Size(137, 21)
         Me.CaptureStartMethod.TabIndex = 36
@@ -229,7 +223,7 @@ Partial Class ADcmXLStreamingGUI
         '
         'helpBtn
         '
-        Me.helpBtn.Location = New System.Drawing.Point(294, 411)
+        Me.helpBtn.Location = New System.Drawing.Point(297, 362)
         Me.helpBtn.Name = "helpBtn"
         Me.helpBtn.Size = New System.Drawing.Size(75, 64)
         Me.helpBtn.TabIndex = 37
@@ -239,7 +233,7 @@ Partial Class ADcmXLStreamingGUI
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(18, 517)
+        Me.Label9.Location = New System.Drawing.Point(21, 468)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(94, 13)
         Me.Label9.TabIndex = 38
@@ -250,7 +244,7 @@ Partial Class ADcmXLStreamingGUI
         Me.captureCounter.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.captureCounter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.captureCounter.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.captureCounter.Location = New System.Drawing.Point(113, 513)
+        Me.captureCounter.Location = New System.Drawing.Point(116, 464)
         Me.captureCounter.Name = "captureCounter"
         Me.captureCounter.Size = New System.Drawing.Size(92, 20)
         Me.captureCounter.TabIndex = 39
@@ -259,12 +253,6 @@ Partial Class ADcmXLStreamingGUI
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.framesSkipped)
-        Me.GroupBox1.Controls.Add(Me.framesPurged)
-        Me.GroupBox1.Controls.Add(Me.Label15)
-        Me.GroupBox1.Controls.Add(Me.Label14)
-        Me.GroupBox1.Controls.Add(Me.purgeFrames)
-        Me.GroupBox1.Controls.Add(Me.WriteFrameNumber)
         Me.GroupBox1.Controls.Add(Me.Label11)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.DeviceType)
@@ -281,72 +269,10 @@ Partial Class ADcmXLStreamingGUI
         Me.GroupBox1.Controls.Add(Me.EstFS)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(357, 232)
+        Me.GroupBox1.Size = New System.Drawing.Size(357, 183)
         Me.GroupBox1.TabIndex = 40
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Sample Configuration"
-        '
-        'framesSkipped
-        '
-        Me.framesSkipped.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.framesSkipped.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.framesSkipped.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.framesSkipped.Location = New System.Drawing.Point(266, 199)
-        Me.framesSkipped.Name = "framesSkipped"
-        Me.framesSkipped.Size = New System.Drawing.Size(79, 20)
-        Me.framesSkipped.TabIndex = 50
-        Me.framesSkipped.Text = "0"
-        Me.framesSkipped.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'framesPurged
-        '
-        Me.framesPurged.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.framesPurged.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.framesPurged.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.framesPurged.Location = New System.Drawing.Point(95, 199)
-        Me.framesPurged.Name = "framesPurged"
-        Me.framesPurged.Size = New System.Drawing.Size(73, 20)
-        Me.framesPurged.TabIndex = 49
-        Me.framesPurged.Text = "0"
-        Me.framesPurged.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(174, 203)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(86, 13)
-        Me.Label15.TabIndex = 47
-        Me.Label15.Text = "Frames Skipped:"
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(8, 203)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(81, 13)
-        Me.Label14.TabIndex = 46
-        Me.Label14.Text = "Frames Purged:"
-        '
-        'purgeFrames
-        '
-        Me.purgeFrames.AutoSize = True
-        Me.purgeFrames.Location = New System.Drawing.Point(154, 98)
-        Me.purgeFrames.Name = "purgeFrames"
-        Me.purgeFrames.Size = New System.Drawing.Size(113, 17)
-        Me.purgeFrames.TabIndex = 45
-        Me.purgeFrames.Text = "Purge Bad Frames"
-        Me.purgeFrames.UseVisualStyleBackColor = True
-        '
-        'WriteFrameNumber
-        '
-        Me.WriteFrameNumber.AutoSize = True
-        Me.WriteFrameNumber.Location = New System.Drawing.Point(9, 98)
-        Me.WriteFrameNumber.Name = "WriteFrameNumber"
-        Me.WriteFrameNumber.Size = New System.Drawing.Size(139, 17)
-        Me.WriteFrameNumber.TabIndex = 44
-        Me.WriteFrameNumber.Text = "Include Sample Number"
-        Me.WriteFrameNumber.UseVisualStyleBackColor = True
         '
         'Label11
         '
@@ -382,7 +308,7 @@ Partial Class ADcmXLStreamingGUI
         Me.GroupBox2.Controls.Add(Me.TimerTriggerRadioBtn)
         Me.GroupBox2.Controls.Add(Me.numSamples)
         Me.GroupBox2.Controls.Add(Me.Label7)
-        Me.GroupBox2.Location = New System.Drawing.Point(12, 250)
+        Me.GroupBox2.Location = New System.Drawing.Point(15, 201)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(357, 155)
         Me.GroupBox2.TabIndex = 41
@@ -495,7 +421,7 @@ Partial Class ADcmXLStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(388, 544)
+        Me.ClientSize = New System.Drawing.Size(388, 498)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.statusLabel)
         Me.Controls.Add(Me.GroupBox2)
@@ -552,10 +478,4 @@ Partial Class ADcmXLStreamingGUI
     Friend WithEvents startPolarity As ComboBox
     Friend WithEvents timeSelect As TextBox
     Friend WithEvents startPinBox As ComboBox
-    Friend WithEvents WriteFrameNumber As CheckBox
-    Friend WithEvents purgeFrames As CheckBox
-    Friend WithEvents framesSkipped As Label
-    Friend WithEvents framesPurged As Label
-    Friend WithEvents Label15 As Label
-    Friend WithEvents Label14 As Label
 End Class

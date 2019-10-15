@@ -8,11 +8,12 @@ Imports adisInterface
 Imports System.ComponentModel
 Imports AdisApi
 Imports System.Threading
+Imports RegMapClasses
 
 Public Class ADcmXLStreamingGUI
     Inherits FormBase
 
-    Private WithEvents fileManager As New TextFileStreamManager
+    Private WithEvents fileManager As StreamDataLogger.StreamDataLogger
     Private totalFrames As Integer
     Private linesPerFile As Integer
     Private frameTimeCalc As Double
@@ -139,7 +140,6 @@ Public Class ADcmXLStreamingGUI
         StopBtn.Enabled = True
         TotalFramesInput.Enabled = False
         LinesPerCSVInput.Enabled = False
-        WriteFrameNumber.Enabled = False
         CaptureExitMethod.Enabled = False
         CaptureStartMethod.Enabled = False
         numSamples.Enabled = False
@@ -217,7 +217,6 @@ Public Class ADcmXLStreamingGUI
             statusLabel.Text = "Capture Finished"
         End If
 
-        WriteFrameNumber.Enabled = True
         startButton.Enabled = True
         TotalFramesInput.Enabled = True
         LinesPerCSVInput.Enabled = True
@@ -266,24 +265,21 @@ Public Class ADcmXLStreamingGUI
             m_TopGUI.FX3.PinStart = False
         End If
 
-        fileManager = New TextFileStreamManager()
-        fileManager.DutInterface = m_TopGUI.Dut
+        fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.FileBaseName = "Real_Time_Data" + timeString
         fileManager.FilePath = savePath
         fileManager.Buffers = totalFrames
         fileManager.FileMaxDataRows = linesPerFile
-        fileManager.BufferTimeout = 10
+        fileManager.BufferTimeoutSeconds = 10
         fileManager.BuffersPerWrite = 1000 'Note: This is # frames, but TFSM counts this as samples. Multiply this number * 32 '15625 = 500k samples
-        fileManager.IncludeSampleNumberColumn = WriteFrameNumber.Checked
-        'Extra properties to make file manager happy - do nothing
         fileManager.Captures = 1
         fileManager.RegList = regListDUT.RealTimeSamplingRegList
         fileManager.RunAsync()
         SampleDone = False
     End Sub
 
-    Private Sub progressUpdate(sender As Object, e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        SampleProgress.Value = e.ProgressPercentage
+    Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
+        Me.Invoke(New MethodInvoker(Sub() SampleProgress.Value = e.ProgressPercentage))
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
@@ -302,7 +298,7 @@ Public Class ADcmXLStreamingGUI
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StopBtn.Click
         CancelCapture = True
-        If fileManager.IsBusy Then
+        If fileManager.Busy Then
             fileManager.CancelAsync()
             statusLabel.Text = "Canceling in capture"
             statusLabel.BackColor = Color.Red
@@ -390,8 +386,7 @@ Public Class ADcmXLStreamingGUI
         CheckExitMethod()
     End Sub
 
-    Private Sub WriteFrameNumber_CheckedChanged(sender As Object, e As EventArgs) Handles WriteFrameNumber.CheckedChanged
-        fileCounterEnable = WriteFrameNumber.Checked
+    Private Sub WriteFrameNumber_CheckedChanged(sender As Object, e As EventArgs)
         UpdateGuiCalcs()
         CheckExitMethod()
         CheckStartMethod()
@@ -415,5 +410,9 @@ Public Class ADcmXLStreamingGUI
             startPinBox.Enabled = False
             startPolarity.Enabled = False
         End If
+    End Sub
+
+    Private Sub helpBtn_Click(sender As Object, e As EventArgs) Handles helpBtn.Click
+        MsgBox("The ""Sample Configuration"" section refers to each individual real time stream from the ADcmXL DUT. ""Capture Configuration"" controls how each sample is triggered (by a timer or a GPIO pin on the FX3)")
     End Sub
 End Class
