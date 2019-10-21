@@ -53,9 +53,12 @@ Public Class ADXl375GUI
         'set interrupt mapping
         writeReg(&H2F, &H1)
 
-        'set FIFO control
-        'writeReg(&H38, &H54)
+        'set FIFO control (FIFO mode)
         writeReg(&H38, &H4F)
+
+        'Set FIFO control (stream mode)
+        'writeReg(&H38, &H8F)
+
         'Disable FIFO
         'writeReg(&H38, &H0)
 
@@ -77,6 +80,17 @@ Public Class ADXl375GUI
         Dim tempShort As UShort
         Dim addr As New List(Of AdisApi.AddrDataPair)
         Dim result As String
+
+        'initial traffic
+        'm_TopGUI.FX3.SetPin(New FX3PinObject(54), 1)
+        'm_TopGUI.FX3.TriggerReg = New RegMapClasses.RegClass With {.Address = &H82}
+        'm_TopGUI.FX3.WordCount = 1
+        'm_TopGUI.FX3.StripBurstTriggerWord = False
+        'm_TopGUI.FX3.SetupBurstMode()
+        'm_TopGUI.FX3.StartBufferedStream(addr, Nothing, 1500UI, 10, Nothing)
+        'm_TopGUI.FX3.WaitForStreamCompletion(100)
+        'm_TopGUI.FX3.RestoreHardwareSpi()
+
         m_TopGUI.FX3.TriggerReg = New RegMapClasses.RegClass With {.Address = &HF2}
         m_TopGUI.FX3.WordCount = 3
         m_TopGUI.FX3.StripBurstTriggerWord = False
@@ -90,46 +104,27 @@ Public Class ADXl375GUI
         Dim logData As New List(Of String)
         logData.Add("x, y, z")
 
-        Dim lastBuf As UShort()
-        Dim sameData As Boolean
-        'm_TopGUI.FX3.DrActive = True
-        m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
         For i As Integer = 0 To numBuf - 1
             'wait for interrupt
             m_TopGUI.FX3.PulseWait(m_TopGUI.FX3.DIO1, 1, 0, 1000)
             'stream data
             m_TopGUI.FX3.StartBufferedStream(addr, Nothing, numBufPerRead, 10, Nothing)
             For j As Integer = 1 To numBufPerRead
-                lastBuf = buf
                 buf = Nothing
                 While IsNothing(buf)
                     buf = m_TopGUI.FX3.GetBuffer()
                 End While
                 'skip if identical
-
-                sameData = False
-                'sameData = True
-                'If IsNothing(lastBuf) Then sameData = False
-                'If sameData Then
-                '    For p As Integer = 0 To buf.Count() - 1
-                '        If buf(p) <> lastBuf(p) Then
-                '            sameData = False
-                '            Exit For
-                '        End If
-                '    Next
-                'End If
-                If Not sameData Then
-                    byteBuf = UShortToByteArray(buf)
-                    'parse x, y, z
-                    result = ""
-                    For k As Integer = 1 To 5 Step 2
-                        tempShort = byteBuf(k + 1)
-                        tempShort = tempShort << 8
-                        tempShort += byteBuf(k)
-                        result = result + ConvertToInt(tempShort).ToString() + ","
-                    Next
-                    logData.Add(result)
-                End If
+                byteBuf = UShortToByteArray(buf)
+                'parse x, y, z
+                result = ""
+                For k As Integer = 1 To 5 Step 2
+                    tempShort = byteBuf(k + 1)
+                    tempShort = tempShort << 8
+                    tempShort += byteBuf(k)
+                    result = result + ConvertToInt(tempShort).ToString() + ","
+                Next
+                logData.Add(result)
             Next
         Next
 

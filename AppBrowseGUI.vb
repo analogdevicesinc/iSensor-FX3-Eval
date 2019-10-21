@@ -25,12 +25,4 @@ Public Class AppBrowseGUI
         subGUI.Show()
     End Sub
 
-    Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
-        Dim runner As New CCES_runner
-        runner.TimeoutSeconds = 1
-        Dim result = runner.RunCommand("--list")
-
-
-    End Sub
-
 End Class

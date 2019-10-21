@@ -152,7 +152,7 @@ Public Class RegisterBulkReadGUI
         End If
 
         'Generate TFSM settings
-        Dim drFreq As UInteger
+        Dim drFreq As Double
         Dim numCaptures As UInteger
         Dim numBuffers As UInteger
 
@@ -171,6 +171,9 @@ Public Class RegisterBulkReadGUI
 
         'Set up file manager
         fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
+        'Dim fakeSource As New StreamDataLogger.FakeStreamProducer
+        'fakeSource.BufferDelayMs = 50
+        'fileManager = New StreamDataLogger.StreamDataLogger(fakeSource, fakeSource)
         fileManager.RegList = regList
         fileManager.FileBaseName = "RegStream" + timeString
         fileManager.FilePath = savePath + "\"
