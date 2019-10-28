@@ -109,7 +109,7 @@ Public Class RegisterBulkReadGUI
 
         'Check whether the measured DR is valid
         If m_TopGUI.FX3.DrActive Then
-            If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
+            If m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) > 10000 Or m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) < 0 Then
                 MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
                 Exit Sub
             End If
@@ -123,7 +123,7 @@ Public Class RegisterBulkReadGUI
 
         'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
         If m_TopGUI.FX3.DrActive Then
-            Dim drPeriod As Double = 1 / m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
+            Dim drPeriod As Double = 1 / m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2)
             Dim num16bitregs As Integer = 0
             For Each reg In regList
                 If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
@@ -156,7 +156,7 @@ Public Class RegisterBulkReadGUI
         Dim numCaptures As UInteger
         Dim numBuffers As UInteger
 
-        drFreq = m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
+        drFreq = m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2)
         If totalDRCaptures < drFreq Then
             numCaptures = totalDRCaptures
             numBuffers = 1
@@ -237,7 +237,7 @@ Public Class RegisterBulkReadGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
-        Label4.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000), 3).ToString + "  Hz"
+        Label4.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
     End Sub
 
     Private Sub UpdateDRPin()
