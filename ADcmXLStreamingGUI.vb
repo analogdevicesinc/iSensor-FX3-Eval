@@ -1,4 +1,4 @@
-﻿'File:          ADclXLStreamingGUI.vb
+﻿'File:          ADcmXLStreamingGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Date:          7/25/2019
 'Description:   GUI for real time data streaming from the ADcmXLx021 series parts.
@@ -8,7 +8,6 @@ Imports adisInterface
 Imports System.ComponentModel
 Imports AdisApi
 Imports System.Threading
-Imports RegMapClasses
 Imports StreamDataLogger
 
 Public Class ADcmXLStreamingGUI
@@ -43,6 +42,21 @@ Public Class ADcmXLStreamingGUI
     Sub New()
         ' This call is required by the designer.
         InitializeComponent()
+    End Sub
+
+    Private Sub SetupToolTips()
+
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.TotalFramesInput, "The number of ADcmXL real time frames read per sample")
+        tip0.SetToolTip(Me.LinesPerCSVInput, "The maximum number of lines to write to a single CSV log file")
+        tip0.SetToolTip(Me.CaptureStartMethod, "The trigger method to put the ADcmXL in real time streaming mode")
+        tip0.SetToolTip(Me.CaptureExitMethod, "The method used to take the ADcmXL out of real time streaming mode")
+        tip0.SetToolTip(Me.numSamples, "The number of samples to capture in a stream operation. Total number of real time frames is (Frames Per Sample) x (Number of Samples)")
+        tip0.SetToolTip(Me.PinTriggerRadioBtn, "Begin each sample capture based on an FX3 digital IO pin edge")
+        tip0.SetToolTip(Me.TimerTriggerRadioBtn, "Begin each sample capture based on a fixed time period")
+        tip0.SetToolTip(Me.startButton, "Start the data capture process")
+        tip0.SetToolTip(Me.StopBtn, "Stop the running data capture. Will finish the current sample")
+
     End Sub
 
     Private Sub TextFileStreamManagerStreaming_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -93,6 +107,8 @@ Public Class ADcmXLStreamingGUI
         startPolarity.SelectedIndex = 0
 
         TimerTriggerRadioBtn.Checked = True
+
+        SetupToolTips()
     End Sub
 
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
@@ -411,9 +427,5 @@ Public Class ADcmXLStreamingGUI
             startPinBox.Enabled = False
             startPolarity.Enabled = False
         End If
-    End Sub
-
-    Private Sub helpBtn_Click(sender As Object, e As EventArgs) Handles helpBtn.Click
-        MsgBox("The ""Sample Configuration"" section refers to each individual real time stream from the ADcmXL DUT. ""Capture Configuration"" controls how each sample is triggered (by a timer or a GPIO pin on the FX3)")
     End Sub
 End Class

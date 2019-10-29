@@ -1,4 +1,9 @@
-﻿Imports FX3Api
+﻿'File:          ADXL375GUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          9/13/2019
+'Description:   Basic interfacing to the ADXL375 accelerometer. Provides read/write and data streaming capabilities.
+
+Imports FX3Api
 Imports Microsoft.VisualBasic.FileIO
 
 Public Class ADXl375GUI

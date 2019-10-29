@@ -1,4 +1,9 @@
-﻿Imports FX3Api
+﻿'File:          BitBangSpiGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          9/23/2019
+'Description:   Bit bang SPI traffic to a DUT. Allows for robustness testing of the SPI interface.
+
+Imports FX3Api
 
 Public Class BitBangSpiGUI
     Inherits FormBase

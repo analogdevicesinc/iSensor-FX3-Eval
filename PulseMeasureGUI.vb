@@ -1,4 +1,9 @@
-﻿Imports AdisApi
+﻿'File:          PulseMeasureGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          7/26/2019
+'Description:   Allows for precise pulse measurement with a trigger condition.
+
+Imports AdisApi
 Imports FX3Api
 
 Public Class PulseMeasureGUI

@@ -19,8 +19,10 @@ Public Class TopGUI
     Public Dut As IDutInterface
 
     'List of listviewitems for bulk register read
-    Public BulkRegList As List(Of ListViewItem)
-    Public numRegSamples As Integer
+    Friend BulkRegList As List(Of ListViewItem)
+    Friend numRegSamples As Integer
+    Friend samplesPerWrite As Integer
+    Friend linesPerFile As Integer
 
     'Last browsed to file location
     Public lastFilePath As String
@@ -99,6 +101,8 @@ Public Class TopGUI
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
         numRegSamples = 10000
+        linesPerFile = 1000000
+        samplesPerWrite = 10000
 
         'Seed random number generator
         Randomize()

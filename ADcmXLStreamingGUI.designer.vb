@@ -39,7 +39,6 @@ Partial Class ADcmXLStreamingGUI
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.CaptureStartMethod = New System.Windows.Forms.ComboBox()
-        Me.helpBtn = New System.Windows.Forms.Button()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.captureCounter = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -75,7 +74,7 @@ Partial Class ADcmXLStreamingGUI
         Me.TotalFramesInput.Location = New System.Drawing.Point(116, 17)
         Me.TotalFramesInput.Name = "TotalFramesInput"
         Me.TotalFramesInput.Size = New System.Drawing.Size(132, 20)
-        Me.TotalFramesInput.TabIndex = 2
+        Me.TotalFramesInput.TabIndex = 0
         Me.TotalFramesInput.Text = "6897"
         '
         'Label2
@@ -100,7 +99,7 @@ Partial Class ADcmXLStreamingGUI
         Me.startButton.Location = New System.Drawing.Point(15, 362)
         Me.startButton.Name = "startButton"
         Me.startButton.Size = New System.Drawing.Size(75, 64)
-        Me.startButton.TabIndex = 20
+        Me.startButton.TabIndex = 10
         Me.startButton.Text = "Start Data Capture"
         Me.startButton.UseVisualStyleBackColor = True
         '
@@ -125,7 +124,7 @@ Partial Class ADcmXLStreamingGUI
         Me.StopBtn.Location = New System.Drawing.Point(96, 362)
         Me.StopBtn.Name = "StopBtn"
         Me.StopBtn.Size = New System.Drawing.Size(75, 64)
-        Me.StopBtn.TabIndex = 24
+        Me.StopBtn.TabIndex = 11
         Me.StopBtn.Text = "Stop Data Capture"
         Me.StopBtn.UseVisualStyleBackColor = True
         '
@@ -179,7 +178,7 @@ Partial Class ADcmXLStreamingGUI
         Me.LinesPerCSVInput.Location = New System.Drawing.Point(116, 43)
         Me.LinesPerCSVInput.Name = "LinesPerCSVInput"
         Me.LinesPerCSVInput.Size = New System.Drawing.Size(132, 20)
-        Me.LinesPerCSVInput.TabIndex = 32
+        Me.LinesPerCSVInput.TabIndex = 1
         Me.LinesPerCSVInput.Text = "1000000"
         '
         'CaptureExitMethod
@@ -189,7 +188,7 @@ Partial Class ADcmXLStreamingGUI
         Me.CaptureExitMethod.Location = New System.Drawing.Point(152, 119)
         Me.CaptureExitMethod.Name = "CaptureExitMethod"
         Me.CaptureExitMethod.Size = New System.Drawing.Size(137, 21)
-        Me.CaptureExitMethod.TabIndex = 33
+        Me.CaptureExitMethod.TabIndex = 3
         Me.CaptureExitMethod.Text = "Pin Exit"
         '
         'Label6
@@ -218,17 +217,8 @@ Partial Class ADcmXLStreamingGUI
         Me.CaptureStartMethod.Location = New System.Drawing.Point(9, 119)
         Me.CaptureStartMethod.Name = "CaptureStartMethod"
         Me.CaptureStartMethod.Size = New System.Drawing.Size(137, 21)
-        Me.CaptureStartMethod.TabIndex = 36
+        Me.CaptureStartMethod.TabIndex = 2
         Me.CaptureStartMethod.Text = "GLOB_CMD Start"
-        '
-        'helpBtn
-        '
-        Me.helpBtn.Location = New System.Drawing.Point(297, 362)
-        Me.helpBtn.Name = "helpBtn"
-        Me.helpBtn.Size = New System.Drawing.Size(75, 64)
-        Me.helpBtn.TabIndex = 37
-        Me.helpBtn.Text = "Help?"
-        Me.helpBtn.UseVisualStyleBackColor = True
         '
         'Label9
         '
@@ -351,14 +341,14 @@ Partial Class ADcmXLStreamingGUI
         Me.startPolarity.Location = New System.Drawing.Point(152, 120)
         Me.startPolarity.Name = "startPolarity"
         Me.startPolarity.Size = New System.Drawing.Size(137, 21)
-        Me.startPolarity.TabIndex = 50
+        Me.startPolarity.TabIndex = 9
         '
         'timeSelect
         '
         Me.timeSelect.Location = New System.Drawing.Point(114, 75)
         Me.timeSelect.Name = "timeSelect"
         Me.timeSelect.Size = New System.Drawing.Size(132, 20)
-        Me.timeSelect.TabIndex = 49
+        Me.timeSelect.TabIndex = 7
         Me.timeSelect.Text = "10000"
         '
         'startPinBox
@@ -367,7 +357,7 @@ Partial Class ADcmXLStreamingGUI
         Me.startPinBox.Location = New System.Drawing.Point(9, 120)
         Me.startPinBox.Name = "startPinBox"
         Me.startPinBox.Size = New System.Drawing.Size(137, 21)
-        Me.startPinBox.TabIndex = 48
+        Me.startPinBox.TabIndex = 8
         '
         'Label10
         '
@@ -384,7 +374,7 @@ Partial Class ADcmXLStreamingGUI
         Me.PinTriggerRadioBtn.Location = New System.Drawing.Point(114, 52)
         Me.PinTriggerRadioBtn.Name = "PinTriggerRadioBtn"
         Me.PinTriggerRadioBtn.Size = New System.Drawing.Size(88, 17)
-        Me.PinTriggerRadioBtn.TabIndex = 46
+        Me.PinTriggerRadioBtn.TabIndex = 5
         Me.PinTriggerRadioBtn.TabStop = True
         Me.PinTriggerRadioBtn.Text = "Pin Triggered"
         Me.PinTriggerRadioBtn.UseVisualStyleBackColor = True
@@ -395,7 +385,7 @@ Partial Class ADcmXLStreamingGUI
         Me.TimerTriggerRadioBtn.Location = New System.Drawing.Point(208, 52)
         Me.TimerTriggerRadioBtn.Name = "TimerTriggerRadioBtn"
         Me.TimerTriggerRadioBtn.Size = New System.Drawing.Size(99, 17)
-        Me.TimerTriggerRadioBtn.TabIndex = 45
+        Me.TimerTriggerRadioBtn.TabIndex = 6
         Me.TimerTriggerRadioBtn.TabStop = True
         Me.TimerTriggerRadioBtn.Text = "Timer Triggered"
         Me.TimerTriggerRadioBtn.UseVisualStyleBackColor = True
@@ -405,7 +395,7 @@ Partial Class ADcmXLStreamingGUI
         Me.numSamples.Location = New System.Drawing.Point(114, 26)
         Me.numSamples.Name = "numSamples"
         Me.numSamples.Size = New System.Drawing.Size(132, 20)
-        Me.numSamples.TabIndex = 44
+        Me.numSamples.TabIndex = 4
         Me.numSamples.Text = "1"
         '
         'Label7
@@ -427,7 +417,6 @@ Partial Class ADcmXLStreamingGUI
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.captureCounter)
         Me.Controls.Add(Me.Label9)
-        Me.Controls.Add(Me.helpBtn)
         Me.Controls.Add(Me.StopBtn)
         Me.Controls.Add(Me.startButton)
         Me.Controls.Add(Me.Label3)
@@ -460,7 +449,6 @@ Partial Class ADcmXLStreamingGUI
     Friend WithEvents Label6 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents CaptureStartMethod As ComboBox
-    Friend WithEvents helpBtn As Button
     Friend WithEvents Label9 As Label
     Friend WithEvents captureCounter As Label
     Friend WithEvents GroupBox1 As GroupBox

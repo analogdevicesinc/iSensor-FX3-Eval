@@ -1,4 +1,9 @@
-﻿Imports FX3Api
+﻿'File:          BurstTestGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          9/23/2019
+'Description:   Testing burst mode for ADIS IMU's
+
+Imports FX3Api
 
 Public Class BurstTestGUI
     Inherits FormBase
