@@ -9,11 +9,12 @@ Imports System.ComponentModel
 Imports AdisApi
 Imports System.Threading
 Imports RegMapClasses
+Imports StreamDataLogger
 
 Public Class ADcmXLStreamingGUI
     Inherits FormBase
 
-    Private WithEvents fileManager As StreamDataLogger.StreamDataLogger
+    Private WithEvents fileManager As Logger
     Private totalFrames As Integer
     Private linesPerFile As Integer
     Private frameTimeCalc As Double
@@ -265,7 +266,7 @@ Public Class ADcmXLStreamingGUI
             m_TopGUI.FX3.PinStart = False
         End If
 
-        fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
+        fileManager = New Logger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.FileBaseName = "Real_Time_Data" + timeString
         fileManager.FilePath = savePath
         fileManager.Buffers = totalFrames

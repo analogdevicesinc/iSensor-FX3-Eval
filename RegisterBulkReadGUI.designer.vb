@@ -42,6 +42,8 @@ Partial Class RegisterBulkReadGUI
         Me.DrActiveBox = New System.Windows.Forms.CheckBox()
         Me.linesPerFile = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.SamplesPerWrite = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -75,13 +77,13 @@ Partial Class RegisterBulkReadGUI
         '
         Me.selectedRegview.Location = New System.Drawing.Point(204, 32)
         Me.selectedRegview.Name = "selectedRegview"
-        Me.selectedRegview.Size = New System.Drawing.Size(227, 368)
+        Me.selectedRegview.Size = New System.Drawing.Size(227, 408)
         Me.selectedRegview.TabIndex = 7
         Me.selectedRegview.UseCompatibleStateImageBehavior = False
         '
         'MainButton
         '
-        Me.MainButton.Location = New System.Drawing.Point(11, 307)
+        Me.MainButton.Location = New System.Drawing.Point(11, 349)
         Me.MainButton.Name = "MainButton"
         Me.MainButton.Size = New System.Drawing.Size(77, 61)
         Me.MainButton.TabIndex = 9
@@ -107,7 +109,7 @@ Partial Class RegisterBulkReadGUI
         '
         'StreamingAVARCancelButton
         '
-        Me.StreamingAVARCancelButton.Location = New System.Drawing.Point(114, 307)
+        Me.StreamingAVARCancelButton.Location = New System.Drawing.Point(121, 349)
         Me.StreamingAVARCancelButton.Name = "StreamingAVARCancelButton"
         Me.StreamingAVARCancelButton.Size = New System.Drawing.Size(77, 61)
         Me.StreamingAVARCancelButton.TabIndex = 12
@@ -120,7 +122,7 @@ Partial Class RegisterBulkReadGUI
         Me.NumberDRToCapture.Name = "NumberDRToCapture"
         Me.NumberDRToCapture.Size = New System.Drawing.Size(111, 20)
         Me.NumberDRToCapture.TabIndex = 14
-        Me.NumberDRToCapture.Text = "1000"
+        Me.NumberDRToCapture.Text = "10000"
         '
         'Label3
         '
@@ -171,7 +173,7 @@ Partial Class RegisterBulkReadGUI
         Me.statusLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.statusLabel.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.statusLabel.Location = New System.Drawing.Point(53, 380)
+        Me.statusLabel.Location = New System.Drawing.Point(53, 420)
         Me.statusLabel.Name = "statusLabel"
         Me.statusLabel.Size = New System.Drawing.Size(145, 20)
         Me.statusLabel.TabIndex = 28
@@ -181,7 +183,7 @@ Partial Class RegisterBulkReadGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(9, 384)
+        Me.Label6.Location = New System.Drawing.Point(9, 424)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(43, 13)
         Me.Label6.TabIndex = 27
@@ -190,7 +192,7 @@ Partial Class RegisterBulkReadGUI
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(8, 421)
+        Me.Label7.Location = New System.Drawing.Point(8, 448)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(91, 13)
         Me.Label7.TabIndex = 30
@@ -198,7 +200,7 @@ Partial Class RegisterBulkReadGUI
         '
         'CaptureProgressStreaming
         '
-        Me.CaptureProgressStreaming.Location = New System.Drawing.Point(107, 416)
+        Me.CaptureProgressStreaming.Location = New System.Drawing.Point(107, 446)
         Me.CaptureProgressStreaming.Name = "CaptureProgressStreaming"
         Me.CaptureProgressStreaming.Size = New System.Drawing.Size(326, 18)
         Me.CaptureProgressStreaming.TabIndex = 29
@@ -215,7 +217,7 @@ Partial Class RegisterBulkReadGUI
         '
         'linesPerFile
         '
-        Me.linesPerFile.Location = New System.Drawing.Point(11, 281)
+        Me.linesPerFile.Location = New System.Drawing.Point(12, 320)
         Me.linesPerFile.Name = "linesPerFile"
         Me.linesPerFile.Size = New System.Drawing.Size(111, 20)
         Me.linesPerFile.TabIndex = 32
@@ -224,17 +226,36 @@ Partial Class RegisterBulkReadGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(9, 265)
+        Me.Label2.Location = New System.Drawing.Point(9, 304)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(83, 13)
         Me.Label2.TabIndex = 33
         Me.Label2.Text = "# Lines Per File:"
         '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(8, 262)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(107, 13)
+        Me.Label8.TabIndex = 34
+        Me.Label8.Text = "# Samples Per Write:"
+        '
+        'SamplesPerWrite
+        '
+        Me.SamplesPerWrite.Location = New System.Drawing.Point(11, 278)
+        Me.SamplesPerWrite.Name = "SamplesPerWrite"
+        Me.SamplesPerWrite.Size = New System.Drawing.Size(111, 20)
+        Me.SamplesPerWrite.TabIndex = 35
+        Me.SamplesPerWrite.Text = "10000"
+        '
         'RegisterBulkReadGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(443, 447)
+        Me.ClientSize = New System.Drawing.Size(443, 476)
+        Me.Controls.Add(Me.SamplesPerWrite)
+        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.linesPerFile)
         Me.Controls.Add(Me.DrActiveBox)
@@ -283,4 +304,6 @@ Partial Class RegisterBulkReadGUI
     Friend WithEvents DrActiveBox As CheckBox
     Friend WithEvents linesPerFile As TextBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents SamplesPerWrite As TextBox
 End Class
