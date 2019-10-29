@@ -135,7 +135,7 @@ Partial Class FX3ConfigGUI
         Me.frequencyInput.Location = New System.Drawing.Point(135, 13)
         Me.frequencyInput.Name = "frequencyInput"
         Me.frequencyInput.Size = New System.Drawing.Size(219, 20)
-        Me.frequencyInput.TabIndex = 8
+        Me.frequencyInput.TabIndex = 0
         '
         'chipSelectControlInput
         '
@@ -143,7 +143,7 @@ Partial Class FX3ConfigGUI
         Me.chipSelectControlInput.Location = New System.Drawing.Point(135, 121)
         Me.chipSelectControlInput.Name = "chipSelectControlInput"
         Me.chipSelectControlInput.Size = New System.Drawing.Size(219, 21)
-        Me.chipSelectControlInput.TabIndex = 9
+        Me.chipSelectControlInput.TabIndex = 4
         '
         'phaseInput
         '
@@ -151,7 +151,7 @@ Partial Class FX3ConfigGUI
         Me.phaseInput.Location = New System.Drawing.Point(135, 67)
         Me.phaseInput.Name = "phaseInput"
         Me.phaseInput.Size = New System.Drawing.Size(219, 21)
-        Me.phaseInput.TabIndex = 10
+        Me.phaseInput.TabIndex = 2
         '
         'polarityInput
         '
@@ -159,7 +159,7 @@ Partial Class FX3ConfigGUI
         Me.polarityInput.Location = New System.Drawing.Point(135, 40)
         Me.polarityInput.Name = "polarityInput"
         Me.polarityInput.Size = New System.Drawing.Size(219, 21)
-        Me.polarityInput.TabIndex = 11
+        Me.polarityInput.TabIndex = 1
         '
         'chipSelectPolarityInput
         '
@@ -167,7 +167,7 @@ Partial Class FX3ConfigGUI
         Me.chipSelectPolarityInput.Location = New System.Drawing.Point(135, 94)
         Me.chipSelectPolarityInput.Name = "chipSelectPolarityInput"
         Me.chipSelectPolarityInput.Size = New System.Drawing.Size(219, 21)
-        Me.chipSelectPolarityInput.TabIndex = 12
+        Me.chipSelectPolarityInput.TabIndex = 3
         '
         'leadTimeInput
         '
@@ -175,7 +175,7 @@ Partial Class FX3ConfigGUI
         Me.leadTimeInput.Location = New System.Drawing.Point(135, 148)
         Me.leadTimeInput.Name = "leadTimeInput"
         Me.leadTimeInput.Size = New System.Drawing.Size(219, 21)
-        Me.leadTimeInput.TabIndex = 13
+        Me.leadTimeInput.TabIndex = 5
         '
         'lagTimeInput
         '
@@ -183,14 +183,14 @@ Partial Class FX3ConfigGUI
         Me.lagTimeInput.Location = New System.Drawing.Point(135, 175)
         Me.lagTimeInput.Name = "lagTimeInput"
         Me.lagTimeInput.Size = New System.Drawing.Size(219, 21)
-        Me.lagTimeInput.TabIndex = 14
+        Me.lagTimeInput.TabIndex = 6
         '
         'wordLenInput
         '
         Me.wordLenInput.Location = New System.Drawing.Point(135, 202)
         Me.wordLenInput.Name = "wordLenInput"
         Me.wordLenInput.Size = New System.Drawing.Size(219, 20)
-        Me.wordLenInput.TabIndex = 15
+        Me.wordLenInput.TabIndex = 7
         '
         'SetConfig
         '
@@ -234,7 +234,7 @@ Partial Class FX3ConfigGUI
         Me.lsbFirstInput.Location = New System.Drawing.Point(135, 228)
         Me.lsbFirstInput.Name = "lsbFirstInput"
         Me.lsbFirstInput.Size = New System.Drawing.Size(219, 21)
-        Me.lsbFirstInput.TabIndex = 20
+        Me.lsbFirstInput.TabIndex = 8
         '
         'Label11
         '
@@ -250,7 +250,7 @@ Partial Class FX3ConfigGUI
         Me.stallTimeInput.Location = New System.Drawing.Point(135, 255)
         Me.stallTimeInput.Name = "stallTimeInput"
         Me.stallTimeInput.Size = New System.Drawing.Size(219, 20)
-        Me.stallTimeInput.TabIndex = 22
+        Me.stallTimeInput.TabIndex = 9
         '
         'Label12
         '
@@ -266,7 +266,7 @@ Partial Class FX3ConfigGUI
         Me.StallCyclesInput.Location = New System.Drawing.Point(135, 281)
         Me.StallCyclesInput.Name = "StallCyclesInput"
         Me.StallCyclesInput.Size = New System.Drawing.Size(219, 20)
-        Me.StallCyclesInput.TabIndex = 25
+        Me.StallCyclesInput.TabIndex = 10
         '
         'dataReadyPinInput
         '
@@ -274,7 +274,7 @@ Partial Class FX3ConfigGUI
         Me.dataReadyPinInput.Location = New System.Drawing.Point(135, 307)
         Me.dataReadyPinInput.Name = "dataReadyPinInput"
         Me.dataReadyPinInput.Size = New System.Drawing.Size(219, 21)
-        Me.dataReadyPinInput.TabIndex = 27
+        Me.dataReadyPinInput.TabIndex = 11
         '
         'dataReadyActiveInput
         '
@@ -282,7 +282,7 @@ Partial Class FX3ConfigGUI
         Me.dataReadyActiveInput.Location = New System.Drawing.Point(135, 334)
         Me.dataReadyActiveInput.Name = "dataReadyActiveInput"
         Me.dataReadyActiveInput.Size = New System.Drawing.Size(219, 21)
-        Me.dataReadyActiveInput.TabIndex = 28
+        Me.dataReadyActiveInput.TabIndex = 12
         '
         'dataReadyPolarityInput
         '
@@ -290,7 +290,7 @@ Partial Class FX3ConfigGUI
         Me.dataReadyPolarityInput.Location = New System.Drawing.Point(135, 361)
         Me.dataReadyPolarityInput.Name = "dataReadyPolarityInput"
         Me.dataReadyPolarityInput.Size = New System.Drawing.Size(219, 21)
-        Me.dataReadyPolarityInput.TabIndex = 29
+        Me.dataReadyPolarityInput.TabIndex = 13
         '
         'Label14
         '
@@ -324,7 +324,7 @@ Partial Class FX3ConfigGUI
         Me.TimerTickMultiplierDisplay.Location = New System.Drawing.Point(135, 414)
         Me.TimerTickMultiplierDisplay.Name = "TimerTickMultiplierDisplay"
         Me.TimerTickMultiplierDisplay.Size = New System.Drawing.Size(219, 20)
-        Me.TimerTickMultiplierDisplay.TabIndex = 34
+        Me.TimerTickMultiplierDisplay.TabIndex = 15
         '
         'Label17
         '
@@ -349,13 +349,13 @@ Partial Class FX3ConfigGUI
         Me.SelectedRegMap.Location = New System.Drawing.Point(135, 388)
         Me.SelectedRegMap.Name = "SelectedRegMap"
         Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
-        Me.SelectedRegMap.TabIndex = 36
+        Me.SelectedRegMap.TabIndex = 14
         '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(441, 459)
+        Me.ClientSize = New System.Drawing.Size(441, 453)
         Me.Controls.Add(Me.SelectedRegMap)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.TimerTickMultiplierDisplay)
