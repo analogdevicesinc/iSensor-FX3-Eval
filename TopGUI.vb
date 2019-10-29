@@ -125,12 +125,40 @@ Public Class TopGUI
         'Set the API version and build date
         label_apiVersion.Text = "ADI iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
 
+        'load the last used file path
         lastFilePath = My.Settings.LastFilePath
+
+        'Set tool tips
+        SetupToolTips()
 
         'Register exception handlers
         Dim myApp As AppDomain = AppDomain.CurrentDomain
         AddHandler myApp.UnhandledException, AddressOf GeneralErrorHandler
         AddHandler Application.ThreadException, AddressOf ThreadErrorHandler
+
+    End Sub
+
+    Private Sub SetupToolTips()
+
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used")
+        tip0.SetToolTip(Me.btn_BoardInfo, "Get information about the version of the connected FX3 board")
+        tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register values to a CSV file")
+        tip0.SetToolTip(Me.btn_CheckDUTConnection, "Checks a DUT connection by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
+        tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
+        tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
+        tip0.SetToolTip(Me.btn_measurePulse, "Measure a DIO pulse width. Can send a pin or register trigger condition")
+        tip0.SetToolTip(Me.btn_OtherApps, "Other misc. applications developed for the iSensor FX3 Example GUI")
+        tip0.SetToolTip(Me.btn_SelectDUT, "Select the DUT type. Loads the default values for that DUT type")
+        tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
+        tip0.SetToolTip(Me.btn_RegAccess, "Read or write all registers in the loaded register map")
+        tip0.SetToolTip(Me.btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
+        tip0.SetToolTip(Me.btn_PinAccess, "Read or set all FX3 digital IO pins (DIO1 - DIO4, FX3GPIO1 - FX3GPIO4)")
+        tip0.SetToolTip(Me.btn_PWMSetup, "Configure PWM signal generation on the FX3 digital IO")
+        tip0.SetToolTip(Me.label_apiVersion, "The current version of the FX3 API and firmware being used by the iSensor FX3 Example GUI")
+        tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
+        tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Example GUI. Requires a GitHub account")
+        tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 500ms, waits for data ready to be asserted, and checks the DUT connection")
 
     End Sub
 
@@ -150,6 +178,7 @@ Public Class TopGUI
                     Throw New Exception("Regmap produced from selected file contains 0 registers")
                 End If
                 regMapPath_Label.Text = value.Substring(value.LastIndexOf("\") + 1)
+                SetupToolTips()
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message())
             End Try

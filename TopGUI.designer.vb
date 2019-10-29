@@ -101,7 +101,7 @@ Partial Class TopGUI
         Me.btn_ResetDUT.Location = New System.Drawing.Point(92, 9)
         Me.btn_ResetDUT.Name = "btn_ResetDUT"
         Me.btn_ResetDUT.Size = New System.Drawing.Size(75, 64)
-        Me.btn_ResetDUT.TabIndex = 14
+        Me.btn_ResetDUT.TabIndex = 1
         Me.btn_ResetDUT.Text = "Reset DUT"
         Me.btn_ResetDUT.UseVisualStyleBackColor = True
         '
@@ -110,7 +110,7 @@ Partial Class TopGUI
         Me.btn_SelectDUT.Location = New System.Drawing.Point(255, 9)
         Me.btn_SelectDUT.Name = "btn_SelectDUT"
         Me.btn_SelectDUT.Size = New System.Drawing.Size(75, 64)
-        Me.btn_SelectDUT.TabIndex = 15
+        Me.btn_SelectDUT.TabIndex = 3
         Me.btn_SelectDUT.Text = "Select DUT Type"
         Me.btn_SelectDUT.UseVisualStyleBackColor = True
         '
@@ -119,7 +119,7 @@ Partial Class TopGUI
         Me.btn_RegAccess.Location = New System.Drawing.Point(12, 149)
         Me.btn_RegAccess.Name = "btn_RegAccess"
         Me.btn_RegAccess.Size = New System.Drawing.Size(75, 64)
-        Me.btn_RegAccess.TabIndex = 0
+        Me.btn_RegAccess.TabIndex = 5
         Me.btn_RegAccess.Text = "Register Access"
         Me.btn_RegAccess.UseVisualStyleBackColor = True
         '
@@ -147,7 +147,7 @@ Partial Class TopGUI
         Me.btn_RealTime.Location = New System.Drawing.Point(93, 149)
         Me.btn_RealTime.Name = "btn_RealTime"
         Me.btn_RealTime.Size = New System.Drawing.Size(75, 64)
-        Me.btn_RealTime.TabIndex = 20
+        Me.btn_RealTime.TabIndex = 6
         Me.btn_RealTime.Text = "Burst Data Capture"
         Me.btn_RealTime.UseVisualStyleBackColor = True
         '
@@ -156,7 +156,7 @@ Partial Class TopGUI
         Me.btn_BulkRegRead.Location = New System.Drawing.Point(174, 149)
         Me.btn_BulkRegRead.Name = "btn_BulkRegRead"
         Me.btn_BulkRegRead.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BulkRegRead.TabIndex = 21
+        Me.btn_BulkRegRead.TabIndex = 7
         Me.btn_BulkRegRead.Text = "Register Logging"
         Me.btn_BulkRegRead.UseVisualStyleBackColor = True
         '
@@ -165,7 +165,7 @@ Partial Class TopGUI
         Me.btn_CheckDUTConnection.Location = New System.Drawing.Point(173, 9)
         Me.btn_CheckDUTConnection.Name = "btn_CheckDUTConnection"
         Me.btn_CheckDUTConnection.Size = New System.Drawing.Size(75, 64)
-        Me.btn_CheckDUTConnection.TabIndex = 22
+        Me.btn_CheckDUTConnection.TabIndex = 2
         Me.btn_CheckDUTConnection.Text = "Check DUT Connection"
         Me.btn_CheckDUTConnection.UseVisualStyleBackColor = True
         '
@@ -174,7 +174,7 @@ Partial Class TopGUI
         Me.btn_FX3Config.Location = New System.Drawing.Point(336, 9)
         Me.btn_FX3Config.Name = "btn_FX3Config"
         Me.btn_FX3Config.Size = New System.Drawing.Size(75, 64)
-        Me.btn_FX3Config.TabIndex = 23
+        Me.btn_FX3Config.TabIndex = 4
         Me.btn_FX3Config.Text = "FX3 Config. Options"
         Me.btn_FX3Config.UseVisualStyleBackColor = True
         '
@@ -183,7 +183,7 @@ Partial Class TopGUI
         Me.btn_APIInfo.Location = New System.Drawing.Point(255, 219)
         Me.btn_APIInfo.Name = "btn_APIInfo"
         Me.btn_APIInfo.Size = New System.Drawing.Size(75, 64)
-        Me.btn_APIInfo.TabIndex = 24
+        Me.btn_APIInfo.TabIndex = 13
         Me.btn_APIInfo.Text = "FX3 API Info."
         Me.btn_APIInfo.UseVisualStyleBackColor = True
         '
@@ -192,7 +192,7 @@ Partial Class TopGUI
         Me.btn_BoardInfo.Location = New System.Drawing.Point(336, 219)
         Me.btn_BoardInfo.Name = "btn_BoardInfo"
         Me.btn_BoardInfo.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BoardInfo.TabIndex = 26
+        Me.btn_BoardInfo.TabIndex = 14
         Me.btn_BoardInfo.Text = "FX3 Board Info."
         Me.btn_BoardInfo.UseVisualStyleBackColor = True
         '
@@ -201,7 +201,7 @@ Partial Class TopGUI
         Me.btn_PWMSetup.Location = New System.Drawing.Point(93, 219)
         Me.btn_PWMSetup.Name = "btn_PWMSetup"
         Me.btn_PWMSetup.Size = New System.Drawing.Size(75, 64)
-        Me.btn_PWMSetup.TabIndex = 25
+        Me.btn_PWMSetup.TabIndex = 11
         Me.btn_PWMSetup.Text = "PWM Output Setup"
         Me.btn_PWMSetup.UseVisualStyleBackColor = True
         '
@@ -210,7 +210,7 @@ Partial Class TopGUI
         Me.btn_measurePulse.Location = New System.Drawing.Point(174, 219)
         Me.btn_measurePulse.Name = "btn_measurePulse"
         Me.btn_measurePulse.Size = New System.Drawing.Size(75, 64)
-        Me.btn_measurePulse.TabIndex = 27
+        Me.btn_measurePulse.TabIndex = 12
         Me.btn_measurePulse.Text = "Measure Signal Pulse Width"
         Me.btn_measurePulse.UseVisualStyleBackColor = True
         '
@@ -219,7 +219,7 @@ Partial Class TopGUI
         Me.btn_OtherApps.Location = New System.Drawing.Point(336, 149)
         Me.btn_OtherApps.Name = "btn_OtherApps"
         Me.btn_OtherApps.Size = New System.Drawing.Size(75, 64)
-        Me.btn_OtherApps.TabIndex = 28
+        Me.btn_OtherApps.TabIndex = 9
         Me.btn_OtherApps.Text = "Other Applications"
         Me.btn_OtherApps.UseVisualStyleBackColor = True
         '
@@ -228,7 +228,7 @@ Partial Class TopGUI
         Me.btn_PinAccess.Location = New System.Drawing.Point(11, 219)
         Me.btn_PinAccess.Name = "btn_PinAccess"
         Me.btn_PinAccess.Size = New System.Drawing.Size(75, 64)
-        Me.btn_PinAccess.TabIndex = 29
+        Me.btn_PinAccess.TabIndex = 10
         Me.btn_PinAccess.Text = "Pin Access"
         Me.btn_PinAccess.UseVisualStyleBackColor = True
         '
@@ -246,7 +246,7 @@ Partial Class TopGUI
         Me.btn_plotData.Location = New System.Drawing.Point(255, 149)
         Me.btn_plotData.Name = "btn_plotData"
         Me.btn_plotData.Size = New System.Drawing.Size(75, 64)
-        Me.btn_plotData.TabIndex = 32
+        Me.btn_plotData.TabIndex = 8
         Me.btn_plotData.Text = "Data Plotting"
         Me.btn_plotData.UseVisualStyleBackColor = True
         '
@@ -265,7 +265,7 @@ Partial Class TopGUI
         Me.report_issue.Location = New System.Drawing.Point(344, 304)
         Me.report_issue.Name = "report_issue"
         Me.report_issue.Size = New System.Drawing.Size(67, 13)
-        Me.report_issue.TabIndex = 35
+        Me.report_issue.TabIndex = 15
         Me.report_issue.TabStop = True
         Me.report_issue.Text = "Report Issue"
         '
