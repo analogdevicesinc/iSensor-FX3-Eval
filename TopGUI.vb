@@ -123,7 +123,7 @@ Public Class TopGUI
         m_AutoSpi.IgnoreExceptions = True
 
         'Set the API version and build date
-        label_apiVersion.Text = "Analog Devices iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
+        label_apiVersion.Text = "ADI iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
 
         lastFilePath = My.Settings.LastFilePath
 
@@ -607,6 +607,11 @@ Public Class TopGUI
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
 
+    End Sub
+
+    Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
+        report_issue.LinkVisited = True
+        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-ExampleGui/issues/new")
     End Sub
 
 #End Region

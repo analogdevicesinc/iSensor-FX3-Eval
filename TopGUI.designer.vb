@@ -46,6 +46,7 @@ Partial Class TopGUI
         Me.label_apiVersion = New System.Windows.Forms.Label()
         Me.btn_plotData = New System.Windows.Forms.Button()
         Me.regMapPath_Label = New System.Windows.Forms.Label()
+        Me.report_issue = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -252,17 +253,28 @@ Partial Class TopGUI
         'regMapPath_Label
         '
         Me.regMapPath_Label.AutoSize = True
-        Me.regMapPath_Label.Location = New System.Drawing.Point(8, 304)
+        Me.regMapPath_Label.Location = New System.Drawing.Point(10, 304)
         Me.regMapPath_Label.Name = "regMapPath_Label"
         Me.regMapPath_Label.Size = New System.Drawing.Size(70, 13)
         Me.regMapPath_Label.TabIndex = 33
         Me.regMapPath_Label.Text = "RegMapPath"
+        '
+        'report_issue
+        '
+        Me.report_issue.AutoSize = True
+        Me.report_issue.Location = New System.Drawing.Point(344, 304)
+        Me.report_issue.Name = "report_issue"
+        Me.report_issue.Size = New System.Drawing.Size(67, 13)
+        Me.report_issue.TabIndex = 35
+        Me.report_issue.TabStop = True
+        Me.report_issue.Text = "Report Issue"
         '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(424, 326)
+        Me.Controls.Add(Me.report_issue)
         Me.Controls.Add(Me.regMapPath_Label)
         Me.Controls.Add(Me.btn_plotData)
         Me.Controls.Add(Me.label_apiVersion)
@@ -318,4 +330,5 @@ Partial Class TopGUI
     Friend WithEvents label_apiVersion As Label
     Friend WithEvents btn_plotData As Button
     Friend WithEvents regMapPath_Label As Label
+    Friend WithEvents report_issue As LinkLabel
 End Class
