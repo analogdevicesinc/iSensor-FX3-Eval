@@ -50,16 +50,23 @@ Public Class RegisterBulkReadGUI
             selectedRegview.Items.Add(item)
         Next
         NumberDRToCapture.Text = m_TopGUI.numRegSamples.ToString()
+        SamplesPerWrite.Text = m_TopGUI.samplesPerWrite.ToString()
+        linesPerFile.Text = m_TopGUI.linesPerFile.ToString()
+        UpdateRegCountLabel()
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        'Save the list-view contents
 
+        'Save the list-view contents
         m_TopGUI.BulkRegList.Clear()
         For Each item In selectedRegview.Items
             m_TopGUI.BulkRegList.Add(item)
         Next
+
+        'sample settings
         m_TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
+        m_TopGUI.linesPerFile = Convert.ToInt32(linesPerFile.Text)
+        m_TopGUI.samplesPerWrite = Convert.ToInt32(SamplesPerWrite.Text)
 
     End Sub
 
@@ -67,6 +74,7 @@ Public Class RegisterBulkReadGUI
         Dim newItem As New ListViewItem()
         newItem.SubItems(0).Text = RegisterList.SelectedItem
         selectedRegview.Items.Add(newItem)
+        UpdateRegCountLabel()
     End Sub
 
     Private Sub RemoveRegisterButton_Click(sender As Object, e As EventArgs) Handles RemoveRegisterButton.Click
@@ -75,6 +83,7 @@ Public Class RegisterBulkReadGUI
         Else
             Me.selectedRegview.Items.RemoveAt(Me.selectedRegview.FocusedItem.Index)
         End If
+        UpdateRegCountLabel()
     End Sub
 
     Private Sub ClearAllButton_Click(sender As Object, e As EventArgs) Handles ClearAllButton.Click
@@ -83,11 +92,17 @@ Public Class RegisterBulkReadGUI
         If result = DialogResult.Yes Then
             selectedRegview.Items.Clear()
         End If
+        UpdateRegCountLabel()
+    End Sub
+
+    Private Sub UpdateRegCountLabel()
+        regStreamingList.Text = "Register Streaming List (" + selectedRegview.Items.Count.ToString() + ")"
     End Sub
 
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
 
         Dim savePath As String
+        Dim DrFreq As Double = Double.PositiveInfinity
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
@@ -186,6 +201,8 @@ Public Class RegisterBulkReadGUI
         RegisterList.Enabled = False
         selectedRegview.Enabled = False
         MainButton.Enabled = False
+        SamplesPerWrite.Enabled = False
+        linesPerFile.Enabled = False
 
     End Sub
 
@@ -206,6 +223,8 @@ Public Class RegisterBulkReadGUI
         RegisterList.Enabled = True
         selectedRegview.Enabled = True
         MainButton.Enabled = True
+        SamplesPerWrite.Enabled = True
+        linesPerFile.Enabled = True
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StreamingAVARCancelButton.Click
@@ -263,6 +282,55 @@ Public Class RegisterBulkReadGUI
     Private Sub DrActiveBox_CheckedChanged(sender As Object, e As EventArgs) Handles DrActiveBox.CheckedChanged
         m_TopGUI.FX3.DrActive = DrActiveBox.Checked
         MeasureDR.Enabled = m_TopGUI.FX3.DrActive
+    End Sub
+
+    Private Sub btn_loadregs_Click(sender As Object, e As EventArgs) Handles btn_loadregs.Click
+        Dim browser As New OpenFileDialog()
+        Dim path As String = m_TopGUI.lastFilePath
+        browser.FileName = path
+        If browser.ShowDialog() = DialogResult.OK Then
+            m_TopGUI.lastFilePath = browser.FileName
+            LoadRegsFromFile(path)
+        Else
+            MsgBox("ERROR: No file selected")
+            Exit Sub
+        End If
+    End Sub
+
+    Private Sub LoadRegsFromFile(path As String)
+        Dim regs() As String
+        Try
+            regs = System.IO.File.ReadAllLines(path)
+        Catch ex As Exception
+            MsgBox("ERROR: Unable to load file. " + ex.Message())
+            Exit Sub
+        End Try
+
+        selectedRegview.Items.Clear()
+        For Each reg In regs
+            If m_TopGUI.RegMap.Contains(reg) Then
+                selectedRegview.Items.Add(New ListViewItem() With {.Text = reg})
+            Else
+                MsgBox("ERROR: Register " + reg + " not found in register map!")
+            End If
+        Next
+
+        'update register count
+        UpdateRegCountLabel()
+    End Sub
+
+    Private Sub btn_saveregs_Click(sender As Object, e As EventArgs) Handles btn_saveregs.Click
+        Dim regs As New List(Of String)
+        For Each item As ListViewItem In selectedRegview.Items
+            regs.Add(item.Text)
+        Next
+
+        If regs.Count() > 0 Then
+            saveCSV("RegList", regs.ToArray())
+        Else
+            MsgBox("ERROR: No register to save")
+        End If
+
     End Sub
 
 End Class
