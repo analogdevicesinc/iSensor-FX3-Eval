@@ -30,4 +30,9 @@ Public Class AppBrowseGUI
         subGUI.Show()
     End Sub
 
+    Private Sub btn_PlotFFT_Click(sender As Object, e As EventArgs) Handles btn_PlotFFT.Click
+        Dim subGUI As New FrequencyPlotGUI()
+        subGUI.SetTopGUI(Me.m_TopGUI)
+        subGUI.Show()
+    End Sub
 End Class

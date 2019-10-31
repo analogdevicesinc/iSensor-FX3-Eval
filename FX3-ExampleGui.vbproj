@@ -88,6 +88,9 @@
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>
     </Reference>
+    <Reference Include="SignalProcessing">
+      <HintPath>Resources\SignalProcessing.dll</HintPath>
+    </Reference>
     <Reference Include="StreamDataLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\StreamDataLogger.dll</HintPath>
@@ -159,6 +162,12 @@
       <DependentUpon>FormBase.vb</DependentUpon>
     </Compile>
     <Compile Include="FormBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrequencyPlotGUI.Designer.vb">
+      <DependentUpon>FrequencyPlotGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FrequencyPlotGUI.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RegisterGUI.designer.vb">
@@ -271,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrequencyPlotGUI.resx">
+      <DependentUpon>FrequencyPlotGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RegisterGUI.resx">
       <DependentUpon>RegisterGUI.vb</DependentUpon>
