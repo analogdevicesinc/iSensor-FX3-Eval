@@ -286,11 +286,8 @@ Public Class RegisterBulkReadGUI
 
     Private Sub btn_loadregs_Click(sender As Object, e As EventArgs) Handles btn_loadregs.Click
         Dim browser As New OpenFileDialog()
-        Dim path As String = m_TopGUI.lastFilePath
-        browser.FileName = path
         If browser.ShowDialog() = DialogResult.OK Then
-            m_TopGUI.lastFilePath = browser.FileName
-            LoadRegsFromFile(path)
+            LoadRegsFromFile(browser.FileName)
         Else
             MsgBox("ERROR: No file selected")
             Exit Sub
