@@ -29,10 +29,10 @@ Partial Class AppBrowseGUI
         '
         'btn_BurstTest
         '
-        Me.btn_BurstTest.Location = New System.Drawing.Point(12, 12)
+        Me.btn_BurstTest.Location = New System.Drawing.Point(174, 12)
         Me.btn_BurstTest.Name = "btn_BurstTest"
         Me.btn_BurstTest.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BurstTest.TabIndex = 29
+        Me.btn_BurstTest.TabIndex = 2
         Me.btn_BurstTest.Text = "Burst Mode Test"
         Me.btn_BurstTest.UseVisualStyleBackColor = True
         '
@@ -41,25 +41,25 @@ Partial Class AppBrowseGUI
         Me.btn_BitBangSpi.Location = New System.Drawing.Point(93, 12)
         Me.btn_BitBangSpi.Name = "btn_BitBangSpi"
         Me.btn_BitBangSpi.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BitBangSpi.TabIndex = 30
+        Me.btn_BitBangSpi.TabIndex = 1
         Me.btn_BitBangSpi.Text = "Bit Bang SPI Interface"
         Me.btn_BitBangSpi.UseVisualStyleBackColor = True
         '
         'btn_ADXL375
         '
-        Me.btn_ADXL375.Location = New System.Drawing.Point(174, 12)
+        Me.btn_ADXL375.Location = New System.Drawing.Point(255, 12)
         Me.btn_ADXL375.Name = "btn_ADXL375"
         Me.btn_ADXL375.Size = New System.Drawing.Size(75, 64)
-        Me.btn_ADXL375.TabIndex = 31
+        Me.btn_ADXL375.TabIndex = 3
         Me.btn_ADXL375.Text = "ADXL375 Data Capture"
         Me.btn_ADXL375.UseVisualStyleBackColor = True
         '
         'btn_PlotFFT
         '
-        Me.btn_PlotFFT.Location = New System.Drawing.Point(255, 12)
+        Me.btn_PlotFFT.Location = New System.Drawing.Point(12, 12)
         Me.btn_PlotFFT.Name = "btn_PlotFFT"
         Me.btn_PlotFFT.Size = New System.Drawing.Size(75, 64)
-        Me.btn_PlotFFT.TabIndex = 32
+        Me.btn_PlotFFT.TabIndex = 0
         Me.btn_PlotFFT.Text = "FFT Data Plotting"
         Me.btn_PlotFFT.UseVisualStyleBackColor = True
         '
@@ -67,7 +67,7 @@ Partial Class AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(347, 92)
+        Me.ClientSize = New System.Drawing.Size(347, 89)
         Me.Controls.Add(Me.btn_PlotFFT)
         Me.Controls.Add(Me.btn_ADXL375)
         Me.Controls.Add(Me.btn_BitBangSpi)

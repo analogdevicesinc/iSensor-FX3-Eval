@@ -9,7 +9,12 @@ Public Class AppBrowseGUI
     Inherits FormBase
 
     Private Sub AppBrowseGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        'register tool tips
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.btn_BitBangSpi, "Bit-bang SPI traffic to a DUT")
+        tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
+        tip0.SetToolTip(Me.btn_PlotFFT, "Stream and plot frequency domain DUT data in near real time")
+        tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
     End Sub
 
     Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_BurstTest.Click
