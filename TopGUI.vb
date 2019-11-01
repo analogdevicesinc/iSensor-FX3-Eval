@@ -151,7 +151,7 @@ Public Class TopGUI
         tip0.SetToolTip(Me.btn_CheckDUTConnection, "Checks a DUT connection by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
         tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
         tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
-        tip0.SetToolTip(Me.btn_measurePulse, "Measure a DIO pulse width. Can send a pin or register trigger condition")
+        tip0.SetToolTip(Me.btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
         tip0.SetToolTip(Me.btn_OtherApps, "Other misc. applications developed for the iSensor FX3 Example GUI")
         tip0.SetToolTip(Me.btn_SelectDUT, "Select the DUT type. Loads the default values for that DUT type")
         tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
@@ -301,11 +301,10 @@ Public Class TopGUI
         Me.Hide()
     End Sub
 
-    Private Sub btn_measurePulse_Click(sender As Object, e As EventArgs) Handles btn_measurePulse.Click
-        Dim subGUI As New PulseMeasureGUI()
+    Private Sub btn_plotFFT_Click(sender As Object, e As EventArgs) Handles btn_plotFFT.Click
+        Dim subGUI As New FrequencyPlotGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
     End Sub
 
     Private Sub btn_PinAccess_Click_1(sender As Object, e As EventArgs) Handles btn_PinAccess.Click
@@ -510,7 +509,7 @@ Public Class TopGUI
         btn_RegAccess.Enabled = True
         btn_ResetDUT.Enabled = True
         btn_SelectDUT.Enabled = True
-        btn_measurePulse.Enabled = True
+        btn_plotFFT.Enabled = True
         btn_PinAccess.Enabled = True
         btn_OtherApps.Enabled = True
         btn_plotData.Enabled = True
@@ -563,7 +562,7 @@ Public Class TopGUI
         btn_RegAccess.Enabled = False
         btn_ResetDUT.Enabled = False
         btn_SelectDUT.Enabled = False
-        btn_measurePulse.Enabled = False
+        btn_plotFFT.Enabled = False
         btn_PinAccess.Enabled = False
         btn_OtherApps.Enabled = False
         btn_plotData.Enabled = False

@@ -54,6 +54,8 @@ Public Class FrequencyPlotGUI
         dataPlot.ChartAreas(0).AxisX.Title = "Frequency (Hz)"
         dataPlot.ChartAreas(0).AxisX.LabelStyle.Format = "#.##"
         dataPlot.ChartAreas(0).AxisY.Title = "FFT Magnitude"
+        dataPlot.ChartAreas(0).AxisX.LogarithmBase = 10
+        dataPlot.ChartAreas(0).AxisY.LogarithmBase = 10
 
         'Remove all existing series
         dataPlot.Series.Clear()
@@ -78,22 +80,20 @@ Public Class FrequencyPlotGUI
             selectedRegList.Add(m_TopGUI.RegMap(item.Text))
         Next
         m_FFTStream.RegList = selectedRegList
-        Dim freq As Double = m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 10000)
+        Dim freq As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)
         m_FFTStream.SampleFrequency = freq
-        drFreq.Text = freq.ToString()
+        drFreq.Text = FormatNumber(freq, 1).ToString() + "Hz"
     End Sub
 
     Private Sub UpdatePlot()
         For reg As Integer = 0 To selectedRegList.Count() - 1
             dataPlot.Series(reg).Points.Clear()
             For i As Integer = 0 To m_FFTStream.Result(reg).Count() - 1
-                If logYaxis.Checked Then
-                    dataPlot.Series(reg).Points.AddXY(m_FFTStream.FrequencyRange(i), 20 * Math.Log10(m_FFTStream.Result(reg)(i)))
-                Else
-                    dataPlot.Series(reg).Points.AddXY(m_FFTStream.FrequencyRange(i), m_FFTStream.Result(reg)(i))
-                End If
+                dataPlot.Series(reg).Points.AddXY(m_FFTStream.FrequencyRange(i), Math.Max(m_FFTStream.Result(reg)(i), 0.00000001))
             Next
         Next
+        dataPlot.ChartAreas(0).AxisX.IsLogarithmic = logXaxis.Checked
+        dataPlot.ChartAreas(0).AxisY.IsLogarithmic = logYaxis.Checked
         dataPlot.ChartAreas(0).RecalculateAxesScale()
         Dim freq As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)
         m_FFTStream.SampleFrequency = freq
@@ -135,6 +135,14 @@ Public Class FrequencyPlotGUI
         btn_stopPlot.Enabled = True
         btn_run.Enabled = False
         running = True
+
+        'disable inputs
+        NFFT.Enabled = False
+        FFT_Averages.Enabled = False
+        regSelect.Enabled = False
+        btn_addreg.Enabled = False
+        btn_removeReg.Enabled = False
+
     End Sub
 
     Private Sub btn_stopPlot_Click(sender As Object, e As EventArgs) Handles btn_stopPlot.Click
@@ -142,14 +150,14 @@ Public Class FrequencyPlotGUI
         btn_run.Enabled = True
         btn_stopPlot.Enabled = False
         running = False
-    End Sub
 
-    Private Sub logYaxis_CheckedChanged(sender As Object, e As EventArgs)
-        If logYaxis.Checked Then
-            dataPlot.ChartAreas(0).AxisY.Title = "FFT Magnitude (dB)"
-        Else
-            dataPlot.ChartAreas(0).AxisY.Title = "FFT Magnitude"
-        End If
+        'enable inputs
+        NFFT.Enabled = True
+        FFT_Averages.Enabled = True
+        regSelect.Enabled = True
+        btn_addreg.Enabled = True
+        btn_removeReg.Enabled = true
+
     End Sub
 
 End Class

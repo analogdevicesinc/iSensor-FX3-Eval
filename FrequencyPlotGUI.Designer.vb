@@ -21,9 +21,9 @@ Partial Class FrequencyPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.RegisterList = New System.Windows.Forms.ListView()
         Me.regSelect = New System.Windows.Forms.ComboBox()
@@ -39,21 +39,22 @@ Partial Class FrequencyPlotGUI
         Me.FFT_Averages = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.logYaxis = New System.Windows.Forms.CheckBox()
+        Me.logXaxis = New System.Windows.Forms.CheckBox()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dataPlot
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend2)
+        ChartArea1.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend1)
         Me.dataPlot.Location = New System.Drawing.Point(237, 9)
         Me.dataPlot.Name = "dataPlot"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.dataPlot.Series.Add(Series2)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.dataPlot.Series.Add(Series1)
         Me.dataPlot.Size = New System.Drawing.Size(587, 532)
         Me.dataPlot.TabIndex = 0
         Me.dataPlot.Text = "dataPlot"
@@ -175,18 +176,29 @@ Partial Class FrequencyPlotGUI
         'logYaxis
         '
         Me.logYaxis.AutoSize = True
-        Me.logYaxis.Location = New System.Drawing.Point(12, 88)
+        Me.logYaxis.Location = New System.Drawing.Point(93, 87)
         Me.logYaxis.Name = "logYaxis"
-        Me.logYaxis.Size = New System.Drawing.Size(112, 17)
+        Me.logYaxis.Size = New System.Drawing.Size(76, 17)
         Me.logYaxis.TabIndex = 15
-        Me.logYaxis.Text = "Logarithmic Y-Axis"
+        Me.logYaxis.Text = "Log Y-Axis"
         Me.logYaxis.UseVisualStyleBackColor = True
+        '
+        'logXaxis
+        '
+        Me.logXaxis.AutoSize = True
+        Me.logXaxis.Location = New System.Drawing.Point(11, 87)
+        Me.logXaxis.Name = "logXaxis"
+        Me.logXaxis.Size = New System.Drawing.Size(76, 17)
+        Me.logXaxis.TabIndex = 16
+        Me.logXaxis.Text = "Log X-Axis"
+        Me.logXaxis.UseVisualStyleBackColor = True
         '
         'FrequencyPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(836, 553)
+        Me.Controls.Add(Me.logXaxis)
         Me.Controls.Add(Me.logYaxis)
         Me.Controls.Add(Me.FFT_Averages)
         Me.Controls.Add(Me.Label4)
@@ -225,4 +237,5 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents FFT_Averages As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents logYaxis As CheckBox
+    Friend WithEvents logXaxis As CheckBox
 End Class

@@ -40,7 +40,7 @@ Partial Class TopGUI
         Me.btn_APIInfo = New System.Windows.Forms.Button()
         Me.btn_BoardInfo = New System.Windows.Forms.Button()
         Me.btn_PWMSetup = New System.Windows.Forms.Button()
-        Me.btn_measurePulse = New System.Windows.Forms.Button()
+        Me.btn_plotFFT = New System.Windows.Forms.Button()
         Me.btn_OtherApps = New System.Windows.Forms.Button()
         Me.btn_PinAccess = New System.Windows.Forms.Button()
         Me.label_apiVersion = New System.Windows.Forms.Label()
@@ -180,19 +180,19 @@ Partial Class TopGUI
         '
         'btn_APIInfo
         '
-        Me.btn_APIInfo.Location = New System.Drawing.Point(255, 219)
+        Me.btn_APIInfo.Location = New System.Drawing.Point(174, 219)
         Me.btn_APIInfo.Name = "btn_APIInfo"
         Me.btn_APIInfo.Size = New System.Drawing.Size(75, 64)
-        Me.btn_APIInfo.TabIndex = 13
+        Me.btn_APIInfo.TabIndex = 12
         Me.btn_APIInfo.Text = "FX3 API Info."
         Me.btn_APIInfo.UseVisualStyleBackColor = True
         '
         'btn_BoardInfo
         '
-        Me.btn_BoardInfo.Location = New System.Drawing.Point(336, 219)
+        Me.btn_BoardInfo.Location = New System.Drawing.Point(255, 219)
         Me.btn_BoardInfo.Name = "btn_BoardInfo"
         Me.btn_BoardInfo.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BoardInfo.TabIndex = 14
+        Me.btn_BoardInfo.TabIndex = 13
         Me.btn_BoardInfo.Text = "FX3 Board Info."
         Me.btn_BoardInfo.UseVisualStyleBackColor = True
         '
@@ -205,21 +205,21 @@ Partial Class TopGUI
         Me.btn_PWMSetup.Text = "PWM Output Setup"
         Me.btn_PWMSetup.UseVisualStyleBackColor = True
         '
-        'btn_measurePulse
+        'btn_plotFFT
         '
-        Me.btn_measurePulse.Location = New System.Drawing.Point(174, 219)
-        Me.btn_measurePulse.Name = "btn_measurePulse"
-        Me.btn_measurePulse.Size = New System.Drawing.Size(75, 64)
-        Me.btn_measurePulse.TabIndex = 12
-        Me.btn_measurePulse.Text = "Measure Signal Pulse Width"
-        Me.btn_measurePulse.UseVisualStyleBackColor = True
+        Me.btn_plotFFT.Location = New System.Drawing.Point(336, 149)
+        Me.btn_plotFFT.Name = "btn_plotFFT"
+        Me.btn_plotFFT.Size = New System.Drawing.Size(75, 64)
+        Me.btn_plotFFT.TabIndex = 9
+        Me.btn_plotFFT.Text = "FFT Data Plotting"
+        Me.btn_plotFFT.UseVisualStyleBackColor = True
         '
         'btn_OtherApps
         '
-        Me.btn_OtherApps.Location = New System.Drawing.Point(336, 149)
+        Me.btn_OtherApps.Location = New System.Drawing.Point(336, 219)
         Me.btn_OtherApps.Name = "btn_OtherApps"
         Me.btn_OtherApps.Size = New System.Drawing.Size(75, 64)
-        Me.btn_OtherApps.TabIndex = 9
+        Me.btn_OtherApps.TabIndex = 14
         Me.btn_OtherApps.Text = "Other Applications"
         Me.btn_OtherApps.UseVisualStyleBackColor = True
         '
@@ -280,7 +280,7 @@ Partial Class TopGUI
         Me.Controls.Add(Me.label_apiVersion)
         Me.Controls.Add(Me.btn_PinAccess)
         Me.Controls.Add(Me.btn_OtherApps)
-        Me.Controls.Add(Me.btn_measurePulse)
+        Me.Controls.Add(Me.btn_plotFFT)
         Me.Controls.Add(Me.btn_BoardInfo)
         Me.Controls.Add(Me.btn_PWMSetup)
         Me.Controls.Add(Me.btn_APIInfo)
@@ -324,7 +324,7 @@ Partial Class TopGUI
     Friend WithEvents btn_APIInfo As Button
     Friend WithEvents btn_BoardInfo As Button
     Friend WithEvents btn_PWMSetup As Button
-    Friend WithEvents btn_measurePulse As Button
+    Friend WithEvents btn_plotFFT As Button
     Friend WithEvents btn_OtherApps As Button
     Friend WithEvents btn_PinAccess As Button
     Friend WithEvents label_apiVersion As Label

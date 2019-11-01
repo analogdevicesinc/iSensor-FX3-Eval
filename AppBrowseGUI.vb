@@ -13,8 +13,9 @@ Public Class AppBrowseGUI
         Dim tip0 As ToolTip = New ToolTip()
         tip0.SetToolTip(Me.btn_BitBangSpi, "Bit-bang SPI traffic to a DUT")
         tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
-        tip0.SetToolTip(Me.btn_PlotFFT, "Stream and plot frequency domain DUT data in near real time")
+        tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
         tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
+
     End Sub
 
     Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_BurstTest.Click
@@ -35,9 +36,10 @@ Public Class AppBrowseGUI
         subGUI.Show()
     End Sub
 
-    Private Sub btn_PlotFFT_Click(sender As Object, e As EventArgs) Handles btn_PlotFFT.Click
-        Dim subGUI As New FrequencyPlotGUI()
+    Private Sub btn_pulseMeasure_Click(sender As Object, e As EventArgs) Handles btn_pulseMeasure.Click
+        Dim subGUI As New PulseMeasureGUI()
         subGUI.SetTopGUI(Me.m_TopGUI)
         subGUI.Show()
+        m_TopGUI.Hide()
     End Sub
 End Class

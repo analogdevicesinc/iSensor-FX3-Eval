@@ -24,7 +24,7 @@ Partial Class AppBrowseGUI
         Me.btn_BurstTest = New System.Windows.Forms.Button()
         Me.btn_BitBangSpi = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
-        Me.btn_PlotFFT = New System.Windows.Forms.Button()
+        Me.btn_pulseMeasure = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btn_BurstTest
@@ -54,21 +54,21 @@ Partial Class AppBrowseGUI
         Me.btn_ADXL375.Text = "ADXL375 Data Capture"
         Me.btn_ADXL375.UseVisualStyleBackColor = True
         '
-        'btn_PlotFFT
+        'btn_pulseMeasure
         '
-        Me.btn_PlotFFT.Location = New System.Drawing.Point(12, 12)
-        Me.btn_PlotFFT.Name = "btn_PlotFFT"
-        Me.btn_PlotFFT.Size = New System.Drawing.Size(75, 64)
-        Me.btn_PlotFFT.TabIndex = 0
-        Me.btn_PlotFFT.Text = "FFT Data Plotting"
-        Me.btn_PlotFFT.UseVisualStyleBackColor = True
+        Me.btn_pulseMeasure.Location = New System.Drawing.Point(12, 12)
+        Me.btn_pulseMeasure.Name = "btn_pulseMeasure"
+        Me.btn_pulseMeasure.Size = New System.Drawing.Size(75, 64)
+        Me.btn_pulseMeasure.TabIndex = 0
+        Me.btn_pulseMeasure.Text = "Measure Signal Pulse Width"
+        Me.btn_pulseMeasure.UseVisualStyleBackColor = True
         '
         'AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(347, 89)
-        Me.Controls.Add(Me.btn_PlotFFT)
+        Me.Controls.Add(Me.btn_pulseMeasure)
         Me.Controls.Add(Me.btn_ADXL375)
         Me.Controls.Add(Me.btn_BitBangSpi)
         Me.Controls.Add(Me.btn_BurstTest)
@@ -81,5 +81,5 @@ Partial Class AppBrowseGUI
     Friend WithEvents btn_BurstTest As Button
     Friend WithEvents btn_BitBangSpi As Button
     Friend WithEvents btn_ADXL375 As Button
-    Friend WithEvents btn_PlotFFT As Button
+    Friend WithEvents btn_pulseMeasure As Button
 End Class
