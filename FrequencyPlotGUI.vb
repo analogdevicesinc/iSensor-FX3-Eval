@@ -312,16 +312,10 @@ Public Class FrequencyPlotGUI
         filebrowser.Filter = "Image Files (*.png) | *.png"
         If filebrowser.ShowDialog() = DialogResult.OK Then
             m_TopGUI.lastFilePath = filebrowser.FileName
-            'create new bitmap of whole form
-            Dim bmpForm As Bitmap = New Bitmap(Me.Width, Me.Height)
-            Me.DrawToBitmap(bmpForm, New Rectangle(0, 0, bmpForm.Width, bmpForm.Height))
-            'bitmap of chart area
-            Dim bmp As Bitmap = New Bitmap(dataPlot.Width, dataPlot.Height)
-            Dim grd As Graphics = Graphics.FromImage(bmp)
-            grd.DrawImage(bmpForm, New Rectangle(0, 0, bmp.Width, bmp.Height), New Rectangle(dataPlot.Left - 1, dataPlot.Top - 1, bmp.Width, bmp.Height), GraphicsUnit.Pixel)
+            Dim bmpForm As Bitmap = New Bitmap(dataPlot.Width, dataPlot.Height)
+            dataPlot.DrawToBitmap(bmpForm, New Rectangle(0, 0, bmpForm.Width, bmpForm.Height))
             'save as png
-            bmp.Save(filebrowser.FileName, Imaging.ImageFormat.Png)
-            bmp.Dispose()
+            bmpForm.Save(filebrowser.FileName, Imaging.ImageFormat.Png)
             bmpForm.Dispose()
         Else
             Exit Sub

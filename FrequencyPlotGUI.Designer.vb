@@ -232,7 +232,6 @@ Partial Class FrequencyPlotGUI
         Me.btn_saveplot.TabIndex = 20
         Me.btn_saveplot.Text = "Save Plot"
         Me.btn_saveplot.UseVisualStyleBackColor = True
-        Me.btn_saveplot.Visible = False
         '
         'FrequencyPlotGUI
         '
