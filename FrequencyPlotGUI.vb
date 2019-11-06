@@ -32,7 +32,7 @@ Public Class FrequencyPlotGUI
 
         'set up list view
         RegisterList.View = View.Details
-        RegisterList.Columns.Add("Register", RegisterList.Width - 1, HorizontalAlignment.Left)
+        RegisterList.Columns.Add("Register", -1, HorizontalAlignment.Left)
 
         'initialize variables
         selectedRegList = New List(Of RegClass)
@@ -152,7 +152,8 @@ Public Class FrequencyPlotGUI
 
     Private Sub btn_addreg_Click(sender As Object, e As EventArgs) Handles btn_addreg.Click
         Dim newItem As New ListViewItem()
-        newItem.SubItems(0).Text = regSelect.SelectedItem
+        Dim reg As RegClass = m_TopGUI.RegMap(regSelect.SelectedItem)
+        newItem.SubItems(0).Text = reg.Label
         RegisterList.Items.Add(newItem)
     End Sub
 
