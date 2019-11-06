@@ -32,7 +32,7 @@ Public Class FrequencyPlotGUI
 
         'set up list view
         RegisterList.View = View.Details
-        RegisterList.Columns.Add("Register", -1, HorizontalAlignment.Left)
+        RegisterList.Columns.Add("Register", RegisterList.Width - 1, HorizontalAlignment.Left)
 
         'initialize variables
         selectedRegList = New List(Of RegClass)
@@ -190,6 +190,7 @@ Public Class FrequencyPlotGUI
         regSelect.Enabled = False
         btn_addreg.Enabled = False
         btn_removeReg.Enabled = False
+        btn_Clear.Enabled = False
         btn_stopPlot.Enabled = True
         btn_run.Enabled = False
 
@@ -205,6 +206,7 @@ Public Class FrequencyPlotGUI
         'enable inputs
         NFFT.Enabled = True
         FFT_Averages.Enabled = True
+        btn_Clear.Enabled = True
         regSelect.Enabled = True
         btn_addreg.Enabled = True
         btn_removeReg.Enabled = True
@@ -240,7 +242,7 @@ Public Class FrequencyPlotGUI
             loc.Y = e.Y
             Dim pointLabel As New Label()
             Me.Controls.Add(pointLabel)
-            pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString("0.#") + " magnitude" + Environment.NewLine + "●"
+            pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString("0.#") + " mag" + Environment.NewLine + "●"
             pointLabel.Font = New Font(pointLabel.Font, FontStyle.Bold)
             pointLabel.AutoSize = True
             loc.X = loc.X - (pointLabel.Width / 2)
