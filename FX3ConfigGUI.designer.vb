@@ -340,9 +340,9 @@ Partial Class FX3ConfigGUI
         Me.Label13.AutoSize = True
         Me.Label13.Location = New System.Drawing.Point(12, 417)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(88, 13)
+        Me.Label13.Size = New System.Drawing.Size(115, 13)
         Me.Label13.TabIndex = 35
-        Me.Label13.Text = "Timer Tick to ms:"
+        Me.Label13.Text = "Timer Tick to seconds:"
         '
         'SelectedRegMap
         '

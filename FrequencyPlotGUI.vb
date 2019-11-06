@@ -212,4 +212,120 @@ Public Class FrequencyPlotGUI
 
     End Sub
 
+    Private Sub dataPlot_Click(sender As Object, e As MouseEventArgs) Handles dataPlot.Click
+
+        Dim freq, mag As Double
+        Dim render As Boolean = True
+        Try
+            freq = dataPlot.ChartAreas(0).AxisX.PixelPositionToValue(e.X)
+            mag = dataPlot.ChartAreas(0).AxisY.PixelPositionToValue(e.Y)
+        Catch ex As Exception
+            render = False
+        End Try
+
+        'convert log scale data
+        If dataPlot.ChartAreas(0).AxisX.IsLogarithmic Then
+            freq = 10 ^ freq
+        End If
+
+        If dataPlot.ChartAreas(0).AxisY.IsLogarithmic Then
+            mag = 10 ^ mag
+        End If
+
+        If render Then
+            'place point and label on screen
+            Dim loc As Point = New Point
+            loc.X = e.X
+            loc.Y = e.Y
+            Dim pointLabel As New Label()
+            Me.Controls.Add(pointLabel)
+            pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString("0.#") + " magnitude" + Environment.NewLine + "●"
+            pointLabel.Font = New Font(pointLabel.Font, FontStyle.Bold)
+            pointLabel.AutoSize = True
+            loc.X = loc.X - (pointLabel.Width / 2)
+            loc.Y = loc.Y - (0.85 * pointLabel.Height)
+            pointLabel.Location = loc
+            pointLabel.Parent = dataPlot
+            pointLabel.BackColor = Color.Transparent
+            pointLabel.TextAlign = ContentAlignment.BottomCenter
+            pointLabel.BringToFront()
+        End If
+
+    End Sub
+
+    Private Sub btn_Clear_Click(sender As Object, e As EventArgs) Handles btn_Clear.Click
+        RegisterList.Items.Clear()
+    End Sub
+
+    Private Sub btn_ClearLabels_Click(sender As Object, e As EventArgs) Handles btn_ClearLabels.Click
+        ResetLabels()
+    End Sub
+
+    Private Sub ResetLabels()
+        Dim labelList As IEnumerable(Of Label) = dataPlot.Controls.OfType(Of Label)
+        For i As Integer = 0 To labelList.Count() - 1
+            dataPlot.Controls.Remove(labelList(0))
+        Next
+    End Sub
+
+    Private Sub btn_Export_Click(sender As Object, e As EventArgs) Handles btn_Export.Click
+        Dim data As New List(Of String)
+        Dim regNames As String
+        Dim title As String
+        Dim sample As String
+
+        'build title
+        title = "FFT_" + NFFT.Text + "Point_" + FFT_Averages.Text + "Averages"
+
+        'build header string
+        regNames = "FREQUENCY,"
+        For Each reg In selectedRegList
+            regNames = regNames + reg.Label + ","
+        Next
+        regNames = regNames.Remove(regNames.Count() - 1)
+        data.Add(regNames)
+
+        'add data
+        Try
+            For i As Integer = 0 To m_FFTStream.Result(0).Count() - 1
+                'get bin frequency
+                sample = m_FFTStream.FrequencyRange(i).ToString() + ","
+                'add data for each register
+                For reg As Integer = 0 To selectedRegList.Count() - 1
+                    sample = sample + m_FFTStream.Result(reg)(i).ToString() + ","
+                Next
+                'remove last comma
+                sample = sample.Remove(sample.Count() - 1)
+                data.Add(sample)
+            Next
+        Catch ex As Exception
+            'exit
+        End Try
+
+        saveCSV(title, data.ToArray())
+
+    End Sub
+
+    Private Sub btn_saveplot_Click(sender As Object, e As EventArgs) Handles btn_saveplot.Click
+        Dim filebrowser As New SaveFileDialog
+        filebrowser.FileName = "FFT_Plot"
+        filebrowser.Filter = "Image Files (*.png) | *.png"
+        If filebrowser.ShowDialog() = DialogResult.OK Then
+            m_TopGUI.lastFilePath = filebrowser.FileName
+            'create new bitmap of whole form
+            Dim bmpForm As Bitmap = New Bitmap(Me.Width, Me.Height)
+            Me.DrawToBitmap(bmpForm, New Rectangle(0, 0, bmpForm.Width, bmpForm.Height))
+            'bitmap of chart area
+            Dim bmp As Bitmap = New Bitmap(dataPlot.Width, dataPlot.Height)
+            Dim grd As Graphics = Graphics.FromImage(bmp)
+            grd.DrawImage(bmpForm, New Rectangle(0, 0, bmp.Width, bmp.Height), New Rectangle(dataPlot.Left - 1, dataPlot.Top - 1, bmp.Width, bmp.Height), GraphicsUnit.Pixel)
+            'save as png
+            bmp.Save(filebrowser.FileName, Imaging.ImageFormat.Png)
+            bmp.Dispose()
+            bmpForm.Dispose()
+        Else
+            Exit Sub
+        End If
+    End Sub
+
 End Class

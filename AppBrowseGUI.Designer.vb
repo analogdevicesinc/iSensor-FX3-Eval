@@ -25,6 +25,7 @@ Partial Class AppBrowseGUI
         Me.btn_BitBangSpi = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
+        Me.btn_test = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btn_BurstTest
@@ -63,11 +64,21 @@ Partial Class AppBrowseGUI
         Me.btn_pulseMeasure.Text = "Measure Signal Pulse Width"
         Me.btn_pulseMeasure.UseVisualStyleBackColor = True
         '
+        'btn_test
+        '
+        Me.btn_test.Location = New System.Drawing.Point(12, 82)
+        Me.btn_test.Name = "btn_test"
+        Me.btn_test.Size = New System.Drawing.Size(75, 64)
+        Me.btn_test.TabIndex = 4
+        Me.btn_test.Text = "Test Button"
+        Me.btn_test.UseVisualStyleBackColor = True
+        '
         'AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(347, 89)
+        Me.ClientSize = New System.Drawing.Size(347, 155)
+        Me.Controls.Add(Me.btn_test)
         Me.Controls.Add(Me.btn_pulseMeasure)
         Me.Controls.Add(Me.btn_ADXL375)
         Me.Controls.Add(Me.btn_BitBangSpi)
@@ -82,4 +93,5 @@ Partial Class AppBrowseGUI
     Friend WithEvents btn_BitBangSpi As Button
     Friend WithEvents btn_ADXL375 As Button
     Friend WithEvents btn_pulseMeasure As Button
+    Friend WithEvents btn_test As Button
 End Class
