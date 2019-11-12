@@ -70,7 +70,7 @@
     <ApplicationIcon>Analog.ICO</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\adisApi.dll</HintPath>
     </Reference>
@@ -78,15 +78,23 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\adisInterface.dll</HintPath>
     </Reference>
+    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\AForge.Math.dll</HintPath>
+    </Reference>
     <Reference Include="CCES_JTAG_Wrapper">
       <HintPath>Resources\CCES_JTAG_Wrapper.dll</HintPath>
     </Reference>
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Api, Version=2.1.4.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="FX3Api, Version=2.1.5.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\FX3Api.dll</HintPath>
+    </Reference>
+    <Reference Include="FX3USB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\FX3USB.dll</HintPath>
     </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>Resources\RegMapClasses.dll</HintPath>

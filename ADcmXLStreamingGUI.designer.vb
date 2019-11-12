@@ -75,7 +75,6 @@ Partial Class ADcmXLStreamingGUI
         Me.TotalFramesInput.Name = "TotalFramesInput"
         Me.TotalFramesInput.Size = New System.Drawing.Size(132, 20)
         Me.TotalFramesInput.TabIndex = 0
-        Me.TotalFramesInput.Text = "6897"
         '
         'Label2
         '
@@ -175,9 +174,9 @@ Partial Class ADcmXLStreamingGUI
         '
         'LinesPerCSVInput
         '
-        Me.LinesPerCSVInput.Location = New System.Drawing.Point(116, 43)
+        Me.LinesPerCSVInput.Location = New System.Drawing.Point(117, 43)
         Me.LinesPerCSVInput.Name = "LinesPerCSVInput"
-        Me.LinesPerCSVInput.Size = New System.Drawing.Size(132, 20)
+        Me.LinesPerCSVInput.Size = New System.Drawing.Size(131, 20)
         Me.LinesPerCSVInput.TabIndex = 1
         Me.LinesPerCSVInput.Text = "1000000"
         '
@@ -278,9 +277,9 @@ Partial Class ADcmXLStreamingGUI
         Me.DeviceType.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.DeviceType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.DeviceType.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.DeviceType.Location = New System.Drawing.Point(116, 69)
+        Me.DeviceType.Location = New System.Drawing.Point(117, 69)
         Me.DeviceType.Name = "DeviceType"
-        Me.DeviceType.Size = New System.Drawing.Size(132, 20)
+        Me.DeviceType.Size = New System.Drawing.Size(131, 20)
         Me.DeviceType.TabIndex = 42
         Me.DeviceType.Text = "0"
         Me.DeviceType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft

@@ -139,7 +139,11 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub ReadDrFreq()
-        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)).ToString() + "Hz"
+        Dim dr As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)
+        DrFreq.Text = FormatNumber(dr).ToString() + "Hz"
+        If dr = Double.PositiveInfinity Then
+            measureDr.Checked = False
+        End If
         drReadTimer.Enabled = measureDr.Checked
     End Sub
 

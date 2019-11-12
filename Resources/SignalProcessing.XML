@@ -4,6 +4,11 @@
         <name>SignalProcessing</name>
     </assembly>
     <members>
+        <member name="T:SignalProcessing.FFT">
+            <summary>
+            Class which allows you to perform a real FFT
+            </summary>
+        </member>
         <member name="M:SignalProcessing.FFT.RealFFT(System.Double[],System.UInt32,System.UInt32)">
             <summary>
             Performs an FFT on a real value input signal.
@@ -85,6 +90,12 @@
             New buffer handler. Converts data to double and enqueues it for the FFT thread to process
             </summary>
             <param name="BufferCount">Number of elements in the buffer</param>
+        </member>
+        <member name="M:SignalProcessing.Window.BartlettWindow(System.Double[]@)">
+            <summary>
+            Applies a Bartlett window
+            </summary>
+            <param name="values"></param>
         </member>
     </members>
 </doc>

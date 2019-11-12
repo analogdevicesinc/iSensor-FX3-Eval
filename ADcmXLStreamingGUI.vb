@@ -19,9 +19,9 @@ Public Class ADcmXLStreamingGUI
     Private frameTimeCalc As Double
     Private fileSizeEst As Double
     Private fileCounterEnable As Boolean
-    Private pinExitEnable As Integer = 0
-    Private timeoutEnable As Integer = 0
-    Private pinStartEnable As Integer = 0
+    Private pinExitEnable As Integer
+    Private timeoutEnable As Integer
+    Private pinStartEnable As Integer
 
     'Capture related fields
     Private pinCaptureStart As Boolean
@@ -121,6 +121,9 @@ Public Class ADcmXLStreamingGUI
 
         'Get data output save location
         savePath = setSaveLocation()
+        If IsNothing(savePath) Then
+            Exit Sub
+        End If
 
         'validate settings
         Try
@@ -247,6 +250,9 @@ Public Class ADcmXLStreamingGUI
 
     Private Sub CaptureSample()
 
+        Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
+        Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
+
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
 
@@ -289,7 +295,7 @@ Public Class ADcmXLStreamingGUI
         fileManager.FileMaxDataRows = linesPerFile
         fileManager.BufferTimeoutSeconds = 10
         fileManager.BuffersPerWrite = 1000 'Note: This is # frames, but TFSM counts this as samples. Multiply this number * 32 '15625 = 500k samples
-        fileManager.Captures = 1
+        fileManager.Captures = 32 '32 accel samples per buffer
         fileManager.RegList = regListDUT.RealTimeSamplingRegList
         fileManager.RunAsync()
         SampleDone = False
@@ -300,17 +306,16 @@ Public Class ADcmXLStreamingGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        Me.Invoke(New MethodInvoker(AddressOf SampleDoneLabels))
+        Invoke(New MethodInvoker(AddressOf SampleDoneLabels))
         SampleDone = True
         If runOnce Then
-            UpdateLabelsStop()
+            Invoke(New MethodInvoker(AddressOf UpdateLabelsStop))
         End If
     End Sub
 
     Private Sub SampleDoneLabels()
         statusLabel.Text = "Done with sample"
         statusLabel.BackColor = Color.LightGreen
-        SampleProgress.Value = 0
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StopBtn.Click
@@ -324,8 +329,6 @@ Public Class ADcmXLStreamingGUI
 
     Private Sub TotalFramesInput_TextChanged(sender As Object, e As EventArgs) Handles TotalFramesInput.TextChanged
         UpdateGuiCalcs()
-        CheckExitMethod()
-        CheckStartMethod()
     End Sub
 
     Private Sub UpdateGuiCalcs()
@@ -357,10 +360,12 @@ Public Class ADcmXLStreamingGUI
 
         frameTimeCalc = totalFrames / 6897
 
-        If fileCounterEnable Then
-            fileSizeEst = totalFrames * 0.0013986875
+        If m_TopGUI.FX3.PartType = DUTType.ADcmXL1021 Then
+            '1021 case. 10000 buffers gives file size of 7.57MB
+            fileSizeEst = totalFrames * (7.57 / 10000)
         Else
-            fileSizeEst = totalFrames * 0.00115465625
+            '3021 case. 10000 buffers gives file size of 11.2MB
+            fileSizeEst = totalFrames * (11.2 / 10000)
         End If
         TimeCalcLabel.Text = Math.Round(frameTimeCalc, 5).ToString() + " Seconds"
         EstFS.Text = Math.Round(fileSizeEst, 3).ToString() + " MB (est)"
@@ -403,12 +408,6 @@ Public Class ADcmXLStreamingGUI
         CheckExitMethod()
     End Sub
 
-    Private Sub WriteFrameNumber_CheckedChanged(sender As Object, e As EventArgs)
-        UpdateGuiCalcs()
-        CheckExitMethod()
-        CheckStartMethod()
-    End Sub
-
     Private Sub PinTriggerRadioBtn_CheckedChanged(sender As Object, e As EventArgs) Handles PinTriggerRadioBtn.CheckedChanged
         If PinTriggerRadioBtn.Checked Then
             TimerTriggerRadioBtn.Checked = False
@@ -428,4 +427,5 @@ Public Class ADcmXLStreamingGUI
             startPolarity.Enabled = False
         End If
     End Sub
+
 End Class
