@@ -265,10 +265,20 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_BulkRegRead_Click(sender As Object, e As EventArgs) Handles btn_BulkRegRead.Click
-        Dim subGUI As New RegisterBulkReadGUI()
-        subGUI.SetTopGUI(Me)
-        subGUI.Show()
-        Me.Hide()
+
+
+        If FX3.PartType = DUTType.IMU Then
+            Dim subGUI As New RegisterBulkReadGUI()
+            subGUI.SetTopGUI(Me)
+            subGUI.Show()
+            Me.Hide()
+        Else
+            'For machine health create a ADcmXLStreamingGUI
+            Dim subGUI As New ADcmXLBufferedLog()
+            subGUI.SetTopGUI(Me)
+            subGUI.Show()
+            Me.Hide()
+        End If
     End Sub
 
     Private Sub btn_PinAccess_Click(sender As Object, e As EventArgs) Handles btn_PWMSetup.Click
