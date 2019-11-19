@@ -132,6 +132,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ADcmXLStreamingGUI.designer.vb">
+      <DependentUpon>ADcmXLStreamingGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ADcmXLStreamingGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ADXl375GUI.Designer.vb">
       <DependentUpon>ADXl375GUI.vb</DependentUpon>
     </Compile>
@@ -181,19 +187,19 @@
     <Compile Include="FrequencyPlotGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegisterGUI.designer.vb">
-      <DependentUpon>RegisterGUI.vb</DependentUpon>
+    <Compile Include="FX3ConfigGUI.designer.vb">
+      <DependentUpon>FX3ConfigGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="RegisterGUI.vb">
+    <Compile Include="FX3ConfigGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="helperFunctions.vb" />
     <Compile Include="IMUStreamingGUI.designer.vb">
       <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
     </Compile>
     <Compile Include="IMUStreamingGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="helperFunctions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -227,6 +233,18 @@
     <Compile Include="PWMSetupGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="RegisterBulkReadGUI.designer.vb">
+      <DependentUpon>RegisterBulkReadGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterBulkReadGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegisterGUI.designer.vb">
+      <DependentUpon>RegisterGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SelectDUTGUI.Designer.vb">
       <DependentUpon>SelectDUTGUI.vb</DependentUpon>
     </Compile>
@@ -245,24 +263,6 @@
     <Compile Include="SelectRegmapGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FX3ConfigGUI.designer.vb">
-      <DependentUpon>FX3ConfigGUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="FX3ConfigGUI.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RegisterBulkReadGUI.designer.vb">
-      <DependentUpon>RegisterBulkReadGUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="RegisterBulkReadGUI.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ADcmXLStreamingGUI.designer.vb">
-      <DependentUpon>ADcmXLStreamingGUI.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ADcmXLStreamingGUI.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="TopGUI.designer.vb">
       <DependentUpon>TopGUI.vb</DependentUpon>
     </Compile>
@@ -271,6 +271,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ADcmXLStreamingGUI.resx">
+      <DependentUpon>ADcmXLStreamingGUI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ADXl375GUI.resx">
       <DependentUpon>ADXl375GUI.vb</DependentUpon>
     </EmbeddedResource>
@@ -295,8 +298,8 @@
     <EmbeddedResource Include="FrequencyPlotGUI.resx">
       <DependentUpon>FrequencyPlotGUI.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RegisterGUI.resx">
-      <DependentUpon>RegisterGUI.vb</DependentUpon>
+    <EmbeddedResource Include="FX3ConfigGUI.resx">
+      <DependentUpon>FX3ConfigGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IMUStreamingGUI.resx">
       <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
@@ -306,36 +309,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PinAccessGUI.resx">
-      <DependentUpon>PinAccessGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PulseMeasureGUI.resx">
-      <DependentUpon>PulseMeasureGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PWMSetupGUI.resx">
-      <DependentUpon>PWMSetupGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SelectDUTGUI.resx">
-      <DependentUpon>SelectDUTGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SelectFX3GUI.resx">
-      <DependentUpon>SelectFX3GUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SelectRegmapGUI.resx">
-      <DependentUpon>SelectRegmapGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FX3ConfigGUI.resx">
-      <DependentUpon>FX3ConfigGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RegisterBulkReadGUI.resx">
-      <DependentUpon>RegisterBulkReadGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ADcmXLStreamingGUI.resx">
-      <DependentUpon>ADcmXLStreamingGUI.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="TopGUI.resx">
-      <DependentUpon>TopGUI.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +334,33 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
+    <EmbeddedResource Include="PinAccessGUI.resx">
+      <DependentUpon>PinAccessGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PulseMeasureGUI.resx">
+      <DependentUpon>PulseMeasureGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PWMSetupGUI.resx">
+      <DependentUpon>PWMSetupGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterBulkReadGUI.resx">
+      <DependentUpon>RegisterBulkReadGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterGUI.resx">
+      <DependentUpon>RegisterGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectDUTGUI.resx">
+      <DependentUpon>SelectDUTGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectFX3GUI.resx">
+      <DependentUpon>SelectFX3GUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectRegmapGUI.resx">
+      <DependentUpon>SelectRegmapGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TopGUI.resx">
+      <DependentUpon>TopGUI.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="USBFlashProg.img" />
   </ItemGroup>
   <ItemGroup>
