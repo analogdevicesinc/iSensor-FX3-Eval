@@ -32,9 +32,11 @@ Public Class ADcmXLStreamingGUI
     Private numSampleCaptures As Integer
     Private sampleCounter As Integer
 
+    'bool to track if cancel is async canceled
     Private CancelCapture As Boolean
-    Private SampleDone As Boolean
-    Private runOnce As Boolean
+
+    'wait handle for captures
+    Private sampleWait As EventWaitHandle
 
     'File related fields
     Private savePath As String
@@ -60,6 +62,8 @@ Public Class ADcmXLStreamingGUI
     End Sub
 
     Private Sub TextFileStreamManagerStreaming_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        sampleWait = New EventWaitHandle(False, EventResetMode.AutoReset)
 
         If m_TopGUI.FX3.PartType = DUTType.ADcmXL3021 Then
             m_TopGUI.Dut = New adisInterface.AdcmInterface3Axis(m_TopGUI.FX3)
@@ -105,25 +109,25 @@ Public Class ADcmXLStreamingGUI
         startPolarity.Items.Add("High")
         startPolarity.Items.Add("Low")
         startPolarity.SelectedIndex = 0
-
         TimerTriggerRadioBtn.Checked = True
-
         SetupToolTips()
+
     End Sub
 
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
-        StopBtn.Enabled = True
-        startButton.Enabled = False
-
-        UpdateGuiCalcs()
-        CheckExitMethod()
-        CheckStartMethod()
 
         'Get data output save location
         savePath = setSaveLocation()
         If IsNothing(savePath) Then
             Exit Sub
         End If
+
+        StopBtn.Enabled = True
+        startButton.Enabled = False
+
+        UpdateGuiCalcs()
+        CheckExitMethod()
+        CheckStartMethod()
 
         'validate settings
         Try
@@ -166,31 +170,35 @@ Public Class ADcmXLStreamingGUI
         startPinBox.Enabled = False
         startPolarity.Enabled = False
 
-        If numSampleCaptures > 1 Or pinCaptureStart Then
-            runOnce = False
-            Dim temp As Thread
-            temp = New Thread(AddressOf CaptureWorker)
-            temp.Start()
-        Else
-            runOnce = True
-            CaptureSample()
-        End If
+        'start capture thread
+        Dim temp As Thread
+        temp = New Thread(AddressOf CaptureWorker)
+        temp.IsBackground = True
+        temp.Start()
 
     End Sub
 
     Private Sub CaptureWorker()
 
-        Dim pinWaitTime As Double
+        Dim timer As New Stopwatch
 
         'Iterate through
-        While sampleCounter < numSampleCaptures And Not CancelCapture
+        While sampleCounter < numSampleCaptures And (Not CancelCapture)
+
             If pinCaptureStart Then
-                'Pin mode
+                'Pin mode (poll pin until ready)
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Pin Wait"))
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
-                pinWaitTime = m_TopGUI.FX3.PulseWait(startPin, pinCapturePolarity, 0, captureTime)
-                If pinWaitTime >= captureTime Then
+                timer.Restart()
+                While (timer.ElapsedMilliseconds < captureTime) And (m_TopGUI.FX3.ReadPin(startPin) <> pinCapturePolarity) And (Not CancelCapture)
+                    System.Threading.Thread.Sleep(25)
+                End While
+                If timer.ElapsedMilliseconds >= captureTime Then
                     Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Pin wait timed out, exiting capture loop"))
+                    Exit While
+                End If
+                If CancelCapture Then
+                    Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Capture canceled, exiting capture loop"))
                     Exit While
                 End If
 
@@ -200,27 +208,39 @@ Public Class ADcmXLStreamingGUI
                 CaptureSample()
 
                 'Wait for sample completion
-                While Not SampleDone
-                    System.Threading.Thread.Sleep(100)
-                End While
+                sampleWait.WaitOne()
                 sampleCounter += 1
                 Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+
+            ElseIf numSampleCaptures = 1 Then
+
+                'single capture mode
+                CaptureSample()
+
+                'wait for sample completion
+                sampleWait.WaitOne()
+                sampleCounter += 1
+                Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+
             Else
+
+                'timer delay mode
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
                 CaptureSample()
 
                 'wait for sample completion
-                While Not SampleDone
-                    System.Threading.Thread.Sleep(100)
-                End While
+                sampleWait.WaitOne()
                 sampleCounter += 1
                 Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
 
                 'Perform sleep
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Sleep for capture period"))
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
-                System.Threading.Thread.Sleep(captureTime)
+                timer.Restart()
+                While (timer.ElapsedMilliseconds < captureTime) And (Not CancelCapture)
+                    System.Threading.Thread.Sleep(100)
+                End While
             End If
         End While
 
@@ -298,7 +318,6 @@ Public Class ADcmXLStreamingGUI
         fileManager.Captures = 32 '32 accel samples per buffer
         fileManager.RegList = regListDUT.RealTimeSamplingRegList
         fileManager.RunAsync()
-        SampleDone = False
     End Sub
 
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
@@ -306,24 +325,17 @@ Public Class ADcmXLStreamingGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        Invoke(New MethodInvoker(AddressOf SampleDoneLabels))
-        SampleDone = True
-        If runOnce Then
-            Invoke(New MethodInvoker(AddressOf UpdateLabelsStop))
-        End If
-    End Sub
-
-    Private Sub SampleDoneLabels()
-        statusLabel.Text = "Done with sample"
-        statusLabel.BackColor = Color.LightGreen
+        sampleWait.Set()
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StopBtn.Click
         CancelCapture = True
-        If fileManager.Busy Then
-            fileManager.CancelAsync()
-            statusLabel.Text = "Canceling in capture"
-            statusLabel.BackColor = Color.Red
+        If Not IsNothing(fileManager) Then
+            If fileManager.Busy Then
+                fileManager.CancelAsync()
+                statusLabel.Text = "Canceling in capture"
+                statusLabel.BackColor = Color.Red
+            End If
         End If
     End Sub
 

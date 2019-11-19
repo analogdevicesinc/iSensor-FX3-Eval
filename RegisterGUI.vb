@@ -32,7 +32,12 @@ Public Class RegisterGUI
             End If
         Next
 
-        drActive.Checked = m_TopGUI.FX3.DrActive
+        If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.ADcmXL Then
+            drActive.Enabled = False
+        Else
+            drActive.Checked = m_TopGUI.FX3.DrActive
+        End If
+
 
         'Set the selected index
         selectPage.SelectedIndex = 0
