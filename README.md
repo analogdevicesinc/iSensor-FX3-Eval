@@ -26,11 +26,11 @@ Open the FX3 GUI and wait for a new "Analog Devices iSensor FX3 Bootloader" devi
 
 The iSensors FX3 Demonstration Platform supports connecting to multiple FX3 boards concurrently. When you first load the Example GUI and click the connect button, an FX3 selection GUI will load. This GUI provides a drop down to select the FX3 board to connect to by serial number. The board currently selected on the dropdown will blink an LED. If there is only a single FX3 board connected to your PC, that board will be selected to connect to.
 
-![FX3 Board Select](Documentation/select_dut.JPG)
+![FX3 Board Select](Documentation/board_select.JPG)
 
 After the desired FX3 board is selected, The iSensors FX3 Demonstration Platform must be loaded into RAM. Clicking the "Connect to FX3" button in the main GUI will attempt to push firmware into the FX3 Explorer board, communicate with both the FX3 Explorer board and the sensor, and verify that the sensor has been properly connected by writing a random value to one of the user scratch registers and attempting to read it back. If successful, all buttons in the GUI will be enabled, allowing you to exercise additional features built into the interface and firmware. 
 
-![FX3Gui Successfully Connected](Documentation/successfully_connected.PNG)
+![FX3Gui Successfully Connected](Documentation/main_window.JPG)
 
 ## FX3 and SPI Configuration
 
