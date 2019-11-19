@@ -422,7 +422,7 @@ Partial Class ADcmXLStreamingGUI
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "ADcmXLStreamingGUI"
-        Me.Text = "Real Time Data Capture"
+        Me.Text = "ADcmXL Real Time Data Capture"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)

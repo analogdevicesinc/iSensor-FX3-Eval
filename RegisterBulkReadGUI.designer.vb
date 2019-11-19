@@ -32,7 +32,7 @@ Partial Class RegisterBulkReadGUI
         Me.NumberDRToCapture = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.MeasureDR = New System.Windows.Forms.Button()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.DrFreq = New System.Windows.Forms.Label()
         Me.DRDIO = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.statusLabel = New System.Windows.Forms.Label()
@@ -145,14 +145,14 @@ Partial Class RegisterBulkReadGUI
         Me.MeasureDR.Text = "Measure Data Ready"
         Me.MeasureDR.UseVisualStyleBackColor = True
         '
-        'Label4
+        'DrFreq
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(112, 242)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(39, 13)
-        Me.Label4.TabIndex = 17
-        Me.Label4.Text = "Label4"
+        Me.DrFreq.AutoSize = True
+        Me.DrFreq.Location = New System.Drawing.Point(112, 242)
+        Me.DrFreq.Name = "DrFreq"
+        Me.DrFreq.Size = New System.Drawing.Size(39, 13)
+        Me.DrFreq.TabIndex = 17
+        Me.DrFreq.Text = "Label4"
         '
         'DRDIO
         '
@@ -298,7 +298,7 @@ Partial Class RegisterBulkReadGUI
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.DRDIO)
-        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.DrFreq)
         Me.Controls.Add(Me.MeasureDR)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.NumberDRToCapture)
@@ -311,7 +311,7 @@ Partial Class RegisterBulkReadGUI
         Me.Controls.Add(Me.AddRegisterButton)
         Me.Controls.Add(Me.Label1)
         Me.Name = "RegisterBulkReadGUI"
-        Me.Text = "Bulk Register Streaming"
+        Me.Text = "Register Logging"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -327,7 +327,7 @@ Partial Class RegisterBulkReadGUI
     Friend WithEvents NumberDRToCapture As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents MeasureDR As Button
-    Friend WithEvents Label4 As Label
+    Friend WithEvents DrFreq As Label
     Friend WithEvents DRDIO As ComboBox
     Friend WithEvents Label5 As Label
     Friend WithEvents statusLabel As Label

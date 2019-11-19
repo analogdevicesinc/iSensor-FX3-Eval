@@ -284,7 +284,7 @@ Partial Class DataPlotGUI
         Me.Controls.Add(Me.regView)
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "DataPlotGUI"
-        Me.Text = "DataPlotGUI"
+        Me.Text = "Data Plotting"
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

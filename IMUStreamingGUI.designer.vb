@@ -161,7 +161,7 @@ Partial Class IMUStreamingGUI
         Me.BitModeCheckbox.Text = "16-Bit Mode Enabled?"
         Me.BitModeCheckbox.UseVisualStyleBackColor = True
         '
-        'BurstStreamGUI
+        'IMUStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -180,8 +180,8 @@ Partial Class IMUStreamingGUI
         Me.Controls.Add(Me.BurstStreamCancelButton)
         Me.Controls.Add(Me.MainButton)
         Me.Controls.Add(Me.ListView1)
-        Me.Name = "BurstStreamGUI"
-        Me.Text = "Burst Stream"
+        Me.Name = "IMUStreamingGUI"
+        Me.Text = "IMU Burst Data Capture"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

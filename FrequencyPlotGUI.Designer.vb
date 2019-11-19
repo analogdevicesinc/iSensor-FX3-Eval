@@ -259,7 +259,7 @@ Partial Class FrequencyPlotGUI
         Me.Controls.Add(Me.RegisterList)
         Me.Controls.Add(Me.dataPlot)
         Me.Name = "FrequencyPlotGUI"
-        Me.Text = "FrequencyPlotGUI"
+        Me.Text = "Frequency Plotting"
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

@@ -40,7 +40,7 @@ Public Class RegisterBulkReadGUI
 
         selectedRegview.View = View.Details
         selectedRegview.Columns.Add("Register", selectedRegview.Width - 1, HorizontalAlignment.Left)
-        Label4.Text = ""
+        DrFreq.Text = ""
         StreamingAVARCancelButton.Enabled = False
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
@@ -53,6 +53,32 @@ Public Class RegisterBulkReadGUI
         SamplesPerWrite.Text = m_TopGUI.samplesPerWrite.ToString()
         linesPerFile.Text = m_TopGUI.linesPerFile.ToString()
         UpdateRegCountLabel()
+        SetupToolTips()
+
+    End Sub
+
+    Private Sub SetupToolTips()
+
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.RegisterList, "Select register from the loaded register map")
+        tip0.SetToolTip(Me.selectedRegview, "Currently selected registers to stream")
+        tip0.SetToolTip(Me.regStreamingList, "Number of registers set to log from")
+        tip0.SetToolTip(Me.AddRegisterButton, "Add the currently selected register")
+        tip0.SetToolTip(Me.RemoveRegisterButton, "Remove the selected register")
+        tip0.SetToolTip(Me.ClearAllButton, "Clear all selected registers")
+        tip0.SetToolTip(Me.btn_loadregs, "Load a list of registers to log from a .csv file")
+        tip0.SetToolTip(Me.btn_saveregs, "Save the currently selected list of registers to log to a .csv file")
+        tip0.SetToolTip(Me.DRDIO, "Select Data Ready Pin")
+        tip0.SetToolTip(Me.DrActiveBox, "Select if register reads are synchronized to the data ready signal")
+        tip0.SetToolTip(Me.MeasureDR, "Measure the data ready frequency")
+        tip0.SetToolTip(Me.RegisterList, "Select register from the loaded register map to log")
+        tip0.SetToolTip(Me.DrFreq, "The current data ready frequency")
+        tip0.SetToolTip(Me.NumberDRToCapture, "The total number of reads of the selected register list to log")
+        tip0.SetToolTip(Me.SamplesPerWrite, "The total number of reads of the selected register list to write to the log file in a single operation")
+        tip0.SetToolTip(Me.linesPerFile, "Maximum lines in a single log file")
+        tip0.SetToolTip(Me.MainButton, "Start the register stream operation")
+        tip0.SetToolTip(Me.StreamingAVARCancelButton, "Cancel a running register stream operation")
+
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
@@ -203,6 +229,8 @@ Public Class RegisterBulkReadGUI
         MainButton.Enabled = False
         SamplesPerWrite.Enabled = False
         linesPerFile.Enabled = False
+        btn_loadregs.Enabled = False
+        btn_saveregs.Enabled = False
 
     End Sub
 
@@ -238,7 +266,7 @@ Public Class RegisterBulkReadGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
-        Label4.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
+        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
     End Sub
 
     Private Sub UpdateDRPin()

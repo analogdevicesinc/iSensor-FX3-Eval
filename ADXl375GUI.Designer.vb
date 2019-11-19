@@ -166,7 +166,7 @@ Partial Class ADXl375GUI
         Me.Controls.Add(Me.writeBtn)
         Me.Controls.Add(Me.readBtn)
         Me.Name = "ADXl375GUI"
-        Me.Text = "ADXl375GUI"
+        Me.Text = "ADXL375 Interface"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

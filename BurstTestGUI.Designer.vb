@@ -122,7 +122,7 @@ Partial Class BurstTestGUI
         Me.result.Text = "Label4"
         Me.result.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'BurstTest
+        'BurstTestGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -137,8 +137,8 @@ Partial Class BurstTestGUI
         Me.Controls.Add(Me.sclk)
         Me.Controls.Add(Me.csDelay)
         Me.Controls.Add(Me.drActive)
-        Me.Name = "BurstTest"
-        Me.Text = "BurstTest"
+        Me.Name = "BurstTestGUI"
+        Me.Text = "Burst Mode Test"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

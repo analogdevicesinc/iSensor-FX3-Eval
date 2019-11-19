@@ -82,7 +82,7 @@ Partial Class SelectDUTGUI
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DutInput)
         Me.Name = "SelectDUTGUI"
-        Me.Text = "SelectDUTGUI"
+        Me.Text = "Select DUT"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
