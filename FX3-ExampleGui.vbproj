@@ -88,10 +88,6 @@
     <Reference Include="CyUSB">
       <HintPath>Resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Api, Version=2.1.5.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\FX3Api.dll</HintPath>
-    </Reference>
     <Reference Include="FX3USB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Resources\FX3USB.dll</HintPath>
@@ -389,6 +385,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iSensor-FX3-API\FX3Api.vbproj">
+      <Project>{a553cac3-91bb-4ed1-914b-f55f1468b0c6}</Project>
+      <Name>FX3Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

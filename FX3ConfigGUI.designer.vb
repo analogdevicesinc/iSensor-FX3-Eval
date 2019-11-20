@@ -52,10 +52,12 @@ Partial Class FX3ConfigGUI
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.TimerTickMultiplierDisplay = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.SelectedRegMap = New System.Windows.Forms.TextBox()
+        Me.WatchdogTimeout = New System.Windows.Forms.TextBox()
+        Me.WatchdogEnable = New System.Windows.Forms.CheckBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -257,9 +259,9 @@ Partial Class FX3ConfigGUI
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(12, 284)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(61, 13)
+        Me.Label12.Size = New System.Drawing.Size(64, 13)
         Me.Label12.TabIndex = 23
-        Me.Label12.Text = "Stall Cycles"
+        Me.Label12.Text = "Stall Cycles:"
         '
         'StallCyclesInput
         '
@@ -297,68 +299,89 @@ Partial Class FX3ConfigGUI
         Me.Label14.AutoSize = True
         Me.Label14.Location = New System.Drawing.Point(12, 310)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(82, 13)
+        Me.Label14.Size = New System.Drawing.Size(85, 13)
         Me.Label14.TabIndex = 30
-        Me.Label14.Text = "Data Ready Pin"
+        Me.Label14.Text = "Data Ready Pin:"
         '
         'Label15
         '
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(12, 337)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(97, 13)
+        Me.Label15.Size = New System.Drawing.Size(100, 13)
         Me.Label15.TabIndex = 31
-        Me.Label15.Text = "Data Ready Active"
+        Me.Label15.Text = "Data Ready Active:"
         '
         'Label16
         '
         Me.Label16.AutoSize = True
         Me.Label16.Location = New System.Drawing.Point(12, 364)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(101, 13)
+        Me.Label16.Size = New System.Drawing.Size(104, 13)
         Me.Label16.TabIndex = 32
-        Me.Label16.Text = "Data Ready Polarity"
-        '
-        'TimerTickMultiplierDisplay
-        '
-        Me.TimerTickMultiplierDisplay.Location = New System.Drawing.Point(135, 414)
-        Me.TimerTickMultiplierDisplay.Name = "TimerTickMultiplierDisplay"
-        Me.TimerTickMultiplierDisplay.Size = New System.Drawing.Size(219, 20)
-        Me.TimerTickMultiplierDisplay.TabIndex = 15
+        Me.Label16.Text = "Data Ready Polarity:"
         '
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(12, 391)
+        Me.Label17.Location = New System.Drawing.Point(12, 440)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(96, 13)
         Me.Label17.TabIndex = 33
         Me.Label17.Text = "Selected RegMap:"
         '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(12, 417)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(115, 13)
-        Me.Label13.TabIndex = 35
-        Me.Label13.Text = "Timer Tick to seconds:"
-        '
         'SelectedRegMap
         '
-        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 388)
+        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 437)
         Me.SelectedRegMap.Name = "SelectedRegMap"
         Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
         Me.SelectedRegMap.TabIndex = 14
+        '
+        'WatchdogTimeout
+        '
+        Me.WatchdogTimeout.Location = New System.Drawing.Point(135, 411)
+        Me.WatchdogTimeout.Name = "WatchdogTimeout"
+        Me.WatchdogTimeout.Size = New System.Drawing.Size(219, 20)
+        Me.WatchdogTimeout.TabIndex = 36
+        '
+        'WatchdogEnable
+        '
+        Me.WatchdogEnable.AutoSize = True
+        Me.WatchdogEnable.Location = New System.Drawing.Point(135, 388)
+        Me.WatchdogEnable.Name = "WatchdogEnable"
+        Me.WatchdogEnable.Size = New System.Drawing.Size(174, 17)
+        Me.WatchdogEnable.TabIndex = 37
+        Me.WatchdogEnable.Text = "Watchdog Functionality Enable"
+        Me.WatchdogEnable.UseVisualStyleBackColor = True
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(12, 414)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(107, 13)
+        Me.Label18.TabIndex = 38
+        Me.Label18.Text = "Watchdog Period (s):"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(12, 389)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(91, 13)
+        Me.Label13.TabIndex = 39
+        Me.Label13.Text = "Watchdog Reset:"
         '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(441, 453)
-        Me.Controls.Add(Me.SelectedRegMap)
+        Me.ClientSize = New System.Drawing.Size(441, 470)
         Me.Controls.Add(Me.Label13)
-        Me.Controls.Add(Me.TimerTickMultiplierDisplay)
+        Me.Controls.Add(Me.Label18)
+        Me.Controls.Add(Me.WatchdogEnable)
+        Me.Controls.Add(Me.WatchdogTimeout)
+        Me.Controls.Add(Me.SelectedRegMap)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.Label15)
@@ -429,8 +452,10 @@ Partial Class FX3ConfigGUI
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
-    Friend WithEvents TimerTickMultiplierDisplay As TextBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents Label13 As Label
     Friend WithEvents SelectedRegMap As TextBox
+    Friend WithEvents WatchdogTimeout As TextBox
+    Friend WithEvents WatchdogEnable As CheckBox
+    Friend WithEvents Label18 As Label
+    Friend WithEvents Label13 As Label
 End Class
