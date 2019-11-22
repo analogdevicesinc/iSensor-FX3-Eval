@@ -215,7 +215,7 @@ FX3Api
 </member>
 <member name="P:FX3Api.FX3Connection.DrPolarity">
  <summary>
- The Data Ready polarity for streaming mode.
+ The Data Ready polarity for streaming mode (index 11)
  </summary>
  <returns>The data ready polarity, as a boolean (True - low to high, False - high to low)</returns>
 </member>
@@ -247,6 +247,18 @@ FX3Api
  Function which performs the SPI configuration option based on the current control endpoint setting
  </summary>
  <param name="clockFrequency">The SPI clock frequency, if it needs to be set</param>
+</member>
+<member name="P:FX3Api.FX3Connection.WatchdogTimeoutSeconds">
+ <summary>
+ Set the FX3 firmware watchdog timeout period (in seconds). If the watchdog is triggered the FX3 will reset.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.WatchdogEnable">
+ <summary>
+ Enable or disable the FX3 firmware watchdog.
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:FX3Api.FX3Connection.GetBoardStatus(System.Boolean@)">
  <summary>
