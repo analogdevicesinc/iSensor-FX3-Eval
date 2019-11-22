@@ -534,6 +534,9 @@ Public Class TopGUI
         FX3.SensorType = My.Settings.SensorType
         FX3.PartType = My.Settings.DeviceType
 
+        'disable watchdog
+        FX3.WatchdogEnable = False
+
         'Test the DUT
         UpdateDutLabel(FX3.PartType)
 
