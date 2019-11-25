@@ -90,7 +90,7 @@ Public Class RegisterGUI
                 readRegList.Add(reg)
             Else
                 'Dummy read reg for unreadable registers
-                readRegList.Add(New RegClass With {.Page = 0, .Address = 0})
+                readRegList.Add(New RegClass With {.Page = reg.Page, .Address = 0})
             End If
         Next
 
@@ -111,6 +111,14 @@ Public Class RegisterGUI
                 regIndex += 1
             Next
         End If
+
+        'check the page register
+        Dim expectedPage As Integer = currentRegList(0).Page
+        Dim dutPage As Integer = m_TopGUI.Dut.ReadUnsigned(New RegClass With {.Page = expectedPage, .Address = 0, .NumBytes = 2})
+        If dutPage <> expectedPage Then
+            MsgBox("ERROR: Unable to load page " + expectedPage.ToString())
+        End If
+
 
     End Sub
 
