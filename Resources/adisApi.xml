@@ -639,6 +639,28 @@
             This function is used to aynchronously stop a buffered stream.
             </summary>
         </member>
+        <member name="T:AdisApi.ISpi32InterfaceException">
+            <summary>
+            This exception is thrown by the Spi32Wrapper class whenever an invalid result is produced by an ISpi32Interface implementation class.
+            </summary>
+        </member>
+        <member name="M:AdisApi.ISpi32InterfaceException.#ctor(System.String)">
+            <summary>
+            Constructor for ISpi32InterfaceException. Must be sent with a message.
+            </summary>
+            <param name="message">Details about </param>
+        </member>
+        <member name="T:AdisApi.Spi32Wrapper">
+            <summary>
+            This class acts as a wrapper around a base ISpi32Interface implementation. It asserts that the base implementation produces the correct size data.
+            </summary>
+        </member>
+        <member name="M:AdisApi.Spi32Wrapper.#ctor(AdisApi.ISpi32Interface)">
+            <summary>
+            Constructor for a Spi32Wrapper
+            </summary>
+            <param name="SpiInterface">The ISpi32Interface implementation to wrap around</param>
+        </member>
         <member name="T:AdisApi.SpiCortexM4">
             <summary>
             
