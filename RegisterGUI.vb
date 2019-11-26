@@ -18,6 +18,8 @@ Public Class RegisterGUI
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
 
+    Private m_pageMessageList As List(Of Integer)
+
     Public Sub FormSetup() Handles Me.Load
         scaleData = False
 
@@ -38,10 +40,10 @@ Public Class RegisterGUI
             drActive.Checked = m_TopGUI.FX3.DrActive
         End If
 
-
         'Set the selected index
         selectPage.SelectedIndex = 0
         lastPageIndex = 0
+        m_pageMessageList = New List(Of Integer)
 
         pageReadTimer = New Timer(500)
         pageReadTimer.Enabled = False
@@ -114,11 +116,14 @@ Public Class RegisterGUI
 
         'check the page register
         Dim expectedPage As Integer = currentRegList(0).Page
+        If m_pageMessageList.Contains(expectedPage) Then
+            Exit Sub
+        End If
         Dim dutPage As Integer = m_TopGUI.Dut.ReadUnsigned(New RegClass With {.Page = expectedPage, .Address = 0, .NumBytes = 2})
         If dutPage <> expectedPage Then
+            m_pageMessageList.Add(expectedPage)
             MsgBox("ERROR: Unable to load page " + expectedPage.ToString())
         End If
-
 
     End Sub
 
@@ -247,10 +252,10 @@ Public Class RegisterGUI
         values = m_TopGUI.Dut.ReadUnsigned(readableRegMap)
         Dim strValues As New List(Of String)
 
-        strValues.Add("Register, Value")
+        strValues.Add("Register, Page, Address, Value")
         Dim index As Integer = 0
         For Each reg In readableRegMap
-            strValues.Add(reg.Label + "," + values(index).ToString())
+            strValues.Add(reg.Label + "," + reg.Page.ToString() + "," + reg.Address.ToString() + "," + values(index).ToString())
             index += 1
         Next
         saveCSV("RegDump", strValues.ToArray(), m_TopGUI.lastFilePath)
