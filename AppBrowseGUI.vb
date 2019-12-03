@@ -43,27 +43,4 @@ Public Class AppBrowseGUI
         m_TopGUI.Hide()
     End Sub
 
-    Private Sub btn_test_Click(sender As Object, e As EventArgs) Handles btn_test.Click
-
-        Dim expected As New List(Of Double)
-        Dim real As New List(Of Double)
-        For freq As Double = 100 To 4000 Step 100
-            m_TopGUI.FX3.StopPWM(m_TopGUI.FX3.DIO2)
-            m_TopGUI.FX3.StartPWM(freq, 0.5, m_TopGUI.FX3.DIO2)
-            System.Threading.Thread.Sleep(500)
-            expected.Add(freq)
-            real.Add(m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DIO1, 1, 5000))
-        Next
-
-        Dim result As New List(Of String)
-        result.Add("ExpectedFreq, ActualFreq")
-        For i As Integer = 0 To real.Count() - 1
-            result.Add(expected(i).ToString() + "," + real(i).ToString())
-        Next
-
-        saveCSV("FreqSweep", result.ToArray())
-
-    End Sub
-
-
 End Class
