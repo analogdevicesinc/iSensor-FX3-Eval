@@ -140,7 +140,7 @@ FX3Api
  <summary>
  Property to get or set the FX3 SPI controller chip select setting. Should be left on hardware control, changing modes will likely cause unexpected behavior.
  Reqcode:   B2
- Value:     Desired setting ( as SpiChipselectControl )
+ Value:     Desired setting (as SpiChipselectControl )
  Index:     4  
  Length:    4
  Data:      None
@@ -151,7 +151,7 @@ FX3Api
  <summary>
  The number of SPI clock cycles before the SPI transaction that chip select is toggled to active.
  Reqcode:   B2
- Value:     Desired Setting ( as SpiLagLeadTime )
+ Value:     Desired Setting (as SpiLagLeadTime )
  Index:     5 
  Length:    4
  Data:      None
@@ -162,7 +162,7 @@ FX3Api
  <summary>
  The number of SPI clock cycles after the transaction ends that chip select is toggled to idle.
  Reqcode:   B2
- Value:     Desired Setting ( as SpiLagLeadTime )
+ Value:     Desired Setting (as SpiLagLeadTime )
  Index:     6 
  Length:    4
  Data:      None
@@ -1077,7 +1077,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>The number of boards running the application firmware which were reset</returns>
 </member>
-<member name="M:FX3Api.FX3Connection.isFirmwarePathValid(System.String@)">
+<member name="M:FX3Api.FX3Connection.IsFirmwarePathValid(System.String@)">
  <summary>
  Checks to see if a provided firmware path is valid. Throws exception if it is not.
  </summary>
@@ -1548,6 +1548,12 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns></returns>
 </member>
+<member name="P:FX3Api.FX3Board.BootloaderVersion">
+ <summary>
+ Get the FX3 bootloader version. This is a second stage bootloader which is stored on the I2C EEPROM
+ </summary>
+ <returns>The bootloader version, as a string</returns>
+</member>
 <member name="M:FX3Api.FX3Board.SetFirmwareVersion(System.String)">
  <summary>
  Set the firmware version. Is friend so as to not be accessible to outside classes.
@@ -1559,6 +1565,12 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Sets if the firmware is currently running in verbose mode. Should NOT be used in verbose mode in normal operating conditions.
  </summary>
  <param name="isVerbose">If the board is in verbose mode or not</param>
+</member>
+<member name="M:FX3Api.FX3Board.SetBootloaderVersion(System.String)">
+ <summary>
+ Sets the bootloader version
+ </summary>
+ <param name="BootloaderVersion">The current bootloader version</param>
 </member>
 <member name="T:FX3Api.FX3ConfigurationException">
  <summary>
