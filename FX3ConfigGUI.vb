@@ -26,6 +26,8 @@ Public Class FX3ConfigGUI
 
         lagTimeInput.DataSource = ([Enum].GetValues(GetType(SpiLagLeadTime)))
 
+        DutVoltage.DataSource = ([Enum].GetValues(GetType(DutVoltage)))
+
         lsbFirstInput.Items.Add("True: LSB comes first")
         lsbFirstInput.Items.Add("False: MSB comes first")
 
@@ -79,6 +81,8 @@ Public Class FX3ConfigGUI
         leadTimeInput.SelectedItem = m_TopGUI.FX3.ChipSelectLeadTime
 
         lagTimeInput.SelectedItem = m_TopGUI.FX3.ChipSelectLagTime
+
+        DutVoltage.SelectedItem = m_TopGUI.FX3.DutSupplyMode
 
         wordLenInput.Text = CStr(m_TopGUI.FX3.WordLength)
 
@@ -228,6 +232,11 @@ Public Class FX3ConfigGUI
         'set regmap
         If Not m_regmappath = "" Then
             m_TopGUI.RegMapPath = m_regmappath
+        End If
+
+        'set power supply mode
+        If DutVoltage.SelectedItem <> m_TopGUI.FX3.DutSupplyMode Then
+            m_TopGUI.FX3.DutSupplyMode = DutVoltage.SelectedItem
         End If
 
         'set watchdog paramters

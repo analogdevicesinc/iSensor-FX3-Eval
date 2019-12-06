@@ -260,6 +260,24 @@ FX3Api
  </summary>
  <returns></returns>
 </member>
+<member name="P:FX3Api.FX3Connection.DutSupplyMode">
+ <summary>
+ Get or set the DUT supply mode on the FX3. Available options are regulated 3.3V, USB 5V, and off. This feature is only available on the 
+ ADI in-house iSensor FX3 eval platform, not the platform based on the Cypress Explorer kit.
+ </summary>
+ <returns>The DUT supply voltage setting</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetFirmwareBuildDate">
+ <summary>
+ Get the firmware build date and time
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.SetBootTimeStamp">
+ <summary>
+ Set the boot unix timestamp in the FX3 application firmware
+ </summary>
+</member>
 <member name="M:FX3Api.FX3Connection.GetBoardStatus(System.Boolean@)">
  <summary>
  Gets the current status code from the FX3.
@@ -1296,9 +1314,10 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Enum of the possible DUT types for the ADcmXLx021
  </summary>
 </member>
-<member name="T:FX3Api.PowerSupply">
+<member name="T:FX3Api.DutVoltage">
  <summary>
- Enum for DUT power supply modes
+ Enum for DUT power supply modes. These power supply modes are only available on the ADI in-house
+ FX3 Demonstration platform.
  </summary>
 </member>
 <member name="T:FX3Api.BitBangSpiConfig">
@@ -1522,6 +1541,12 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>The board uptime, in ms, as a long</returns>
 </member>
+<member name="P:FX3Api.FX3Board.BuildDateTime">
+ <summary>
+ Gets the date and time the FX3 application firmware was compiled.
+ </summary>
+ <returns>The date time string</returns>
+</member>
 <member name="P:FX3Api.FX3Board.SerialNumber">
  <summary>
  Read-only property to get the active FX3 serial number
@@ -1571,6 +1596,12 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Sets the bootloader version
  </summary>
  <param name="BootloaderVersion">The current bootloader version</param>
+</member>
+<member name="M:FX3Api.FX3Board.SetDateTime(System.String)">
+ <summary>
+ Set the Date/time string after connecting
+ </summary>
+ <param name="DateTime"></param>
 </member>
 <member name="T:FX3Api.FX3ConfigurationException">
  <summary>

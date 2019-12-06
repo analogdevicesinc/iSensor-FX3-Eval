@@ -4,6 +4,7 @@
 'Description:   Browse form for all misc. applications which don't need to be on main page.
 
 Imports CCES_JTAG_Wrapper
+Imports adisInterface
 
 Public Class AppBrowseGUI
     Inherits FormBase

@@ -58,6 +58,8 @@ Partial Class FX3ConfigGUI
         Me.WatchdogEnable = New System.Windows.Forms.CheckBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.DutVoltage = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -324,7 +326,7 @@ Partial Class FX3ConfigGUI
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(12, 440)
+        Me.Label17.Location = New System.Drawing.Point(12, 467)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(96, 13)
         Me.Label17.TabIndex = 33
@@ -332,7 +334,7 @@ Partial Class FX3ConfigGUI
         '
         'SelectedRegMap
         '
-        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 437)
+        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 464)
         Me.SelectedRegMap.Name = "SelectedRegMap"
         Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
         Me.SelectedRegMap.TabIndex = 14
@@ -372,11 +374,30 @@ Partial Class FX3ConfigGUI
         Me.Label13.TabIndex = 39
         Me.Label13.Text = "Watchdog Reset:"
         '
+        'Label19
+        '
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(12, 440)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(72, 13)
+        Me.Label19.TabIndex = 41
+        Me.Label19.Text = "DUT Voltage:"
+        '
+        'DutVoltage
+        '
+        Me.DutVoltage.FormattingEnabled = True
+        Me.DutVoltage.Location = New System.Drawing.Point(135, 437)
+        Me.DutVoltage.Name = "DutVoltage"
+        Me.DutVoltage.Size = New System.Drawing.Size(219, 21)
+        Me.DutVoltage.TabIndex = 40
+        '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(441, 470)
+        Me.ClientSize = New System.Drawing.Size(441, 500)
+        Me.Controls.Add(Me.Label19)
+        Me.Controls.Add(Me.DutVoltage)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label18)
         Me.Controls.Add(Me.WatchdogEnable)
@@ -458,4 +479,6 @@ Partial Class FX3ConfigGUI
     Friend WithEvents WatchdogEnable As CheckBox
     Friend WithEvents Label18 As Label
     Friend WithEvents Label13 As Label
+    Friend WithEvents Label19 As Label
+    Friend WithEvents DutVoltage As ComboBox
 End Class
