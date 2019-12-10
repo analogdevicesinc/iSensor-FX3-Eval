@@ -16,9 +16,13 @@ Public Class BurstTestGUI
         csDelay.DataSource = ([Enum].GetValues(GetType(SpiLagLeadTime)))
         csDelay.SelectedItem = m_TopGUI.FX3.ChipSelectLeadTime
         numBytes.Text = "20"
-        numWords = 10
-        result.Text = ""
+        numWords = 9
         m_TopGUI.FX3.StripBurstTriggerWord = False
+        result.View = View.Details
+        result.Columns.Add("Byte Number")
+        result.Columns.Add("Byte Value")
+        result.Columns(0).Width = -2
+        result.Columns(1).Width = -2
     End Sub
 
     Private Sub captureData_Click(sender As Object, e As EventArgs) Handles captureData.Click
@@ -30,9 +34,17 @@ Public Class BurstTestGUI
         m_TopGUI.FX3.WaitForStreamCompletion(250)
         Dim buf() As UShort
         buf = m_TopGUI.FX3.GetBuffer()
-        result.Text = "0x"
-        For Each value In buf
-            result.Text = result.Text + value.ToString("x4")
+        Dim byteNum As Integer = 0
+        Dim byteVal As UShort
+        result.Items.Clear()
+        For Each item In buf
+            'lower
+            byteVal = (item >> 8)
+            result.Items.Add(New ListViewItem(New String() {byteNum.ToString(), byteVal.ToString("X2")}))
+            byteNum += 1
+            byteVal = item And &HFF
+            result.Items.Add(New ListViewItem(New String() {byteNum.ToString(), byteVal.ToString("X2")}))
+            byteNum += 1
         Next
     End Sub
 
