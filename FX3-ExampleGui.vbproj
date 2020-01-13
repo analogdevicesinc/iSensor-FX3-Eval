@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A9BF8777-02E2-4429-82B0-99063E8EC9EF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>FX3ExampleGUI.TopGUI</StartupObject>
+    <StartupObject>FX3ExampleGUI.My.MyApplication</StartupObject>
     <RootNamespace>FX3ExampleGUI</RootNamespace>
     <AssemblyName>FX3ExampleGUI</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
