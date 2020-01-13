@@ -169,7 +169,12 @@ Public Class PinAccessGUI
         ' get mode
         ' TODO: get mode once it is implemented
 
-        m_TopGUI.FX3.PulseDrive(pin, level, period, mode)
+        Try
+            m_TopGUI.FX3.PulseDrive(pin, level, period, mode)
+        Catch ex As Exception
+            MsgBox("ERROR: " + ex.Message())
+        End Try
+
     End Sub
 
     Private Sub ButtonReadSelected_Click(sender As Object, e As EventArgs) Handles ButtonReadSelected.Click

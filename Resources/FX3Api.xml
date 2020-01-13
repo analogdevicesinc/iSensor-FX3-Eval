@@ -591,7 +591,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <param name="pin">The FX3PinObject for the pin to drive</param>
  <param name="polarity">The level to drive the pin to. 1 - high, 0 - low</param>
- <param name="pperiod">The time to drive the pin for, in ms</param>
+ <param name="pperiod">The time to drive the pin for, in ms. Minimum of 3us.</param>
  <param name="mode">Not implemented</param>
 </member>
 <member name="M:FX3Api.FX3Connection.PulseWait(AdisApi.IPinObject,System.UInt32,System.UInt32,System.UInt32)">
@@ -651,6 +651,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="timeoutInMs">The timeout from when the pin measurement starts to when the function returns if the signal cannot be found</param>
  <returns>The DR frequency in Hz</returns>
 </member>
+<member name="M:FX3Api.FX3Connection.MeasurePinDelay(AdisApi.IPinObject,System.UInt32,AdisApi.IPinObject,System.UInt32)">
+ <summary>
+ This function measures the time delay between toggling a trigger pin, and a state change on the busy pin. This can be used to measure
+ the propagation delay between a sync edge and data ready being de-asserted.
+ </summary>
+ <param name="TriggerPin">The pin to toggle. When this pin is driven to the selected polarity the delay timer starts</param>
+ <param name="TriggerDrivePolarity">The polarity to drive the trigger pin to. 1- high, 0 - low</param>
+ <param name="BusyPin">The pin to measure.</param>
+ <param name="Timeout">Operation timeout period, in ms</param>
+ <returns>The delay time, in ms</returns>
+</member>
 <member name="M:FX3Api.FX3Connection.MeasureBusyPulse(AdisApi.IPinObject,System.UInt32,System.UInt32,AdisApi.IPinObject,System.UInt32,System.UInt32)">
  <summary>
  This function triggers a DUT action using a pulse drive, and then measures the following pulse width on a separate busy line.
@@ -664,12 +675,11 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="Timeout">The timeout, in ms, to wait before canceling, if the pulse is never detected</param>
  <returns>The pulse width, in ms. Accurate to approx. 1us</returns>
 </member>
-<member name="M:FX3Api.FX3Connection.MeasureBusyPulse(System.UInt16,System.UInt16,AdisApi.IPinObject,System.UInt32,System.UInt32)">
+<member name="M:FX3Api.FX3Connection.MeasureBusyPulse(System.Byte[],AdisApi.IPinObject,System.UInt32,System.UInt32)">
  <summary>
  Overload of measure busy pulse which triggers the DUT event using a SPI write instead of a pin drive.
  </summary>
- <param name="TriggerRegAddr">The address of the DUT trigger register (For example, a COMMAND register)</param>
- <param name="TriggerRegValue">The value to write to the DUT trigger register</param>
+ <param name="SpiTriggerData">The data to transmit on the MOSI line, to trigger the operation being measured</param>
  <param name="BusyPin">The pin to measure a busy pulse on</param>
  <param name="BusyPolarity">The polarity of the pulse being measured (0 will measure a low pulse, 1 will measure a high pulse)</param>
  <param name="Timeout">The timeout, in ms, to wait before canceling, if the pulse is never detected</param>
