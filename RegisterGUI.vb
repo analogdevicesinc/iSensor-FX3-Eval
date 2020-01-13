@@ -17,10 +17,15 @@ Public Class RegisterGUI
     Private drReadTimer As Timer
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
+    Private originalDRSetting As Boolean
 
     Private m_pageMessageList As List(Of Integer)
 
     Public Sub FormSetup() Handles Me.Load
+        'disable dr active reads
+        originalDRSetting = m_TopGUI.FX3.DrActive
+        m_TopGUI.FX3.DrActive = False
+
         scaleData = False
 
         'get list of pages
@@ -170,6 +175,9 @@ Public Class RegisterGUI
         pageReadTimer.Enabled = False
         drReadTimer.Enabled = False
         m_TopGUI.btn_RegAccess.Enabled = True
+
+        'reset dr active setting
+        m_TopGUI.FX3.DrActive = originalDRSetting Or drActive.Checked
     End Sub
 
     Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged

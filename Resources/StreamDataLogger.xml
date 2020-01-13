@@ -22,6 +22,12 @@ StreamDataLogger
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="P:StreamDataLogger.Logger.LowerWordFirst">
+ <summary>
+ Property to get/set if the lower word is returned first for a 32-bit register
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:StreamDataLogger.Logger.Buffers">
  <summary>
  The total number of buffers to read in the stream. Each buffer is the reglist read numcaptures times

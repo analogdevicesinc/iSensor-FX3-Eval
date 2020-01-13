@@ -443,11 +443,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="P:FX3Api.FX3Connection.WordCount">
  <summary>
- Gets or sets the number of 16 bit words that are transferred during the burst.
+ Gets or sets the number of 16 bit words that are read during the burst. Does not include trigger, real transfer will be 2 bytes larger.
  </summary>
  <value></value>
  <returns></returns>
  <remarks></remarks>
+</member>
+<member name="P:FX3Api.FX3Connection.BurstByteCount">
+ <summary>
+ Get or set the burst word length, in bytes. Is the total count of bytes transfered, including trigger
+ </summary>
+ <returns></returns>
 </member>
 <member name="P:FX3Api.FX3Connection.TriggerReg">
  <summary>
@@ -456,6 +462,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <value></value>
  <returns></returns>
  <remarks></remarks>
+</member>
+<member name="P:FX3Api.FX3Connection.BurstMOSIData">
+ <summary>
+ Data to transmit on the MOSI line during a burst read operation. Is overwriten if
+ you set the trigger reg, since trigger reg is given priority.
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:FX3Api.FX3Connection.ClearBurstMode">
  <summary>
@@ -495,7 +508,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Cancel a any running stream
  </summary>
 </member>
-<member name="M:FX3Api.FX3Connection.StartBurstStream(System.UInt32)">
+<member name="M:FX3Api.FX3Connection.StartBurstStream(System.UInt32,System.Collections.Generic.IEnumerable{System.Byte})">
  <summary>
  Function to start a burst read using the BurstStreamManager
  </summary>

@@ -15,11 +15,19 @@ Public Class RegisterBulkReadGUI
     Private pin As IPinObject
 
     Public Sub FormSetup() Handles Me.Load
+
+        'create control handle if needed
+        If Not IsHandleCreated Then
+            CreateHandle()
+        End If
+
+        'populate selected register list from the last run
         For Each reg In m_TopGUI.RegMap
             RegisterList.Items.Add(reg.Label)
         Next
         RegisterList.SelectedIndex = 0
 
+        'add DIO options
         DRDIO.Items.Add("DIO1")
         DRDIO.Items.Add("DIO2")
         DRDIO.Items.Add("DIO3")
@@ -94,6 +102,9 @@ Public Class RegisterBulkReadGUI
         m_TopGUI.linesPerFile = Convert.ToInt32(linesPerFile.Text)
         m_TopGUI.samplesPerWrite = Convert.ToInt32(SamplesPerWrite.Text)
 
+        'dispose
+        Me.Dispose()
+
     End Sub
 
     Private Sub AddRegisterButton_Click(sender As Object, e As EventArgs) Handles AddRegisterButton.Click
@@ -128,7 +139,7 @@ Public Class RegisterBulkReadGUI
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
 
         Dim savePath As String
-        Dim DrFreq As Double = Double.PositiveInfinity
+        Dim MeasuredFreq As Double = Double.PositiveInfinity
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
@@ -150,7 +161,11 @@ Public Class RegisterBulkReadGUI
 
         'Check whether the measured DR is valid
         If m_TopGUI.FX3.DrActive Then
-            If m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) > 10000 Or m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) < 0 Then
+            'measure data ready frequency
+            MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(pin, 1, 10000, 2)
+            DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
+
+            If MeasuredFreq > 10000 Or MeasuredFreq = Double.PositiveInfinity Then
                 MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
                 Exit Sub
             End If
@@ -164,7 +179,7 @@ Public Class RegisterBulkReadGUI
 
         'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
         If m_TopGUI.FX3.DrActive Then
-            Dim drPeriod As Double = 1 / m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2)
+            Dim drPeriod As Double = 1 / MeasuredFreq
             Dim num16bitregs As Integer = 0
             For Each reg In regList
                 If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
@@ -235,7 +250,11 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        Me.Invoke(New MethodInvoker(AddressOf DoneWork))
+        If Me.InvokeRequired Then
+            Me.Invoke((New MethodInvoker(AddressOf DoneWork)))
+        Else
+            DoneWork()
+        End If
     End Sub
 
     Private Sub DoneWork()
@@ -287,7 +306,11 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        Me.Invoke(New MethodInvoker(Sub() CaptureProgressStreaming.Value = e.ProgressPercentage))
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(Sub() CaptureProgressStreaming.Value = e.ProgressPercentage))
+        Else
+            CaptureProgressStreaming.Value = e.ProgressPercentage
+        End If
     End Sub
 
     Private Sub UpdateGUI()

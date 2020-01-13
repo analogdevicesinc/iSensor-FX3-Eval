@@ -26,17 +26,18 @@ Partial Class BurstTestGUI
         Me.sclk = New System.Windows.Forms.TextBox()
         Me.applySettings = New System.Windows.Forms.Button()
         Me.captureData = New System.Windows.Forms.Button()
-        Me.numBytes = New System.Windows.Forms.TextBox()
+        Me.num32words = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.result = New System.Windows.Forms.ListView()
+        Me.result = New System.Windows.Forms.DataGridView()
+        CType(Me.result, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'drActive
         '
         Me.drActive.AutoSize = True
-        Me.drActive.Location = New System.Drawing.Point(80, 12)
+        Me.drActive.Location = New System.Drawing.Point(99, 12)
         Me.drActive.Name = "drActive"
         Me.drActive.Size = New System.Drawing.Size(75, 17)
         Me.drActive.TabIndex = 0
@@ -46,16 +47,16 @@ Partial Class BurstTestGUI
         'csDelay
         '
         Me.csDelay.FormattingEnabled = True
-        Me.csDelay.Location = New System.Drawing.Point(80, 35)
+        Me.csDelay.Location = New System.Drawing.Point(99, 35)
         Me.csDelay.Name = "csDelay"
-        Me.csDelay.Size = New System.Drawing.Size(172, 21)
+        Me.csDelay.Size = New System.Drawing.Size(216, 21)
         Me.csDelay.TabIndex = 1
         '
         'sclk
         '
-        Me.sclk.Location = New System.Drawing.Point(80, 62)
+        Me.sclk.Location = New System.Drawing.Point(99, 62)
         Me.sclk.Name = "sclk"
-        Me.sclk.Size = New System.Drawing.Size(172, 20)
+        Me.sclk.Size = New System.Drawing.Size(216, 20)
         Me.sclk.TabIndex = 2
         '
         'applySettings
@@ -69,19 +70,19 @@ Partial Class BurstTestGUI
         '
         'captureData
         '
-        Me.captureData.Location = New System.Drawing.Point(177, 114)
+        Me.captureData.Location = New System.Drawing.Point(240, 114)
         Me.captureData.Name = "captureData"
         Me.captureData.Size = New System.Drawing.Size(75, 45)
         Me.captureData.TabIndex = 4
         Me.captureData.Text = "Capture Data"
         Me.captureData.UseVisualStyleBackColor = True
         '
-        'numBytes
+        'num32words
         '
-        Me.numBytes.Location = New System.Drawing.Point(80, 88)
-        Me.numBytes.Name = "numBytes"
-        Me.numBytes.Size = New System.Drawing.Size(172, 20)
-        Me.numBytes.TabIndex = 5
+        Me.num32words.Location = New System.Drawing.Point(99, 88)
+        Me.num32words.Name = "num32words"
+        Me.num32words.Size = New System.Drawing.Size(216, 20)
+        Me.num32words.TabIndex = 5
         '
         'Label1
         '
@@ -106,28 +107,32 @@ Partial Class BurstTestGUI
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(12, 91)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(46, 13)
+        Me.Label3.Size = New System.Drawing.Size(81, 13)
         Me.Label3.TabIndex = 8
-        Me.Label3.Text = "# Bytes:"
+        Me.Label3.Text = "# 32-Bit Words:"
         '
         'result
         '
+        Me.result.AllowUserToAddRows = False
+        Me.result.AllowUserToDeleteRows = False
+        Me.result.AllowUserToResizeColumns = False
+        Me.result.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.result.Location = New System.Drawing.Point(12, 165)
         Me.result.Name = "result"
-        Me.result.Size = New System.Drawing.Size(240, 262)
+        Me.result.RowHeadersVisible = False
+        Me.result.Size = New System.Drawing.Size(303, 293)
         Me.result.TabIndex = 9
-        Me.result.UseCompatibleStateImageBehavior = False
         '
         'BurstTestGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(269, 439)
+        Me.ClientSize = New System.Drawing.Size(328, 470)
         Me.Controls.Add(Me.result)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.numBytes)
+        Me.Controls.Add(Me.num32words)
         Me.Controls.Add(Me.captureData)
         Me.Controls.Add(Me.applySettings)
         Me.Controls.Add(Me.sclk)
@@ -135,6 +140,7 @@ Partial Class BurstTestGUI
         Me.Controls.Add(Me.drActive)
         Me.Name = "BurstTestGUI"
         Me.Text = "Burst Mode Test"
+        CType(Me.result, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -145,9 +151,9 @@ Partial Class BurstTestGUI
     Friend WithEvents sclk As TextBox
     Friend WithEvents applySettings As Button
     Friend WithEvents captureData As Button
-    Friend WithEvents numBytes As TextBox
+    Friend WithEvents num32words As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents result As ListView
+    Friend WithEvents result As DataGridView
 End Class

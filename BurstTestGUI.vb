@@ -4,6 +4,7 @@
 'Description:   Testing burst mode for ADIS IMU's
 
 Imports FX3Api
+Imports RegMapClasses
 
 Public Class BurstTestGUI
     Inherits FormBase
@@ -15,36 +16,42 @@ Public Class BurstTestGUI
         drActive.Checked = m_TopGUI.FX3.DrActive
         csDelay.DataSource = ([Enum].GetValues(GetType(SpiLagLeadTime)))
         csDelay.SelectedItem = m_TopGUI.FX3.ChipSelectLeadTime
-        numBytes.Text = "20"
-        numWords = 9
+        num32words.Text = "12"
+        numWords = 12
         m_TopGUI.FX3.StripBurstTriggerWord = False
-        result.View = View.Details
-        result.Columns.Add("Byte Number")
-        result.Columns.Add("Byte Value")
-        result.Columns(0).Width = -2
-        result.Columns(1).Width = -2
+        m_TopGUI.FX3.TriggerReg = New RegClass With {.Address = 0, .Page = 0}
+        result.ColumnCount = 3
+        result.Columns(0).Name = ("Word Number")
+        result.Columns(1).Name = ("MISO Value")
+        result.Columns(2).Name = ("MOSI Value")
+        result.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+        result.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+        result.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+        SetupResultView()
     End Sub
 
     Private Sub captureData_Click(sender As Object, e As EventArgs) Handles captureData.Click
-        Dim addr As New List(Of AdisApi.AddrDataPair)
+        Dim burstTrigger As New List(Of Byte)
+        Dim valueLng As ULong
+        For i As Integer = 0 To numWords - 1
+            valueLng = Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16)
+            burstTrigger.Add((valueLng >> 24) And &HFF)
+            burstTrigger.Add((valueLng >> 16) And &HFF)
+            burstTrigger.Add((valueLng >> 8) And &HFF)
+            burstTrigger.Add((valueLng >> 0) And &HFF)
+        Next
         m_TopGUI.FX3.TriggerReg = New RegMapClasses.RegClass With {.Address = 0}
-        m_TopGUI.FX3.WordCount = numWords
+        m_TopGUI.FX3.StripBurstTriggerWord = False
+        m_TopGUI.FX3.BurstByteCount = 4 * numWords
         m_TopGUI.FX3.SetupBurstMode()
-        m_TopGUI.FX3.StartBufferedStream(addr, Nothing, 1UI, 10, Nothing)
+        m_TopGUI.FX3.StartBurstStream(1, burstTrigger)
         m_TopGUI.FX3.WaitForStreamCompletion(250)
         Dim buf() As UShort
         buf = m_TopGUI.FX3.GetBuffer()
-        Dim byteNum As Integer = 0
-        Dim byteVal As UShort
-        result.Items.Clear()
-        For Each item In buf
-            'lower
-            byteVal = (item >> 8)
-            result.Items.Add(New ListViewItem(New String() {byteNum.ToString(), byteVal.ToString("X2")}))
-            byteNum += 1
-            byteVal = item And &HFF
-            result.Items.Add(New ListViewItem(New String() {byteNum.ToString(), byteVal.ToString("X2")}))
-            byteNum += 1
+        For i As Integer = 0 To numWords - 1
+            valueLng = buf(2 * i + 1)
+            valueLng += (buf(2 * i) * 2 ^ 16)
+            result.Item("MISO Value", i).Value = "0x" + valueLng.ToString("X8")
         Next
     End Sub
 
@@ -52,7 +59,22 @@ Public Class BurstTestGUI
         m_TopGUI.FX3.SclkFrequency = Convert.ToInt32(sclk.Text)
         m_TopGUI.FX3.DrActive = drActive.Checked
         m_TopGUI.FX3.ChipSelectLeadTime = csDelay.SelectedItem
-        numWords = (Convert.ToInt32(numBytes.Text) / 2) - 1
+        numWords = Convert.ToInt32(num32words.Text)
+        SetupResultView()
+    End Sub
+
+    Private Sub SetupResultView()
+        If result.RowCount < numWords Then
+            For i As Integer = result.RowCount To numWords - 1
+                result.Rows.Add({i.ToString(), "", "0x00000000"})
+            Next
+        ElseIf result.RowCount > numWords Then
+            Dim numRows = result.RowCount - numWords
+            For i As Integer = 0 To numRows - 1
+                result.Rows.RemoveAt(result.RowCount - 1)
+            Next
+        End If
+
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
