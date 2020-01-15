@@ -1334,7 +1334,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="T:FX3Api.DUTType">
  <summary>
- Enum of the possible DUT types for the ADcmXLx021
+ Enum of the possible iSensors DUT types
  </summary>
 </member>
 <member name="T:FX3Api.DutVoltage">

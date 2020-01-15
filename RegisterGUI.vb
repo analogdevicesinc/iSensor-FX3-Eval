@@ -120,6 +120,7 @@ Public Class RegisterGUI
         End If
 
         'check the page register
+        If m_TopGUI.FX3.PartType = FX3Api.DUTType.LegacyIMU Then Exit Sub
         Dim expectedPage As Integer = currentRegList(0).Page
         If m_pageMessageList.Contains(expectedPage) Then
             Exit Sub

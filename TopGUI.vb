@@ -267,7 +267,7 @@ Public Class TopGUI
     Private Sub btn_BulkRegRead_Click(sender As Object, e As EventArgs) Handles btn_BulkRegRead.Click
 
 
-        If FX3.PartType = DUTType.IMU Then
+        If FX3.SensorType = DeviceType.IMU Then
             Dim subGUI As New RegisterBulkReadGUI()
             subGUI.SetTopGUI(Me)
             subGUI.Show()
@@ -451,6 +451,8 @@ Public Class TopGUI
             Dut = New AdcmInterface2Axis(FX3)
         ElseIf FX3.PartType = DUTType.ADcmXL1021 Then
             Dut = New AdcmInterface1Axis(FX3)
+        ElseIf FX3.PartType = DUTType.LegacyIMU Then
+            Dut = New aducInterface(FX3, Nothing)
         ElseIf FX3.SensorType = DeviceType.AutomotiveSpi Then
             Dut = New ZeusInterface(m_AutoSpi, Nothing)
         Else
@@ -622,7 +624,7 @@ Public Class TopGUI
         End If
 
         Dim scratchReg As RegClass = Nothing
-        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1"}
+        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1"}
 
         For Each regName In scratchRegNames
             If RegMap.Contains(regName) Then

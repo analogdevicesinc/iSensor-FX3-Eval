@@ -2396,6 +2396,19 @@ adisInterface
  <returns></returns>
  <remarks></remarks>
 </member>
+<member name="M:adisInterface.ZeusBurstClass.#ctor(AdisApi.IBurstSpiInterface)">
+ <summary>
+ Zeus burst constructor. Must be given instance of IBurstSpiInterface, which acts as interface to the DUT
+ </summary>
+ <param name="IBurstSpi">The IBurstSpi interface to the DUT</param>
+</member>
+<member name="M:adisInterface.ZeusBurstClass.CalculateDataCrc(System.Collections.Generic.IEnumerable{System.UInt16})">
+ <summary>
+ Override of the CRC calculation function
+ </summary>
+ <param name="data">Data to calculate CRC on</param>
+ <returns></returns>
+</member>
 <member name="T:adisInterface.ZeusInterface">
  <summary>
  Interface for devices with paged register access with 16 bit write read operations.
