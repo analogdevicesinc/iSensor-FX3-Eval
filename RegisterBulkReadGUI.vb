@@ -161,11 +161,15 @@ Public Class RegisterBulkReadGUI
 
         'Check whether the measured DR is valid
         If m_TopGUI.FX3.DrActive Then
+<<<<<<< HEAD
+            If m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) > 10000 Or m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) < 0 Then
+=======
             'measure data ready frequency
             MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(pin, 1, 10000, 2)
             DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
 
             If MeasuredFreq > 10000 Or MeasuredFreq = Double.PositiveInfinity Then
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
                 MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
                 Exit Sub
             End If
@@ -179,7 +183,11 @@ Public Class RegisterBulkReadGUI
 
         'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
         If m_TopGUI.FX3.DrActive Then
+<<<<<<< HEAD
+            Dim drPeriod As Double = 1 / m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2)
+=======
             Dim drPeriod As Double = 1 / MeasuredFreq
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
             Dim num16bitregs As Integer = 0
             For Each reg In regList
                 If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
@@ -207,6 +215,27 @@ Public Class RegisterBulkReadGUI
             Exit Sub
         End If
 
+<<<<<<< HEAD
+        'Generate TFSM settings
+        Dim drFreq As Double
+        Dim numCaptures As UInteger
+        Dim numBuffers As UInteger
+
+        drFreq = m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2)
+        If totalDRCaptures < drFreq Then
+            numCaptures = totalDRCaptures
+            numBuffers = 1
+        Else
+            numCaptures = drFreq
+            If totalDRCaptures Mod numCaptures > 0 Then
+                numBuffers = (totalDRCaptures / numCaptures) + 1
+            Else
+                numBuffers = totalDRCaptures / numCaptures
+            End If
+        End If
+
+=======
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
         'Set up file manager
         fileManager = New Logger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.RegList = regList
@@ -285,7 +314,11 @@ Public Class RegisterBulkReadGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
+<<<<<<< HEAD
+        Label4.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
+=======
         DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
     End Sub
 
     Private Sub UpdateDRPin()
