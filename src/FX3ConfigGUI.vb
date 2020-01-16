@@ -110,13 +110,13 @@ Public Class FX3ConfigGUI
             dataReadyPolarityInput.SelectedItem = "High-to-Low: Trigger on falling edge"
         End If
 
-        If m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO1.ToString Then
+        If m_TopGUI.FX3.ReadyPin.pinConfig = m_TopGUI.FX3.DIO1.pinConfig Then
             dataReadyPinInput.SelectedItem = "DIO1"
-        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO2.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.pinConfig = m_TopGUI.FX3.DIO2.pinConfig Then
             dataReadyPinInput.SelectedItem = "DIO2"
-        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO3.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.pinConfig = m_TopGUI.FX3.DIO3.pinConfig Then
             dataReadyPinInput.SelectedItem = "DIO3"
-        ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO4.ToString Then
+        ElseIf m_TopGUI.FX3.ReadyPin.pinConfig = m_TopGUI.FX3.DIO4.pinConfig Then
             dataReadyPinInput.SelectedItem = "DIO4"
         End If
 
