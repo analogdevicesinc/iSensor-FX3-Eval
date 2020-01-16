@@ -72,39 +72,43 @@
   <ItemGroup>
     <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\adisApi.dll</HintPath>
+      <HintPath>..\Resources\adisApi.dll</HintPath>
     </Reference>
     <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\adisInterface.dll</HintPath>
+      <HintPath>..\Resources\adisInterface.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\AForge.Math.dll</HintPath>
+      <HintPath>..\Resources\AForge.Math.dll</HintPath>
     </Reference>
-    <Reference Include="CCES_JTAG_Wrapper">
-      <HintPath>Resources\CCES_JTAG_Wrapper.dll</HintPath>
-    </Reference>
-    <Reference Include="CyUSB">
-      <HintPath>Resources\CyUSB.dll</HintPath>
-    </Reference>
-    <Reference Include="FX3Api, Version=2.3.1.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="CCES_JTAG_Wrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\FX3Api.dll</HintPath>
+      <HintPath>..\Resources\CCES_JTAG_Wrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="CyUSB, Version=1.2.3.0, Culture=neutral, PublicKeyToken=01f1d2b6c851ae92, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\CyUSB.dll</HintPath>
+    </Reference>
+    <Reference Include="FX3Api, Version=2.5.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\FX3Api.dll</HintPath>
     </Reference>
     <Reference Include="FX3USB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\FX3USB.dll</HintPath>
+      <HintPath>..\Resources\FX3USB.dll</HintPath>
     </Reference>
-    <Reference Include="RegMapClasses">
-      <HintPath>Resources\RegMapClasses.dll</HintPath>
+    <Reference Include="RegMapClasses, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\RegMapClasses.dll</HintPath>
     </Reference>
-    <Reference Include="SignalProcessing">
-      <HintPath>Resources\SignalProcessing.dll</HintPath>
+    <Reference Include="SignalProcessing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Resources\SignalProcessing.dll</HintPath>
     </Reference>
     <Reference Include="StreamDataLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Resources\StreamDataLogger.dll</HintPath>
+      <HintPath>..\Resources\StreamDataLogger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -324,13 +328,13 @@
     <EmbeddedResource Include="FX3_Firmware.img" />
     <EmbeddedResource Include="boot_fw.img" />
     <None Include="ADcmXL3021_Regmap.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ADIS1647x_Regmap.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ADIS1649x_Regmap.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
@@ -387,9 +391,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
     <PostBuildEvent>XCOPY /y "$(TargetDir)*" "T:\~Lab_SW_Tools\iSensor-FX3-Gui\iSensor-FX3-Gui-Build"</PostBuildEvent>
