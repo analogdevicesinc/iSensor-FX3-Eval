@@ -248,7 +248,7 @@ Public Class TopGUI
 
     Private Sub btn_RealTime_Click(sender As Object, e As EventArgs) Handles btn_RealTime.Click
 
-        If FX3.PartType = DUTType.IMU Then
+        If FX3.PartType = DUTType.IMU Or FX3.SensorType = DeviceType.IMU Then
             'For IMU's create a new IMU streaming GUI
             Dim subGUI As New IMUStreamingGUI()
             subGUI.SetTopGUI(Me)
@@ -266,8 +266,7 @@ Public Class TopGUI
 
     Private Sub btn_BulkRegRead_Click(sender As Object, e As EventArgs) Handles btn_BulkRegRead.Click
 
-
-        If FX3.SensorType = DeviceType.IMU Then
+        If FX3.PartType = DUTType.IMU Or FX3.SensorType = DeviceType.IMU Then
             Dim subGUI As New RegisterBulkReadGUI()
             subGUI.SetTopGUI(Me)
             subGUI.Show()
