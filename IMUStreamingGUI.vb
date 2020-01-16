@@ -6,21 +6,17 @@
 Imports AdisApi
 Imports adisInterface
 Imports System.ComponentModel
+Imports StreamDataLogger
+Imports RegMapClasses
 
 Public Class IMUStreamingGUI
     Inherits FormBase
 
-    Private WithEvents fileManager As New TextFileStreamManager
+    Private WithEvents fileManager As Logger
     Private totalDRCaptures As Integer = 0
     Private pin As IPinObject
     Private tempRegList As List(Of RegMapClasses.RegClass)
     Private regListCount As Integer = 0
-
-    Sub New()
-        ' This call is required by the designer.
-        InitializeComponent()
-
-    End Sub
 
     Public Sub FormSetup() Handles Me.Load
         UpdateRegmap()
@@ -45,6 +41,7 @@ Public Class IMUStreamingGUI
         NumberDRToCapture.Text = "10000"
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
+        m_TopGUI.FX3.DrActive = True
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
@@ -79,41 +76,39 @@ Public Class IMUStreamingGUI
             Exit Sub
         End If
 
-        'Generate TFSM settings
-        Dim drFreq As UInteger
-        Dim numCaptures As UInteger
-        Dim numBuffers As UInteger
+        'instantiate stream data logger
+        fileManager = New Logger(m_TopGUI.FX3, New adisInterface.adbfInterface(m_TopGUI.FX3, Nothing))
 
-        drFreq = m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000)
-        If totalDRCaptures < drFreq Then
-            numCaptures = totalDRCaptures
-            numBuffers = 1
+        'set up FX3 specific properties
+        If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then
+            m_TopGUI.FX3.TriggerReg = New RegClass With {.Address = 0, .Page = 0}
+            'assign burst read address
+            Dim burstHeader As Byte() = {0, 0, &HA, 0}
+            m_TopGUI.FX3.BurstMOSIData = burstHeader
+            m_TopGUI.FX3.BurstByteCount = tempRegList.Count * 4
+            m_TopGUI.FX3.StripBurstTriggerWord = False
+            fileManager.LowerWordFirst = False
         Else
-            numCaptures = drFreq
-            If totalDRCaptures Mod numCaptures > 0 Then
-                numBuffers = (totalDRCaptures / numCaptures) + 1
-            Else
-                numBuffers = totalDRCaptures / numCaptures
-            End If
+            m_TopGUI.FX3.WordCount() = regListCount
+            m_TopGUI.FX3.TriggerReg = m_TopGUI.RegMap.BurstReadTrig
+            m_TopGUI.FX3.StripBurstTriggerWord = True
+            fileManager.LowerWordFirst = True
         End If
 
-        m_TopGUI.FX3.WordCount() = regListCount
-        m_TopGUI.FX3.TriggerReg = m_TopGUI.RegMap.BurstReadTrig
+        'enable burst mode
         m_TopGUI.FX3.SetupBurstMode()
 
-        'Set up file manager to pass over to TFSM
-        fileManager.DutInterface = m_TopGUI.Dut
+        'Set up stream data logger properties
         fileManager.RegList = tempRegList
         fileManager.FileBaseName = "BURST" + timeString
         fileManager.FilePath = savePath
         fileManager.Buffers = totalDRCaptures 'Number of times to read all the registers in the reg map
         fileManager.Captures = 1 'Number of times to read each register in the reg map
         fileManager.FileMaxDataRows = 1000000 'Keep this under 1M samples to open in Excel
-        fileManager.BufferTimeout = 3 'Timeout in seconds
-        fileManager.BuffersPerWrite = 10 * drFreq 'Dynamic buffers per write to avoid storing too much data in RAM
-        fileManager.IncludeSampleNumberColumn = False
-        fileManager.ScaleData = False
+        fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
+        fileManager.BuffersPerWrite = 10000
 
+        'run async
         fileManager.RunAsync()
 
         statusLabel.Text = "Writing Data"
@@ -130,6 +125,10 @@ Public Class IMUStreamingGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
+        Me.Invoke(New MethodInvoker(AddressOf CaptureDoneWork))
+    End Sub
+
+    Private Sub CaptureDoneWork()
         statusLabel.Text = "Done"
         statusLabel.BackColor = Color.Green
         BurstStreamCancelButton.Enabled = False
@@ -145,7 +144,7 @@ Public Class IMUStreamingGUI
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles BurstStreamCancelButton.Click
         MainButton.Enabled = True
-        If fileManager.IsBusy Then
+        If fileManager.Busy Then
             fileManager.CancelAsync()
             statusLabel.Text = "Canceling"
             statusLabel.BackColor = Color.Red
@@ -189,17 +188,15 @@ Public Class IMUStreamingGUI
     End Sub
 
     Private Sub UpdateRegmap()
-        If BitModeCheckbox.Checked Then
+        If Use16BitRegs.Checked Then
             'Handle 16-bit registers
             tempRegList = m_TopGUI.RegMap.BurstReadList
-            regListCount = m_TopGUI.RegMap.BurstReadList.Count
             'Loop through each register and check for 32-bit locations
             For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
                 'If a register is listed as a 32-bit register
-                If item.ReadLen > 16 Then
+                If item.NumBytes > 2 Then
                     'Remove its upper counterpart from the list (we're only capturing 16-bit registers)
-                    tempRegList.Remove(tempRegList.Find(Function(p) p.Address = item.Address))
-                    regListCount = regListCount - 1
+                    tempRegList.Remove(item)
                 End If
             Next
             'Refresh the register list in the GUI
@@ -214,13 +211,12 @@ Public Class IMUStreamingGUI
         Else
             'Handle 32-bit registers
             tempRegList = m_TopGUI.RegMap.BurstReadList
-            regListCount = m_TopGUI.RegMap.BurstReadList.Count
             'Loop through each register and check for 32-bit locations
             For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
                 'If a register is listed as a 32-bit register
                 If item.ReadLen > 16 Then
                     'Remove its lower counterpart from the list (it'll get added to the transfer later anyway)
-                    tempRegList.Remove(tempRegList.Find(Function(p) p.Address = (item.Address + &H2)))
+                    tempRegList.Remove(tempRegList.Find(Function(p) p.Address = (item.Address + 2 / m_TopGUI.Dut.DeviceAddressIncrement)))
                 End If
             Next
             'Refresh the register list in the GUI
@@ -233,17 +229,34 @@ Public Class IMUStreamingGUI
                 ListView1.Items.Add(newItem)
             Next
         End If
+
+        'Add in extra registers for iSensorAutoSpi
+        If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then
+            tempRegList.Add(New RegClass With {.Address = 0, .Page = 0, .Label = "CRC", .NumBytes = 4, .ReadLen = 32})
+            tempRegList.Insert(0, New RegClass With {.Address = 0, .Page = 0, .Label = "BURST_HEADER", .NumBytes = 4, .ReadLen = 32})
+        End If
+
+        'calculate word count
+        regListCount = 0
+        For Each reg In tempRegList
+            If reg.NumBytes <> 4 Then
+                regListCount += 1
+            Else
+                regListCount += 2
+            End If
+        Next
+
     End Sub
 
     Private Sub NumberDRToCapture_TextChanged(sender As Object, e As EventArgs) Handles NumberDRToCapture.TextChanged
         UpdateGUI()
     End Sub
 
-    Private Sub progressUpdate(sender As Object, e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        CaptureProgressBurst.Value = e.ProgressPercentage
+    Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
+        Me.Invoke(New MethodInvoker(Sub() CaptureProgressBurst.Value = e.ProgressPercentage))
     End Sub
 
-    Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs) Handles BitModeCheckbox.CheckedChanged
+    Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs) Handles Use16BitRegs.CheckedChanged
         UpdateRegmap()
     End Sub
 End Class

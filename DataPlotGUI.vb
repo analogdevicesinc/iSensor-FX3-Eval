@@ -1,4 +1,9 @@
-﻿Imports RegMapClasses
+﻿'File:          DataPlotGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          9/23/2019
+'Description:   Allows for data plotting and logging, along with playback of logged data.
+
+Imports RegMapClasses
 Imports System.Timers
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports System.Threading

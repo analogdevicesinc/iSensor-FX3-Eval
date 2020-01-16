@@ -129,14 +129,14 @@ Partial Class DataPlotGUI
         Me.sampleFreq.Location = New System.Drawing.Point(141, 6)
         Me.sampleFreq.Name = "sampleFreq"
         Me.sampleFreq.Size = New System.Drawing.Size(143, 20)
-        Me.sampleFreq.TabIndex = 5
+        Me.sampleFreq.TabIndex = 4
         '
         'btn_startStop
         '
         Me.btn_startStop.Location = New System.Drawing.Point(323, 6)
         Me.btn_startStop.Name = "btn_startStop"
         Me.btn_startStop.Size = New System.Drawing.Size(88, 35)
-        Me.btn_startStop.TabIndex = 6
+        Me.btn_startStop.TabIndex = 0
         Me.btn_startStop.Text = "Start Plotting"
         Me.btn_startStop.UseVisualStyleBackColor = True
         '
@@ -170,14 +170,14 @@ Partial Class DataPlotGUI
         Me.samplesRendered.Location = New System.Drawing.Point(141, 32)
         Me.samplesRendered.Name = "samplesRendered"
         Me.samplesRendered.Size = New System.Drawing.Size(143, 20)
-        Me.samplesRendered.TabIndex = 9
+        Me.samplesRendered.TabIndex = 5
         '
         'btn_autonull
         '
         Me.btn_autonull.Location = New System.Drawing.Point(417, 6)
         Me.btn_autonull.Name = "btn_autonull"
         Me.btn_autonull.Size = New System.Drawing.Size(88, 35)
-        Me.btn_autonull.TabIndex = 10
+        Me.btn_autonull.TabIndex = 1
         Me.btn_autonull.Text = "Auto-Null"
         Me.btn_autonull.UseVisualStyleBackColor = True
         '
@@ -187,7 +187,7 @@ Partial Class DataPlotGUI
         Me.logToCSV.Location = New System.Drawing.Point(11, 57)
         Me.logToCSV.Name = "logToCSV"
         Me.logToCSV.Size = New System.Drawing.Size(127, 17)
-        Me.logToCSV.TabIndex = 11
+        Me.logToCSV.TabIndex = 6
         Me.logToCSV.Text = "Log Plot Data to CSV"
         Me.logToCSV.UseVisualStyleBackColor = True
         '
@@ -196,7 +196,7 @@ Partial Class DataPlotGUI
         Me.saveChart.Location = New System.Drawing.Point(417, 47)
         Me.saveChart.Name = "saveChart"
         Me.saveChart.Size = New System.Drawing.Size(88, 35)
-        Me.saveChart.TabIndex = 12
+        Me.saveChart.TabIndex = 2
         Me.saveChart.Text = "Save Plot"
         Me.saveChart.UseVisualStyleBackColor = True
         '
@@ -214,7 +214,7 @@ Partial Class DataPlotGUI
         Me.stopPlayback.Location = New System.Drawing.Point(323, 47)
         Me.stopPlayback.Name = "stopPlayback"
         Me.stopPlayback.Size = New System.Drawing.Size(88, 35)
-        Me.stopPlayback.TabIndex = 14
+        Me.stopPlayback.TabIndex = 3
         Me.stopPlayback.Text = "Stop Playback"
         Me.stopPlayback.UseVisualStyleBackColor = True
         '
@@ -224,7 +224,7 @@ Partial Class DataPlotGUI
         Me.axis_autoscale.Location = New System.Drawing.Point(11, 91)
         Me.axis_autoscale.Name = "axis_autoscale"
         Me.axis_autoscale.Size = New System.Drawing.Size(107, 17)
-        Me.axis_autoscale.TabIndex = 15
+        Me.axis_autoscale.TabIndex = 7
         Me.axis_autoscale.Text = "AutoScale Y-Axis"
         Me.axis_autoscale.UseVisualStyleBackColor = True
         '
@@ -233,14 +233,14 @@ Partial Class DataPlotGUI
         Me.maxscale.Location = New System.Drawing.Point(394, 88)
         Me.maxscale.Name = "maxscale"
         Me.maxscale.Size = New System.Drawing.Size(111, 20)
-        Me.maxscale.TabIndex = 17
+        Me.maxscale.TabIndex = 9
         '
         'minScale
         '
         Me.minScale.Location = New System.Drawing.Point(173, 88)
         Me.minScale.Name = "minScale"
         Me.minScale.Size = New System.Drawing.Size(111, 20)
-        Me.minScale.TabIndex = 18
+        Me.minScale.TabIndex = 8
         '
         'Label3
         '
@@ -284,7 +284,7 @@ Partial Class DataPlotGUI
         Me.Controls.Add(Me.regView)
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "DataPlotGUI"
-        Me.Text = "DataPlotGUI"
+        Me.Text = "Data Plotting"
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

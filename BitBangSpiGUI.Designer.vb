@@ -134,7 +134,7 @@ Partial Class BitBangSpiGUI
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Name = "BitBangSpiGUI"
-        Me.Text = "BitBangSpiGUI"
+        Me.Text = "Bit Bang SPI"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

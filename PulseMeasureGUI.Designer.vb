@@ -23,10 +23,7 @@ Partial Class PulseMeasureGUI
     Private Sub InitializeComponent()
         Me.modePages = New System.Windows.Forms.TabControl()
         Me.SpiPage = New System.Windows.Forms.TabPage()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.triggerRegVal = New System.Windows.Forms.TextBox()
-        Me.triggerReg = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.triggerData = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.PinPage = New System.Windows.Forms.TabPage()
         Me.drivePolarity = New System.Windows.Forms.TextBox()
@@ -61,10 +58,7 @@ Partial Class PulseMeasureGUI
         '
         'SpiPage
         '
-        Me.SpiPage.Controls.Add(Me.Label7)
-        Me.SpiPage.Controls.Add(Me.triggerRegVal)
-        Me.SpiPage.Controls.Add(Me.triggerReg)
-        Me.SpiPage.Controls.Add(Me.Label3)
+        Me.SpiPage.Controls.Add(Me.triggerData)
         Me.SpiPage.Controls.Add(Me.Label2)
         Me.SpiPage.Location = New System.Drawing.Point(4, 22)
         Me.SpiPage.Name = "SpiPage"
@@ -74,46 +68,21 @@ Partial Class PulseMeasureGUI
         Me.SpiPage.Text = "SPI Triggered"
         Me.SpiPage.UseVisualStyleBackColor = True
         '
-        'Label7
+        'triggerData
         '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(6, 60)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(88, 13)
-        Me.Label7.TabIndex = 7
-        Me.Label7.Text = "Values are in hex"
-        '
-        'triggerRegVal
-        '
-        Me.triggerRegVal.Location = New System.Drawing.Point(133, 32)
-        Me.triggerRegVal.Name = "triggerRegVal"
-        Me.triggerRegVal.Size = New System.Drawing.Size(107, 20)
-        Me.triggerRegVal.TabIndex = 8
-        '
-        'triggerReg
-        '
-        Me.triggerReg.Location = New System.Drawing.Point(133, 6)
-        Me.triggerReg.Name = "triggerReg"
-        Me.triggerReg.Size = New System.Drawing.Size(107, 20)
-        Me.triggerReg.TabIndex = 7
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(6, 35)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(110, 13)
-        Me.Label3.TabIndex = 1
-        Me.Label3.Text = "Command Reg Value:"
+        Me.triggerData.Location = New System.Drawing.Point(9, 25)
+        Me.triggerData.Name = "triggerData"
+        Me.triggerData.Size = New System.Drawing.Size(232, 20)
+        Me.triggerData.TabIndex = 7
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(6, 9)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(121, 13)
+        Me.Label2.Size = New System.Drawing.Size(115, 13)
         Me.Label2.TabIndex = 0
-        Me.Label2.Text = "Command Reg Address:"
+        Me.Label2.Text = "SPI Trigger Data (hex):"
         '
         'PinPage
         '
@@ -288,17 +257,14 @@ Partial Class PulseMeasureGUI
     Friend WithEvents startBtn As Button
     Friend WithEvents label_result As TextBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents triggerRegVal As TextBox
-    Friend WithEvents triggerReg As TextBox
+    Friend WithEvents triggerData As TextBox
     Friend WithEvents drivePolarity As TextBox
     Friend WithEvents driveTime As TextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents triggerPin As ComboBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents Label7 As Label
     Friend WithEvents busyPin As ComboBox
     Friend WithEvents timeout As TextBox
     Friend WithEvents Label8 As Label

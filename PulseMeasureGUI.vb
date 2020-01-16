@@ -1,4 +1,9 @@
-﻿Imports AdisApi
+﻿'File:          PulseMeasureGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Date:          7/26/2019
+'Description:   Allows for precise pulse measurement with a trigger condition.
+
+Imports AdisApi
 Imports FX3Api
 
 Public Class PulseMeasureGUI
@@ -32,6 +37,7 @@ Public Class PulseMeasureGUI
 
         Dim trig As IPinObject
         Dim busy As IPinObject
+        Dim SpiTrigger As List(Of Byte)
 
         trig = PinList(triggerPin.SelectedIndex)
         busy = PinList(busyPin.SelectedIndex)
@@ -49,9 +55,13 @@ Public Class PulseMeasureGUI
             End Try
         Else
             Try
-                label_result.Text = m_TopGUI.FX3.MeasureBusyPulse(Convert.ToUInt32(triggerReg.Text, 16), Convert.ToUInt32(triggerRegVal.Text, 16), busy, Convert.ToUInt32(busyPolarity.Text, 16), Convert.ToInt32(timeout.Text)).ToString()
+                SpiTrigger = New List(Of Byte)
+                For index As Integer = 0 To triggerData.Text.Count() - 2 Step 2
+                    SpiTrigger.Add(Convert.ToByte(triggerData.Text.Substring(index, 2), 16))
+                Next
+                label_result.Text = m_TopGUI.FX3.MeasureBusyPulse(SpiTrigger.ToArray(), busy, Convert.ToUInt32(busyPolarity.Text, 16), Convert.ToInt32(timeout.Text)).ToString() + "ms"
             Catch ex As Exception
-                MsgBox("ERROR: Invalid config. " + ex.Message())
+                MsgBox("ERROR: Invalid config. " + ex.ToString())
             End Try
         End If
 

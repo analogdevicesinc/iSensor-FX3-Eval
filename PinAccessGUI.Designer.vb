@@ -182,7 +182,7 @@ Partial Class PinAccessGUI
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.Name = "PinAccessGUI"
-        Me.Text = "PinAccessGUI"
+        Me.Text = "Pin Access"
         CType(Me.dgvPinList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

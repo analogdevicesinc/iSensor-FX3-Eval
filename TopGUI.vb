@@ -19,8 +19,10 @@ Public Class TopGUI
     Public Dut As IDutInterface
 
     'List of listviewitems for bulk register read
-    Public BulkRegList As List(Of ListViewItem)
-    Public numRegSamples As Integer
+    Friend BulkRegList As List(Of ListViewItem)
+    Friend numRegSamples As Integer
+    Friend samplesPerWrite As Integer
+    Friend linesPerFile As Integer
 
     'Last browsed to file location
     Public lastFilePath As String
@@ -99,6 +101,8 @@ Public Class TopGUI
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
         numRegSamples = 10000
+        linesPerFile = 1000000
+        samplesPerWrite = 10000
 
         'Seed random number generator
         Randomize()
@@ -123,14 +127,42 @@ Public Class TopGUI
         m_AutoSpi.IgnoreExceptions = True
 
         'Set the API version and build date
-        label_apiVersion.Text = "Analog Devices iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
+        label_apiVersion.Text = "ADI iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
 
+        'load the last used file path
         lastFilePath = My.Settings.LastFilePath
+
+        'Set tool tips
+        SetupToolTips()
 
         'Register exception handlers
         Dim myApp As AppDomain = AppDomain.CurrentDomain
         AddHandler myApp.UnhandledException, AddressOf GeneralErrorHandler
         AddHandler Application.ThreadException, AddressOf ThreadErrorHandler
+
+    End Sub
+
+    Private Sub SetupToolTips()
+
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used")
+        tip0.SetToolTip(Me.btn_BoardInfo, "Get information about the version of the connected FX3 board")
+        tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register values to a CSV file")
+        tip0.SetToolTip(Me.btn_CheckDUTConnection, "Checks a DUT connection by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
+        tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
+        tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
+        tip0.SetToolTip(Me.btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
+        tip0.SetToolTip(Me.btn_OtherApps, "Other misc. applications developed for the iSensor FX3 Example GUI")
+        tip0.SetToolTip(Me.btn_SelectDUT, "Select the DUT type. Loads the default values for that DUT type")
+        tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
+        tip0.SetToolTip(Me.btn_RegAccess, "Read or write all registers in the loaded register map")
+        tip0.SetToolTip(Me.btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
+        tip0.SetToolTip(Me.btn_PinAccess, "Read or set all FX3 digital IO pins (DIO1 - DIO4, FX3GPIO1 - FX3GPIO4)")
+        tip0.SetToolTip(Me.btn_PWMSetup, "Configure PWM signal generation on the FX3 digital IO")
+        tip0.SetToolTip(Me.label_apiVersion, "The current version of the FX3 API and firmware being used by the iSensor FX3 Example GUI")
+        tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
+        tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Example GUI. Requires a GitHub account")
+        tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 500ms, waits for data ready to be asserted, and checks the DUT connection")
 
     End Sub
 
@@ -150,6 +182,7 @@ Public Class TopGUI
                     Throw New Exception("Regmap produced from selected file contains 0 registers")
                 End If
                 regMapPath_Label.Text = value.Substring(value.LastIndexOf("\") + 1)
+                SetupToolTips()
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message())
             End Try
@@ -232,10 +265,20 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_BulkRegRead_Click(sender As Object, e As EventArgs) Handles btn_BulkRegRead.Click
-        Dim subGUI As New RegisterBulkReadGUI()
-        subGUI.SetTopGUI(Me)
-        subGUI.Show()
-        Me.Hide()
+
+
+        If FX3.SensorType = DeviceType.IMU Then
+            Dim subGUI As New RegisterBulkReadGUI()
+            subGUI.SetTopGUI(Me)
+            subGUI.Show()
+            Me.Hide()
+        Else
+            'For machine health create a ADcmXLStreamingGUI
+            Dim subGUI As New ADcmXLBufferedLog()
+            subGUI.SetTopGUI(Me)
+            subGUI.Show()
+            Me.Hide()
+        End If
     End Sub
 
     Private Sub btn_PinAccess_Click(sender As Object, e As EventArgs) Handles btn_PWMSetup.Click
@@ -268,11 +311,10 @@ Public Class TopGUI
         Me.Hide()
     End Sub
 
-    Private Sub btn_measurePulse_Click(sender As Object, e As EventArgs) Handles btn_measurePulse.Click
-        Dim subGUI As New PulseMeasureGUI()
+    Private Sub btn_plotFFT_Click(sender As Object, e As EventArgs) Handles btn_plotFFT.Click
+        Dim subGUI As New FrequencyPlotGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
     End Sub
 
     Private Sub btn_PinAccess_Click_1(sender As Object, e As EventArgs) Handles btn_PinAccess.Click
@@ -409,6 +451,8 @@ Public Class TopGUI
             Dut = New AdcmInterface2Axis(FX3)
         ElseIf FX3.PartType = DUTType.ADcmXL1021 Then
             Dut = New AdcmInterface1Axis(FX3)
+        ElseIf FX3.PartType = DUTType.LegacyIMU Then
+            Dut = New aducInterface(FX3, Nothing)
         ElseIf FX3.SensorType = DeviceType.AutomotiveSpi Then
             Dut = New ZeusInterface(m_AutoSpi, Nothing)
         Else
@@ -477,7 +521,7 @@ Public Class TopGUI
         btn_RegAccess.Enabled = True
         btn_ResetDUT.Enabled = True
         btn_SelectDUT.Enabled = True
-        btn_measurePulse.Enabled = True
+        btn_plotFFT.Enabled = True
         btn_PinAccess.Enabled = True
         btn_OtherApps.Enabled = True
         btn_plotData.Enabled = True
@@ -491,6 +535,9 @@ Public Class TopGUI
         'Load settings
         FX3.SensorType = My.Settings.SensorType
         FX3.PartType = My.Settings.DeviceType
+
+        'disable watchdog
+        FX3.WatchdogEnable = False
 
         'Test the DUT
         UpdateDutLabel(FX3.PartType)
@@ -530,7 +577,7 @@ Public Class TopGUI
         btn_RegAccess.Enabled = False
         btn_ResetDUT.Enabled = False
         btn_SelectDUT.Enabled = False
-        btn_measurePulse.Enabled = False
+        btn_plotFFT.Enabled = False
         btn_PinAccess.Enabled = False
         btn_OtherApps.Enabled = False
         btn_plotData.Enabled = False
@@ -577,7 +624,7 @@ Public Class TopGUI
         End If
 
         Dim scratchReg As RegClass = Nothing
-        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1"}
+        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1"}
 
         For Each regName In scratchRegNames
             If RegMap.Contains(regName) Then
@@ -607,6 +654,11 @@ Public Class TopGUI
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
 
+    End Sub
+
+    Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
+        report_issue.LinkVisited = True
+        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-ExampleGui/issues/new")
     End Sub
 
 #End Region

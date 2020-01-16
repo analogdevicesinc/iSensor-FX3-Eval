@@ -26,6 +26,8 @@ Public Class FX3ConfigGUI
 
         lagTimeInput.DataSource = ([Enum].GetValues(GetType(SpiLagLeadTime)))
 
+        DutVoltage.DataSource = ([Enum].GetValues(GetType(DutVoltage)))
+
         lsbFirstInput.Items.Add("True: LSB comes first")
         lsbFirstInput.Items.Add("False: MSB comes first")
 
@@ -80,6 +82,8 @@ Public Class FX3ConfigGUI
 
         lagTimeInput.SelectedItem = m_TopGUI.FX3.ChipSelectLagTime
 
+        DutVoltage.SelectedItem = m_TopGUI.FX3.DutSupplyMode
+
         wordLenInput.Text = CStr(m_TopGUI.FX3.WordLength)
 
         If m_TopGUI.FX3.IsLSBFirst Then
@@ -113,8 +117,11 @@ Public Class FX3ConfigGUI
             dataReadyPinInput.SelectedItem = "DIO4"
         End If
 
-        TimerTickMultiplierDisplay.Text = m_TopGUI.FX3.TimerTickScaleFactor.ToString
-        TimerTickMultiplierDisplay.ReadOnly = True
+        WatchdogEnable.Checked = m_TopGUI.FX3.WatchdogEnable
+        WatchdogTimeout.Text = m_TopGUI.FX3.WatchdogTimeoutSeconds
+        If Not WatchdogEnable.Checked Then
+            WatchdogTimeout.ReadOnly = True
+        End If
 
     End Sub
 
@@ -222,8 +229,24 @@ Public Class FX3ConfigGUI
                 m_TopGUI.FX3.ReadyPin = m_TopGUI.FX3.DIO1
         End Select
 
+        'set regmap
         If Not m_regmappath = "" Then
             m_TopGUI.RegMapPath = m_regmappath
+        End If
+
+        'set power supply mode
+        If DutVoltage.SelectedItem <> m_TopGUI.FX3.DutSupplyMode Then
+            m_TopGUI.FX3.DutSupplyMode = DutVoltage.SelectedItem
+        End If
+
+        'set watchdog paramters
+        If WatchdogEnable.Checked <> m_TopGUI.FX3.WatchdogEnable Then
+            m_TopGUI.FX3.WatchdogEnable = WatchdogEnable.Checked
+        End If
+
+        Dim watchdogTime As Integer = Convert.ToInt32(WatchdogTimeout.Text)
+        If watchdogTime <> m_TopGUI.FX3.WatchdogTimeoutSeconds Then
+            m_TopGUI.FX3.WatchdogTimeoutSeconds = watchdogTime
         End If
 
         StatusLabel.Text = "Done"
@@ -244,6 +267,14 @@ Public Class FX3ConfigGUI
         fileBrowser.ShowDialog()
         m_regmappath = fileBrowser.FileName
         SelectedRegMap.Text = m_regmappath.Substring(m_regmappath.LastIndexOf("\") + 1)
+    End Sub
+
+    Private Sub WatchdogEnable_CheckedChanged(sender As Object, e As EventArgs) Handles WatchdogEnable.CheckedChanged
+        If WatchdogEnable.Checked Then
+            WatchdogTimeout.ReadOnly = False
+        Else
+            WatchdogTimeout.ReadOnly = True
+        End If
     End Sub
 
 End Class

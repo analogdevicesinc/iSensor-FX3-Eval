@@ -17,8 +17,15 @@ Public Class RegisterGUI
     Private drReadTimer As Timer
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
+    Private originalDRSetting As Boolean
+
+    Private m_pageMessageList As List(Of Integer)
 
     Public Sub FormSetup() Handles Me.Load
+        'disable dr active reads
+        originalDRSetting = m_TopGUI.FX3.DrActive
+        m_TopGUI.FX3.DrActive = False
+
         scaleData = False
 
         'get list of pages
@@ -32,11 +39,16 @@ Public Class RegisterGUI
             End If
         Next
 
-        drActive.Checked = m_TopGUI.FX3.DrActive
+        If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.ADcmXL Then
+            drActive.Enabled = False
+        Else
+            drActive.Checked = m_TopGUI.FX3.DrActive
+        End If
 
         'Set the selected index
         selectPage.SelectedIndex = 0
         lastPageIndex = 0
+        m_pageMessageList = New List(Of Integer)
 
         pageReadTimer = New Timer(500)
         pageReadTimer.Enabled = False
@@ -85,7 +97,7 @@ Public Class RegisterGUI
                 readRegList.Add(reg)
             Else
                 'Dummy read reg for unreadable registers
-                readRegList.Add(New RegClass With {.Page = 0, .Address = 0})
+                readRegList.Add(New RegClass With {.Page = reg.Page, .Address = 0})
             End If
         Next
 
@@ -105,6 +117,18 @@ Public Class RegisterGUI
                 regView.Item("Contents", regIndex).Value = value.ToString("X")
                 regIndex += 1
             Next
+        End If
+
+        'check the page register
+        If m_TopGUI.FX3.PartType = FX3Api.DUTType.LegacyIMU Then Exit Sub
+        Dim expectedPage As Integer = currentRegList(0).Page
+        If m_pageMessageList.Contains(expectedPage) Then
+            Exit Sub
+        End If
+        Dim dutPage As Integer = m_TopGUI.Dut.ReadUnsigned(New RegClass With {.Page = expectedPage, .Address = 0, .NumBytes = 2})
+        If dutPage <> expectedPage Then
+            m_pageMessageList.Add(expectedPage)
+            MsgBox("ERROR: Unable to load page " + expectedPage.ToString())
         End If
 
     End Sub
@@ -139,7 +163,11 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub ReadDrFreq()
-        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)).ToString() + "Hz"
+        Dim dr As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)
+        DrFreq.Text = FormatNumber(dr).ToString() + "Hz"
+        If dr = Double.PositiveInfinity Then
+            measureDr.Checked = False
+        End If
         drReadTimer.Enabled = measureDr.Checked
     End Sub
 
@@ -148,6 +176,9 @@ Public Class RegisterGUI
         pageReadTimer.Enabled = False
         drReadTimer.Enabled = False
         m_TopGUI.btn_RegAccess.Enabled = True
+
+        'reset dr active setting
+        m_TopGUI.FX3.DrActive = originalDRSetting Or drActive.Checked
     End Sub
 
     Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged
@@ -230,10 +261,10 @@ Public Class RegisterGUI
         values = m_TopGUI.Dut.ReadUnsigned(readableRegMap)
         Dim strValues As New List(Of String)
 
-        strValues.Add("Register, Value")
+        strValues.Add("Register, Page, Address, Value")
         Dim index As Integer = 0
         For Each reg In readableRegMap
-            strValues.Add(reg.Label + "," + values(index).ToString())
+            strValues.Add(reg.Label + "," + reg.Page.ToString() + "," + reg.Address.ToString() + "," + values(index).ToString())
             index += 1
         Next
         saveCSV("RegDump", strValues.ToArray(), m_TopGUI.lastFilePath)

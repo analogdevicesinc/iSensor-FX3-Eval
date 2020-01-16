@@ -52,10 +52,14 @@ Partial Class FX3ConfigGUI
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
-        Me.TimerTickMultiplierDisplay = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
         Me.SelectedRegMap = New System.Windows.Forms.TextBox()
+        Me.WatchdogTimeout = New System.Windows.Forms.TextBox()
+        Me.WatchdogEnable = New System.Windows.Forms.CheckBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label19 = New System.Windows.Forms.Label()
+        Me.DutVoltage = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -135,7 +139,7 @@ Partial Class FX3ConfigGUI
         Me.frequencyInput.Location = New System.Drawing.Point(135, 13)
         Me.frequencyInput.Name = "frequencyInput"
         Me.frequencyInput.Size = New System.Drawing.Size(219, 20)
-        Me.frequencyInput.TabIndex = 8
+        Me.frequencyInput.TabIndex = 0
         '
         'chipSelectControlInput
         '
@@ -143,7 +147,7 @@ Partial Class FX3ConfigGUI
         Me.chipSelectControlInput.Location = New System.Drawing.Point(135, 121)
         Me.chipSelectControlInput.Name = "chipSelectControlInput"
         Me.chipSelectControlInput.Size = New System.Drawing.Size(219, 21)
-        Me.chipSelectControlInput.TabIndex = 9
+        Me.chipSelectControlInput.TabIndex = 4
         '
         'phaseInput
         '
@@ -151,7 +155,7 @@ Partial Class FX3ConfigGUI
         Me.phaseInput.Location = New System.Drawing.Point(135, 67)
         Me.phaseInput.Name = "phaseInput"
         Me.phaseInput.Size = New System.Drawing.Size(219, 21)
-        Me.phaseInput.TabIndex = 10
+        Me.phaseInput.TabIndex = 2
         '
         'polarityInput
         '
@@ -159,7 +163,7 @@ Partial Class FX3ConfigGUI
         Me.polarityInput.Location = New System.Drawing.Point(135, 40)
         Me.polarityInput.Name = "polarityInput"
         Me.polarityInput.Size = New System.Drawing.Size(219, 21)
-        Me.polarityInput.TabIndex = 11
+        Me.polarityInput.TabIndex = 1
         '
         'chipSelectPolarityInput
         '
@@ -167,7 +171,7 @@ Partial Class FX3ConfigGUI
         Me.chipSelectPolarityInput.Location = New System.Drawing.Point(135, 94)
         Me.chipSelectPolarityInput.Name = "chipSelectPolarityInput"
         Me.chipSelectPolarityInput.Size = New System.Drawing.Size(219, 21)
-        Me.chipSelectPolarityInput.TabIndex = 12
+        Me.chipSelectPolarityInput.TabIndex = 3
         '
         'leadTimeInput
         '
@@ -175,7 +179,7 @@ Partial Class FX3ConfigGUI
         Me.leadTimeInput.Location = New System.Drawing.Point(135, 148)
         Me.leadTimeInput.Name = "leadTimeInput"
         Me.leadTimeInput.Size = New System.Drawing.Size(219, 21)
-        Me.leadTimeInput.TabIndex = 13
+        Me.leadTimeInput.TabIndex = 5
         '
         'lagTimeInput
         '
@@ -183,14 +187,14 @@ Partial Class FX3ConfigGUI
         Me.lagTimeInput.Location = New System.Drawing.Point(135, 175)
         Me.lagTimeInput.Name = "lagTimeInput"
         Me.lagTimeInput.Size = New System.Drawing.Size(219, 21)
-        Me.lagTimeInput.TabIndex = 14
+        Me.lagTimeInput.TabIndex = 6
         '
         'wordLenInput
         '
         Me.wordLenInput.Location = New System.Drawing.Point(135, 202)
         Me.wordLenInput.Name = "wordLenInput"
         Me.wordLenInput.Size = New System.Drawing.Size(219, 20)
-        Me.wordLenInput.TabIndex = 15
+        Me.wordLenInput.TabIndex = 7
         '
         'SetConfig
         '
@@ -234,7 +238,7 @@ Partial Class FX3ConfigGUI
         Me.lsbFirstInput.Location = New System.Drawing.Point(135, 228)
         Me.lsbFirstInput.Name = "lsbFirstInput"
         Me.lsbFirstInput.Size = New System.Drawing.Size(219, 21)
-        Me.lsbFirstInput.TabIndex = 20
+        Me.lsbFirstInput.TabIndex = 8
         '
         'Label11
         '
@@ -250,23 +254,23 @@ Partial Class FX3ConfigGUI
         Me.stallTimeInput.Location = New System.Drawing.Point(135, 255)
         Me.stallTimeInput.Name = "stallTimeInput"
         Me.stallTimeInput.Size = New System.Drawing.Size(219, 20)
-        Me.stallTimeInput.TabIndex = 22
+        Me.stallTimeInput.TabIndex = 9
         '
         'Label12
         '
         Me.Label12.AutoSize = True
         Me.Label12.Location = New System.Drawing.Point(12, 284)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(61, 13)
+        Me.Label12.Size = New System.Drawing.Size(64, 13)
         Me.Label12.TabIndex = 23
-        Me.Label12.Text = "Stall Cycles"
+        Me.Label12.Text = "Stall Cycles:"
         '
         'StallCyclesInput
         '
         Me.StallCyclesInput.Location = New System.Drawing.Point(135, 281)
         Me.StallCyclesInput.Name = "StallCyclesInput"
         Me.StallCyclesInput.Size = New System.Drawing.Size(219, 20)
-        Me.StallCyclesInput.TabIndex = 25
+        Me.StallCyclesInput.TabIndex = 10
         '
         'dataReadyPinInput
         '
@@ -274,7 +278,7 @@ Partial Class FX3ConfigGUI
         Me.dataReadyPinInput.Location = New System.Drawing.Point(135, 307)
         Me.dataReadyPinInput.Name = "dataReadyPinInput"
         Me.dataReadyPinInput.Size = New System.Drawing.Size(219, 21)
-        Me.dataReadyPinInput.TabIndex = 27
+        Me.dataReadyPinInput.TabIndex = 11
         '
         'dataReadyActiveInput
         '
@@ -282,7 +286,7 @@ Partial Class FX3ConfigGUI
         Me.dataReadyActiveInput.Location = New System.Drawing.Point(135, 334)
         Me.dataReadyActiveInput.Name = "dataReadyActiveInput"
         Me.dataReadyActiveInput.Size = New System.Drawing.Size(219, 21)
-        Me.dataReadyActiveInput.TabIndex = 28
+        Me.dataReadyActiveInput.TabIndex = 12
         '
         'dataReadyPolarityInput
         '
@@ -290,75 +294,115 @@ Partial Class FX3ConfigGUI
         Me.dataReadyPolarityInput.Location = New System.Drawing.Point(135, 361)
         Me.dataReadyPolarityInput.Name = "dataReadyPolarityInput"
         Me.dataReadyPolarityInput.Size = New System.Drawing.Size(219, 21)
-        Me.dataReadyPolarityInput.TabIndex = 29
+        Me.dataReadyPolarityInput.TabIndex = 13
         '
         'Label14
         '
         Me.Label14.AutoSize = True
         Me.Label14.Location = New System.Drawing.Point(12, 310)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(82, 13)
+        Me.Label14.Size = New System.Drawing.Size(85, 13)
         Me.Label14.TabIndex = 30
-        Me.Label14.Text = "Data Ready Pin"
+        Me.Label14.Text = "Data Ready Pin:"
         '
         'Label15
         '
         Me.Label15.AutoSize = True
         Me.Label15.Location = New System.Drawing.Point(12, 337)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(97, 13)
+        Me.Label15.Size = New System.Drawing.Size(100, 13)
         Me.Label15.TabIndex = 31
-        Me.Label15.Text = "Data Ready Active"
+        Me.Label15.Text = "Data Ready Active:"
         '
         'Label16
         '
         Me.Label16.AutoSize = True
         Me.Label16.Location = New System.Drawing.Point(12, 364)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(101, 13)
+        Me.Label16.Size = New System.Drawing.Size(104, 13)
         Me.Label16.TabIndex = 32
-        Me.Label16.Text = "Data Ready Polarity"
-        '
-        'TimerTickMultiplierDisplay
-        '
-        Me.TimerTickMultiplierDisplay.Location = New System.Drawing.Point(135, 414)
-        Me.TimerTickMultiplierDisplay.Name = "TimerTickMultiplierDisplay"
-        Me.TimerTickMultiplierDisplay.Size = New System.Drawing.Size(219, 20)
-        Me.TimerTickMultiplierDisplay.TabIndex = 34
+        Me.Label16.Text = "Data Ready Polarity:"
         '
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(12, 391)
+        Me.Label17.Location = New System.Drawing.Point(12, 467)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(96, 13)
         Me.Label17.TabIndex = 33
         Me.Label17.Text = "Selected RegMap:"
         '
+        'SelectedRegMap
+        '
+        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 464)
+        Me.SelectedRegMap.Name = "SelectedRegMap"
+        Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
+        Me.SelectedRegMap.TabIndex = 14
+        '
+        'WatchdogTimeout
+        '
+        Me.WatchdogTimeout.Location = New System.Drawing.Point(135, 411)
+        Me.WatchdogTimeout.Name = "WatchdogTimeout"
+        Me.WatchdogTimeout.Size = New System.Drawing.Size(219, 20)
+        Me.WatchdogTimeout.TabIndex = 36
+        '
+        'WatchdogEnable
+        '
+        Me.WatchdogEnable.AutoSize = True
+        Me.WatchdogEnable.Location = New System.Drawing.Point(135, 388)
+        Me.WatchdogEnable.Name = "WatchdogEnable"
+        Me.WatchdogEnable.Size = New System.Drawing.Size(174, 17)
+        Me.WatchdogEnable.TabIndex = 37
+        Me.WatchdogEnable.Text = "Watchdog Functionality Enable"
+        Me.WatchdogEnable.UseVisualStyleBackColor = True
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Location = New System.Drawing.Point(12, 414)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(107, 13)
+        Me.Label18.TabIndex = 38
+        Me.Label18.Text = "Watchdog Period (s):"
+        '
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(12, 417)
+        Me.Label13.Location = New System.Drawing.Point(12, 389)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(88, 13)
-        Me.Label13.TabIndex = 35
-        Me.Label13.Text = "Timer Tick to ms:"
+        Me.Label13.Size = New System.Drawing.Size(91, 13)
+        Me.Label13.TabIndex = 39
+        Me.Label13.Text = "Watchdog Reset:"
         '
-        'SelectedRegMap
+        'Label19
         '
-        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 388)
-        Me.SelectedRegMap.Name = "SelectedRegMap"
-        Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
-        Me.SelectedRegMap.TabIndex = 36
+        Me.Label19.AutoSize = True
+        Me.Label19.Location = New System.Drawing.Point(12, 440)
+        Me.Label19.Name = "Label19"
+        Me.Label19.Size = New System.Drawing.Size(72, 13)
+        Me.Label19.TabIndex = 41
+        Me.Label19.Text = "DUT Voltage:"
+        '
+        'DutVoltage
+        '
+        Me.DutVoltage.FormattingEnabled = True
+        Me.DutVoltage.Location = New System.Drawing.Point(135, 437)
+        Me.DutVoltage.Name = "DutVoltage"
+        Me.DutVoltage.Size = New System.Drawing.Size(219, 21)
+        Me.DutVoltage.TabIndex = 40
         '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(441, 459)
-        Me.Controls.Add(Me.SelectedRegMap)
+        Me.ClientSize = New System.Drawing.Size(441, 500)
+        Me.Controls.Add(Me.Label19)
+        Me.Controls.Add(Me.DutVoltage)
         Me.Controls.Add(Me.Label13)
-        Me.Controls.Add(Me.TimerTickMultiplierDisplay)
+        Me.Controls.Add(Me.Label18)
+        Me.Controls.Add(Me.WatchdogEnable)
+        Me.Controls.Add(Me.WatchdogTimeout)
+        Me.Controls.Add(Me.SelectedRegMap)
         Me.Controls.Add(Me.Label17)
         Me.Controls.Add(Me.Label16)
         Me.Controls.Add(Me.Label15)
@@ -429,8 +473,12 @@ Partial Class FX3ConfigGUI
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
     Friend WithEvents Label16 As Label
-    Friend WithEvents TimerTickMultiplierDisplay As TextBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents Label13 As Label
     Friend WithEvents SelectedRegMap As TextBox
+    Friend WithEvents WatchdogTimeout As TextBox
+    Friend WithEvents WatchdogEnable As CheckBox
+    Friend WithEvents Label18 As Label
+    Friend WithEvents Label13 As Label
+    Friend WithEvents Label19 As Label
+    Friend WithEvents DutVoltage As ComboBox
 End Class

@@ -40,12 +40,13 @@ Partial Class TopGUI
         Me.btn_APIInfo = New System.Windows.Forms.Button()
         Me.btn_BoardInfo = New System.Windows.Forms.Button()
         Me.btn_PWMSetup = New System.Windows.Forms.Button()
-        Me.btn_measurePulse = New System.Windows.Forms.Button()
+        Me.btn_plotFFT = New System.Windows.Forms.Button()
         Me.btn_OtherApps = New System.Windows.Forms.Button()
         Me.btn_PinAccess = New System.Windows.Forms.Button()
         Me.label_apiVersion = New System.Windows.Forms.Label()
         Me.btn_plotData = New System.Windows.Forms.Button()
         Me.regMapPath_Label = New System.Windows.Forms.Label()
+        Me.report_issue = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -100,7 +101,7 @@ Partial Class TopGUI
         Me.btn_ResetDUT.Location = New System.Drawing.Point(92, 9)
         Me.btn_ResetDUT.Name = "btn_ResetDUT"
         Me.btn_ResetDUT.Size = New System.Drawing.Size(75, 64)
-        Me.btn_ResetDUT.TabIndex = 14
+        Me.btn_ResetDUT.TabIndex = 1
         Me.btn_ResetDUT.Text = "Reset DUT"
         Me.btn_ResetDUT.UseVisualStyleBackColor = True
         '
@@ -109,7 +110,7 @@ Partial Class TopGUI
         Me.btn_SelectDUT.Location = New System.Drawing.Point(255, 9)
         Me.btn_SelectDUT.Name = "btn_SelectDUT"
         Me.btn_SelectDUT.Size = New System.Drawing.Size(75, 64)
-        Me.btn_SelectDUT.TabIndex = 15
+        Me.btn_SelectDUT.TabIndex = 3
         Me.btn_SelectDUT.Text = "Select DUT Type"
         Me.btn_SelectDUT.UseVisualStyleBackColor = True
         '
@@ -118,7 +119,7 @@ Partial Class TopGUI
         Me.btn_RegAccess.Location = New System.Drawing.Point(12, 149)
         Me.btn_RegAccess.Name = "btn_RegAccess"
         Me.btn_RegAccess.Size = New System.Drawing.Size(75, 64)
-        Me.btn_RegAccess.TabIndex = 0
+        Me.btn_RegAccess.TabIndex = 5
         Me.btn_RegAccess.Text = "Register Access"
         Me.btn_RegAccess.UseVisualStyleBackColor = True
         '
@@ -146,7 +147,7 @@ Partial Class TopGUI
         Me.btn_RealTime.Location = New System.Drawing.Point(93, 149)
         Me.btn_RealTime.Name = "btn_RealTime"
         Me.btn_RealTime.Size = New System.Drawing.Size(75, 64)
-        Me.btn_RealTime.TabIndex = 20
+        Me.btn_RealTime.TabIndex = 6
         Me.btn_RealTime.Text = "Burst Data Capture"
         Me.btn_RealTime.UseVisualStyleBackColor = True
         '
@@ -155,7 +156,7 @@ Partial Class TopGUI
         Me.btn_BulkRegRead.Location = New System.Drawing.Point(174, 149)
         Me.btn_BulkRegRead.Name = "btn_BulkRegRead"
         Me.btn_BulkRegRead.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BulkRegRead.TabIndex = 21
+        Me.btn_BulkRegRead.TabIndex = 7
         Me.btn_BulkRegRead.Text = "Register Logging"
         Me.btn_BulkRegRead.UseVisualStyleBackColor = True
         '
@@ -164,7 +165,7 @@ Partial Class TopGUI
         Me.btn_CheckDUTConnection.Location = New System.Drawing.Point(173, 9)
         Me.btn_CheckDUTConnection.Name = "btn_CheckDUTConnection"
         Me.btn_CheckDUTConnection.Size = New System.Drawing.Size(75, 64)
-        Me.btn_CheckDUTConnection.TabIndex = 22
+        Me.btn_CheckDUTConnection.TabIndex = 2
         Me.btn_CheckDUTConnection.Text = "Check DUT Connection"
         Me.btn_CheckDUTConnection.UseVisualStyleBackColor = True
         '
@@ -173,25 +174,25 @@ Partial Class TopGUI
         Me.btn_FX3Config.Location = New System.Drawing.Point(336, 9)
         Me.btn_FX3Config.Name = "btn_FX3Config"
         Me.btn_FX3Config.Size = New System.Drawing.Size(75, 64)
-        Me.btn_FX3Config.TabIndex = 23
+        Me.btn_FX3Config.TabIndex = 4
         Me.btn_FX3Config.Text = "FX3 Config. Options"
         Me.btn_FX3Config.UseVisualStyleBackColor = True
         '
         'btn_APIInfo
         '
-        Me.btn_APIInfo.Location = New System.Drawing.Point(255, 219)
+        Me.btn_APIInfo.Location = New System.Drawing.Point(174, 219)
         Me.btn_APIInfo.Name = "btn_APIInfo"
         Me.btn_APIInfo.Size = New System.Drawing.Size(75, 64)
-        Me.btn_APIInfo.TabIndex = 24
+        Me.btn_APIInfo.TabIndex = 12
         Me.btn_APIInfo.Text = "FX3 API Info."
         Me.btn_APIInfo.UseVisualStyleBackColor = True
         '
         'btn_BoardInfo
         '
-        Me.btn_BoardInfo.Location = New System.Drawing.Point(336, 219)
+        Me.btn_BoardInfo.Location = New System.Drawing.Point(255, 219)
         Me.btn_BoardInfo.Name = "btn_BoardInfo"
         Me.btn_BoardInfo.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BoardInfo.TabIndex = 26
+        Me.btn_BoardInfo.TabIndex = 13
         Me.btn_BoardInfo.Text = "FX3 Board Info."
         Me.btn_BoardInfo.UseVisualStyleBackColor = True
         '
@@ -200,25 +201,25 @@ Partial Class TopGUI
         Me.btn_PWMSetup.Location = New System.Drawing.Point(93, 219)
         Me.btn_PWMSetup.Name = "btn_PWMSetup"
         Me.btn_PWMSetup.Size = New System.Drawing.Size(75, 64)
-        Me.btn_PWMSetup.TabIndex = 25
+        Me.btn_PWMSetup.TabIndex = 11
         Me.btn_PWMSetup.Text = "PWM Output Setup"
         Me.btn_PWMSetup.UseVisualStyleBackColor = True
         '
-        'btn_measurePulse
+        'btn_plotFFT
         '
-        Me.btn_measurePulse.Location = New System.Drawing.Point(174, 219)
-        Me.btn_measurePulse.Name = "btn_measurePulse"
-        Me.btn_measurePulse.Size = New System.Drawing.Size(75, 64)
-        Me.btn_measurePulse.TabIndex = 27
-        Me.btn_measurePulse.Text = "Measure Signal Pulse Width"
-        Me.btn_measurePulse.UseVisualStyleBackColor = True
+        Me.btn_plotFFT.Location = New System.Drawing.Point(336, 149)
+        Me.btn_plotFFT.Name = "btn_plotFFT"
+        Me.btn_plotFFT.Size = New System.Drawing.Size(75, 64)
+        Me.btn_plotFFT.TabIndex = 9
+        Me.btn_plotFFT.Text = "FFT Data Plotting"
+        Me.btn_plotFFT.UseVisualStyleBackColor = True
         '
         'btn_OtherApps
         '
-        Me.btn_OtherApps.Location = New System.Drawing.Point(336, 149)
+        Me.btn_OtherApps.Location = New System.Drawing.Point(336, 219)
         Me.btn_OtherApps.Name = "btn_OtherApps"
         Me.btn_OtherApps.Size = New System.Drawing.Size(75, 64)
-        Me.btn_OtherApps.TabIndex = 28
+        Me.btn_OtherApps.TabIndex = 14
         Me.btn_OtherApps.Text = "Other Applications"
         Me.btn_OtherApps.UseVisualStyleBackColor = True
         '
@@ -227,7 +228,7 @@ Partial Class TopGUI
         Me.btn_PinAccess.Location = New System.Drawing.Point(11, 219)
         Me.btn_PinAccess.Name = "btn_PinAccess"
         Me.btn_PinAccess.Size = New System.Drawing.Size(75, 64)
-        Me.btn_PinAccess.TabIndex = 29
+        Me.btn_PinAccess.TabIndex = 10
         Me.btn_PinAccess.Text = "Pin Access"
         Me.btn_PinAccess.UseVisualStyleBackColor = True
         '
@@ -245,30 +246,41 @@ Partial Class TopGUI
         Me.btn_plotData.Location = New System.Drawing.Point(255, 149)
         Me.btn_plotData.Name = "btn_plotData"
         Me.btn_plotData.Size = New System.Drawing.Size(75, 64)
-        Me.btn_plotData.TabIndex = 32
+        Me.btn_plotData.TabIndex = 8
         Me.btn_plotData.Text = "Data Plotting"
         Me.btn_plotData.UseVisualStyleBackColor = True
         '
         'regMapPath_Label
         '
         Me.regMapPath_Label.AutoSize = True
-        Me.regMapPath_Label.Location = New System.Drawing.Point(8, 304)
+        Me.regMapPath_Label.Location = New System.Drawing.Point(10, 304)
         Me.regMapPath_Label.Name = "regMapPath_Label"
         Me.regMapPath_Label.Size = New System.Drawing.Size(70, 13)
         Me.regMapPath_Label.TabIndex = 33
         Me.regMapPath_Label.Text = "RegMapPath"
+        '
+        'report_issue
+        '
+        Me.report_issue.AutoSize = True
+        Me.report_issue.Location = New System.Drawing.Point(344, 304)
+        Me.report_issue.Name = "report_issue"
+        Me.report_issue.Size = New System.Drawing.Size(67, 13)
+        Me.report_issue.TabIndex = 15
+        Me.report_issue.TabStop = True
+        Me.report_issue.Text = "Report Issue"
         '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(424, 326)
+        Me.Controls.Add(Me.report_issue)
         Me.Controls.Add(Me.regMapPath_Label)
         Me.Controls.Add(Me.btn_plotData)
         Me.Controls.Add(Me.label_apiVersion)
         Me.Controls.Add(Me.btn_PinAccess)
         Me.Controls.Add(Me.btn_OtherApps)
-        Me.Controls.Add(Me.btn_measurePulse)
+        Me.Controls.Add(Me.btn_plotFFT)
         Me.Controls.Add(Me.btn_BoardInfo)
         Me.Controls.Add(Me.btn_PWMSetup)
         Me.Controls.Add(Me.btn_APIInfo)
@@ -312,10 +324,11 @@ Partial Class TopGUI
     Friend WithEvents btn_APIInfo As Button
     Friend WithEvents btn_BoardInfo As Button
     Friend WithEvents btn_PWMSetup As Button
-    Friend WithEvents btn_measurePulse As Button
+    Friend WithEvents btn_plotFFT As Button
     Friend WithEvents btn_OtherApps As Button
     Friend WithEvents btn_PinAccess As Button
     Friend WithEvents label_apiVersion As Label
     Friend WithEvents btn_plotData As Button
     Friend WithEvents regMapPath_Label As Label
+    Friend WithEvents report_issue As LinkLabel
 End Class

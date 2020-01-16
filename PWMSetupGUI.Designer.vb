@@ -101,7 +101,7 @@ Partial Class PWMSetupGUI
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Name = "PWMSetupGUI"
-        Me.Text = "Configure PWM"
+        Me.Text = "PWM Setup"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

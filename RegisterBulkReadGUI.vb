@@ -4,22 +4,30 @@
 'Description:   Allows for bulk data logging from registers. Can be triggered on a data ready signal for IMUs
 
 Imports AdisApi
-Imports adisInterface
 Imports System.ComponentModel
+Imports StreamDataLogger
 
 Public Class RegisterBulkReadGUI
     Inherits FormBase
 
-    Private WithEvents fileManager As StreamDataLogger.StreamDataLogger
+    Private WithEvents fileManager As Logger
     Private totalDRCaptures As Integer = 0
     Private pin As IPinObject
 
     Public Sub FormSetup() Handles Me.Load
+
+        'create control handle if needed
+        If Not IsHandleCreated Then
+            CreateHandle()
+        End If
+
+        'populate selected register list from the last run
         For Each reg In m_TopGUI.RegMap
             RegisterList.Items.Add(reg.Label)
         Next
         RegisterList.SelectedIndex = 0
 
+        'add DIO options
         DRDIO.Items.Add("DIO1")
         DRDIO.Items.Add("DIO2")
         DRDIO.Items.Add("DIO3")
@@ -40,7 +48,7 @@ Public Class RegisterBulkReadGUI
 
         selectedRegview.View = View.Details
         selectedRegview.Columns.Add("Register", selectedRegview.Width - 1, HorizontalAlignment.Left)
-        Label4.Text = ""
+        DrFreq.Text = ""
         StreamingAVARCancelButton.Enabled = False
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
@@ -50,16 +58,52 @@ Public Class RegisterBulkReadGUI
             selectedRegview.Items.Add(item)
         Next
         NumberDRToCapture.Text = m_TopGUI.numRegSamples.ToString()
+        SamplesPerWrite.Text = m_TopGUI.samplesPerWrite.ToString()
+        linesPerFile.Text = m_TopGUI.linesPerFile.ToString()
+        UpdateRegCountLabel()
+        SetupToolTips()
+
+    End Sub
+
+    Private Sub SetupToolTips()
+
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.RegisterList, "Select register from the loaded register map")
+        tip0.SetToolTip(Me.selectedRegview, "Currently selected registers to stream")
+        tip0.SetToolTip(Me.regStreamingList, "Number of registers set to log from")
+        tip0.SetToolTip(Me.AddRegisterButton, "Add the currently selected register")
+        tip0.SetToolTip(Me.RemoveRegisterButton, "Remove the selected register")
+        tip0.SetToolTip(Me.ClearAllButton, "Clear all selected registers")
+        tip0.SetToolTip(Me.btn_loadregs, "Load a list of registers to log from a .csv file")
+        tip0.SetToolTip(Me.btn_saveregs, "Save the currently selected list of registers to log to a .csv file")
+        tip0.SetToolTip(Me.DRDIO, "Select Data Ready Pin")
+        tip0.SetToolTip(Me.DrActiveBox, "Select if register reads are synchronized to the data ready signal")
+        tip0.SetToolTip(Me.MeasureDR, "Measure the data ready frequency")
+        tip0.SetToolTip(Me.RegisterList, "Select register from the loaded register map to log")
+        tip0.SetToolTip(Me.DrFreq, "The current data ready frequency")
+        tip0.SetToolTip(Me.NumberDRToCapture, "The total number of reads of the selected register list to log")
+        tip0.SetToolTip(Me.SamplesPerWrite, "The total number of reads of the selected register list to write to the log file in a single operation")
+        tip0.SetToolTip(Me.linesPerFile, "Maximum lines in a single log file")
+        tip0.SetToolTip(Me.MainButton, "Start the register stream operation")
+        tip0.SetToolTip(Me.StreamingAVARCancelButton, "Cancel a running register stream operation")
+
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        'Save the list-view contents
 
+        'Save the list-view contents
         m_TopGUI.BulkRegList.Clear()
         For Each item In selectedRegview.Items
             m_TopGUI.BulkRegList.Add(item)
         Next
+
+        'sample settings
         m_TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
+        m_TopGUI.linesPerFile = Convert.ToInt32(linesPerFile.Text)
+        m_TopGUI.samplesPerWrite = Convert.ToInt32(SamplesPerWrite.Text)
+
+        'dispose
+        Me.Dispose()
 
     End Sub
 
@@ -67,6 +111,7 @@ Public Class RegisterBulkReadGUI
         Dim newItem As New ListViewItem()
         newItem.SubItems(0).Text = RegisterList.SelectedItem
         selectedRegview.Items.Add(newItem)
+        UpdateRegCountLabel()
     End Sub
 
     Private Sub RemoveRegisterButton_Click(sender As Object, e As EventArgs) Handles RemoveRegisterButton.Click
@@ -75,6 +120,7 @@ Public Class RegisterBulkReadGUI
         Else
             Me.selectedRegview.Items.RemoveAt(Me.selectedRegview.FocusedItem.Index)
         End If
+        UpdateRegCountLabel()
     End Sub
 
     Private Sub ClearAllButton_Click(sender As Object, e As EventArgs) Handles ClearAllButton.Click
@@ -83,11 +129,17 @@ Public Class RegisterBulkReadGUI
         If result = DialogResult.Yes Then
             selectedRegview.Items.Clear()
         End If
+        UpdateRegCountLabel()
+    End Sub
+
+    Private Sub UpdateRegCountLabel()
+        regStreamingList.Text = "Register Streaming List (" + selectedRegview.Items.Count.ToString() + ")"
     End Sub
 
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
 
         Dim savePath As String
+        Dim MeasuredFreq As Double = Double.PositiveInfinity
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
@@ -109,7 +161,15 @@ Public Class RegisterBulkReadGUI
 
         'Check whether the measured DR is valid
         If m_TopGUI.FX3.DrActive Then
+<<<<<<< HEAD
             If m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) > 10000 Or m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2) < 0 Then
+=======
+            'measure data ready frequency
+            MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(pin, 1, 10000, 2)
+            DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
+
+            If MeasuredFreq > 10000 Or MeasuredFreq = Double.PositiveInfinity Then
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
                 MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
                 Exit Sub
             End If
@@ -123,7 +183,11 @@ Public Class RegisterBulkReadGUI
 
         'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
         If m_TopGUI.FX3.DrActive Then
+<<<<<<< HEAD
             Dim drPeriod As Double = 1 / m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2)
+=======
+            Dim drPeriod As Double = 1 / MeasuredFreq
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
             Dim num16bitregs As Integer = 0
             For Each reg In regList
                 If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
@@ -151,6 +215,7 @@ Public Class RegisterBulkReadGUI
             Exit Sub
         End If
 
+<<<<<<< HEAD
         'Generate TFSM settings
         Dim drFreq As Double
         Dim numCaptures As UInteger
@@ -169,11 +234,10 @@ Public Class RegisterBulkReadGUI
             End If
         End If
 
+=======
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
         'Set up file manager
-        fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
-        'Dim fakeSource As New StreamDataLogger.FakeStreamProducer
-        'fakeSource.BufferDelayMs = 50
-        'fileManager = New StreamDataLogger.StreamDataLogger(fakeSource, fakeSource)
+        fileManager = New Logger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.RegList = regList
         fileManager.FileBaseName = "RegStream" + timeString
         fileManager.FilePath = savePath + "\"
@@ -181,12 +245,15 @@ Public Class RegisterBulkReadGUI
         fileManager.Captures = 1 'Number of times to read each register in the reg map
         Try
             fileManager.FileMaxDataRows = Convert.ToInt32(linesPerFile.Text()) 'Keep this under 1M samples to open in Excel
+            fileManager.BuffersPerWrite = Convert.ToInt32(SamplesPerWrite.Text) 'Dynamic buffers per write to avoid storing too much data in RAM
         Catch ex As Exception
             fileManager.FileMaxDataRows = 1000000
+            fileManager.BuffersPerWrite = 10000
+            SamplesPerWrite.Text = "10000"
             linesPerFile.Text = "1000000"
+            MsgBox("ERROR: Invalid settings entered, using default")
         End Try
         fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
-        fileManager.BuffersPerWrite = 10000 'Dynamic buffers per write to avoid storing too much data in RAM
 
         fileManager.RunAsync()
 
@@ -204,11 +271,19 @@ Public Class RegisterBulkReadGUI
         RegisterList.Enabled = False
         selectedRegview.Enabled = False
         MainButton.Enabled = False
+        SamplesPerWrite.Enabled = False
+        linesPerFile.Enabled = False
+        btn_loadregs.Enabled = False
+        btn_saveregs.Enabled = False
 
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        Me.Invoke(New MethodInvoker(AddressOf DoneWork))
+        If Me.InvokeRequired Then
+            Me.Invoke((New MethodInvoker(AddressOf DoneWork)))
+        Else
+            DoneWork()
+        End If
     End Sub
 
     Private Sub DoneWork()
@@ -224,6 +299,8 @@ Public Class RegisterBulkReadGUI
         RegisterList.Enabled = True
         selectedRegview.Enabled = True
         MainButton.Enabled = True
+        SamplesPerWrite.Enabled = True
+        linesPerFile.Enabled = True
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StreamingAVARCancelButton.Click
@@ -237,7 +314,11 @@ Public Class RegisterBulkReadGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
+<<<<<<< HEAD
         Label4.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
+=======
+        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
+>>>>>>> 777302237ebea64f61d6ce49e5533a5149999f7f
     End Sub
 
     Private Sub UpdateDRPin()
@@ -258,7 +339,11 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        Me.Invoke(New MethodInvoker(Sub() CaptureProgressStreaming.Value = e.ProgressPercentage))
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(Sub() CaptureProgressStreaming.Value = e.ProgressPercentage))
+        Else
+            CaptureProgressStreaming.Value = e.ProgressPercentage
+        End If
     End Sub
 
     Private Sub UpdateGUI()
@@ -281,6 +366,52 @@ Public Class RegisterBulkReadGUI
     Private Sub DrActiveBox_CheckedChanged(sender As Object, e As EventArgs) Handles DrActiveBox.CheckedChanged
         m_TopGUI.FX3.DrActive = DrActiveBox.Checked
         MeasureDR.Enabled = m_TopGUI.FX3.DrActive
+    End Sub
+
+    Private Sub btn_loadregs_Click(sender As Object, e As EventArgs) Handles btn_loadregs.Click
+        Dim browser As New OpenFileDialog()
+        If browser.ShowDialog() = DialogResult.OK Then
+            LoadRegsFromFile(browser.FileName)
+        Else
+            MsgBox("ERROR: No file selected")
+            Exit Sub
+        End If
+    End Sub
+
+    Private Sub LoadRegsFromFile(path As String)
+        Dim regs() As String
+        Try
+            regs = System.IO.File.ReadAllLines(path)
+        Catch ex As Exception
+            MsgBox("ERROR: Unable to load file. " + ex.Message())
+            Exit Sub
+        End Try
+
+        selectedRegview.Items.Clear()
+        For Each reg In regs
+            If m_TopGUI.RegMap.Contains(reg) Then
+                selectedRegview.Items.Add(New ListViewItem() With {.Text = reg})
+            Else
+                MsgBox("ERROR: Register " + reg + " not found in register map!")
+            End If
+        Next
+
+        'update register count
+        UpdateRegCountLabel()
+    End Sub
+
+    Private Sub btn_saveregs_Click(sender As Object, e As EventArgs) Handles btn_saveregs.Click
+        Dim regs As New List(Of String)
+        For Each item As ListViewItem In selectedRegview.Items
+            regs.Add(item.Text)
+        Next
+
+        If regs.Count() > 0 Then
+            saveCSV("RegList", regs.ToArray())
+        Else
+            MsgBox("ERROR: No register to save")
+        End If
+
     End Sub
 
 End Class

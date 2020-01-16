@@ -1,4 +1,4 @@
-﻿'File:          ADclXLStreamingGUI.vb
+﻿'File:          ADcmXLStreamingGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Date:          7/25/2019
 'Description:   GUI for real time data streaming from the ADcmXLx021 series parts.
@@ -8,20 +8,20 @@ Imports adisInterface
 Imports System.ComponentModel
 Imports AdisApi
 Imports System.Threading
-Imports RegMapClasses
+Imports StreamDataLogger
 
 Public Class ADcmXLStreamingGUI
     Inherits FormBase
 
-    Private WithEvents fileManager As StreamDataLogger.StreamDataLogger
+    Private WithEvents fileManager As Logger
     Private totalFrames As Integer
     Private linesPerFile As Integer
     Private frameTimeCalc As Double
     Private fileSizeEst As Double
     Private fileCounterEnable As Boolean
-    Private pinExitEnable As Integer = 0
-    Private timeoutEnable As Integer = 0
-    Private pinStartEnable As Integer = 0
+    Private pinExitEnable As Integer
+    Private timeoutEnable As Integer
+    Private pinStartEnable As Integer
 
     'Capture related fields
     Private pinCaptureStart As Boolean
@@ -32,9 +32,11 @@ Public Class ADcmXLStreamingGUI
     Private numSampleCaptures As Integer
     Private sampleCounter As Integer
 
+    'bool to track if cancel is async canceled
     Private CancelCapture As Boolean
-    Private SampleDone As Boolean
-    Private runOnce As Boolean
+
+    'wait handle for captures
+    Private sampleWait As EventWaitHandle
 
     'File related fields
     Private savePath As String
@@ -44,7 +46,24 @@ Public Class ADcmXLStreamingGUI
         InitializeComponent()
     End Sub
 
+    Private Sub SetupToolTips()
+
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.TotalFramesInput, "The number of ADcmXL real time frames read per sample")
+        tip0.SetToolTip(Me.LinesPerCSVInput, "The maximum number of lines to write to a single CSV log file")
+        tip0.SetToolTip(Me.CaptureStartMethod, "The trigger method to put the ADcmXL in real time streaming mode")
+        tip0.SetToolTip(Me.CaptureExitMethod, "The method used to take the ADcmXL out of real time streaming mode")
+        tip0.SetToolTip(Me.numSamples, "The number of samples to capture in a stream operation. Total number of real time frames is (Frames Per Sample) x (Number of Samples)")
+        tip0.SetToolTip(Me.PinTriggerRadioBtn, "Begin each sample capture based on an FX3 digital IO pin edge")
+        tip0.SetToolTip(Me.TimerTriggerRadioBtn, "Begin each sample capture based on a fixed time period")
+        tip0.SetToolTip(Me.startButton, "Start the data capture process")
+        tip0.SetToolTip(Me.StopBtn, "Stop the running data capture. Will finish the current sample")
+
+    End Sub
+
     Private Sub TextFileStreamManagerStreaming_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        sampleWait = New EventWaitHandle(False, EventResetMode.AutoReset)
 
         If m_TopGUI.FX3.PartType = DUTType.ADcmXL3021 Then
             m_TopGUI.Dut = New adisInterface.AdcmInterface3Axis(m_TopGUI.FX3)
@@ -90,20 +109,25 @@ Public Class ADcmXLStreamingGUI
         startPolarity.Items.Add("High")
         startPolarity.Items.Add("Low")
         startPolarity.SelectedIndex = 0
-
         TimerTriggerRadioBtn.Checked = True
+        SetupToolTips()
+
     End Sub
 
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
+
+        'Get data output save location
+        savePath = setSaveLocation()
+        If IsNothing(savePath) Then
+            Exit Sub
+        End If
+
         StopBtn.Enabled = True
         startButton.Enabled = False
 
         UpdateGuiCalcs()
         CheckExitMethod()
         CheckStartMethod()
-
-        'Get data output save location
-        savePath = setSaveLocation()
 
         'validate settings
         Try
@@ -146,31 +170,35 @@ Public Class ADcmXLStreamingGUI
         startPinBox.Enabled = False
         startPolarity.Enabled = False
 
-        If numSampleCaptures > 1 Or pinCaptureStart Then
-            runOnce = False
-            Dim temp As Thread
-            temp = New Thread(AddressOf CaptureWorker)
-            temp.Start()
-        Else
-            runOnce = True
-            CaptureSample()
-        End If
+        'start capture thread
+        Dim temp As Thread
+        temp = New Thread(AddressOf CaptureWorker)
+        temp.IsBackground = True
+        temp.Start()
 
     End Sub
 
     Private Sub CaptureWorker()
 
-        Dim pinWaitTime As Double
+        Dim timer As New Stopwatch
 
         'Iterate through
-        While sampleCounter < numSampleCaptures And Not CancelCapture
+        While sampleCounter < numSampleCaptures And (Not CancelCapture)
+
             If pinCaptureStart Then
-                'Pin mode
+                'Pin mode (poll pin until ready)
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Pin Wait"))
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
-                pinWaitTime = m_TopGUI.FX3.PulseWait(startPin, pinCapturePolarity, 0, captureTime)
-                If pinWaitTime >= captureTime Then
+                timer.Restart()
+                While (timer.ElapsedMilliseconds < captureTime) And (m_TopGUI.FX3.ReadPin(startPin) <> pinCapturePolarity) And (Not CancelCapture)
+                    System.Threading.Thread.Sleep(25)
+                End While
+                If timer.ElapsedMilliseconds >= captureTime Then
                     Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Pin wait timed out, exiting capture loop"))
+                    Exit While
+                End If
+                If CancelCapture Then
+                    Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Capture canceled, exiting capture loop"))
                     Exit While
                 End If
 
@@ -180,27 +208,39 @@ Public Class ADcmXLStreamingGUI
                 CaptureSample()
 
                 'Wait for sample completion
-                While Not SampleDone
-                    System.Threading.Thread.Sleep(100)
-                End While
+                sampleWait.WaitOne()
                 sampleCounter += 1
                 Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+
+            ElseIf numSampleCaptures = 1 Then
+
+                'single capture mode
+                CaptureSample()
+
+                'wait for sample completion
+                sampleWait.WaitOne()
+                sampleCounter += 1
+                Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+
             Else
+
+                'timer delay mode
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
                 CaptureSample()
 
                 'wait for sample completion
-                While Not SampleDone
-                    System.Threading.Thread.Sleep(100)
-                End While
+                sampleWait.WaitOne()
                 sampleCounter += 1
                 Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
 
                 'Perform sleep
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Sleep for capture period"))
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
-                System.Threading.Thread.Sleep(captureTime)
+                timer.Restart()
+                While (timer.ElapsedMilliseconds < captureTime) And (Not CancelCapture)
+                    System.Threading.Thread.Sleep(100)
+                End While
             End If
         End While
 
@@ -229,6 +269,9 @@ Public Class ADcmXLStreamingGUI
     End Sub
 
     Private Sub CaptureSample()
+
+        Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
+        Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
@@ -265,17 +308,16 @@ Public Class ADcmXLStreamingGUI
             m_TopGUI.FX3.PinStart = False
         End If
 
-        fileManager = New StreamDataLogger.StreamDataLogger(m_TopGUI.FX3, m_TopGUI.Dut)
+        fileManager = New Logger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.FileBaseName = "Real_Time_Data" + timeString
         fileManager.FilePath = savePath
         fileManager.Buffers = totalFrames
         fileManager.FileMaxDataRows = linesPerFile
         fileManager.BufferTimeoutSeconds = 10
         fileManager.BuffersPerWrite = 1000 'Note: This is # frames, but TFSM counts this as samples. Multiply this number * 32 '15625 = 500k samples
-        fileManager.Captures = 1
+        fileManager.Captures = 32 '32 accel samples per buffer
         fileManager.RegList = regListDUT.RealTimeSamplingRegList
         fileManager.RunAsync()
-        SampleDone = False
     End Sub
 
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
@@ -283,32 +325,22 @@ Public Class ADcmXLStreamingGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        Me.Invoke(New MethodInvoker(AddressOf SampleDoneLabels))
-        SampleDone = True
-        If runOnce Then
-            UpdateLabelsStop()
-        End If
-    End Sub
-
-    Private Sub SampleDoneLabels()
-        statusLabel.Text = "Done with sample"
-        statusLabel.BackColor = Color.LightGreen
-        SampleProgress.Value = 0
+        sampleWait.Set()
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StopBtn.Click
         CancelCapture = True
-        If fileManager.Busy Then
-            fileManager.CancelAsync()
-            statusLabel.Text = "Canceling in capture"
-            statusLabel.BackColor = Color.Red
+        If Not IsNothing(fileManager) Then
+            If fileManager.Busy Then
+                fileManager.CancelAsync()
+                statusLabel.Text = "Canceling in capture"
+                statusLabel.BackColor = Color.Red
+            End If
         End If
     End Sub
 
     Private Sub TotalFramesInput_TextChanged(sender As Object, e As EventArgs) Handles TotalFramesInput.TextChanged
         UpdateGuiCalcs()
-        CheckExitMethod()
-        CheckStartMethod()
     End Sub
 
     Private Sub UpdateGuiCalcs()
@@ -340,10 +372,12 @@ Public Class ADcmXLStreamingGUI
 
         frameTimeCalc = totalFrames / 6897
 
-        If fileCounterEnable Then
-            fileSizeEst = totalFrames * 0.0013986875
+        If m_TopGUI.FX3.PartType = DUTType.ADcmXL1021 Then
+            '1021 case. 10000 buffers gives file size of 7.57MB
+            fileSizeEst = totalFrames * (7.57 / 10000)
         Else
-            fileSizeEst = totalFrames * 0.00115465625
+            '3021 case. 10000 buffers gives file size of 11.2MB
+            fileSizeEst = totalFrames * (11.2 / 10000)
         End If
         TimeCalcLabel.Text = Math.Round(frameTimeCalc, 5).ToString() + " Seconds"
         EstFS.Text = Math.Round(fileSizeEst, 3).ToString() + " MB (est)"
@@ -386,12 +420,6 @@ Public Class ADcmXLStreamingGUI
         CheckExitMethod()
     End Sub
 
-    Private Sub WriteFrameNumber_CheckedChanged(sender As Object, e As EventArgs)
-        UpdateGuiCalcs()
-        CheckExitMethod()
-        CheckStartMethod()
-    End Sub
-
     Private Sub PinTriggerRadioBtn_CheckedChanged(sender As Object, e As EventArgs) Handles PinTriggerRadioBtn.CheckedChanged
         If PinTriggerRadioBtn.Checked Then
             TimerTriggerRadioBtn.Checked = False
@@ -412,7 +440,4 @@ Public Class ADcmXLStreamingGUI
         End If
     End Sub
 
-    Private Sub helpBtn_Click(sender As Object, e As EventArgs) Handles helpBtn.Click
-        MsgBox("The ""Sample Configuration"" section refers to each individual real time stream from the ADcmXL DUT. ""Capture Configuration"" controls how each sample is triggered (by a timer or a GPIO pin on the FX3)")
-    End Sub
 End Class

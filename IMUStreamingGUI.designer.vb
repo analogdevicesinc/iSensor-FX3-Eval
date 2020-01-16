@@ -34,13 +34,13 @@ Partial Class IMUStreamingGUI
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CaptureProgressBurst = New System.Windows.Forms.ProgressBar()
-        Me.BitModeCheckbox = New System.Windows.Forms.CheckBox()
+        Me.Use16BitRegs = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(83, 40)
+        Me.Label5.Location = New System.Drawing.Point(80, 37)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(48, 13)
         Me.Label5.TabIndex = 28
@@ -57,7 +57,7 @@ Partial Class IMUStreamingGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(82, 21)
+        Me.Label4.Location = New System.Drawing.Point(80, 12)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(39, 13)
         Me.Label4.TabIndex = 26
@@ -65,9 +65,9 @@ Partial Class IMUStreamingGUI
         '
         'MeasureDR
         '
-        Me.MeasureDR.Location = New System.Drawing.Point(9, 20)
+        Me.MeasureDR.Location = New System.Drawing.Point(9, 12)
         Me.MeasureDR.Name = "MeasureDR"
-        Me.MeasureDR.Size = New System.Drawing.Size(59, 94)
+        Me.MeasureDR.Size = New System.Drawing.Size(59, 102)
         Me.MeasureDR.TabIndex = 25
         Me.MeasureDR.Text = "Measure DR"
         Me.MeasureDR.UseVisualStyleBackColor = True
@@ -75,11 +75,11 @@ Partial Class IMUStreamingGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(83, 79)
+        Me.Label3.Location = New System.Drawing.Point(80, 78)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(92, 13)
+        Me.Label3.Size = New System.Drawing.Size(105, 13)
         Me.Label3.TabIndex = 24
-        Me.Label3.Text = "# DR To Capture:"
+        Me.Label3.Text = "# Bursts To Capture:"
         '
         'NumberDRToCapture
         '
@@ -90,7 +90,7 @@ Partial Class IMUStreamingGUI
         '
         'BurstStreamCancelButton
         '
-        Me.BurstStreamCancelButton.Location = New System.Drawing.Point(114, 128)
+        Me.BurstStreamCancelButton.Location = New System.Drawing.Point(117, 128)
         Me.BurstStreamCancelButton.Name = "BurstStreamCancelButton"
         Me.BurstStreamCancelButton.Size = New System.Drawing.Size(77, 61)
         Me.BurstStreamCancelButton.TabIndex = 22
@@ -99,7 +99,7 @@ Partial Class IMUStreamingGUI
         '
         'MainButton
         '
-        Me.MainButton.Location = New System.Drawing.Point(13, 128)
+        Me.MainButton.Location = New System.Drawing.Point(9, 128)
         Me.MainButton.Name = "MainButton"
         Me.MainButton.Size = New System.Drawing.Size(77, 61)
         Me.MainButton.TabIndex = 21
@@ -108,9 +108,9 @@ Partial Class IMUStreamingGUI
         '
         'ListView1
         '
-        Me.ListView1.Location = New System.Drawing.Point(219, 12)
+        Me.ListView1.Location = New System.Drawing.Point(214, 12)
         Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(192, 280)
+        Me.ListView1.Size = New System.Drawing.Size(200, 285)
         Me.ListView1.TabIndex = 20
         Me.ListView1.UseCompatibleStateImageBehavior = False
         '
@@ -119,9 +119,9 @@ Partial Class IMUStreamingGUI
         Me.statusLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.statusLabel.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.statusLabel.Location = New System.Drawing.Point(50, 228)
+        Me.statusLabel.Location = New System.Drawing.Point(55, 236)
         Me.statusLabel.Name = "statusLabel"
-        Me.statusLabel.Size = New System.Drawing.Size(138, 20)
+        Me.statusLabel.Size = New System.Drawing.Size(139, 20)
         Me.statusLabel.TabIndex = 30
         Me.statusLabel.Text = "Label6"
         Me.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -129,7 +129,7 @@ Partial Class IMUStreamingGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(12, 232)
+        Me.Label6.Location = New System.Drawing.Point(6, 240)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(43, 13)
         Me.Label6.TabIndex = 29
@@ -138,7 +138,7 @@ Partial Class IMUStreamingGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(10, 256)
+        Me.Label1.Location = New System.Drawing.Point(6, 263)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(91, 13)
         Me.Label1.TabIndex = 32
@@ -146,27 +146,27 @@ Partial Class IMUStreamingGUI
         '
         'CaptureProgressBurst
         '
-        Me.CaptureProgressBurst.Location = New System.Drawing.Point(13, 272)
+        Me.CaptureProgressBurst.Location = New System.Drawing.Point(9, 279)
         Me.CaptureProgressBurst.Name = "CaptureProgressBurst"
-        Me.CaptureProgressBurst.Size = New System.Drawing.Size(175, 18)
+        Me.CaptureProgressBurst.Size = New System.Drawing.Size(185, 18)
         Me.CaptureProgressBurst.TabIndex = 31
         '
-        'BitModeCheckbox
+        'Use16BitRegs
         '
-        Me.BitModeCheckbox.AutoSize = True
-        Me.BitModeCheckbox.Location = New System.Drawing.Point(15, 202)
-        Me.BitModeCheckbox.Name = "BitModeCheckbox"
-        Me.BitModeCheckbox.Size = New System.Drawing.Size(131, 17)
-        Me.BitModeCheckbox.TabIndex = 33
-        Me.BitModeCheckbox.Text = "16-Bit Mode Enabled?"
-        Me.BitModeCheckbox.UseVisualStyleBackColor = True
+        Me.Use16BitRegs.AutoSize = True
+        Me.Use16BitRegs.Location = New System.Drawing.Point(9, 205)
+        Me.Use16BitRegs.Name = "Use16BitRegs"
+        Me.Use16BitRegs.Size = New System.Drawing.Size(131, 17)
+        Me.Use16BitRegs.TabIndex = 33
+        Me.Use16BitRegs.Text = "16-Bit Mode Enabled?"
+        Me.Use16BitRegs.UseVisualStyleBackColor = True
         '
-        'BurstStreamGUI
+        'IMUStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(426, 309)
-        Me.Controls.Add(Me.BitModeCheckbox)
+        Me.Controls.Add(Me.Use16BitRegs)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CaptureProgressBurst)
         Me.Controls.Add(Me.statusLabel)
@@ -180,8 +180,8 @@ Partial Class IMUStreamingGUI
         Me.Controls.Add(Me.BurstStreamCancelButton)
         Me.Controls.Add(Me.MainButton)
         Me.Controls.Add(Me.ListView1)
-        Me.Name = "BurstStreamGUI"
-        Me.Text = "Burst Stream"
+        Me.Name = "IMUStreamingGUI"
+        Me.Text = "IMU Burst Data Capture"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -200,5 +200,5 @@ Partial Class IMUStreamingGUI
     Friend WithEvents Label6 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents CaptureProgressBurst As ProgressBar
-    Friend WithEvents BitModeCheckbox As CheckBox
+    Friend WithEvents Use16BitRegs As CheckBox
 End Class

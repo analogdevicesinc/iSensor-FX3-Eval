@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SignalProcessing</name>
+    </assembly>
+    <members>
+        <member name="T:SignalProcessing.FFT">
+            <summary>
+            Class which allows you to perform a real FFT
+            </summary>
+        </member>
+        <member name="M:SignalProcessing.FFT.RealFFT(System.Double[],System.UInt32,System.UInt32)">
+            <summary>
+            Performs an FFT on a real value input signal.
+            </summary>
+            <param name="values">The input signal. Should ideally be contiguous in time</param>
+            <param name="NFFT">The number of points in a single FFT. Must be a 2^n value, for n = 1 to 14</param>
+            <param name="averages">The number of FFT averages to perform</param>
+            <returns>The FFT result</returns>
+        </member>
+        <member name="T:SignalProcessing.Command">
+            <summary>
+            Command enum for the FFT calculation thread
+            </summary>
+        </member>
+        <member name="T:SignalProcessing.FFT_Streamer">
+            <summary>
+            FFT data streaming class. Handles the FFT calculation and reading data from the DUT
+            </summary>
+        </member>
+        <member name="T:SignalProcessing.FFT_Streamer.FFTDoneHandler">
+            <summary>
+            Signature for the FFT done event handler
+            </summary>
+        </member>
+        <member name="E:SignalProcessing.FFT_Streamer.FFTDone">
+            <summary>
+            This event is raised when an FFT has completed
+            </summary>
+        </member>
+        <member name="M:SignalProcessing.FFT_Streamer.#ctor(StreamDataLogger.IStreamEventProducer@,adisInterface.IBufferedStreamProducer@)">
+            <summary>
+            FFT_Streamer constructor
+            </summary>
+            <param name="EventProducer">The DUT event producer</param>
+            <param name="StreamProducer">The DUT stream producer</param>
+        </member>
+        <member name="P:SignalProcessing.FFT_Streamer.FrequencyRange">
+            <summary>
+            The frequency values (Hz) for each bin. Read only
+            </summary>
+        </member>
+        <member name="P:SignalProcessing.FFT_Streamer.NumAverages">
+            <summary>
+            The number of FFT averages to perform before raising an FFT done event.
+            </summary>
+        </member>
+        <member name="P:SignalProcessing.FFT_Streamer.RegList">
+            <summary>
+            The list of registers to stream data from
+            </summary>
+        </member>
+        <member name="P:SignalProcessing.FFT_Streamer.Result">
+            <summary>
+            The FFT result. This is a M x N array, where M is the number of registers and N is the FFT length.
+            </summary>
+        </member>
+        <member name="P:SignalProcessing.FFT_Streamer.Length">
+            <summary>
+            The FFT length. Must be a 2^n value, for n = [1,14]
+            </summary>
+        </member>
+        <member name="P:SignalProcessing.FFT_Streamer.SampleFrequency">
+            <summary>
+            The sample frequency. Should be set to Fs, or the DUT data ready frequency.
+            </summary>
+        </member>
+        <member name="M:SignalProcessing.FFT_Streamer.RunAync">
+            <summary>
+            Starts an FFT stream operation
+            </summary>
+        </member>
+        <member name="M:SignalProcessing.FFT_Streamer.CancelAsync">
+            <summary>
+            Stops an FFT stream operation.
+            </summary>
+        </member>
+        <member name="M:SignalProcessing.FFT_Streamer.NewBuffer(System.Int32)">
+            <summary>
+            New buffer handler. Converts data to double and enqueues it for the FFT thread to process
+            </summary>
+            <param name="BufferCount">Number of elements in the buffer</param>
+        </member>
+        <member name="M:SignalProcessing.Window.BartlettWindow(System.Double[]@)">
+            <summary>
+            Applies a Bartlett window
+            </summary>
+            <param name="values"></param>
+        </member>
+    </members>
+</doc>
