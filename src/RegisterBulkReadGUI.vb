@@ -274,6 +274,8 @@ Public Class RegisterBulkReadGUI
         MainButton.Enabled = True
         SamplesPerWrite.Enabled = True
         linesPerFile.Enabled = True
+        btn_loadregs.Enabled = True
+        btn_saveregs.Enabled = True
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StreamingAVARCancelButton.Click
