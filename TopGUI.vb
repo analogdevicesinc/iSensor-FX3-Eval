@@ -526,7 +526,7 @@ Public Class TopGUI
         btn_OtherApps.Enabled = True
         btn_plotData.Enabled = True
 
-        label_FX3Status.Text = "Connected to " + FX3.ActiveFX3SerialNumber
+        label_FX3Status.Text = "Connected to " + [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType) + " (SN: " + FX3.ActiveFX3SerialNumber + ")"
         label_FX3Status.BackColor = Color.Green
 
         'Select register access button initially

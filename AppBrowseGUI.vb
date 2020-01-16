@@ -3,8 +3,7 @@
 'Date:          9/23/2019
 'Description:   Browse form for all misc. applications which don't need to be on main page.
 
-Imports CCES_JTAG_Wrapper
-Imports adisInterface
+Imports FX3Api
 
 Public Class AppBrowseGUI
     Inherits FormBase

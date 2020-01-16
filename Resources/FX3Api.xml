@@ -248,6 +248,14 @@ FX3Api
  </summary>
  <param name="clockFrequency">The SPI clock frequency, if it needs to be set</param>
 </member>
+<member name="M:FX3Api.FX3Connection.SetPinResistorSetting(AdisApi.IPinObject,FX3Api.FX3PinResistorSetting)">
+ <summary>
+ Set the FX3 GPIO input stage pull up or pull down resistor setting. All FX3 GPIOs have a software configurable
+ pull up / pull down resistor (10KOhm).
+ </summary>
+ <param name="Pin">The pin to set (FX3PinObject)</param>
+ <param name="Setting">The pin resistor setting to apply</param>
+</member>
 <member name="P:FX3Api.FX3Connection.WatchdogTimeoutSeconds">
  <summary>
  Set the FX3 firmware watchdog timeout period (in seconds). If the watchdog is triggered the FX3 will reset.
@@ -721,58 +729,58 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="P:FX3Api.FX3Connection.ResetPin">
  <summary>
- Read-only property to get the reset pin (mapped to GPIO 0 on FX3)
+ Read-only property to get the reset pin
  </summary>
  <returns>The reset pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.DIO1">
  <summary>
- Read-only property to get the DIO1 pin (mapped to GPIO 4 on FX3)
+ Read-only property to get the DIO1 pin
  </summary>
  <returns>Returns the DIO1 pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.DIO2">
  <summary>
- Read-only property to get the DIO2 pin (mapped to GPIO 3 on FX3)
+ Read-only property to get the DIO2 pin
  </summary>
  <returns>Returns the DIO2 pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.DIO3">
  <summary>
- Read-only property to get the DIO3 pin (mapped to GPIO 2 on FX3)
+ Read-only property to get the DIO3 pin
  </summary>
  <returns>Returns the DIO3 pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.DIO4">
  <summary>
- Read-only property to get the DIO4 pin (mapped to GPIO 1 on FX3)
+ Read-only property to get the DIO4 pin
  </summary>
  <returns>Returns the DIO4 pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO1">
  <summary>
- Read-only property to get the FX3_GPIO1 pin (mapped to GPIO 5 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO1 pin. This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO2">
  <summary>
- Read-only property to get the FX3_GPIO2 pin (mapped to GPIO 6 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO2 pin. This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO3">
  <summary>
- Read-only property to get the FX3_GPIO3 pin (mapped to GPIO 7 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO3 pin. This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FX3_GPIO4">
  <summary>
- Read-only property to get the FX3_GPIO4 pin (mapped to GPIO 12 on FX3). This pin does not map to the standard iSensor breakout,
+ Read-only property to get the FX3_GPIO4 pin. This pin does not map to the standard iSensor breakout,
  and should be used for other general purpose interfacing. This pin shares a complex GPIO block with DIO1. If DIO1 is being used
  as a clock source, via the StartPWM function, then this pin cannot be used as a clock source.
  </summary>
@@ -957,6 +965,11 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  indicating if the board was disconnected.
  </summary>
  <param name="FX3SerialNumber"></param>
+</member>
+<member name="M:FX3Api.FX3Connection.GetFX3BoardType">
+ <summary>
+ Get the FX3 board type from the connected firmware.
+ </summary>
 </member>
 <member name="M:FX3Api.FX3Connection.WaitForBoard(System.Int32)">
  <summary>
@@ -1310,6 +1323,16 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 <member name="T:FX3Api.StreamCommands">
  <summary>
  This enum lists all the available streaming commands which can be sent to the FX3 (in the endpoint index)
+ </summary>
+</member>
+<member name="T:FX3Api.FX3BoardType">
+ <summary>
+ Possible FX3 board types. Used to differentiate iSensors FX3 board from Cypress Explorer kit.
+ </summary>
+</member>
+<member name="T:FX3Api.FX3PinResistorSetting">
+ <summary>
+ Setting for pull up / pull down resistors on FX3 GPIO input stage.
  </summary>
 </member>
 <member name="T:FX3Api.USBCommands">

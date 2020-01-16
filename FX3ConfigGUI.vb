@@ -27,6 +27,9 @@ Public Class FX3ConfigGUI
         lagTimeInput.DataSource = ([Enum].GetValues(GetType(SpiLagLeadTime)))
 
         DutVoltage.DataSource = ([Enum].GetValues(GetType(DutVoltage)))
+        If m_TopGUI.FX3.ActiveFX3.BoardType <> FX3BoardType.iSensorFX3Board Then
+            DutVoltage.Enabled = False
+        End If
 
         lsbFirstInput.Items.Add("True: LSB comes first")
         lsbFirstInput.Items.Add("False: MSB comes first")
