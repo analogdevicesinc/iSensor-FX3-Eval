@@ -166,6 +166,10 @@ If you're unable to find the device, try the following in order:
 
 The bootloader should now be flashed into flash memory.
 
+## Issues with Data Ready (Or Any Other GPIO) Not Detecting Logic Level Changes
+
+If any of the GPIOs do not detect logic level changes after loading the latest firmware, **and** you're using a SuperSpeed Explorer Kit, the most likely cause is a missing jumper on J5. Please install the jumper, power off the FX3 board (unplug USB), and try again. 
+
 ## Issues with communicating with the FX3 during long operations
 
 Certain FX3 API functions can take a very long time to execute. Depending on how the function was called, it may even be possible to force the FX3 to become unresponsive. 
