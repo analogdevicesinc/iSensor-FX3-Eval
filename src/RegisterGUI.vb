@@ -58,6 +58,9 @@ Public Class RegisterGUI
         drReadTimer.Enabled = False
         AddHandler drReadTimer.Elapsed, New ElapsedEventHandler(AddressOf DrReadCallBack)
 
+        'enable register value copying
+        regView.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText
+
     End Sub
 
     Private Sub FormRegisters_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -163,7 +166,7 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub ReadDrFreq()
-        Dim dr As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)
+        Dim dr As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 4000, 2)
         DrFreq.Text = FormatNumber(dr).ToString() + "Hz"
         If dr = Double.PositiveInfinity Then
             measureDr.Checked = False
@@ -277,4 +280,10 @@ Public Class RegisterGUI
     Private Sub drActive_CheckedChanged(sender As Object, e As EventArgs) Handles drActive.CheckedChanged
         m_TopGUI.FX3.DrActive = drActive.Checked
     End Sub
+
+    Private Sub ResizeHandler() Handles Me.Resize
+        regView.Height = Me.Height - 90
+        btn_DumpRegmap.Top = Me.Height - 95
+    End Sub
+
 End Class

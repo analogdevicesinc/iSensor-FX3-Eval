@@ -266,7 +266,7 @@ Partial Class RegisterGUI
         '
         'btn_DumpRegmap
         '
-        Me.btn_DumpRegmap.Location = New System.Drawing.Point(470, 481)
+        Me.btn_DumpRegmap.Location = New System.Drawing.Point(464, 482)
         Me.btn_DumpRegmap.Name = "btn_DumpRegmap"
         Me.btn_DumpRegmap.Size = New System.Drawing.Size(83, 47)
         Me.btn_DumpRegmap.TabIndex = 30
@@ -287,7 +287,7 @@ Partial Class RegisterGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(622, 540)
+        Me.ClientSize = New System.Drawing.Size(624, 538)
         Me.Controls.Add(Me.drActive)
         Me.Controls.Add(Me.btn_DumpRegmap)
         Me.Controls.Add(Me.GroupBox5)
@@ -298,6 +298,8 @@ Partial Class RegisterGUI
         Me.Controls.Add(Me.regView)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
+        Me.MaximumSize = New System.Drawing.Size(640, 1000)
+        Me.MinimumSize = New System.Drawing.Size(640, 440)
         Me.Name = "RegisterGUI"
         Me.Text = "Register Access"
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
