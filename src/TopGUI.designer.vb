@@ -52,7 +52,7 @@ Partial Class TopGUI
         'text_FX3Status
         '
         Me.text_FX3Status.AutoSize = True
-        Me.text_FX3Status.Location = New System.Drawing.Point(10, 81)
+        Me.text_FX3Status.Location = New System.Drawing.Point(10, 79)
         Me.text_FX3Status.Name = "text_FX3Status"
         Me.text_FX3Status.Size = New System.Drawing.Size(65, 13)
         Me.text_FX3Status.TabIndex = 4
@@ -61,9 +61,9 @@ Partial Class TopGUI
         'label_FX3Status
         '
         Me.label_FX3Status.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.label_FX3Status.Location = New System.Drawing.Point(77, 79)
+        Me.label_FX3Status.Location = New System.Drawing.Point(81, 76)
         Me.label_FX3Status.Name = "label_FX3Status"
-        Me.label_FX3Status.Size = New System.Drawing.Size(334, 16)
+        Me.label_FX3Status.Size = New System.Drawing.Size(330, 18)
         Me.label_FX3Status.TabIndex = 5
         Me.label_FX3Status.Text = "Ok"
         Me.label_FX3Status.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -72,7 +72,7 @@ Partial Class TopGUI
         '
         Me.btn_Connect.Location = New System.Drawing.Point(11, 9)
         Me.btn_Connect.Name = "btn_Connect"
-        Me.btn_Connect.Size = New System.Drawing.Size(75, 64)
+        Me.btn_Connect.Size = New System.Drawing.Size(75, 62)
         Me.btn_Connect.TabIndex = 0
         Me.btn_Connect.Text = "Connect to FX3"
         Me.btn_Connect.UseVisualStyleBackColor = True
@@ -89,9 +89,9 @@ Partial Class TopGUI
         'label_DUTStatus
         '
         Me.label_DUTStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.label_DUTStatus.Location = New System.Drawing.Point(77, 103)
+        Me.label_DUTStatus.Location = New System.Drawing.Point(82, 102)
         Me.label_DUTStatus.Name = "label_DUTStatus"
-        Me.label_DUTStatus.Size = New System.Drawing.Size(334, 16)
+        Me.label_DUTStatus.Size = New System.Drawing.Size(329, 18)
         Me.label_DUTStatus.TabIndex = 13
         Me.label_DUTStatus.Text = "Waiting for FX3"
         Me.label_DUTStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -100,7 +100,7 @@ Partial Class TopGUI
         '
         Me.btn_ResetDUT.Location = New System.Drawing.Point(92, 9)
         Me.btn_ResetDUT.Name = "btn_ResetDUT"
-        Me.btn_ResetDUT.Size = New System.Drawing.Size(75, 64)
+        Me.btn_ResetDUT.Size = New System.Drawing.Size(75, 62)
         Me.btn_ResetDUT.TabIndex = 1
         Me.btn_ResetDUT.Text = "Reset DUT"
         Me.btn_ResetDUT.UseVisualStyleBackColor = True
@@ -109,16 +109,16 @@ Partial Class TopGUI
         '
         Me.btn_SelectDUT.Location = New System.Drawing.Point(255, 9)
         Me.btn_SelectDUT.Name = "btn_SelectDUT"
-        Me.btn_SelectDUT.Size = New System.Drawing.Size(75, 64)
+        Me.btn_SelectDUT.Size = New System.Drawing.Size(75, 62)
         Me.btn_SelectDUT.TabIndex = 3
         Me.btn_SelectDUT.Text = "Select DUT Type"
         Me.btn_SelectDUT.UseVisualStyleBackColor = True
         '
         'btn_RegAccess
         '
-        Me.btn_RegAccess.Location = New System.Drawing.Point(12, 149)
+        Me.btn_RegAccess.Location = New System.Drawing.Point(11, 153)
         Me.btn_RegAccess.Name = "btn_RegAccess"
-        Me.btn_RegAccess.Size = New System.Drawing.Size(75, 64)
+        Me.btn_RegAccess.Size = New System.Drawing.Size(75, 62)
         Me.btn_RegAccess.TabIndex = 5
         Me.btn_RegAccess.Text = "Register Access"
         Me.btn_RegAccess.UseVisualStyleBackColor = True
@@ -126,7 +126,7 @@ Partial Class TopGUI
         'text_DUTType
         '
         Me.text_DUTType.AutoSize = True
-        Me.text_DUTType.Location = New System.Drawing.Point(9, 130)
+        Me.text_DUTType.Location = New System.Drawing.Point(10, 131)
         Me.text_DUTType.Name = "text_DUTType"
         Me.text_DUTType.Size = New System.Drawing.Size(60, 13)
         Me.text_DUTType.TabIndex = 18
@@ -135,27 +135,27 @@ Partial Class TopGUI
         'label_DUTType
         '
         Me.label_DUTType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.label_DUTType.Location = New System.Drawing.Point(77, 127)
+        Me.label_DUTType.Location = New System.Drawing.Point(82, 128)
         Me.label_DUTType.Name = "label_DUTType"
-        Me.label_DUTType.Size = New System.Drawing.Size(334, 16)
+        Me.label_DUTType.Size = New System.Drawing.Size(329, 18)
         Me.label_DUTType.TabIndex = 19
         Me.label_DUTType.Text = "Not Set"
         Me.label_DUTType.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'btn_RealTime
         '
-        Me.btn_RealTime.Location = New System.Drawing.Point(93, 149)
+        Me.btn_RealTime.Location = New System.Drawing.Point(93, 153)
         Me.btn_RealTime.Name = "btn_RealTime"
-        Me.btn_RealTime.Size = New System.Drawing.Size(75, 64)
+        Me.btn_RealTime.Size = New System.Drawing.Size(75, 62)
         Me.btn_RealTime.TabIndex = 6
         Me.btn_RealTime.Text = "Burst Data Capture"
         Me.btn_RealTime.UseVisualStyleBackColor = True
         '
         'btn_BulkRegRead
         '
-        Me.btn_BulkRegRead.Location = New System.Drawing.Point(174, 149)
+        Me.btn_BulkRegRead.Location = New System.Drawing.Point(174, 153)
         Me.btn_BulkRegRead.Name = "btn_BulkRegRead"
-        Me.btn_BulkRegRead.Size = New System.Drawing.Size(75, 64)
+        Me.btn_BulkRegRead.Size = New System.Drawing.Size(75, 62)
         Me.btn_BulkRegRead.TabIndex = 7
         Me.btn_BulkRegRead.Text = "Register Logging"
         Me.btn_BulkRegRead.UseVisualStyleBackColor = True
@@ -164,7 +164,7 @@ Partial Class TopGUI
         '
         Me.btn_CheckDUTConnection.Location = New System.Drawing.Point(173, 9)
         Me.btn_CheckDUTConnection.Name = "btn_CheckDUTConnection"
-        Me.btn_CheckDUTConnection.Size = New System.Drawing.Size(75, 64)
+        Me.btn_CheckDUTConnection.Size = New System.Drawing.Size(75, 62)
         Me.btn_CheckDUTConnection.TabIndex = 2
         Me.btn_CheckDUTConnection.Text = "Check DUT Connection"
         Me.btn_CheckDUTConnection.UseVisualStyleBackColor = True
@@ -173,61 +173,61 @@ Partial Class TopGUI
         '
         Me.btn_FX3Config.Location = New System.Drawing.Point(336, 9)
         Me.btn_FX3Config.Name = "btn_FX3Config"
-        Me.btn_FX3Config.Size = New System.Drawing.Size(75, 64)
+        Me.btn_FX3Config.Size = New System.Drawing.Size(75, 62)
         Me.btn_FX3Config.TabIndex = 4
         Me.btn_FX3Config.Text = "FX3 Config. Options"
         Me.btn_FX3Config.UseVisualStyleBackColor = True
         '
         'btn_APIInfo
         '
-        Me.btn_APIInfo.Location = New System.Drawing.Point(174, 219)
+        Me.btn_APIInfo.Location = New System.Drawing.Point(173, 221)
         Me.btn_APIInfo.Name = "btn_APIInfo"
-        Me.btn_APIInfo.Size = New System.Drawing.Size(75, 64)
+        Me.btn_APIInfo.Size = New System.Drawing.Size(75, 62)
         Me.btn_APIInfo.TabIndex = 12
         Me.btn_APIInfo.Text = "FX3 API Info."
         Me.btn_APIInfo.UseVisualStyleBackColor = True
         '
         'btn_BoardInfo
         '
-        Me.btn_BoardInfo.Location = New System.Drawing.Point(255, 219)
+        Me.btn_BoardInfo.Location = New System.Drawing.Point(255, 221)
         Me.btn_BoardInfo.Name = "btn_BoardInfo"
-        Me.btn_BoardInfo.Size = New System.Drawing.Size(75, 64)
+        Me.btn_BoardInfo.Size = New System.Drawing.Size(75, 62)
         Me.btn_BoardInfo.TabIndex = 13
         Me.btn_BoardInfo.Text = "FX3 Board Info."
         Me.btn_BoardInfo.UseVisualStyleBackColor = True
         '
         'btn_PWMSetup
         '
-        Me.btn_PWMSetup.Location = New System.Drawing.Point(93, 219)
+        Me.btn_PWMSetup.Location = New System.Drawing.Point(92, 221)
         Me.btn_PWMSetup.Name = "btn_PWMSetup"
-        Me.btn_PWMSetup.Size = New System.Drawing.Size(75, 64)
+        Me.btn_PWMSetup.Size = New System.Drawing.Size(75, 62)
         Me.btn_PWMSetup.TabIndex = 11
         Me.btn_PWMSetup.Text = "PWM Output Setup"
         Me.btn_PWMSetup.UseVisualStyleBackColor = True
         '
         'btn_plotFFT
         '
-        Me.btn_plotFFT.Location = New System.Drawing.Point(336, 149)
+        Me.btn_plotFFT.Location = New System.Drawing.Point(336, 153)
         Me.btn_plotFFT.Name = "btn_plotFFT"
-        Me.btn_plotFFT.Size = New System.Drawing.Size(75, 64)
+        Me.btn_plotFFT.Size = New System.Drawing.Size(75, 62)
         Me.btn_plotFFT.TabIndex = 9
         Me.btn_plotFFT.Text = "FFT Data Plotting"
         Me.btn_plotFFT.UseVisualStyleBackColor = True
         '
         'btn_OtherApps
         '
-        Me.btn_OtherApps.Location = New System.Drawing.Point(336, 219)
+        Me.btn_OtherApps.Location = New System.Drawing.Point(336, 221)
         Me.btn_OtherApps.Name = "btn_OtherApps"
-        Me.btn_OtherApps.Size = New System.Drawing.Size(75, 64)
+        Me.btn_OtherApps.Size = New System.Drawing.Size(75, 62)
         Me.btn_OtherApps.TabIndex = 14
         Me.btn_OtherApps.Text = "Other Applications"
         Me.btn_OtherApps.UseVisualStyleBackColor = True
         '
         'btn_PinAccess
         '
-        Me.btn_PinAccess.Location = New System.Drawing.Point(11, 219)
+        Me.btn_PinAccess.Location = New System.Drawing.Point(11, 221)
         Me.btn_PinAccess.Name = "btn_PinAccess"
-        Me.btn_PinAccess.Size = New System.Drawing.Size(75, 64)
+        Me.btn_PinAccess.Size = New System.Drawing.Size(75, 62)
         Me.btn_PinAccess.TabIndex = 10
         Me.btn_PinAccess.Text = "Pin Access"
         Me.btn_PinAccess.UseVisualStyleBackColor = True
@@ -243,9 +243,9 @@ Partial Class TopGUI
         '
         'btn_plotData
         '
-        Me.btn_plotData.Location = New System.Drawing.Point(255, 149)
+        Me.btn_plotData.Location = New System.Drawing.Point(255, 153)
         Me.btn_plotData.Name = "btn_plotData"
-        Me.btn_plotData.Size = New System.Drawing.Size(75, 64)
+        Me.btn_plotData.Size = New System.Drawing.Size(75, 62)
         Me.btn_plotData.TabIndex = 8
         Me.btn_plotData.Text = "Data Plotting"
         Me.btn_plotData.UseVisualStyleBackColor = True

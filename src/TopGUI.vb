@@ -457,7 +457,7 @@ Public Class TopGUI
     ''' </summary>
     ''' <param name="DutType"></param>
     Friend Sub UpdateDutLabel(DutType As DUTType)
-        label_DUTType.BackColor = Color.Green
+        label_DUTType.BackColor = Color.Chartreuse
         label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
 
         'Set the DUT
@@ -543,7 +543,7 @@ Public Class TopGUI
         btn_plotData.Enabled = True
 
         label_FX3Status.Text = "Connected to " + [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType) + " (SN: " + FX3.ActiveFX3SerialNumber + ")"
-        label_FX3Status.BackColor = Color.Green
+        label_FX3Status.BackColor = Color.Chartreuse
 
         'Select register access button initially
         btn_RegAccess.Select()
@@ -607,7 +607,7 @@ Public Class TopGUI
         label_DUTStatus.BackColor = Color.Yellow
         label_FX3Status.Text = "Not Connected"
         label_FX3Status.BackColor = Color.Yellow
-        label_DUTType.BackColor = Color.Green
+        label_DUTType.BackColor = Color.Chartreuse
         label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
     End Sub
 
@@ -665,7 +665,7 @@ Public Class TopGUI
             label_DUTStatus.BackColor = Color.Red
         Else
             label_DUTStatus.Text = "DUT Connected"
-            label_DUTStatus.BackColor = Color.Green
+            label_DUTStatus.BackColor = Color.Chartreuse
         End If
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
