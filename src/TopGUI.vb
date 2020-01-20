@@ -349,8 +349,25 @@ Public Class TopGUI
     End Sub
 
     Public Sub Setup() Handles Me.Load
-        Me.Top = My.Settings.LastTop
-        Me.Left = My.Settings.LastLeft
+        'check screen settings
+        Dim goodLoc As Boolean = False
+        Dim screens As Screen() = Screen.AllScreens
+        Dim formRect As Rectangle = New Rectangle(My.Settings.LastLeft, My.Settings.LastTop, Me.Width, Me.Height)
+        For Each screen In screens
+            If screen.WorkingArea.Contains(formRect) Then
+                goodLoc = True
+            End If
+        Next
+        If goodLoc Then
+            Me.Top = My.Settings.LastTop
+            Me.Left = My.Settings.LastLeft
+        ElseIf screens.Count > 0 Then
+            Me.Top = (screens(0).WorkingArea.Height / 2) - (Me.Height / 2)
+            Me.Left = (screens(0).WorkingArea.Width / 2) - (Me.Width / 2)
+        Else
+            MsgBox("ERROR: This application requires a screen to function properly...")
+        End If
+
     End Sub
 
     Private Sub Cleanup(sender As Object, e As EventArgs) Handles Me.Closing
