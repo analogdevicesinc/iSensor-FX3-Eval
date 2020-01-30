@@ -29,7 +29,6 @@ Partial Class FrequencyPlotGUI
         Me.regSelect = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.NFFT = New System.Windows.Forms.TextBox()
         Me.drFreq = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.btn_addreg = New System.Windows.Forms.Button()
@@ -44,6 +43,7 @@ Partial Class FrequencyPlotGUI
         Me.btn_Export = New System.Windows.Forms.Button()
         Me.btn_Clear = New System.Windows.Forms.Button()
         Me.btn_saveplot = New System.Windows.Forms.Button()
+        Me.NFFT = New System.Windows.Forms.ComboBox()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -96,14 +96,6 @@ Partial Class FrequencyPlotGUI
         Me.Label2.Size = New System.Drawing.Size(98, 13)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Sample Frequency:"
-        '
-        'NFFT
-        '
-        Me.NFFT.Location = New System.Drawing.Point(113, 9)
-        Me.NFFT.Name = "NFFT"
-        Me.NFFT.Size = New System.Drawing.Size(118, 20)
-        Me.NFFT.TabIndex = 5
-        Me.NFFT.Text = "2048"
         '
         'drFreq
         '
@@ -233,11 +225,20 @@ Partial Class FrequencyPlotGUI
         Me.btn_saveplot.Text = "Save Plot"
         Me.btn_saveplot.UseVisualStyleBackColor = True
         '
+        'NFFT
+        '
+        Me.NFFT.FormattingEnabled = True
+        Me.NFFT.Location = New System.Drawing.Point(113, 9)
+        Me.NFFT.Name = "NFFT"
+        Me.NFFT.Size = New System.Drawing.Size(118, 21)
+        Me.NFFT.TabIndex = 21
+        '
         'FrequencyPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(836, 553)
+        Me.Controls.Add(Me.NFFT)
         Me.Controls.Add(Me.btn_saveplot)
         Me.Controls.Add(Me.btn_Clear)
         Me.Controls.Add(Me.btn_Export)
@@ -252,7 +253,6 @@ Partial Class FrequencyPlotGUI
         Me.Controls.Add(Me.btn_addreg)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.drFreq)
-        Me.Controls.Add(Me.NFFT)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.regSelect)
@@ -271,7 +271,6 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents regSelect As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
-    Friend WithEvents NFFT As TextBox
     Friend WithEvents drFreq As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents btn_addreg As Button
@@ -286,4 +285,5 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents btn_Export As Button
     Friend WithEvents btn_Clear As Button
     Friend WithEvents btn_saveplot As Button
+    Friend WithEvents NFFT As ComboBox
 End Class

@@ -16,9 +16,6 @@ Public Class FrequencyPlotGUI
     'selected register list
     Private selectedRegList As List(Of RegClass)
 
-    'bool to track if currently plotting data
-    Private running As Boolean
-
     Private Sub FrequencyPlotGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         'instantiate fft streamer
@@ -30,6 +27,12 @@ Public Class FrequencyPlotGUI
         Next
         regSelect.SelectedIndex = 0
 
+        'populate NFFT setting dropdown
+        For n As Integer = 3 To 14
+            NFFT.Items.Add((2 ^ n).ToString)
+        Next
+        NFFT.SelectedIndex = 8
+
         'set up list view
         RegisterList.View = View.Details
         RegisterList.Columns.Add("Register", RegisterList.Width - 1, HorizontalAlignment.Left)
@@ -37,7 +40,6 @@ Public Class FrequencyPlotGUI
         'initialize variables
         selectedRegList = New List(Of RegClass)
         btn_stopPlot.Enabled = False
-        running = False
 
         'set DR triggered register reads
         m_TopGUI.FX3.DrActive = True
@@ -45,11 +47,13 @@ Public Class FrequencyPlotGUI
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
-        If running Then
+        If m_FFTStream.IsBusy Then
             m_FFTStream.CancelAsync()
-            running = False
-            Threading.Thread.Sleep(250)
         End If
+        While m_FFTStream.IsBusy
+            System.Threading.Thread.Sleep(100)
+        End While
+        m_FFTStream.Dispose()
     End Sub
 
     Private Sub SetupPlot()
@@ -139,7 +143,11 @@ Public Class FrequencyPlotGUI
 
     Private Sub FFTDone() Handles m_FFTStream.FFTDone
         'Whenever there is new FFT data update the plot
-        Me.Invoke(New MethodInvoker(AddressOf UpdatePlot))
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf UpdatePlot))
+        Else
+            UpdatePlot()
+        End If
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
@@ -181,9 +189,6 @@ Public Class FrequencyPlotGUI
         'start async stream operation
         m_FFTStream.RunAync()
 
-        'set running flag
-        running = True
-
         'disable inputs
         NFFT.Enabled = False
         FFT_Averages.Enabled = False
@@ -200,8 +205,9 @@ Public Class FrequencyPlotGUI
         'cancel running stream
         m_FFTStream.CancelAsync()
 
-        'set running flag to false
-        running = False
+        While m_FFTStream.IsBusy
+            System.Threading.Thread.Sleep(100)
+        End While
 
         'enable inputs
         NFFT.Enabled = True
