@@ -125,7 +125,11 @@ Public Class IMUStreamingGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        Me.Invoke(New MethodInvoker(AddressOf CaptureDoneWork))
+        If Me.InvokeRequired Then
+            Me.Invoke(New MethodInvoker(AddressOf CaptureDoneWork))
+        Else
+            CaptureDoneWork()
+        End If
     End Sub
 
     Private Sub CaptureDoneWork()
@@ -188,15 +192,15 @@ Public Class IMUStreamingGUI
     End Sub
 
     Private Sub UpdateRegmap()
-        If Use16BitRegs.Checked Then
-            'Handle 16-bit registers
+        If Use32BitRegs.Checked Then
+            'Handle 32-bit registers
             tempRegList = m_TopGUI.RegMap.BurstReadList
             'Loop through each register and check for 32-bit locations
             For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
                 'If a register is listed as a 32-bit register
-                If item.NumBytes > 2 Then
-                    'Remove its upper counterpart from the list (we're only capturing 16-bit registers)
-                    tempRegList.Remove(item)
+                If item.ReadLen > 16 Then
+                    'Remove its lower counterpart from the list (it'll get added to the transfer later anyway)
+                    tempRegList.Remove(tempRegList.Find(Function(p) p.Address = (item.Address + 2 / m_TopGUI.Dut.DeviceAddressIncrement)))
                 End If
             Next
             'Refresh the register list in the GUI
@@ -209,14 +213,14 @@ Public Class IMUStreamingGUI
                 ListView1.Items.Add(newItem)
             Next
         Else
-            'Handle 32-bit registers
+            'Handle 16-bit registers
             tempRegList = m_TopGUI.RegMap.BurstReadList
             'Loop through each register and check for 32-bit locations
             For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
                 'If a register is listed as a 32-bit register
-                If item.ReadLen > 16 Then
-                    'Remove its lower counterpart from the list (it'll get added to the transfer later anyway)
-                    tempRegList.Remove(tempRegList.Find(Function(p) p.Address = (item.Address + 2 / m_TopGUI.Dut.DeviceAddressIncrement)))
+                If item.NumBytes > 2 Then
+                    'Remove its upper counterpart from the list (we're only capturing 16-bit registers)
+                    tempRegList.Remove(item)
                 End If
             Next
             'Refresh the register list in the GUI
@@ -256,7 +260,7 @@ Public Class IMUStreamingGUI
         Me.Invoke(New MethodInvoker(Sub() CaptureProgressBurst.Value = e.ProgressPercentage))
     End Sub
 
-    Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs) Handles Use16BitRegs.CheckedChanged
+    Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs) Handles Use32BitRegs.CheckedChanged
         UpdateRegmap()
     End Sub
 End Class

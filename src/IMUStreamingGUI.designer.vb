@@ -34,7 +34,7 @@ Partial Class IMUStreamingGUI
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CaptureProgressBurst = New System.Windows.Forms.ProgressBar()
-        Me.Use16BitRegs = New System.Windows.Forms.CheckBox()
+        Me.Use32BitRegs = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Label5
@@ -151,22 +151,22 @@ Partial Class IMUStreamingGUI
         Me.CaptureProgressBurst.Size = New System.Drawing.Size(185, 18)
         Me.CaptureProgressBurst.TabIndex = 31
         '
-        'Use16BitRegs
+        'Use32BitRegs
         '
-        Me.Use16BitRegs.AutoSize = True
-        Me.Use16BitRegs.Location = New System.Drawing.Point(9, 205)
-        Me.Use16BitRegs.Name = "Use16BitRegs"
-        Me.Use16BitRegs.Size = New System.Drawing.Size(131, 17)
-        Me.Use16BitRegs.TabIndex = 33
-        Me.Use16BitRegs.Text = "16-Bit Mode Enabled?"
-        Me.Use16BitRegs.UseVisualStyleBackColor = True
+        Me.Use32BitRegs.AutoSize = True
+        Me.Use32BitRegs.Location = New System.Drawing.Point(9, 205)
+        Me.Use32BitRegs.Name = "Use32BitRegs"
+        Me.Use32BitRegs.Size = New System.Drawing.Size(114, 17)
+        Me.Use32BitRegs.TabIndex = 33
+        Me.Use32BitRegs.Text = "32-Bit Burst Reads"
+        Me.Use32BitRegs.UseVisualStyleBackColor = True
         '
         'IMUStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(426, 309)
-        Me.Controls.Add(Me.Use16BitRegs)
+        Me.Controls.Add(Me.Use32BitRegs)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CaptureProgressBurst)
         Me.Controls.Add(Me.statusLabel)
@@ -200,5 +200,5 @@ Partial Class IMUStreamingGUI
     Friend WithEvents Label6 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents CaptureProgressBurst As ProgressBar
-    Friend WithEvents Use16BitRegs As CheckBox
+    Friend WithEvents Use32BitRegs As CheckBox
 End Class

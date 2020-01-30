@@ -82,10 +82,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Resources\AForge.Math.dll</HintPath>
     </Reference>
-    <Reference Include="CCES_JTAG_Wrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Resources\CCES_JTAG_Wrapper.dll</HintPath>
-    </Reference>
     <Reference Include="CyUSB, Version=1.2.3.0, Culture=neutral, PublicKeyToken=01f1d2b6c851ae92, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Resources\CyUSB.dll</HintPath>

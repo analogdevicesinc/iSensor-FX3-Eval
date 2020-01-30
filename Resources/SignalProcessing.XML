@@ -45,6 +45,11 @@
             <param name="EventProducer">The DUT event producer</param>
             <param name="StreamProducer">The DUT stream producer</param>
         </member>
+        <member name="P:SignalProcessing.FFT_Streamer.IsBusy">
+            <summary>
+            Flag to check if the streamer is still busy or not
+            </summary>
+        </member>
         <member name="P:SignalProcessing.FFT_Streamer.FrequencyRange">
             <summary>
             The frequency values (Hz) for each bin. Read only
@@ -90,6 +95,11 @@
             New buffer handler. Converts data to double and enqueues it for the FFT thread to process
             </summary>
             <param name="BufferCount">Number of elements in the buffer</param>
+        </member>
+        <member name="M:SignalProcessing.FFT_Streamer.Dispose">
+            <summary>
+            Dispose the FFT streamer
+            </summary>
         </member>
         <member name="M:SignalProcessing.Window.BartlettWindow(System.Double[]@)">
             <summary>

@@ -1419,7 +1419,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>The GPIO number, as a UINT16</returns>
 </member>
-<member name="M:FX3Api.FX3SPIConfig.#ctor(FX3Api.DeviceType)">
+<member name="M:FX3Api.FX3SPIConfig.#ctor(FX3Api.DeviceType,FX3Api.FX3BoardType)">
  <summary>
  Class Constructor, sets reasonable default values for IMU and ADcmXL devices
  </summary>

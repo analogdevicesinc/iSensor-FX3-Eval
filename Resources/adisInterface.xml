@@ -162,6 +162,11 @@ adisInterface
  Structure to store MOSI data and a format array used for parsing out the useful register data
  </summary>
 </member>
+<member name="T:adisInterface.BufferStreamInfo">
+ <summary>
+ Structure to store info about current running buffered stream. Used for parsing result buffer.
+ </summary>
+</member>
 <member name="T:adisInterface.iSensorAutomotiveSpi">
  <summary>
  This class allows for interfacing with parts using the ADI robust automotive SPI protocol. The automotive SPI protocol is designed to interface with
