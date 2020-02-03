@@ -67,7 +67,7 @@ Public Class DataPlotGUI
         tip0.SetToolTip(Me.btn_startStop, "Start or Stop data plotting")
         tip0.SetToolTip(Me.btn_autonull, "Set the offset values for each register being plotted to the last read value")
         tip0.SetToolTip(Me.btn_saveChart, "Save image of the current plot area")
-        tip0.SetToolTip(Me.btn_stopPlayback, "Play back data plot from a CSV plot log")
+        tip0.SetToolTip(Me.playFromCSV, "Play back data plot from a CSV plot log")
         tip0.SetToolTip(Me.logToCSV, "Save plot data to a CSV log")
         tip0.SetToolTip(Me.regView, "Select registers to plot, and supply register offset values. The data plotted for each register is scaled by the scale factor defined in the register map CSV file")
     End Sub
@@ -240,6 +240,10 @@ Public Class DataPlotGUI
                 saveCSV("PLOT_LOG", logData.ToArray(), m_TopGUI.lastFilePath)
                 logData.Clear()
             End If
+            sampleFreq.Enabled = True
+            samplesRendered.Enabled = True
+            playFromCSV.Enabled = True
+            playFromCSV.Visible = True
             btn_startStop.Text = "Start Plotting"
         Else
             BuildPlotRegList()
@@ -252,6 +256,10 @@ Public Class DataPlotGUI
             ConfigurePlot()
             plotTimer.Interval = samplePeriodMs
             plotTimer.Enabled = True
+            sampleFreq.Enabled = False
+            samplesRendered.Enabled = False
+            playFromCSV.Enabled = False
+            playFromCSV.Visible = False
             btn_startStop.Text = "Stop Plotting"
             logTimer.Restart()
         End If
@@ -469,12 +477,14 @@ Public Class DataPlotGUI
     End Sub
 
     Private Sub EnablePlaybackButtons()
-        playFromCSV.Visible = True
         logToCSV.Enabled = True
+        playFromCSV.Visible = True
         playFromCSV.Enabled = True
         btn_stopPlayback.Visible = False
         btn_stopPlayback.Enabled = False
         btn_startStop.Enabled = True
+        samplesRendered.Enabled = True
+        sampleFreq.Enabled = True
     End Sub
 
     Private Sub DisablePlaybackButtons()
@@ -484,6 +494,8 @@ Public Class DataPlotGUI
         btn_stopPlayback.Enabled = True
         btn_startStop.Enabled = False
         logToCSV.Enabled = False
+        samplesRendered.Enabled = False
+        sampleFreq.Enabled = False
     End Sub
 
     Private Sub axis_autoscale_CheckedChanged(sender As Object, e As EventArgs) Handles axis_autoscale.CheckedChanged
