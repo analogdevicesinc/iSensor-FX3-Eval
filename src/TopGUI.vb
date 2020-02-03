@@ -184,7 +184,7 @@ Public Class TopGUI
                 regMapPath_Label.Text = value.Substring(value.LastIndexOf("\") + 1)
                 SetupToolTips()
             Catch ex As Exception
-                MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message())
+                MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message() + " " + RegMap.ErrorText)
             End Try
         End Set
     End Property
