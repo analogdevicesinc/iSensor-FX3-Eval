@@ -21,9 +21,9 @@ Partial Class DataPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.regView = New System.Windows.Forms.DataGridView()
         Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -31,17 +31,17 @@ Partial Class DataPlotGUI
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Plot = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Offset = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.label_sampleFreq = New System.Windows.Forms.Label()
         Me.sampleFreq = New System.Windows.Forms.TextBox()
         Me.btn_startStop = New System.Windows.Forms.Button()
         Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.label_samplesRendered = New System.Windows.Forms.Label()
         Me.samplesRendered = New System.Windows.Forms.TextBox()
         Me.btn_autonull = New System.Windows.Forms.Button()
         Me.logToCSV = New System.Windows.Forms.CheckBox()
-        Me.saveChart = New System.Windows.Forms.Button()
+        Me.btn_saveChart = New System.Windows.Forms.Button()
         Me.playFromCSV = New System.Windows.Forms.Button()
-        Me.stopPlayback = New System.Windows.Forms.Button()
+        Me.btn_stopPlayback = New System.Windows.Forms.Button()
         Me.axis_autoscale = New System.Windows.Forms.CheckBox()
         Me.maxscale = New System.Windows.Forms.TextBox()
         Me.minScale = New System.Windows.Forms.TextBox()
@@ -115,14 +115,14 @@ Partial Class DataPlotGUI
         Me.Offset.HeaderText = "Offset"
         Me.Offset.Name = "Offset"
         '
-        'Label1
+        'label_sampleFreq
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(8, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(123, 13)
-        Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Sample Frequency (Hz) :"
+        Me.label_sampleFreq.AutoSize = True
+        Me.label_sampleFreq.Location = New System.Drawing.Point(8, 9)
+        Me.label_sampleFreq.Name = "label_sampleFreq"
+        Me.label_sampleFreq.Size = New System.Drawing.Size(123, 13)
+        Me.label_sampleFreq.TabIndex = 4
+        Me.label_sampleFreq.Text = "Sample Frequency (Hz) :"
         '
         'sampleFreq
         '
@@ -142,28 +142,28 @@ Partial Class DataPlotGUI
         '
         'dataPlot
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend1)
+        ChartArea2.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend2)
         Me.dataPlot.Location = New System.Drawing.Point(511, 6)
         Me.dataPlot.Name = "dataPlot"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.dataPlot.Series.Add(Series1)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.dataPlot.Series.Add(Series2)
         Me.dataPlot.Size = New System.Drawing.Size(867, 496)
         Me.dataPlot.TabIndex = 7
         Me.dataPlot.Text = "Data Plot"
         '
-        'Label2
+        'label_samplesRendered
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(8, 35)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(103, 13)
-        Me.Label2.TabIndex = 8
-        Me.Label2.Text = "Samples Rendered :"
+        Me.label_samplesRendered.AutoSize = True
+        Me.label_samplesRendered.Location = New System.Drawing.Point(8, 35)
+        Me.label_samplesRendered.Name = "label_samplesRendered"
+        Me.label_samplesRendered.Size = New System.Drawing.Size(103, 13)
+        Me.label_samplesRendered.TabIndex = 8
+        Me.label_samplesRendered.Text = "Samples Rendered :"
         '
         'samplesRendered
         '
@@ -191,14 +191,14 @@ Partial Class DataPlotGUI
         Me.logToCSV.Text = "Log Plot Data to CSV"
         Me.logToCSV.UseVisualStyleBackColor = True
         '
-        'saveChart
+        'btn_saveChart
         '
-        Me.saveChart.Location = New System.Drawing.Point(417, 47)
-        Me.saveChart.Name = "saveChart"
-        Me.saveChart.Size = New System.Drawing.Size(88, 35)
-        Me.saveChart.TabIndex = 2
-        Me.saveChart.Text = "Save Plot"
-        Me.saveChart.UseVisualStyleBackColor = True
+        Me.btn_saveChart.Location = New System.Drawing.Point(417, 47)
+        Me.btn_saveChart.Name = "btn_saveChart"
+        Me.btn_saveChart.Size = New System.Drawing.Size(88, 35)
+        Me.btn_saveChart.TabIndex = 2
+        Me.btn_saveChart.Text = "Save Plot"
+        Me.btn_saveChart.UseVisualStyleBackColor = True
         '
         'playFromCSV
         '
@@ -209,14 +209,14 @@ Partial Class DataPlotGUI
         Me.playFromCSV.Text = "Play From CSV"
         Me.playFromCSV.UseVisualStyleBackColor = True
         '
-        'stopPlayback
+        'btn_stopPlayback
         '
-        Me.stopPlayback.Location = New System.Drawing.Point(323, 47)
-        Me.stopPlayback.Name = "stopPlayback"
-        Me.stopPlayback.Size = New System.Drawing.Size(88, 35)
-        Me.stopPlayback.TabIndex = 3
-        Me.stopPlayback.Text = "Stop Playback"
-        Me.stopPlayback.UseVisualStyleBackColor = True
+        Me.btn_stopPlayback.Location = New System.Drawing.Point(323, 47)
+        Me.btn_stopPlayback.Name = "btn_stopPlayback"
+        Me.btn_stopPlayback.Size = New System.Drawing.Size(88, 35)
+        Me.btn_stopPlayback.TabIndex = 3
+        Me.btn_stopPlayback.Text = "Stop Playback"
+        Me.btn_stopPlayback.UseVisualStyleBackColor = True
         '
         'axis_autoscale
         '
@@ -270,17 +270,17 @@ Partial Class DataPlotGUI
         Me.Controls.Add(Me.minScale)
         Me.Controls.Add(Me.maxscale)
         Me.Controls.Add(Me.axis_autoscale)
-        Me.Controls.Add(Me.stopPlayback)
+        Me.Controls.Add(Me.btn_stopPlayback)
         Me.Controls.Add(Me.playFromCSV)
-        Me.Controls.Add(Me.saveChart)
+        Me.Controls.Add(Me.btn_saveChart)
         Me.Controls.Add(Me.logToCSV)
         Me.Controls.Add(Me.btn_autonull)
         Me.Controls.Add(Me.samplesRendered)
-        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.label_samplesRendered)
         Me.Controls.Add(Me.dataPlot)
         Me.Controls.Add(Me.btn_startStop)
         Me.Controls.Add(Me.sampleFreq)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.label_sampleFreq)
         Me.Controls.Add(Me.regView)
         Me.Margin = New System.Windows.Forms.Padding(1)
         Me.Name = "DataPlotGUI"
@@ -299,17 +299,17 @@ Partial Class DataPlotGUI
     Friend WithEvents Contents As DataGridViewTextBoxColumn
     Friend WithEvents Plot As DataGridViewCheckBoxColumn
     Friend WithEvents Offset As DataGridViewTextBoxColumn
-    Friend WithEvents Label1 As Label
+    Friend WithEvents label_sampleFreq As Label
     Friend WithEvents sampleFreq As TextBox
     Friend WithEvents btn_startStop As Button
     Friend WithEvents dataPlot As DataVisualization.Charting.Chart
-    Friend WithEvents Label2 As Label
+    Friend WithEvents label_samplesRendered As Label
     Friend WithEvents samplesRendered As TextBox
     Friend WithEvents btn_autonull As Button
     Friend WithEvents logToCSV As CheckBox
-    Friend WithEvents saveChart As Button
+    Friend WithEvents btn_saveChart As Button
     Friend WithEvents playFromCSV As Button
-    Friend WithEvents stopPlayback As Button
+    Friend WithEvents btn_stopPlayback As Button
     Friend WithEvents axis_autoscale As CheckBox
     Friend WithEvents maxscale As TextBox
     Friend WithEvents minScale As TextBox

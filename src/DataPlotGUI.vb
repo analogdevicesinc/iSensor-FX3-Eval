@@ -50,12 +50,26 @@ Public Class DataPlotGUI
 
         logTimer = New Stopwatch()
 
-        stopPlayback.Enabled = False
-        stopPlayback.Visible = False
+        btn_stopPlayback.Enabled = False
+        btn_stopPlayback.Visible = False
         axis_autoscale.Checked = True
 
         playBackMutex = New Mutex()
         plotMutex = New Mutex()
+
+        RegisterToolTips()
+    End Sub
+
+    Private Sub RegisterToolTips()
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.label_sampleFreq, "The data sampling frequency for plotting. This is driven by a Windows software timer, and is not very accurate")
+        tip0.SetToolTip(Me.label_samplesRendered, "The maximum number of samples to render in a single plot")
+        tip0.SetToolTip(Me.btn_startStop, "Start or Stop data plotting")
+        tip0.SetToolTip(Me.btn_autonull, "Set the offset values for each register being plotted to the last read value")
+        tip0.SetToolTip(Me.btn_saveChart, "Save image of the current plot area")
+        tip0.SetToolTip(Me.btn_stopPlayback, "Play back data plot from a CSV plot log")
+        tip0.SetToolTip(Me.logToCSV, "Save plot data to a CSV log")
+        tip0.SetToolTip(Me.regView, "Select registers to plot, and supply register offset values. The data plotted for each register is scaled by the scale factor defined in the register map CSV file")
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
@@ -75,7 +89,9 @@ Public Class DataPlotGUI
     End Sub
 
     Private Sub PlotTimerCallback()
-        Me.BeginInvoke(New MethodInvoker(AddressOf PlotWork))
+        If Me.InvokeRequired Then
+            Me.BeginInvoke(New MethodInvoker(AddressOf PlotWork))
+        End If
     End Sub
 
     Private Sub PlotWork()
@@ -339,7 +355,7 @@ Public Class DataPlotGUI
 
     End Sub
 
-    Private Sub saveChart_Click(sender As Object, e As EventArgs) Handles saveChart.Click
+    Private Sub saveChart_Click(sender As Object, e As EventArgs) Handles btn_saveChart.Click
         Dim filebrowser As New SaveFileDialog
         Try
             filebrowser.FileName = m_TopGUI.lastFilePath.Substring(0, m_TopGUI.lastFilePath.LastIndexOf("\") + 1) + "PLOT.png"
@@ -448,7 +464,7 @@ Public Class DataPlotGUI
         Return result
     End Function
 
-    Private Sub stopPlayback_Click(sender As Object, e As EventArgs) Handles stopPlayback.Click
+    Private Sub stopPlayback_Click(sender As Object, e As EventArgs) Handles btn_stopPlayback.Click
         playBackRunning = False
     End Sub
 
@@ -456,16 +472,16 @@ Public Class DataPlotGUI
         playFromCSV.Visible = True
         logToCSV.Enabled = True
         playFromCSV.Enabled = True
-        stopPlayback.Visible = False
-        stopPlayback.Enabled = False
+        btn_stopPlayback.Visible = False
+        btn_stopPlayback.Enabled = False
         btn_startStop.Enabled = True
     End Sub
 
     Private Sub DisablePlaybackButtons()
         playFromCSV.Visible = False
         playFromCSV.Enabled = False
-        stopPlayback.Visible = True
-        stopPlayback.Enabled = True
+        btn_stopPlayback.Visible = True
+        btn_stopPlayback.Enabled = True
         btn_startStop.Enabled = False
         logToCSV.Enabled = False
     End Sub
