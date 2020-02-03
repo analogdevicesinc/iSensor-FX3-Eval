@@ -323,13 +323,16 @@
   <ItemGroup>
     <EmbeddedResource Include="FX3_Firmware.img" />
     <EmbeddedResource Include="boot_fw.img" />
-    <None Include="ADcmXL3021_Regmap.csv">
+    <None Include="ADcmXLx021_Regmap.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ADIS1647x_Regmap.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="ADIS1649x_Regmap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ADIS1650x_Regmap.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="My Project\app.manifest" />
