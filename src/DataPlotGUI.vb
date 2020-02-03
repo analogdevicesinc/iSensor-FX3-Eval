@@ -20,7 +20,6 @@ Public Class DataPlotGUI
     Private plotYMax As Integer
     Private plotColors As List(Of Color)
     Private numSamples As UInteger
-    Private log As Boolean
     Private logData As List(Of String)
     Private logTimer As Stopwatch
     Private playBackRunning As Boolean
@@ -91,7 +90,7 @@ Public Class DataPlotGUI
 
         regValues = GetPlotRegValues()
 
-        If log Then
+        If logToCSV.Checked Then
             logStr = logTimer.ElapsedMilliseconds().ToString()
         End If
 
@@ -102,13 +101,13 @@ Public Class DataPlotGUI
             regView.Item("Contents", item.Index).Style = New DataGridViewCellStyle With {.BackColor = item.Color}
             plotValues.Add(regValues(index) - item.Offset)
             'Log if needed
-            If log Then
+            If logToCSV.Checked Then
                 logStr = logStr + "," + regValues(index).ToString()
             End If
             index += 1
         Next
 
-        If log Then
+        If logToCSV.Checked Then
             logData.Add(logStr)
         End If
 
@@ -126,13 +125,31 @@ Public Class DataPlotGUI
         Dim yMin, yMax As Double
         Dim goodscale As Boolean = False
         If Not axis_autoscale.Checked Then
+            goodscale = True
+            'min
             Try
                 yMin = Convert.ToDouble(minScale.Text())
-                yMax = Convert.ToDouble(maxscale.Text())
-                goodscale = True
+                minScale.BackColor = Color.White
             Catch ex As Exception
                 goodscale = False
+                minScale.BackColor = Color.Red
             End Try
+
+            'max
+            Try
+                yMax = Convert.ToDouble(maxscale.Text())
+                maxscale.BackColor = Color.White
+            Catch ex As Exception
+                goodscale = False
+                maxscale.BackColor = Color.Red
+            End Try
+
+            'check values
+            If yMin > yMax Then
+                yMax = yMin + 1
+                maxscale.Text = yMax.ToString()
+            End If
+
         End If
 
         If goodscale Then
@@ -198,21 +215,23 @@ Public Class DataPlotGUI
     Private Sub btn_startStop_Click(sender As Object, e As EventArgs) Handles btn_startStop.Click
         If plotting Then
             'Stop
+            logToCSV.Enabled = True
             plotting = False
             plotTimer.Enabled = False
             StopPlot()
-            If log Then
+            'save log if there is data
+            If logData.Count > 1 Then
                 saveCSV("PLOT_LOG", logData.ToArray(), m_TopGUI.lastFilePath)
                 logData.Clear()
             End If
             btn_startStop.Text = "Start Plotting"
         Else
-            log = logToCSV.Checked
             BuildPlotRegList()
             If selectedRegList.Count() = 0 Then
                 MsgBox("ERROR: Must select at least one register to plot")
                 Exit Sub
             End If
+            logToCSV.Enabled = False
             plotting = True
             ConfigurePlot()
             plotTimer.Interval = samplePeriodMs
@@ -224,6 +243,7 @@ Public Class DataPlotGUI
 
     Private Sub BuildPlotRegList()
         Dim headers As String
+        selectedRegList.Clear()
         For index As Integer = 0 To regView.RowCount() - 1
             If regView.Item("Plot", index).Value = True Then
                 If plotColors.Count() <= selectedRegList.Count() Then
@@ -246,8 +266,8 @@ Public Class DataPlotGUI
         Try
             freq = Convert.ToDouble(sampleFreq.Text)
             samplePeriodMs = 1000 / freq
-            If samplePeriodMs < 5 Then
-                Throw New Exception("Cannot run at more than 200Hz")
+            If samplePeriodMs < 10 Then
+                Throw New Exception("Cannot run at more than 100Hz")
             End If
         Catch ex As Exception
             MsgBox("ERROR: Invalid sample frequency. " + ex.ToString())
@@ -259,7 +279,7 @@ Public Class DataPlotGUI
             numSamples = Convert.ToInt32(samplesRendered.Text)
         Catch ex As Exception
             MsgBox("Invalid number of samples")
-            samplesRendered.Text = "500"
+            samplesRendered.Text = "200"
             ConfigurePlot()
             Exit Sub
         End Try
@@ -355,6 +375,7 @@ Public Class DataPlotGUI
             MsgBox("ERROR: Invalid Log CSV")
             Exit Sub
         End If
+        logToCSV.Checked = False
         BuildPlotRegList()
         ConfigurePlot()
         DisablePlaybackButtons()
@@ -433,6 +454,7 @@ Public Class DataPlotGUI
 
     Private Sub EnablePlaybackButtons()
         playFromCSV.Visible = True
+        logToCSV.Enabled = True
         playFromCSV.Enabled = True
         stopPlayback.Visible = False
         stopPlayback.Enabled = False
@@ -445,6 +467,7 @@ Public Class DataPlotGUI
         stopPlayback.Visible = True
         stopPlayback.Enabled = True
         btn_startStop.Enabled = False
+        logToCSV.Enabled = False
     End Sub
 
     Private Sub axis_autoscale_CheckedChanged(sender As Object, e As EventArgs) Handles axis_autoscale.CheckedChanged
