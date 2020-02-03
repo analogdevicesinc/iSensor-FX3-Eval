@@ -46,6 +46,19 @@ Public Class FrequencyPlotGUI
 
     End Sub
 
+    Private Sub InteractWithOtherForms(hide As Boolean)
+        'hide other forms
+        For Each openForm As Form In Application.OpenForms
+            If Not ReferenceEquals(openForm, Me) Then
+                If hide Then
+                    openForm.Hide()
+                Else
+                    openForm.Show()
+                End If
+            End If
+        Next
+    End Sub
+
     Private Sub Shutdown() Handles Me.Closing
         If m_FFTStream.IsBusy Then
             m_FFTStream.CancelAsync()
@@ -54,6 +67,8 @@ Public Class FrequencyPlotGUI
             System.Threading.Thread.Sleep(100)
         End While
         m_FFTStream.Dispose()
+        'show other forms
+        InteractWithOtherForms(False)
     End Sub
 
     Private Sub SetupPlot()
@@ -85,7 +100,7 @@ Public Class FrequencyPlotGUI
 
     End Sub
 
-    Private Sub SetupStream()
+    Private Function SetupStream() As Boolean
         'set length
         Dim length As UInteger
         Try
@@ -112,14 +127,23 @@ Public Class FrequencyPlotGUI
         Next
         m_FFTStream.RegList = selectedRegList
 
-        UpdateSampleFreq()
-    End Sub
+        'set dr active
+        m_TopGUI.FX3.DrActive = True
 
-    Private Sub UpdateSampleFreq()
+        Return UpdateSampleFreq()
+    End Function
+
+    Private Function UpdateSampleFreq() As Boolean
         Dim freq As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)
         m_FFTStream.SampleFrequency = freq
         drFreq.Text = FormatNumber(freq, 1).ToString() + "Hz"
-    End Sub
+        If freq = Double.PositiveInfinity Then
+            MsgBox("ERROR: Data ready not toggling. Stopping plot operation...")
+            btn_stopPlot.PerformClick()
+            Return False
+        End If
+        Return True 
+    End Function
 
     Private Sub UpdatePlot()
         'handle invokes after the form is closed
@@ -181,7 +205,9 @@ Public Class FrequencyPlotGUI
         End If
 
         'set up stream (FFT_Streamer and register list)
-        SetupStream()
+        If Not SetupStream() Then
+            Exit Sub
+        End If
 
         'set up plotting
         SetupPlot()
@@ -198,6 +224,9 @@ Public Class FrequencyPlotGUI
         btn_Clear.Enabled = False
         btn_stopPlot.Enabled = True
         btn_run.Enabled = False
+
+        'hide other forms
+        InteractWithOtherForms(True)
 
     End Sub
 
@@ -218,6 +247,12 @@ Public Class FrequencyPlotGUI
         btn_removeReg.Enabled = True
         btn_run.Enabled = True
         btn_stopPlot.Enabled = False
+
+        'disable DRactive
+        m_TopGUI.FX3.DrActive = False
+
+        'show other forms
+        InteractWithOtherForms(False)
 
     End Sub
 
