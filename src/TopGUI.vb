@@ -127,7 +127,7 @@ Public Class TopGUI
         m_AutoSpi.IgnoreExceptions = True
 
         'Set the API version and build date
-        label_apiVersion.Text = "ADI iSensor FX3 Demonstration Platform Version " + FX3.GetFX3ApiInfo.VersionNumber
+        label_apiVersion.Text = "ADI iSensor FX3 Example GUI v" + System.Windows.Forms.Application.ProductVersion
 
         'load the last used file path
         lastFilePath = My.Settings.LastFilePath

@@ -211,6 +211,9 @@ Public Class RegisterBulkReadGUI
         End If
 
         'Set up file manager
+        If Not IsNothing(fileManager) Then
+            fileManager.Dispose()
+        End If
         fileManager = New Logger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.RegList = regList
         fileManager.FileBaseName = "RegStream" + timeString
