@@ -395,7 +395,27 @@ Public Class TopGUI
 
     'General exception handler
     Public Sub GeneralErrorHandler(sender As Object, e As UnhandledExceptionEventArgs)
-        MsgBox("ERROR: Un-handled exception has occurred. " + e.ExceptionObject.ToString())
+        Dim ex As Exception = DirectCast(e.ExceptionObject, Exception)
+        Dim exStr As String
+        Dim currentTime As Date = Date.Now()
+        Dim currentTimeStr As String = currentTime.ToString("s")
+        currentTimeStr = currentTimeStr.Replace(":", "-")
+        Dim logPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Analog Devices", "FX3ExampleGUI")
+        'check dir
+        If Not Directory.Exists(logPath) Then
+            Directory.CreateDirectory(logPath)
+        End If
+        'check file
+        logPath = Path.Combine(logPath, "ERROR_LOG.csv")
+        If Not File.Exists(logPath) Then
+            File.WriteAllLines(logPath, {"USER,OS,DATE,FX3VERSION,EXCEPTIONTYPE,EXCEPTIONSTRING"})
+        End If
+        'log error
+        exStr = ex.ToString()
+        exStr = exStr.Replace(Environment.NewLine, " ")
+        exStr = exStr.Replace(",", " ")
+        File.AppendAllLines(logPath, {Environment.UserName + "," + Environment.OSVersion.ToString() + "," + currentTimeStr + "," + Application.ProductVersion + "," + ex.GetType().ToString() + "," + exStr})
+        MsgBox("ERROR: Un-handled exception has occurred. Detailed data has been stored at " + logPath)
     End Sub
 
     ''' <summary>
