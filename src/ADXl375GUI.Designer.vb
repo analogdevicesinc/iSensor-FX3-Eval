@@ -151,7 +151,7 @@ Partial Class ADXl375GUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 258)
+        Me.ClientSize = New System.Drawing.Size(284, 261)
         Me.Controls.Add(Me.parseLA)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.numBuffers)
@@ -165,6 +165,8 @@ Partial Class ADXl375GUI
         Me.Controls.Add(Me.addr)
         Me.Controls.Add(Me.writeBtn)
         Me.Controls.Add(Me.readBtn)
+        Me.MaximumSize = New System.Drawing.Size(300, 300)
+        Me.MinimumSize = New System.Drawing.Size(300, 300)
         Me.Name = "ADXl375GUI"
         Me.Text = "ADXL375 Interface"
         Me.ResumeLayout(False)

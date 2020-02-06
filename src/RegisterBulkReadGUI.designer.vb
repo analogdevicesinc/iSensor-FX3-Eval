@@ -283,7 +283,7 @@ Partial Class RegisterBulkReadGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(443, 499)
+        Me.ClientSize = New System.Drawing.Size(444, 501)
         Me.Controls.Add(Me.btn_loadregs)
         Me.Controls.Add(Me.btn_saveregs)
         Me.Controls.Add(Me.regStreamingList)
@@ -310,6 +310,8 @@ Partial Class RegisterBulkReadGUI
         Me.Controls.Add(Me.RemoveRegisterButton)
         Me.Controls.Add(Me.AddRegisterButton)
         Me.Controls.Add(Me.Label1)
+        Me.MaximumSize = New System.Drawing.Size(460, 540)
+        Me.MinimumSize = New System.Drawing.Size(460, 540)
         Me.Name = "RegisterBulkReadGUI"
         Me.Text = "Register Logging"
         Me.ResumeLayout(False)

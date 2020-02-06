@@ -65,7 +65,7 @@ Partial Class IMUStreamingGUI
         '
         'MeasureDR
         '
-        Me.MeasureDR.Location = New System.Drawing.Point(9, 12)
+        Me.MeasureDR.Location = New System.Drawing.Point(12, 12)
         Me.MeasureDR.Name = "MeasureDR"
         Me.MeasureDR.Size = New System.Drawing.Size(59, 102)
         Me.MeasureDR.TabIndex = 25
@@ -99,7 +99,7 @@ Partial Class IMUStreamingGUI
         '
         'MainButton
         '
-        Me.MainButton.Location = New System.Drawing.Point(9, 128)
+        Me.MainButton.Location = New System.Drawing.Point(12, 128)
         Me.MainButton.Name = "MainButton"
         Me.MainButton.Size = New System.Drawing.Size(77, 61)
         Me.MainButton.TabIndex = 21
@@ -108,9 +108,9 @@ Partial Class IMUStreamingGUI
         '
         'ListView1
         '
-        Me.ListView1.Location = New System.Drawing.Point(214, 12)
+        Me.ListView1.Location = New System.Drawing.Point(200, 11)
         Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(200, 285)
+        Me.ListView1.Size = New System.Drawing.Size(200, 288)
         Me.ListView1.TabIndex = 20
         Me.ListView1.UseCompatibleStateImageBehavior = False
         '
@@ -129,7 +129,7 @@ Partial Class IMUStreamingGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(6, 240)
+        Me.Label6.Location = New System.Drawing.Point(9, 240)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(43, 13)
         Me.Label6.TabIndex = 29
@@ -138,7 +138,7 @@ Partial Class IMUStreamingGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 263)
+        Me.Label1.Location = New System.Drawing.Point(9, 263)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(91, 13)
         Me.Label1.TabIndex = 32
@@ -146,15 +146,15 @@ Partial Class IMUStreamingGUI
         '
         'CaptureProgressBurst
         '
-        Me.CaptureProgressBurst.Location = New System.Drawing.Point(9, 279)
+        Me.CaptureProgressBurst.Location = New System.Drawing.Point(12, 279)
         Me.CaptureProgressBurst.Name = "CaptureProgressBurst"
-        Me.CaptureProgressBurst.Size = New System.Drawing.Size(185, 18)
+        Me.CaptureProgressBurst.Size = New System.Drawing.Size(182, 18)
         Me.CaptureProgressBurst.TabIndex = 31
         '
         'Use32BitRegs
         '
         Me.Use32BitRegs.AutoSize = True
-        Me.Use32BitRegs.Location = New System.Drawing.Point(9, 205)
+        Me.Use32BitRegs.Location = New System.Drawing.Point(12, 205)
         Me.Use32BitRegs.Name = "Use32BitRegs"
         Me.Use32BitRegs.Size = New System.Drawing.Size(114, 17)
         Me.Use32BitRegs.TabIndex = 33
@@ -165,7 +165,7 @@ Partial Class IMUStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(426, 309)
+        Me.ClientSize = New System.Drawing.Size(414, 311)
         Me.Controls.Add(Me.Use32BitRegs)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CaptureProgressBurst)
@@ -180,6 +180,8 @@ Partial Class IMUStreamingGUI
         Me.Controls.Add(Me.BurstStreamCancelButton)
         Me.Controls.Add(Me.MainButton)
         Me.Controls.Add(Me.ListView1)
+        Me.MaximumSize = New System.Drawing.Size(430, 350)
+        Me.MinimumSize = New System.Drawing.Size(430, 350)
         Me.Name = "IMUStreamingGUI"
         Me.Text = "IMU Burst Data Capture"
         Me.ResumeLayout(False)

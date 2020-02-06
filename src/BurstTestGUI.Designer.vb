@@ -127,7 +127,7 @@ Partial Class BurstTestGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(328, 470)
+        Me.ClientSize = New System.Drawing.Size(329, 471)
         Me.Controls.Add(Me.result)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -138,6 +138,8 @@ Partial Class BurstTestGUI
         Me.Controls.Add(Me.sclk)
         Me.Controls.Add(Me.csDelay)
         Me.Controls.Add(Me.drActive)
+        Me.MaximumSize = New System.Drawing.Size(345, 510)
+        Me.MinimumSize = New System.Drawing.Size(345, 510)
         Me.Name = "BurstTestGUI"
         Me.Text = "Burst Mode Test"
         CType(Me.result, System.ComponentModel.ISupportInitialize).EndInit()

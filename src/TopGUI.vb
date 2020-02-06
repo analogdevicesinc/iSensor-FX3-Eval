@@ -381,6 +381,13 @@ Public Class TopGUI
         My.Settings.SelectedRegMap = m_RegMapPath
         My.Settings.Save()
 
+        'close all other forms
+        For Each runningForm As Form In Application.OpenForms
+            If Me.InvokeRequired Then
+                Me.BeginInvoke(Sub() runningForm.Close())
+            End If
+        Next
+
         'Disconnect the FX3 (does nothing if not already connected)
         FX3.Disconnect()
 

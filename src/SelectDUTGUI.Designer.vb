@@ -75,12 +75,14 @@ Partial Class SelectDUTGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 155)
+        Me.ClientSize = New System.Drawing.Size(284, 156)
         Me.Controls.Add(Me.sensorInput)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.btn_ApplySetting)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.DutInput)
+        Me.MaximumSize = New System.Drawing.Size(300, 195)
+        Me.MinimumSize = New System.Drawing.Size(300, 195)
         Me.Name = "SelectDUTGUI"
         Me.Text = "Select DUT"
         Me.ResumeLayout(False)

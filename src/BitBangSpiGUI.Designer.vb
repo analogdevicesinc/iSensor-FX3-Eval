@@ -45,7 +45,7 @@ Partial Class BitBangSpiGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(13, 61)
+        Me.Label2.Location = New System.Drawing.Point(12, 61)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(89, 13)
         Me.Label2.TabIndex = 1
@@ -63,7 +63,7 @@ Partial Class BitBangSpiGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(13, 167)
+        Me.Label4.Location = New System.Drawing.Point(9, 160)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(89, 13)
         Me.Label4.TabIndex = 3
@@ -71,7 +71,7 @@ Partial Class BitBangSpiGUI
         '
         'btn_Transfer
         '
-        Me.btn_Transfer.Location = New System.Drawing.Point(12, 98)
+        Me.btn_Transfer.Location = New System.Drawing.Point(15, 98)
         Me.btn_Transfer.Name = "btn_Transfer"
         Me.btn_Transfer.Size = New System.Drawing.Size(90, 42)
         Me.btn_Transfer.TabIndex = 4
@@ -80,14 +80,14 @@ Partial Class BitBangSpiGUI
         '
         'MISOData
         '
-        Me.MISOData.Location = New System.Drawing.Point(106, 164)
+        Me.MISOData.Location = New System.Drawing.Point(105, 157)
         Me.MISOData.Name = "MISOData"
         Me.MISOData.Size = New System.Drawing.Size(167, 20)
         Me.MISOData.TabIndex = 5
         '
         'bitsPerTransfer
         '
-        Me.bitsPerTransfer.Location = New System.Drawing.Point(106, 6)
+        Me.bitsPerTransfer.Location = New System.Drawing.Point(105, 6)
         Me.bitsPerTransfer.Name = "bitsPerTransfer"
         Me.bitsPerTransfer.Size = New System.Drawing.Size(167, 20)
         Me.bitsPerTransfer.TabIndex = 6
@@ -95,7 +95,7 @@ Partial Class BitBangSpiGUI
         '
         'MOSIData
         '
-        Me.MOSIData.Location = New System.Drawing.Point(106, 58)
+        Me.MOSIData.Location = New System.Drawing.Point(105, 58)
         Me.MOSIData.Name = "MOSIData"
         Me.MOSIData.Size = New System.Drawing.Size(167, 20)
         Me.MOSIData.TabIndex = 7
@@ -103,7 +103,7 @@ Partial Class BitBangSpiGUI
         '
         'numTransfers
         '
-        Me.numTransfers.Location = New System.Drawing.Point(106, 32)
+        Me.numTransfers.Location = New System.Drawing.Point(105, 32)
         Me.numTransfers.Name = "numTransfers"
         Me.numTransfers.Size = New System.Drawing.Size(167, 20)
         Me.numTransfers.TabIndex = 8
@@ -111,7 +111,7 @@ Partial Class BitBangSpiGUI
         '
         'btn_restoreSpi
         '
-        Me.btn_restoreSpi.Location = New System.Drawing.Point(183, 98)
+        Me.btn_restoreSpi.Location = New System.Drawing.Point(182, 98)
         Me.btn_restoreSpi.Name = "btn_restoreSpi"
         Me.btn_restoreSpi.Size = New System.Drawing.Size(90, 42)
         Me.btn_restoreSpi.TabIndex = 9
@@ -122,7 +122,7 @@ Partial Class BitBangSpiGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(285, 189)
+        Me.ClientSize = New System.Drawing.Size(284, 191)
         Me.Controls.Add(Me.btn_restoreSpi)
         Me.Controls.Add(Me.numTransfers)
         Me.Controls.Add(Me.MOSIData)
@@ -133,6 +133,8 @@ Partial Class BitBangSpiGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.MaximumSize = New System.Drawing.Size(300, 230)
+        Me.MinimumSize = New System.Drawing.Size(300, 230)
         Me.Name = "BitBangSpiGUI"
         Me.Text = "Bit Bang SPI"
         Me.ResumeLayout(False)

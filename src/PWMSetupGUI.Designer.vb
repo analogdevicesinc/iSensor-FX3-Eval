@@ -67,7 +67,7 @@ Partial Class PWMSetupGUI
         '
         'startBtn
         '
-        Me.startBtn.Location = New System.Drawing.Point(105, 97)
+        Me.startBtn.Location = New System.Drawing.Point(105, 98)
         Me.startBtn.Name = "startBtn"
         Me.startBtn.Size = New System.Drawing.Size(75, 64)
         Me.startBtn.TabIndex = 20
@@ -92,7 +92,7 @@ Partial Class PWMSetupGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(291, 173)
+        Me.ClientSize = New System.Drawing.Size(294, 176)
         Me.Controls.Add(Me.Freq)
         Me.Controls.Add(Me.DutyCycle)
         Me.Controls.Add(Me.startBtn)
@@ -100,6 +100,8 @@ Partial Class PWMSetupGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.MaximumSize = New System.Drawing.Size(310, 215)
+        Me.MinimumSize = New System.Drawing.Size(310, 215)
         Me.Name = "PWMSetupGUI"
         Me.Text = "PWM Setup"
         Me.ResumeLayout(False)

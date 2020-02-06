@@ -43,7 +43,7 @@ Partial Class ADcmXLBufferedLog
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 134)
+        Me.Label2.Location = New System.Drawing.Point(9, 134)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(133, 13)
         Me.Label2.TabIndex = 3
@@ -51,7 +51,7 @@ Partial Class ADcmXLBufferedLog
         '
         'calc_time
         '
-        Me.calc_time.Location = New System.Drawing.Point(151, 131)
+        Me.calc_time.Location = New System.Drawing.Point(148, 131)
         Me.calc_time.Name = "calc_time"
         Me.calc_time.Size = New System.Drawing.Size(124, 20)
         Me.calc_time.TabIndex = 4
@@ -59,7 +59,7 @@ Partial Class ADcmXLBufferedLog
         'time_cap
         '
         Me.time_cap.AutoSize = True
-        Me.time_cap.Location = New System.Drawing.Point(15, 42)
+        Me.time_cap.Location = New System.Drawing.Point(15, 44)
         Me.time_cap.Name = "time_cap"
         Me.time_cap.Size = New System.Drawing.Size(127, 17)
         Me.time_cap.TabIndex = 5
@@ -70,7 +70,7 @@ Partial Class ADcmXLBufferedLog
         'fft_cap
         '
         Me.fft_cap.AutoSize = True
-        Me.fft_cap.Location = New System.Drawing.Point(191, 42)
+        Me.fft_cap.Location = New System.Drawing.Point(188, 44)
         Me.fft_cap.Name = "fft_cap"
         Me.fft_cap.Size = New System.Drawing.Size(84, 17)
         Me.fft_cap.TabIndex = 6
@@ -81,7 +81,7 @@ Partial Class ADcmXLBufferedLog
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 9)
+        Me.Label1.Location = New System.Drawing.Point(12, 17)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(79, 13)
         Me.Label1.TabIndex = 7
@@ -89,16 +89,16 @@ Partial Class ADcmXLBufferedLog
         '
         'ADcmXLType
         '
-        Me.ADcmXLType.Location = New System.Drawing.Point(97, 6)
+        Me.ADcmXLType.Location = New System.Drawing.Point(97, 14)
         Me.ADcmXLType.Name = "ADcmXLType"
-        Me.ADcmXLType.Size = New System.Drawing.Size(178, 20)
+        Me.ADcmXLType.Size = New System.Drawing.Size(175, 20)
         Me.ADcmXLType.TabIndex = 8
         '
         'ADcmXLBufferedLog
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(292, 165)
+        Me.ClientSize = New System.Drawing.Size(284, 161)
         Me.Controls.Add(Me.ADcmXLType)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.fft_cap)
@@ -106,6 +106,8 @@ Partial Class ADcmXLBufferedLog
         Me.Controls.Add(Me.calc_time)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.btn_capture)
+        Me.MaximumSize = New System.Drawing.Size(300, 200)
+        Me.MinimumSize = New System.Drawing.Size(300, 200)
         Me.Name = "ADcmXLBufferedLog"
         Me.Text = "ADcmXL Buffer Data"
         Me.ResumeLayout(False)

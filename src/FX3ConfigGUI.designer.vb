@@ -395,7 +395,7 @@ Partial Class FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(441, 500)
+        Me.ClientSize = New System.Drawing.Size(444, 497)
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.DutVoltage)
         Me.Controls.Add(Me.Label13)
@@ -435,6 +435,8 @@ Partial Class FX3ConfigGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.MaximumSize = New System.Drawing.Size(460, 536)
+        Me.MinimumSize = New System.Drawing.Size(460, 536)
         Me.Name = "FX3ConfigGUI"
         Me.Text = "FX3 Configuration"
         Me.ResumeLayout(False)

@@ -69,12 +69,14 @@ Partial Class SelectRegmapGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(527, 98)
+        Me.ClientSize = New System.Drawing.Size(529, 101)
         Me.Controls.Add(Me.BrowseButton)
         Me.Controls.Add(Me.OKButton)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.SelectRegmapComboBox)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximumSize = New System.Drawing.Size(545, 140)
+        Me.MinimumSize = New System.Drawing.Size(545, 140)
         Me.Name = "SelectRegmapGUI"
         Me.Text = "Select Register Map"
         Me.ResumeLayout(False)

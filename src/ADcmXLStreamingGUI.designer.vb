@@ -410,7 +410,7 @@ Partial Class ADcmXLStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(388, 498)
+        Me.ClientSize = New System.Drawing.Size(384, 501)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.statusLabel)
         Me.Controls.Add(Me.GroupBox2)
@@ -421,6 +421,8 @@ Partial Class ADcmXLStreamingGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximumSize = New System.Drawing.Size(400, 540)
+        Me.MinimumSize = New System.Drawing.Size(400, 540)
         Me.Name = "ADcmXLStreamingGUI"
         Me.Text = "ADcmXL Real Time Data Capture"
         Me.GroupBox1.ResumeLayout(False)

@@ -67,11 +67,13 @@ Partial Class AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(347, 92)
+        Me.ClientSize = New System.Drawing.Size(344, 87)
         Me.Controls.Add(Me.btn_pulseMeasure)
         Me.Controls.Add(Me.btn_ADXL375)
         Me.Controls.Add(Me.btn_BitBangSpi)
         Me.Controls.Add(Me.btn_BurstTest)
+        Me.MaximumSize = New System.Drawing.Size(360, 126)
+        Me.MinimumSize = New System.Drawing.Size(360, 126)
         Me.Name = "AppBrowseGUI"
         Me.Text = "App Browser"
         Me.ResumeLayout(False)

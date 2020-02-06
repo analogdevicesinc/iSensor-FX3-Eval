@@ -228,7 +228,7 @@ Partial Class PulseMeasureGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(277, 326)
+        Me.ClientSize = New System.Drawing.Size(279, 326)
         Me.Controls.Add(Me.busyPolarity)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label9)
@@ -239,6 +239,8 @@ Partial Class PulseMeasureGUI
         Me.Controls.Add(Me.label_result)
         Me.Controls.Add(Me.startBtn)
         Me.Controls.Add(Me.modePages)
+        Me.MaximumSize = New System.Drawing.Size(295, 365)
+        Me.MinimumSize = New System.Drawing.Size(295, 365)
         Me.Name = "PulseMeasureGUI"
         Me.Text = "Pulse Measurement"
         Me.modePages.ResumeLayout(False)

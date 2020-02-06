@@ -68,11 +68,13 @@ Partial Class SelectFX3GUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(268, 159)
+        Me.ClientSize = New System.Drawing.Size(269, 161)
         Me.Controls.Add(Me.WarningLabel)
         Me.Controls.Add(Me.SelectFX3OKButton)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.SelectFX3ComboBox)
+        Me.MaximumSize = New System.Drawing.Size(285, 200)
+        Me.MinimumSize = New System.Drawing.Size(285, 200)
         Me.Name = "SelectFX3GUI"
         Me.Text = "Select FX3"
         Me.ResumeLayout(False)
