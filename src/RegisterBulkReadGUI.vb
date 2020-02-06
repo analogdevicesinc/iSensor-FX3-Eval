@@ -103,7 +103,9 @@ Public Class RegisterBulkReadGUI
         m_TopGUI.samplesPerWrite = Convert.ToInt32(SamplesPerWrite.Text)
 
         'dispose
-        fileManager.Dispose()
+        If Not IsNothing(fileManager) Then
+            fileManager.Dispose()
+        End If
         Me.Dispose()
 
     End Sub
