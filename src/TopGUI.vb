@@ -396,10 +396,31 @@ Public Class TopGUI
     'General exception handler
     Public Sub GeneralErrorHandler(sender As Object, e As UnhandledExceptionEventArgs)
         Dim ex As Exception = DirectCast(e.ExceptionObject, Exception)
+        LogError(ex)
+    End Sub
+
+    ''' <summary>
+    ''' Thread exception handler. Calls error logger with base exception
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Sub ThreadErrorHandler(sender As Object, e As ThreadExceptionEventArgs)
+        LogError(e.Exception )
+    End Sub
+
+    Private Sub LogError(e As Exception)
         Dim exStr As String
         Dim currentTime As Date = Date.Now()
         Dim currentTimeStr As String = currentTime.ToString("s")
-        currentTimeStr = currentTimeStr.Replace(":", "-")
+        Dim FX3Uptime As String = "ERROR"
+        Dim FX3SN As String = "ERROR"
+        If Not IsNothing(FX3) Then
+            If Not IsNothing(FX3.ActiveFX3) Then
+                FX3Uptime = FX3.ActiveFX3.Uptime.ToString() + "ms"
+                FX3SN = FX3.ActiveFX3.SerialNumber
+            End If
+        End If
+            currentTimeStr = currentTimeStr.Replace(":", "-")
         Dim logPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Analog Devices", "FX3ExampleGUI")
         'check dir
         If Not Directory.Exists(logPath) Then
@@ -408,23 +429,14 @@ Public Class TopGUI
         'check file
         logPath = Path.Combine(logPath, "ERROR_LOG.csv")
         If Not File.Exists(logPath) Then
-            File.WriteAllLines(logPath, {"USER,OS,DATE,FX3VERSION,EXCEPTIONTYPE,EXCEPTIONSTRING"})
+            File.WriteAllLines(logPath, {"DATE,USER,OS,FX3VERSION,REGMAP,FX3UPTIME,FX3SN,EXCEPTION"})
         End If
         'log error
-        exStr = ex.ToString()
+        exStr = e.ToString()
         exStr = exStr.Replace(Environment.NewLine, " ")
         exStr = exStr.Replace(",", " ")
-        File.AppendAllLines(logPath, {Environment.UserName + "," + Environment.OSVersion.ToString() + "," + currentTimeStr + "," + Application.ProductVersion + "," + ex.GetType().ToString() + "," + exStr})
+        File.AppendAllLines(logPath, {currentTimeStr + "," + Environment.UserName + "," + Environment.OSVersion.ToString() + "," + Application.ProductVersion + "," + RegMapPath + "," + FX3Uptime + "," + FX3SN + "," + exStr})
         MsgBox("ERROR: Un-handled exception has occurred. Detailed data has been stored at " + logPath)
-    End Sub
-
-    ''' <summary>
-    ''' Thread exception handler
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Sub ThreadErrorHandler(sender As Object, e As ThreadExceptionEventArgs)
-        MsgBox("ERROR: Un-handled thread exception has occurred. " + e.Exception.ToString())
     End Sub
 
     ''' <summary>
