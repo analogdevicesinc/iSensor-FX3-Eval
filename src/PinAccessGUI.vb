@@ -66,9 +66,6 @@ Public Class PinAccessGUI
         ComboBoxHighLow.Items.Add("Low")
         ComboBoxHighLow.DropDownStyle = ComboBoxStyle.DropDownList
         ComboBoxHighLow.SelectedIndex = 0
-        ComboBoxMode.Items.Add("Not implemented")
-        ComboBoxMode.DropDownStyle = ComboBoxStyle.DropDownList
-        ComboBoxMode.SelectedIndex = 0
         TextBoxPeriod.Text = "100"
         ' TODO: add options for mode selection
     End Sub
