@@ -251,6 +251,12 @@
     <Compile Include="RegisterGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ResistorConfigGUI.Designer.vb">
+      <DependentUpon>ResistorConfigGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ResistorConfigGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="SelectDUTGUI.Designer.vb">
       <DependentUpon>SelectDUTGUI.vb</DependentUpon>
     </Compile>
@@ -360,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RegisterGUI.resx">
       <DependentUpon>RegisterGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResistorConfigGUI.resx">
+      <DependentUpon>ResistorConfigGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectDUTGUI.resx">
       <DependentUpon>SelectDUTGUI.vb</DependentUpon>

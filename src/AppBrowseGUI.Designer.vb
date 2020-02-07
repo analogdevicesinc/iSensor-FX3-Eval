@@ -25,6 +25,7 @@ Partial Class AppBrowseGUI
         Me.btn_BitBangSpi = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
+        Me.btn_resistorConfig = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btn_BurstTest
@@ -63,17 +64,27 @@ Partial Class AppBrowseGUI
         Me.btn_pulseMeasure.Text = "Measure Signal Pulse Width"
         Me.btn_pulseMeasure.UseVisualStyleBackColor = True
         '
+        'btn_resistorConfig
+        '
+        Me.btn_resistorConfig.Location = New System.Drawing.Point(12, 82)
+        Me.btn_resistorConfig.Name = "btn_resistorConfig"
+        Me.btn_resistorConfig.Size = New System.Drawing.Size(75, 64)
+        Me.btn_resistorConfig.TabIndex = 4
+        Me.btn_resistorConfig.Text = "Input Pin Resistor Config"
+        Me.btn_resistorConfig.UseVisualStyleBackColor = True
+        '
         'AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(344, 87)
+        Me.ClientSize = New System.Drawing.Size(344, 161)
+        Me.Controls.Add(Me.btn_resistorConfig)
         Me.Controls.Add(Me.btn_pulseMeasure)
         Me.Controls.Add(Me.btn_ADXL375)
         Me.Controls.Add(Me.btn_BitBangSpi)
         Me.Controls.Add(Me.btn_BurstTest)
-        Me.MaximumSize = New System.Drawing.Size(360, 126)
-        Me.MinimumSize = New System.Drawing.Size(360, 126)
+        Me.MaximumSize = New System.Drawing.Size(360, 200)
+        Me.MinimumSize = New System.Drawing.Size(360, 200)
         Me.Name = "AppBrowseGUI"
         Me.Text = "App Browser"
         Me.ResumeLayout(False)
@@ -84,4 +95,5 @@ Partial Class AppBrowseGUI
     Friend WithEvents btn_BitBangSpi As Button
     Friend WithEvents btn_ADXL375 As Button
     Friend WithEvents btn_pulseMeasure As Button
+    Friend WithEvents btn_resistorConfig As Button
 End Class

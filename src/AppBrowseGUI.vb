@@ -40,7 +40,11 @@ Public Class AppBrowseGUI
         Dim subGUI As New PulseMeasureGUI()
         subGUI.SetTopGUI(Me.m_TopGUI)
         subGUI.Show()
-        m_TopGUI.Hide()
     End Sub
 
+    Private Sub btn_resistorConfig_Click(sender As Object, e As EventArgs) Handles btn_resistorConfig.Click
+        Dim subGUI As New ResistorConfigGUI()
+        subGUI.SetTopGUI(Me.m_TopGUI)
+        subGUI.Show()
+    End Sub
 End Class
