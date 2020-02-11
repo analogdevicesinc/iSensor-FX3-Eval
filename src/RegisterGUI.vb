@@ -109,7 +109,11 @@ Public Class RegisterGUI
             DutValuesDoub = m_TopGUI.Dut.ReadScaledValue(readRegList)
             Dim regIndex As Integer = 0
             For Each value In DutValuesDoub
-                regView.Item("Contents", regIndex).Value = value.ToString()
+                If currentRegList(regIndex).IsReadable Then
+                    regView.Item("Contents", regIndex).Value = value.ToString()
+                Else
+                    regView.Item("Contents", regIndex).Value = "Cannot Read"
+                End If
                 regIndex += 1
             Next
         Else
@@ -117,7 +121,11 @@ Public Class RegisterGUI
             DutValuesUInt = m_TopGUI.Dut.ReadUnsigned(readRegList)
             Dim regIndex As Integer = 0
             For Each value In DutValuesUInt
-                regView.Item("Contents", regIndex).Value = value.ToString("X")
+                If currentRegList(regIndex).IsReadable Then
+                    regView.Item("Contents", regIndex).Value = value.ToString("X" + (currentRegList(regIndex).NumBytes * 2).ToString())
+                Else
+                    regView.Item("Contents", regIndex).Value = "Cannot Read"
+                End If
                 regIndex += 1
             Next
         End If
