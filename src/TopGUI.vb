@@ -299,8 +299,7 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_BoardInfo_Click(sender As Object, e As EventArgs) Handles btn_BoardInfo.Click
-        Dim fx3info As FX3Api.FX3Board = FX3.ActiveFX3
-        MsgBox(fx3info.ToString())
+        MsgBox(FX3.ActiveFX3.ToString())
     End Sub
 
     Private Sub btn_APIInfo_Click(sender As Object, e As EventArgs) Handles btn_APIInfo.Click
@@ -409,18 +408,26 @@ Public Class TopGUI
     End Sub
 
     Private Sub LogError(e As Exception)
+        Static firstException As Boolean = True
         Dim exStr As String
         Dim currentTime As Date = Date.Now()
         Dim currentTimeStr As String = currentTime.ToString("s")
         Dim FX3Uptime As String = "ERROR"
         Dim FX3SN As String = "ERROR"
+        If Not firstException Then
+            'force kill after first exception
+            Environment.Exit(1)
+        Else
+            'set first exception flag to false (static means is persistent through calls)
+            firstException = False
+        End If
         If Not IsNothing(FX3) Then
             If Not IsNothing(FX3.ActiveFX3) Then
                 FX3Uptime = FX3.ActiveFX3.Uptime.ToString() + "ms"
                 FX3SN = FX3.ActiveFX3.SerialNumber
             End If
         End If
-            currentTimeStr = currentTimeStr.Replace(":", "-")
+        currentTimeStr = currentTimeStr.Replace(":", "-")
         Dim logPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Analog Devices", "FX3ExampleGUI")
         'check dir
         If Not Directory.Exists(logPath) Then
