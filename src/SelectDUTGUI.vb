@@ -22,6 +22,7 @@ Public Class SelectDUTGUI
         m_TopGUI.FX3.SensorType = sensorInput.SelectedItem
         m_TopGUI.FX3.PartType = DutInput.SelectedItem
         m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
+        m_TopGUI.SaveAppSettings()
         Me.Close()
     End Sub
 

@@ -22,6 +22,8 @@ Public Class RegisterGUI
     Private m_pageMessageList As List(Of Integer)
 
     Public Sub FormSetup() Handles Me.Load
+        regView.ClearSelection()
+
         'disable dr active reads
         originalDRSetting = m_TopGUI.FX3.DrActive
         m_TopGUI.FX3.DrActive = False
@@ -63,8 +65,15 @@ Public Class RegisterGUI
 
     End Sub
 
-    Private Sub FormRegisters_Load(sender As Object, e As EventArgs) Handles Me.Load
-        regView.ClearSelection()
+    Private Sub HiddenHandler() Handles Me.VisibleChanged
+        If Not Me.Visible Then
+            'disable dr / cont reads
+            pageReadTimer.Enabled = False
+            drReadTimer.Enabled = False
+        Else
+            pageReadTimer.Enabled = contRead.Checked
+            drReadTimer.Enabled = measureDr.Checked
+        End If
     End Sub
 
     Private Sub ButtonWrite_Click(sender As Object, e As EventArgs) Handles ButtonWrite.Click

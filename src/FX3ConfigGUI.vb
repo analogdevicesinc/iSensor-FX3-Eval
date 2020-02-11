@@ -252,6 +252,9 @@ Public Class FX3ConfigGUI
             m_TopGUI.FX3.WatchdogTimeoutSeconds = watchdogTime
         End If
 
+        'save app settings
+        m_TopGUI.SaveAppSettings()
+
         StatusLabel.Text = "Done"
         StatusLabel.BackColor = Color.Green
 

@@ -42,7 +42,6 @@ Public Class TopGUI
     Public Sub New()
 
         ' This call is required by the designer.'
-
         InitializeComponent()
 
         Dim firmwarePath As String
@@ -371,14 +370,7 @@ Public Class TopGUI
 
     Private Sub Cleanup(sender As Object, e As EventArgs) Handles Me.Closing
 
-        'Save settings
-        My.Settings.DeviceType = FX3.PartType
-        My.Settings.SensorType = FX3.SensorType
-        My.Settings.LastLeft = Me.Left
-        My.Settings.LastTop = Me.Top
-        My.Settings.LastFilePath = lastFilePath
-        My.Settings.SelectedRegMap = m_RegMapPath
-        My.Settings.Save()
+        SaveAppSettings()
 
         'close all other forms
         For Each runningForm As Form In Application.OpenForms
@@ -390,6 +382,20 @@ Public Class TopGUI
         'Disconnect the FX3 (does nothing if not already connected)
         FX3.Disconnect()
 
+    End Sub
+
+    ''' <summary>
+    ''' Save app settings
+    ''' </summary>
+    Friend Sub SaveAppSettings()
+        'Save settings
+        My.Settings.DeviceType = FX3.PartType
+        My.Settings.SensorType = FX3.SensorType
+        My.Settings.LastLeft = Me.Left
+        My.Settings.LastTop = Me.Top
+        My.Settings.LastFilePath = lastFilePath
+        My.Settings.SelectedRegMap = m_RegMapPath
+        My.Settings.Save()
     End Sub
 
     'General exception handler
@@ -491,7 +497,7 @@ Public Class TopGUI
         ResetButtons()
         ResetLabels()
         btn_Connect.Enabled = False
-        label_FX3Status.Text = "FX3 Rebooting"
+        label_FX3Status.Text = "FX3 Rebooting..."
 
         'Start a timeout counter
         m_disconnectTimer.Enabled = True
