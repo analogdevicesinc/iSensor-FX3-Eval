@@ -557,7 +557,7 @@ Public Class TopGUI
             End If
         Else
             label_FX3Status.BackColor = Color.Red
-            label_FX3Status.Text = "ERROR: No FX3 connected"
+            label_FX3Status.Text = "ERROR: No FX3 board connected"
             btn_Connect.Text = "Connect to FX3"
             Exit Sub
         End If
@@ -568,7 +568,6 @@ Public Class TopGUI
             m_disconnectTimer.Enabled = False
             m_FX3Connected = True
         Else
-            MsgBox("ERROR: Invalid FX3 serial number selected")
             Exit Sub
         End If
 
@@ -617,6 +616,7 @@ Public Class TopGUI
         End If
         btn_Connect.Enabled = False
         label_FX3Status.Text = "Resetting all FX3 board(s)"
+        label_FX3Status.BackColor = Color.Yellow
         FX3.ResetAllFX3s()
         'Spin up async timer to check the device list
         m_disconnectTimer.Enabled = True
