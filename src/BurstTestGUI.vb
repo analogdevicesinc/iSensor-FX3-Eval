@@ -44,10 +44,14 @@ Public Class BurstTestGUI
         m_TopGUI.FX3.StripBurstTriggerWord = False
         m_TopGUI.FX3.BurstByteCount = 4 * numWords
         m_TopGUI.FX3.SetupBurstMode()
-        m_TopGUI.FX3.StartBurstStream(1, burstTrigger)
+        m_TopGUI.FX3.StartBurstStream(4, burstTrigger)
         m_TopGUI.FX3.WaitForStreamCompletion(250)
         Dim buf() As UShort
         buf = m_TopGUI.FX3.GetBuffer()
+        If IsNothing(buf) Then
+            MsgBox("Error: Null buffer received...")
+            Exit Sub
+        End If
         For i As Integer = 0 To numWords - 1
             valueLng = buf(2 * i + 1)
             valueLng += (buf(2 * i) * 2 ^ 16)
