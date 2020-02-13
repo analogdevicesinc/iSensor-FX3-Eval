@@ -155,18 +155,20 @@ Public Class RegisterGUI
 
     Private Sub regView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles regView.CellClick
         Dim regLabel As String
+        Dim reg As RegClass
         Try
             regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
+            reg = m_TopGUI.RegMap(regLabel)
             If scaleData Then
                 Dim value As Double
-                value = m_TopGUI.Dut.ReadScaledValue(m_TopGUI.RegMap(regLabel))
+                value = m_TopGUI.Dut.ReadScaledValue(reg)
                 CurrentValue.Text = value.ToString()
                 regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString()
             Else
                 Dim value As UInteger
-                value = m_TopGUI.Dut.ReadUnsigned(m_TopGUI.RegMap(regLabel))
-                CurrentValue.Text = value.ToString("X")
-                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("X")
+                value = m_TopGUI.Dut.ReadUnsigned(reg)
+                CurrentValue.Text = value.ToString("X" + (reg.NumBytes * 2).ToString())
+                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("X" + (reg.NumBytes * 2).ToString())
             End If
         Catch ex As Exception
             CurrentValue.Text = "ERROR"
