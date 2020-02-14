@@ -33,6 +33,12 @@ Partial Class BitBangSpiGUI
         Me.btn_restoreSpi = New System.Windows.Forms.Button()
         Me.sclk_freq = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.csLead = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.stallTicks = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.csLag = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'Label1
@@ -65,7 +71,7 @@ Partial Class BitBangSpiGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(9, 180)
+        Me.Label4.Location = New System.Drawing.Point(9, 257)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(89, 13)
         Me.Label4.TabIndex = 3
@@ -73,7 +79,7 @@ Partial Class BitBangSpiGUI
         '
         'btn_Transfer
         '
-        Me.btn_Transfer.Location = New System.Drawing.Point(15, 118)
+        Me.btn_Transfer.Location = New System.Drawing.Point(15, 195)
         Me.btn_Transfer.Name = "btn_Transfer"
         Me.btn_Transfer.Size = New System.Drawing.Size(90, 42)
         Me.btn_Transfer.TabIndex = 4
@@ -82,7 +88,7 @@ Partial Class BitBangSpiGUI
         '
         'MISOData
         '
-        Me.MISOData.Location = New System.Drawing.Point(105, 177)
+        Me.MISOData.Location = New System.Drawing.Point(105, 254)
         Me.MISOData.Name = "MISOData"
         Me.MISOData.Size = New System.Drawing.Size(167, 20)
         Me.MISOData.TabIndex = 5
@@ -113,7 +119,7 @@ Partial Class BitBangSpiGUI
         '
         'btn_restoreSpi
         '
-        Me.btn_restoreSpi.Location = New System.Drawing.Point(182, 118)
+        Me.btn_restoreSpi.Location = New System.Drawing.Point(182, 195)
         Me.btn_restoreSpi.Name = "btn_restoreSpi"
         Me.btn_restoreSpi.Size = New System.Drawing.Size(90, 42)
         Me.btn_restoreSpi.TabIndex = 9
@@ -137,11 +143,68 @@ Partial Class BitBangSpiGUI
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "SCLK Freq (Hz):"
         '
+        'csLead
+        '
+        Me.csLead.Location = New System.Drawing.Point(105, 136)
+        Me.csLead.Name = "csLead"
+        Me.csLead.Size = New System.Drawing.Size(167, 20)
+        Me.csLead.TabIndex = 13
+        Me.csLead.Text = "5"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(12, 139)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(80, 13)
+        Me.Label6.TabIndex = 12
+        Me.Label6.Text = "CS Lead Ticks:"
+        '
+        'stallTicks
+        '
+        Me.stallTicks.Location = New System.Drawing.Point(105, 110)
+        Me.stallTicks.Name = "stallTicks"
+        Me.stallTicks.Size = New System.Drawing.Size(167, 20)
+        Me.stallTicks.TabIndex = 15
+        Me.stallTicks.Text = "10.0"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(12, 113)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(76, 13)
+        Me.Label7.TabIndex = 14
+        Me.Label7.Text = "Stall Time (us):"
+        '
+        'csLag
+        '
+        Me.csLag.Location = New System.Drawing.Point(105, 162)
+        Me.csLag.Name = "csLag"
+        Me.csLag.Size = New System.Drawing.Size(167, 20)
+        Me.csLag.TabIndex = 17
+        Me.csLag.Text = "5"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(12, 165)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(74, 13)
+        Me.Label8.TabIndex = 16
+        Me.Label8.Text = "CS Lag Ticks:"
+        '
         'BitBangSpiGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 211)
+        Me.ClientSize = New System.Drawing.Size(284, 289)
+        Me.Controls.Add(Me.csLag)
+        Me.Controls.Add(Me.Label8)
+        Me.Controls.Add(Me.stallTicks)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.csLead)
+        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.sclk_freq)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.btn_restoreSpi)
@@ -154,8 +217,6 @@ Partial Class BitBangSpiGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.MaximumSize = New System.Drawing.Size(300, 250)
-        Me.MinimumSize = New System.Drawing.Size(300, 250)
         Me.Name = "BitBangSpiGUI"
         Me.Text = "Bit Bang SPI"
         Me.ResumeLayout(False)
@@ -175,4 +236,10 @@ Partial Class BitBangSpiGUI
     Friend WithEvents btn_restoreSpi As Button
     Friend WithEvents sclk_freq As TextBox
     Friend WithEvents Label5 As Label
+    Friend WithEvents csLead As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents stallTicks As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents csLag As TextBox
+    Friend WithEvents Label8 As Label
 End Class

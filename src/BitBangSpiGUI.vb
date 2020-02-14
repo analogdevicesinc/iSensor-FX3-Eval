@@ -10,7 +10,9 @@ Public Class BitBangSpiGUI
 
     Private Sub BitBangSpiGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         m_TopGUI.FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
-        m_TopGUI.FX3.SetBitBangSpiFreq(Convert.ToDouble(sclk_freq.Text))
+        csLag.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks.ToString()
+        csLead.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks.ToString()
+        stallTicks.Text = m_TopGUI.FX3.BitBangSpiConfig.StallTicks.ToString()
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -28,6 +30,9 @@ Public Class BitBangSpiGUI
             transfers = Convert.ToUInt32(numTransfers.Text)
             bptransfer = Convert.ToUInt32(bitsPerTransfer.Text)
             m_TopGUI.FX3.SetBitBangSpiFreq(Convert.ToDouble(sclk_freq.Text))
+            m_TopGUI.FX3.SetBitBangStallTime(Convert.ToDouble(stallTicks.Text))
+            m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks = Convert.ToUInt16(csLag.Text)
+            m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks = Convert.ToUInt16(csLead.Text)
             Dim byteStr As String
             For i As Integer = 0 To MOSIData.Text.Length() - 1 Step 2
                 byteStr = MOSIData.Text.Substring(i, 2)
