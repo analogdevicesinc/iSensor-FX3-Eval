@@ -419,6 +419,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="Freq">The SPI frequency, in Hz</param>
  <returns>A boolean indicating if the frequency could be set.</returns>
 </member>
+<member name="M:FX3Api.FX3Connection.SetBitBangStallTime(System.Double)">
+ <summary>
+ Set the bit bang SPI stall time. Driven by a clock with resolution of 49.3ns
+ </summary>
+ <param name="MicroSecondsStall">Stall time desired, in microseconds. Minimum of 0.7us</param>
+ <returns>A boolean indicating if value is good or not. Defaults to closest possible value</returns>
+</member>
 <member name="M:FX3Api.FX3Connection.SetBitBangSpiFreq(System.Double)">
  <summary>
  Sets the SCLK frequency for a bit bang SPI connection. 
