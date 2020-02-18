@@ -524,16 +524,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Cancel a any running stream
  </summary>
 </member>
+<member name="M:FX3Api.FX3Connection.CancelStreamImplementation(FX3Api.USBCommands)">
+ <summary>
+ Cancel running stream
+ </summary>
+ <param name="ReqCode">ReqCode for the type of stream to cancel</param>
+</member>
 <member name="M:FX3Api.FX3Connection.StartBurstStream(System.UInt32,System.Collections.Generic.IEnumerable{System.Byte})">
  <summary>
  Function to start a burst read using the BurstStreamManager
  </summary>
  <param name="numBuffers">The number of buffers to read in the stream operation</param>
-</member>
-<member name="M:FX3Api.FX3Connection.StopBurstStream">
- <summary>
- Stops a burst stream by setting the stream state variables
- </summary>
 </member>
 <member name="P:FX3Api.FX3Connection.StripBurstTriggerWord">
  <summary>
@@ -544,11 +545,6 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 <member name="M:FX3Api.FX3Connection.BurstStreamManager">
  <summary>
  This function reads burst stream data from the DUT over the streaming endpoint. It is intended to operate in its own thread, and should not be called directly.
- </summary>
-</member>
-<member name="M:FX3Api.FX3Connection.StopGenericStream">
- <summary>
- Stops a generic stream by setting the stream state variables
  </summary>
 </member>
 <member name="M:FX3Api.FX3Connection.StartGenericStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
@@ -1270,11 +1266,6 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="numBuffers">The total number of data ready's to capture.</param>
  <returns></returns>
 </member>
-<member name="M:FX3Api.FX3Connection.ISpi32Interface_StopStream">
- <summary>
- 
- </summary>
-</member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
  This is similar to the most general streaming function used by the IRegInterface, and all other buffered streaming functions can be derived from 
@@ -1287,6 +1278,11 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="numBuffers">The total number of buffers to capture</param>
  <param name="timeoutSeconds">The time to wait on the interfacing board before stopping the stream</param>
  <param name="worker">A background worker used to notify the caller of progress made in the stream. You MUST check that this parameter has been initialized</param>
+</member>
+<member name="M:FX3Api.FX3Connection.ISpi32StopStream">
+ <summary>
+ ISpi32 StopStream implementation. Calls generic version.
+ </summary>
 </member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_GetBufferedStreamDataPacket">
  <summary>
