@@ -185,6 +185,12 @@ Public Class FrequencyPlotGUI
     Private Sub btn_addreg_Click(sender As Object, e As EventArgs) Handles btn_addreg.Click
         Dim newItem As New ListViewItem()
         Dim reg As RegClass = m_TopGUI.RegMap(regSelect.SelectedItem)
+        For Each entry As ListViewItem In RegisterList.Items
+            If entry.Text = reg.Label Then
+                MsgBox("ERROR: Can only plot each register one time")
+                Exit Sub
+            End If
+        Next
         newItem.SubItems(0).Text = reg.Label
         RegisterList.Items.Add(newItem)
     End Sub
