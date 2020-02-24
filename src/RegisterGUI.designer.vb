@@ -32,7 +32,6 @@ Partial Class RegisterGUI
         Me.newValue = New System.Windows.Forms.TextBox()
         Me.writeLabel = New System.Windows.Forms.Label()
         Me.readLabel = New System.Windows.Forms.Label()
-        Me.CurrentValue = New System.Windows.Forms.Label()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.ButtonRead = New System.Windows.Forms.Button()
         Me.scaledData = New System.Windows.Forms.CheckBox()
@@ -46,6 +45,7 @@ Partial Class RegisterGUI
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.btn_DumpRegmap = New System.Windows.Forms.Button()
         Me.drActive = New System.Windows.Forms.CheckBox()
+        Me.CurrentValue = New System.Windows.Forms.TextBox()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -148,17 +148,6 @@ Partial Class RegisterGUI
         Me.readLabel.TabIndex = 15
         Me.readLabel.Text = "Current Hex Value"
         '
-        'CurrentValue
-        '
-        Me.CurrentValue.BackColor = System.Drawing.Color.White
-        Me.CurrentValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.CurrentValue.Location = New System.Drawing.Point(13, 34)
-        Me.CurrentValue.Name = "CurrentValue"
-        Me.CurrentValue.Size = New System.Drawing.Size(72, 20)
-        Me.CurrentValue.TabIndex = 16
-        Me.CurrentValue.Text = "Not Read"
-        Me.CurrentValue.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
         'ButtonRead
         '
         Me.ButtonRead.Location = New System.Drawing.Point(120, 19)
@@ -240,8 +229,8 @@ Partial Class RegisterGUI
         '
         'GroupBox4
         '
-        Me.GroupBox4.Controls.Add(Me.readLabel)
         Me.GroupBox4.Controls.Add(Me.CurrentValue)
+        Me.GroupBox4.Controls.Add(Me.readLabel)
         Me.GroupBox4.Controls.Add(Me.writeLabel)
         Me.GroupBox4.Controls.Add(Me.newValue)
         Me.GroupBox4.Controls.Add(Me.ButtonWrite)
@@ -283,6 +272,17 @@ Partial Class RegisterGUI
         Me.drActive.Text = "DR Sync Register Reads"
         Me.drActive.UseVisualStyleBackColor = True
         '
+        'CurrentValue
+        '
+        Me.CurrentValue.BackColor = System.Drawing.SystemColors.Window
+        Me.CurrentValue.Location = New System.Drawing.Point(13, 37)
+        Me.CurrentValue.Name = "CurrentValue"
+        Me.CurrentValue.ReadOnly = True
+        Me.CurrentValue.Size = New System.Drawing.Size(72, 20)
+        Me.CurrentValue.TabIndex = 16
+        Me.CurrentValue.Text = "Not Read"
+        Me.CurrentValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'RegisterGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -318,7 +318,6 @@ Partial Class RegisterGUI
     Friend WithEvents newValue As System.Windows.Forms.TextBox
     Friend WithEvents writeLabel As System.Windows.Forms.Label
     Friend WithEvents readLabel As System.Windows.Forms.Label
-    Friend WithEvents CurrentValue As System.Windows.Forms.Label
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents ButtonRead As System.Windows.Forms.Button
     Friend WithEvents Label6 As System.Windows.Forms.Label
@@ -336,4 +335,5 @@ Partial Class RegisterGUI
     Friend WithEvents measureDr As CheckBox
     Friend WithEvents btn_DumpRegmap As Button
     Friend WithEvents drActive As CheckBox
+    Friend WithEvents CurrentValue As TextBox
 End Class
