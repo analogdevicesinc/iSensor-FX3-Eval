@@ -199,4 +199,50 @@ Public Class PinAccessGUI
             Return True
         End If
     End Function
+
+    Private Sub btn_ReadGPIO_Click(sender As Object, e As EventArgs) Handles btn_ReadGPIO.Click
+        Dim pinNum As UInteger
+        Try
+            pinNum = Convert.ToUInt32(GPIO_Num.Text)
+            If pinNum > 63 Then
+                Throw New ArgumentException("Pin number out of range. Max value 64")
+            End If
+        Catch ex As Exception
+            MsgBox("Invalid Pin! " + ex.Message)
+            Exit Sub
+        End Try
+
+        GPIO_Value.Text = m_TopGUI.FX3.ReadPin(New FX3PinObject(pinNum)).ToString()
+    End Sub
+
+    Private Sub btn_SetGPIOHigh_Click(sender As Object, e As EventArgs) Handles btn_SetGPIOHigh.Click
+        Dim pinNum As UInteger
+        Try
+            pinNum = Convert.ToUInt32(GPIO_Num.Text)
+            If pinNum > 63 Then
+                Throw New ArgumentException("Pin number out of range. Max value 63")
+            End If
+        Catch ex As Exception
+            MsgBox("Invalid Pin! " + ex.Message)
+            Exit Sub
+        End Try
+
+        m_TopGUI.FX3.SetPin(New FX3PinObject(pinNum), 1)
+    End Sub
+
+    Private Sub btn_SetGPIOLow_Click(sender As Object, e As EventArgs) Handles btn_SetGPIOLow.Click
+        Dim pinNum As UInteger
+        Try
+            pinNum = Convert.ToUInt32(GPIO_Num.Text)
+            If pinNum > 63 Then
+                Throw New ArgumentException("Pin number out of range. Max value 63")
+            End If
+        Catch ex As Exception
+            MsgBox("Invalid Pin! " + ex.Message)
+            Exit Sub
+        End Try
+
+        m_TopGUI.FX3.SetPin(New FX3PinObject(pinNum), 0)
+
+    End Sub
 End Class
