@@ -372,4 +372,95 @@ Public Class FrequencyPlotGUI
         End If
     End Sub
 
+    Private Sub btn_apply3db_Click(sender As Object, e As EventArgs) Handles btn_apply3db.Click
+
+        Dim seriesCnt As Integer = dataPlot.Series.Count
+        Dim seriesIndex As Integer
+        Dim i As Integer
+        Dim val As Double
+        Dim temp As Series
+
+        seriesIndex = selectedRegList.Count
+        i = 0
+        For Each reg In selectedRegList
+            'get -3dB values
+            val = Calculate3dBValue(i)
+            'if error then exit
+            If val = Double.PositiveInfinity Then Exit Sub
+            'apply new line
+            If seriesIndex >= dataPlot.Series.Count Then
+                temp = New Series
+                temp.ChartType = SeriesChartType.Line
+                temp.BorderWidth = 2
+                temp.Name = reg.Label + " -3dB point"
+                dataPlot.Series.Add(temp)
+            End If
+            'place values into the series
+            dataPlot.Series(seriesIndex).Points.Clear()
+            For j As Integer = 0 To m_FFTStream.Result(i).Count() - 1
+                dataPlot.Series(seriesIndex).Points.AddXY(m_FFTStream.FrequencyRange(j), val)
+            Next
+            i += 1
+            seriesIndex += 1
+        Next
+
+    End Sub
+
+    Private Function Calculate3dBValue(index As Integer) As Double
+        Dim passBandVal As Double
+        Dim minIndex, maxIndex As Integer
+        Dim minFreq, maxFreq As Double
+
+        Try
+            minFreq = Convert.ToDouble(input_3db_min.Text)
+            maxFreq = Convert.ToDouble(input_3db_max.Text)
+            If minFreq > maxFreq Then
+                Throw New ArgumentException("ERROR: Min freq must be less than max freq")
+            End If
+        Catch ex As Exception
+            MsgBox("ERROR: Invalid pass band entered. " + ex.Message)
+            Return Double.PositiveInfinity
+        End Try
+
+        'get the index corresponding to those frequencies
+        Dim i As Integer = 0
+        Dim freq As Double = 0
+        Try
+            While freq < minFreq
+                freq = m_FFTStream.FrequencyRange(i)
+                i += 1
+            End While
+            minIndex = i - 1
+            While freq < maxFreq
+                freq = m_FFTStream.FrequencyRange(i)
+                i += 1
+            End While
+            maxIndex = i
+        Catch ex As Exception
+            MsgBox("ERROR: Invalid pass band entered. " + ex.Message)
+            Return Double.PositiveInfinity
+        End Try
+
+        'check distance
+        If (maxIndex - minIndex) < 0 Then
+            MsgBox("ERROR: Must average over 1 or more samples")
+            Return Double.PositiveInfinity
+        End If
+
+        'accumulate pass band value
+        passBandVal = 0
+        For fft_index As Integer = minIndex To maxIndex
+            passBandVal += m_FFTStream.Result(index)(fft_index)
+        Next
+
+        'average
+        passBandVal = passBandVal / (maxIndex - minIndex + 1)
+
+        'multiply by -3dB point ratio
+        passBandVal = passBandVal * 0.708
+
+        Return passBandVal
+
+    End Function
+
 End Class

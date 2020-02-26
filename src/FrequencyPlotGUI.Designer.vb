@@ -21,9 +21,9 @@ Partial Class FrequencyPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.RegisterList = New System.Windows.Forms.ListView()
         Me.regSelect = New System.Windows.Forms.ComboBox()
@@ -44,21 +44,26 @@ Partial Class FrequencyPlotGUI
         Me.btn_Clear = New System.Windows.Forms.Button()
         Me.btn_saveplot = New System.Windows.Forms.Button()
         Me.NFFT = New System.Windows.Forms.ComboBox()
+        Me.btn_apply3db = New System.Windows.Forms.Button()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.input_3db_min = New System.Windows.Forms.TextBox()
+        Me.input_3db_max = New System.Windows.Forms.TextBox()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dataPlot
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend1)
+        ChartArea2.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend2)
         Me.dataPlot.Location = New System.Drawing.Point(237, 9)
         Me.dataPlot.Name = "dataPlot"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.dataPlot.Series.Add(Series1)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.dataPlot.Series.Add(Series2)
         Me.dataPlot.Size = New System.Drawing.Size(587, 532)
         Me.dataPlot.TabIndex = 0
         Me.dataPlot.Text = "dataPlot"
@@ -233,11 +238,59 @@ Partial Class FrequencyPlotGUI
         Me.NFFT.Size = New System.Drawing.Size(118, 21)
         Me.NFFT.TabIndex = 21
         '
+        'btn_apply3db
+        '
+        Me.btn_apply3db.Location = New System.Drawing.Point(10, 425)
+        Me.btn_apply3db.Name = "btn_apply3db"
+        Me.btn_apply3db.Size = New System.Drawing.Size(68, 41)
+        Me.btn_apply3db.TabIndex = 22
+        Me.btn_apply3db.Text = "Apply -3dB Lines"
+        Me.btn_apply3db.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(7, 475)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(127, 13)
+        Me.Label5.TabIndex = 23
+        Me.Label5.Text = "Pass Band Min Freq (Hz):"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(7, 501)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(130, 13)
+        Me.Label6.TabIndex = 24
+        Me.Label6.Text = "Pass Band Max Freq (Hz):"
+        '
+        'input_3db_min
+        '
+        Me.input_3db_min.Location = New System.Drawing.Point(140, 472)
+        Me.input_3db_min.Name = "input_3db_min"
+        Me.input_3db_min.Size = New System.Drawing.Size(91, 20)
+        Me.input_3db_min.TabIndex = 25
+        Me.input_3db_min.Text = "10"
+        '
+        'input_3db_max
+        '
+        Me.input_3db_max.Location = New System.Drawing.Point(140, 498)
+        Me.input_3db_max.Name = "input_3db_max"
+        Me.input_3db_max.Size = New System.Drawing.Size(91, 20)
+        Me.input_3db_max.TabIndex = 26
+        Me.input_3db_max.Text = "100"
+        '
         'FrequencyPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(836, 553)
+        Me.Controls.Add(Me.input_3db_max)
+        Me.Controls.Add(Me.input_3db_min)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.btn_apply3db)
         Me.Controls.Add(Me.NFFT)
         Me.Controls.Add(Me.btn_saveplot)
         Me.Controls.Add(Me.btn_Clear)
@@ -286,4 +339,9 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents btn_Clear As Button
     Friend WithEvents btn_saveplot As Button
     Friend WithEvents NFFT As ComboBox
+    Friend WithEvents btn_apply3db As Button
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents input_3db_min As TextBox
+    Friend WithEvents input_3db_max As TextBox
 End Class
