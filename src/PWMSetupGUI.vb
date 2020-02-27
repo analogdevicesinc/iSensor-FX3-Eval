@@ -59,9 +59,7 @@ Public Class PWMSetupGUI
                 startBtn.Text = "Start Pin PWM"
                 StartPWM = True
                 Freq.ReadOnly = False
-                Freq.Text = "2000"
                 DutyCycle.ReadOnly = False
-                DutyCycle.Text = "0.5"
             End If
         Catch ex As Exception
             Exit Sub
