@@ -463,4 +463,23 @@ Public Class FrequencyPlotGUI
 
     End Function
 
+    Private Sub logYaxis_CheckedChanged(sender As Object, e As EventArgs) Handles logYaxis.CheckedChanged
+
+        'check if log axis needed
+        dataPlot.ChartAreas(0).AxisX.IsLogarithmic = logXaxis.Checked
+        dataPlot.ChartAreas(0).AxisY.IsLogarithmic = logYaxis.Checked
+        'recalculate scale based on newest values
+        dataPlot.ChartAreas(0).RecalculateAxesScale()
+
+    End Sub
+
+    Private Sub logXaxis_CheckedChanged(sender As Object, e As EventArgs) Handles logXaxis.CheckedChanged
+
+        'check if log axis needed
+        dataPlot.ChartAreas(0).AxisX.IsLogarithmic = logXaxis.Checked
+        dataPlot.ChartAreas(0).AxisY.IsLogarithmic = logYaxis.Checked
+        'recalculate scale based on newest values
+        dataPlot.ChartAreas(0).RecalculateAxesScale()
+
+    End Sub
 End Class
