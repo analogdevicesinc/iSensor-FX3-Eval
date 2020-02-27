@@ -1,8 +1,8 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FrequencyPlotGUI
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -19,11 +19,11 @@ Partial Class FrequencyPlotGUI
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.RegisterList = New System.Windows.Forms.ListView()
         Me.regSelect = New System.Windows.Forms.ComboBox()
@@ -54,17 +54,17 @@ Partial Class FrequencyPlotGUI
         '
         'dataPlot
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend2)
+        ChartArea1.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend1)
         Me.dataPlot.Location = New System.Drawing.Point(237, 9)
         Me.dataPlot.Name = "dataPlot"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.dataPlot.Series.Add(Series2)
-        Me.dataPlot.Size = New System.Drawing.Size(587, 532)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.dataPlot.Series.Add(Series1)
+        Me.dataPlot.Size = New System.Drawing.Size(587, 511)
         Me.dataPlot.TabIndex = 0
         Me.dataPlot.Text = "dataPlot"
         '
@@ -250,7 +250,7 @@ Partial Class FrequencyPlotGUI
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(7, 475)
+        Me.Label5.Location = New System.Drawing.Point(7, 477)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(127, 13)
         Me.Label5.TabIndex = 23
@@ -259,7 +259,7 @@ Partial Class FrequencyPlotGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 501)
+        Me.Label6.Location = New System.Drawing.Point(7, 503)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(130, 13)
         Me.Label6.TabIndex = 24
@@ -267,7 +267,7 @@ Partial Class FrequencyPlotGUI
         '
         'input_3db_min
         '
-        Me.input_3db_min.Location = New System.Drawing.Point(140, 472)
+        Me.input_3db_min.Location = New System.Drawing.Point(140, 474)
         Me.input_3db_min.Name = "input_3db_min"
         Me.input_3db_min.Size = New System.Drawing.Size(91, 20)
         Me.input_3db_min.TabIndex = 25
@@ -275,7 +275,7 @@ Partial Class FrequencyPlotGUI
         '
         'input_3db_max
         '
-        Me.input_3db_max.Location = New System.Drawing.Point(140, 498)
+        Me.input_3db_max.Location = New System.Drawing.Point(140, 500)
         Me.input_3db_max.Name = "input_3db_max"
         Me.input_3db_max.Size = New System.Drawing.Size(91, 20)
         Me.input_3db_max.TabIndex = 26
@@ -285,7 +285,7 @@ Partial Class FrequencyPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(836, 553)
+        Me.ClientSize = New System.Drawing.Size(834, 531)
         Me.Controls.Add(Me.input_3db_max)
         Me.Controls.Add(Me.input_3db_min)
         Me.Controls.Add(Me.Label6)
@@ -311,6 +311,7 @@ Partial Class FrequencyPlotGUI
         Me.Controls.Add(Me.regSelect)
         Me.Controls.Add(Me.RegisterList)
         Me.Controls.Add(Me.dataPlot)
+        Me.MinimumSize = New System.Drawing.Size(850, 570)
         Me.Name = "FrequencyPlotGUI"
         Me.Text = "Frequency Plotting"
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).EndInit()
