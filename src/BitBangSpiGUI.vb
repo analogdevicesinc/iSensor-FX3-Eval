@@ -12,7 +12,7 @@ Public Class BitBangSpiGUI
         m_TopGUI.FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
         csLag.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks.ToString()
         csLead.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks.ToString()
-        stallTicks.Text = m_TopGUI.FX3.BitBangSpiConfig.StallTicks.ToString()
+        stallTicks.Text = 10.0
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
