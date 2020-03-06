@@ -42,10 +42,11 @@ Partial Class RegisterGUI
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.measureDr = New System.Windows.Forms.CheckBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.CurrentValue = New System.Windows.Forms.TextBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.btn_DumpRegmap = New System.Windows.Forms.Button()
         Me.drActive = New System.Windows.Forms.CheckBox()
-        Me.CurrentValue = New System.Windows.Forms.TextBox()
+        Me.btn_writeRegMap = New System.Windows.Forms.Button()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -241,6 +242,17 @@ Partial Class RegisterGUI
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Selected Register"
         '
+        'CurrentValue
+        '
+        Me.CurrentValue.BackColor = System.Drawing.SystemColors.Window
+        Me.CurrentValue.Location = New System.Drawing.Point(13, 37)
+        Me.CurrentValue.Name = "CurrentValue"
+        Me.CurrentValue.ReadOnly = True
+        Me.CurrentValue.Size = New System.Drawing.Size(72, 20)
+        Me.CurrentValue.TabIndex = 16
+        Me.CurrentValue.Text = "Not Read"
+        Me.CurrentValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'GroupBox5
         '
         Me.GroupBox5.Controls.Add(Me.ButtonRead)
@@ -255,7 +267,7 @@ Partial Class RegisterGUI
         '
         'btn_DumpRegmap
         '
-        Me.btn_DumpRegmap.Location = New System.Drawing.Point(464, 482)
+        Me.btn_DumpRegmap.Location = New System.Drawing.Point(410, 482)
         Me.btn_DumpRegmap.Name = "btn_DumpRegmap"
         Me.btn_DumpRegmap.Size = New System.Drawing.Size(83, 47)
         Me.btn_DumpRegmap.TabIndex = 30
@@ -272,22 +284,21 @@ Partial Class RegisterGUI
         Me.drActive.Text = "DR Sync Register Reads"
         Me.drActive.UseVisualStyleBackColor = True
         '
-        'CurrentValue
+        'btn_writeRegMap
         '
-        Me.CurrentValue.BackColor = System.Drawing.SystemColors.Window
-        Me.CurrentValue.Location = New System.Drawing.Point(13, 37)
-        Me.CurrentValue.Name = "CurrentValue"
-        Me.CurrentValue.ReadOnly = True
-        Me.CurrentValue.Size = New System.Drawing.Size(72, 20)
-        Me.CurrentValue.TabIndex = 16
-        Me.CurrentValue.Text = "Not Read"
-        Me.CurrentValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.btn_writeRegMap.Location = New System.Drawing.Point(518, 482)
+        Me.btn_writeRegMap.Name = "btn_writeRegMap"
+        Me.btn_writeRegMap.Size = New System.Drawing.Size(83, 47)
+        Me.btn_writeRegMap.TabIndex = 32
+        Me.btn_writeRegMap.Text = "Write RegMap"
+        Me.btn_writeRegMap.UseVisualStyleBackColor = True
         '
         'RegisterGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(624, 538)
+        Me.Controls.Add(Me.btn_writeRegMap)
         Me.Controls.Add(Me.drActive)
         Me.Controls.Add(Me.btn_DumpRegmap)
         Me.Controls.Add(Me.GroupBox5)
@@ -336,4 +347,5 @@ Partial Class RegisterGUI
     Friend WithEvents btn_DumpRegmap As Button
     Friend WithEvents drActive As CheckBox
     Friend WithEvents CurrentValue As TextBox
+    Friend WithEvents btn_writeRegMap As Button
 End Class

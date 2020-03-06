@@ -303,6 +303,51 @@ Public Class RegisterGUI
     Private Sub ResizeHandler() Handles Me.Resize
         regView.Height = Me.Height - 90
         btn_DumpRegmap.Top = Me.Height - 95
+        btn_writeRegMap.Top = Me.Height - 95
     End Sub
 
+    Private Sub btn_writeRegMap_Click(sender As Object, e As EventArgs) Handles btn_writeRegMap.Click
+        Dim fileBrowser As New OpenFileDialog
+        Dim fileBrowseResult As DialogResult
+        Dim loadPath As String
+        Dim writeRegs As New List(Of RegClass)
+        Dim writeVals As New List(Of UInteger)
+        fileBrowser.Title = "Please Select the Register Dump File"
+        fileBrowser.Filter = "Register Dump Files|*.csv"
+        fileBrowseResult = fileBrowser.ShowDialog()
+        If fileBrowseResult <> DialogResult.OK Then
+            Exit Sub
+        End If
+        loadPath = fileBrowser.FileName
+
+        Dim csvReader As New FileIO.TextFieldParser(loadPath)
+        csvReader.TextFieldType = FileIO.FieldType.Delimited
+        csvReader.SetDelimiters(",")
+
+        Dim regLine As String()
+        Dim reg As RegClass
+        'clear header
+        csvReader.ReadLine()
+        While Not csvReader.EndOfData
+            Try
+                regLine = csvReader.ReadFields()
+                'get register object
+                reg = m_TopGUI.RegMap(regLine(0))
+                'if readable then add value
+                If reg.IsWriteable Then
+                    writeRegs.Add(reg)
+                    writeVals.Add(Convert.ToUInt32(regLine(3)))
+                End If
+            Catch ex As Exception
+                MsgBox("ERROR Parsing CSV file. " + ex.Message())
+                csvReader.Close()
+                Exit Sub
+            End Try
+        End While
+        csvReader.Close()
+
+        'apply data to DUT
+        m_TopGUI.Dut.WriteUnsigned(writeRegs, writeVals)
+
+    End Sub
 End Class
