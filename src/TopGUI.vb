@@ -217,7 +217,7 @@ Public Class TopGUI
 
         Select Case btn_Connect.Text
             Case "Connect to FX3"
-                btn_Connect.Text = "Reboot FX3"
+                btn_Connect.Text = "Connecting to FX3..."
                 ConnectWork()
             Case "Reboot FX3"
                 RebootFX3()
@@ -574,6 +574,7 @@ Public Class TopGUI
             m_disconnectTimer.Enabled = False
             m_FX3Connected = True
         Else
+            btn_Connect.Text = "Connect to FX3"
             Exit Sub
         End If
 
@@ -595,6 +596,7 @@ Public Class TopGUI
 
         label_FX3Status.Text = "Connected to " + [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType) + " (SN: " + FX3.ActiveFX3SerialNumber + ")"
         label_FX3Status.BackColor = Color.Chartreuse
+        btn_Connect.Text = "Reboot FX3"
 
         'Select register access button initially
         btn_RegAccess.Select()
