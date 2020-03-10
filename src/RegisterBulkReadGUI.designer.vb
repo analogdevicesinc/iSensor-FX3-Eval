@@ -47,6 +47,7 @@ Partial Class RegisterBulkReadGUI
         Me.regStreamingList = New System.Windows.Forms.Label()
         Me.btn_saveregs = New System.Windows.Forms.Button()
         Me.btn_loadregs = New System.Windows.Forms.Button()
+        Me.ValidateDR = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -80,13 +81,13 @@ Partial Class RegisterBulkReadGUI
         '
         Me.selectedRegview.Location = New System.Drawing.Point(198, 32)
         Me.selectedRegview.Name = "selectedRegview"
-        Me.selectedRegview.Size = New System.Drawing.Size(235, 433)
+        Me.selectedRegview.Size = New System.Drawing.Size(235, 458)
         Me.selectedRegview.TabIndex = 99
         Me.selectedRegview.UseCompatibleStateImageBehavior = False
         '
         'MainButton
         '
-        Me.MainButton.Location = New System.Drawing.Point(10, 399)
+        Me.MainButton.Location = New System.Drawing.Point(11, 424)
         Me.MainButton.Name = "MainButton"
         Me.MainButton.Size = New System.Drawing.Size(77, 40)
         Me.MainButton.TabIndex = 12
@@ -112,7 +113,7 @@ Partial Class RegisterBulkReadGUI
         '
         'StreamingAVARCancelButton
         '
-        Me.StreamingAVARCancelButton.Location = New System.Drawing.Point(115, 399)
+        Me.StreamingAVARCancelButton.Location = New System.Drawing.Point(116, 424)
         Me.StreamingAVARCancelButton.Name = "StreamingAVARCancelButton"
         Me.StreamingAVARCancelButton.Size = New System.Drawing.Size(77, 40)
         Me.StreamingAVARCancelButton.TabIndex = 13
@@ -121,7 +122,7 @@ Partial Class RegisterBulkReadGUI
         '
         'NumberDRToCapture
         '
-        Me.NumberDRToCapture.Location = New System.Drawing.Point(10, 289)
+        Me.NumberDRToCapture.Location = New System.Drawing.Point(11, 314)
         Me.NumberDRToCapture.Name = "NumberDRToCapture"
         Me.NumberDRToCapture.Size = New System.Drawing.Size(111, 20)
         Me.NumberDRToCapture.TabIndex = 9
@@ -130,7 +131,7 @@ Partial Class RegisterBulkReadGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(8, 273)
+        Me.Label3.Location = New System.Drawing.Point(9, 298)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(116, 13)
         Me.Label3.TabIndex = 15
@@ -176,7 +177,7 @@ Partial Class RegisterBulkReadGUI
         Me.statusLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.statusLabel.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.statusLabel.Location = New System.Drawing.Point(51, 445)
+        Me.statusLabel.Location = New System.Drawing.Point(52, 470)
         Me.statusLabel.Name = "statusLabel"
         Me.statusLabel.Size = New System.Drawing.Size(139, 20)
         Me.statusLabel.TabIndex = 28
@@ -186,7 +187,7 @@ Partial Class RegisterBulkReadGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 449)
+        Me.Label6.Location = New System.Drawing.Point(8, 474)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(43, 13)
         Me.Label6.TabIndex = 27
@@ -195,7 +196,7 @@ Partial Class RegisterBulkReadGUI
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(6, 473)
+        Me.Label7.Location = New System.Drawing.Point(7, 498)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(91, 13)
         Me.Label7.TabIndex = 30
@@ -203,7 +204,7 @@ Partial Class RegisterBulkReadGUI
         '
         'CaptureProgressStreaming
         '
-        Me.CaptureProgressStreaming.Location = New System.Drawing.Point(105, 471)
+        Me.CaptureProgressStreaming.Location = New System.Drawing.Point(106, 496)
         Me.CaptureProgressStreaming.Name = "CaptureProgressStreaming"
         Me.CaptureProgressStreaming.Size = New System.Drawing.Size(326, 18)
         Me.CaptureProgressStreaming.TabIndex = 29
@@ -220,7 +221,7 @@ Partial Class RegisterBulkReadGUI
         '
         'linesPerFile
         '
-        Me.linesPerFile.Location = New System.Drawing.Point(11, 373)
+        Me.linesPerFile.Location = New System.Drawing.Point(12, 398)
         Me.linesPerFile.Name = "linesPerFile"
         Me.linesPerFile.Size = New System.Drawing.Size(111, 20)
         Me.linesPerFile.TabIndex = 11
@@ -229,7 +230,7 @@ Partial Class RegisterBulkReadGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(8, 357)
+        Me.Label2.Location = New System.Drawing.Point(9, 382)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(83, 13)
         Me.Label2.TabIndex = 33
@@ -238,7 +239,7 @@ Partial Class RegisterBulkReadGUI
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(7, 315)
+        Me.Label8.Location = New System.Drawing.Point(8, 340)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(107, 13)
         Me.Label8.TabIndex = 34
@@ -246,7 +247,7 @@ Partial Class RegisterBulkReadGUI
         '
         'SamplesPerWrite
         '
-        Me.SamplesPerWrite.Location = New System.Drawing.Point(10, 331)
+        Me.SamplesPerWrite.Location = New System.Drawing.Point(11, 356)
         Me.SamplesPerWrite.Name = "SamplesPerWrite"
         Me.SamplesPerWrite.Size = New System.Drawing.Size(111, 20)
         Me.SamplesPerWrite.TabIndex = 10
@@ -279,11 +280,23 @@ Partial Class RegisterBulkReadGUI
         Me.btn_loadregs.Text = "Load Register List"
         Me.btn_loadregs.UseVisualStyleBackColor = True
         '
+        'ValidateDR
+        '
+        Me.ValidateDR.Checked = True
+        Me.ValidateDR.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.ValidateDR.Location = New System.Drawing.Point(11, 272)
+        Me.ValidateDR.Name = "ValidateDR"
+        Me.ValidateDR.Size = New System.Drawing.Size(140, 21)
+        Me.ValidateDR.TabIndex = 101
+        Me.ValidateDR.Text = "Validate DR Period"
+        Me.ValidateDR.UseVisualStyleBackColor = True
+        '
         'RegisterBulkReadGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(444, 501)
+        Me.ClientSize = New System.Drawing.Size(444, 522)
+        Me.Controls.Add(Me.ValidateDR)
         Me.Controls.Add(Me.btn_loadregs)
         Me.Controls.Add(Me.btn_saveregs)
         Me.Controls.Add(Me.regStreamingList)
@@ -310,8 +323,6 @@ Partial Class RegisterBulkReadGUI
         Me.Controls.Add(Me.RemoveRegisterButton)
         Me.Controls.Add(Me.AddRegisterButton)
         Me.Controls.Add(Me.Label1)
-        Me.MaximumSize = New System.Drawing.Size(460, 540)
-        Me.MinimumSize = New System.Drawing.Size(460, 540)
         Me.Name = "RegisterBulkReadGUI"
         Me.Text = "Register Logging"
         Me.ResumeLayout(False)
@@ -344,4 +355,5 @@ Partial Class RegisterBulkReadGUI
     Friend WithEvents regStreamingList As Label
     Friend WithEvents btn_saveregs As Button
     Friend WithEvents btn_loadregs As Button
+    Friend WithEvents ValidateDR As CheckBox
 End Class

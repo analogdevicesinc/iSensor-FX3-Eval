@@ -45,6 +45,8 @@ Public Class RegisterBulkReadGUI
 
         MeasureDR.Enabled = m_TopGUI.FX3.DrActive
         DrActiveBox.Checked = m_TopGUI.FX3.DrActive
+        ValidateDR.Checked = m_TopGUI.FX3.DrActive
+        ValidateDR.Enabled = m_TopGUI.FX3.DrActive
 
         selectedRegview.View = View.Details
         selectedRegview.Columns.Add("Register", selectedRegview.Width - 1, HorizontalAlignment.Left)
@@ -163,7 +165,7 @@ Public Class RegisterBulkReadGUI
         End If
 
         'Check whether the measured DR is valid
-        If m_TopGUI.FX3.DrActive Then
+        If m_TopGUI.FX3.DrActive And ValidateDR.Checked Then
             'measure data ready frequency
             MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(pin, 1, 10000, 2)
             DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
@@ -180,28 +182,28 @@ Public Class RegisterBulkReadGUI
             regList.Add(m_TopGUI.RegMap(item.Text))
         Next
 
-            'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
-            If m_TopGUI.FX3.DrActive Then
+        'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
+        If m_TopGUI.FX3.DrActive And ValidateDR.Checked Then
             Dim drPeriod As Double = 1 / MeasuredFreq
             Dim num16bitregs As Integer = 0
-                For Each reg In regList
-                    If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
-                        num16bitregs += 1
-                    Else
-                        num16bitregs += 2
-                    End If
-                Next
-                Dim calcPeriod As Double = ((m_TopGUI.FX3.StallTime / 1000000) + 17 / m_TopGUI.FX3.SclkFrequency) * num16bitregs
-                'remove last stall time
-                calcPeriod = calcPeriod - (m_TopGUI.FX3.StallTime / 1000000)
+            For Each reg In regList
+                If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
+                    num16bitregs += 1
+                Else
+                    num16bitregs += 2
+                End If
+            Next
+            Dim calcPeriod As Double = ((m_TopGUI.FX3.StallTime / 1000000) + 17 / m_TopGUI.FX3.SclkFrequency) * num16bitregs
+            'remove last stall time
+            calcPeriod = calcPeriod - (m_TopGUI.FX3.StallTime / 1000000)
 
-                If calcPeriod > drPeriod Then
-                    Dim result1 As DialogResult = MessageBox.Show("Register capture time exceeds data ready period. Would you like to continue?", "Data will take too long to read!", MessageBoxButtons.YesNo)
-                    If result1 = DialogResult.No Then
-                        Exit Sub
-                    End If
+            If calcPeriod > drPeriod Then
+                Dim result1 As DialogResult = MessageBox.Show("Register capture time exceeds data ready period. Would you like to continue?", "Data will take too long to read!", MessageBoxButtons.YesNo)
+                If result1 = DialogResult.No Then
+                    Exit Sub
                 End If
             End If
+        End If
 
         'Get data output save location
         savePath = setSaveLocation(m_TopGUI.lastFilePath)
@@ -343,6 +345,7 @@ Public Class RegisterBulkReadGUI
     Private Sub DrActiveBox_CheckedChanged(sender As Object, e As EventArgs) Handles DrActiveBox.CheckedChanged
         m_TopGUI.FX3.DrActive = DrActiveBox.Checked
         MeasureDR.Enabled = m_TopGUI.FX3.DrActive
+        ValidateDR.Enabled = m_TopGUI.FX3.DrActive
     End Sub
 
     Private Sub btn_loadregs_Click(sender As Object, e As EventArgs) Handles btn_loadregs.Click
