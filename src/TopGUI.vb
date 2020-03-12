@@ -124,6 +124,7 @@ Public Class TopGUI
         'Set up autospi
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
+        m_AutoSpi.IgnoreCRCExceptions = False
 
         'Set the API version and build date
         label_apiVersion.Text = "ADI iSensor FX3 Example GUI v" + System.Windows.Forms.Application.ProductVersion
