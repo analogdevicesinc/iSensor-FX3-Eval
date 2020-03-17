@@ -15,6 +15,7 @@ Public Class RegisterGUI
     Private lastPageIndex As Integer
     Private pageReadTimer As Timer
     Private drReadTimer As Timer
+    Private drEnableTimer As Timer
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
     Private originalDRSetting As Boolean
@@ -56,7 +57,7 @@ Public Class RegisterGUI
         pageReadTimer.Enabled = False
         AddHandler pageReadTimer.Elapsed, New ElapsedEventHandler(AddressOf PageReadCallback)
 
-        drReadTimer = New Timer(500)
+        drReadTimer = New Timer(750)
         drReadTimer.Enabled = False
         AddHandler drReadTimer.Elapsed, New ElapsedEventHandler(AddressOf DrReadCallBack)
 
@@ -184,13 +185,26 @@ Public Class RegisterGUI
         Me.BeginInvoke(New MethodInvoker(AddressOf ReadDrFreq))
     End Sub
 
+    Private Sub EnableDrTimer()
+        drEnableTimer.Dispose()
+        drReadTimer.Enabled = measureDr.Checked
+    End Sub
+
     Private Sub ReadDrFreq()
-        Dim dr As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 4000, 2)
+        Dim dr As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 2500, 2)
         DrFreq.Text = FormatNumber(dr).ToString() + "Hz"
         If dr = Double.PositiveInfinity Then
             measureDr.Checked = False
         End If
-        drReadTimer.Enabled = measureDr.Checked
+        'if data ready is less than 10Hz want to shove some delays in here to prevent form from locking up a bunch
+        If dr < 10 Then
+            're-enable via timer, 5x the sample period delay
+            drEnableTimer = New Timer(5000 / dr)
+            AddHandler drEnableTimer.Elapsed, New ElapsedEventHandler(AddressOf EnableDrTimer)
+            drEnableTimer.Enabled = True
+        Else
+            drReadTimer.Enabled = measureDr.Checked
+        End If
     End Sub
 
     Private Sub closingTimerKill() Handles Me.FormClosing
