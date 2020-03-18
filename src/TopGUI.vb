@@ -124,7 +124,7 @@ Public Class TopGUI
         'Set up autospi
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
-        m_AutoSpi.IgnoreCRCExceptions = False
+        'm_AutoSpi.IgnoreCRCExceptions = False
 
         'Set the API version and build date
         label_apiVersion.Text = "ADI iSensor FX3 Example GUI v" + System.Windows.Forms.Application.ProductVersion
@@ -415,6 +415,12 @@ Public Class TopGUI
     End Sub
 
     Private Sub LogError(e As Exception)
+
+        If TypeOf (e) Is SpiException Then
+            MsgBox("ERROR: Automotive SPI protocol exception has occurred - is the DUT connected properly? " + e.Message)
+            Exit Sub
+        End If
+
         Static firstException As Boolean = True
         Dim exStr As String
         Dim currentTime As Date = Date.Now()
