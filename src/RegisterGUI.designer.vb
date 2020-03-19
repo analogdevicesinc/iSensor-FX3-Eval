@@ -44,6 +44,8 @@ Partial Class RegisterGUI
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         Me.CurrentValue = New System.Windows.Forms.TextBox()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.numDecimals = New System.Windows.Forms.TextBox()
+        Me.numDecimals_label = New System.Windows.Forms.Label()
         Me.btn_DumpRegmap = New System.Windows.Forms.Button()
         Me.drActive = New System.Windows.Forms.CheckBox()
         Me.btn_writeRegMap = New System.Windows.Forms.Button()
@@ -55,7 +57,7 @@ Partial Class RegisterGUI
         '
         'ButtonWrite
         '
-        Me.ButtonWrite.Location = New System.Drawing.Point(100, 80)
+        Me.ButtonWrite.Location = New System.Drawing.Point(84, 87)
         Me.ButtonWrite.Name = "ButtonWrite"
         Me.ButtonWrite.Size = New System.Drawing.Size(61, 21)
         Me.ButtonWrite.TabIndex = 7
@@ -123,7 +125,7 @@ Partial Class RegisterGUI
         '
         'newValue
         '
-        Me.newValue.Location = New System.Drawing.Point(13, 80)
+        Me.newValue.Location = New System.Drawing.Point(6, 87)
         Me.newValue.Name = "newValue"
         Me.newValue.Size = New System.Drawing.Size(72, 20)
         Me.newValue.TabIndex = 10
@@ -133,7 +135,7 @@ Partial Class RegisterGUI
         '
         Me.writeLabel.AutoSize = True
         Me.writeLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.writeLabel.Location = New System.Drawing.Point(10, 64)
+        Me.writeLabel.Location = New System.Drawing.Point(3, 68)
         Me.writeLabel.Name = "writeLabel"
         Me.writeLabel.Size = New System.Drawing.Size(94, 13)
         Me.writeLabel.TabIndex = 11
@@ -143,7 +145,7 @@ Partial Class RegisterGUI
         '
         Me.readLabel.AutoSize = True
         Me.readLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.readLabel.Location = New System.Drawing.Point(10, 16)
+        Me.readLabel.Location = New System.Drawing.Point(6, 16)
         Me.readLabel.Name = "readLabel"
         Me.readLabel.Size = New System.Drawing.Size(110, 13)
         Me.readLabel.TabIndex = 15
@@ -161,7 +163,7 @@ Partial Class RegisterGUI
         'scaledData
         '
         Me.scaledData.AutoSize = True
-        Me.scaledData.Location = New System.Drawing.Point(9, 51)
+        Me.scaledData.Location = New System.Drawing.Point(6, 42)
         Me.scaledData.Name = "scaledData"
         Me.scaledData.Size = New System.Drawing.Size(79, 17)
         Me.scaledData.TabIndex = 20
@@ -191,7 +193,7 @@ Partial Class RegisterGUI
         'DrFreq
         '
         Me.DrFreq.AutoSize = True
-        Me.DrFreq.Location = New System.Drawing.Point(6, 39)
+        Me.DrFreq.Location = New System.Drawing.Point(3, 39)
         Me.DrFreq.Name = "DrFreq"
         Me.DrFreq.Size = New System.Drawing.Size(112, 13)
         Me.DrFreq.TabIndex = 25
@@ -200,7 +202,7 @@ Partial Class RegisterGUI
         'contRead
         '
         Me.contRead.AutoSize = True
-        Me.contRead.Location = New System.Drawing.Point(9, 30)
+        Me.contRead.Location = New System.Drawing.Point(6, 19)
         Me.contRead.Name = "contRead"
         Me.contRead.Size = New System.Drawing.Size(113, 17)
         Me.contRead.TabIndex = 26
@@ -221,7 +223,7 @@ Partial Class RegisterGUI
         'measureDr
         '
         Me.measureDr.AutoSize = True
-        Me.measureDr.Location = New System.Drawing.Point(9, 19)
+        Me.measureDr.Location = New System.Drawing.Point(6, 19)
         Me.measureDr.Name = "measureDr"
         Me.measureDr.Size = New System.Drawing.Size(127, 17)
         Me.measureDr.TabIndex = 27
@@ -245,7 +247,7 @@ Partial Class RegisterGUI
         'CurrentValue
         '
         Me.CurrentValue.BackColor = System.Drawing.SystemColors.Window
-        Me.CurrentValue.Location = New System.Drawing.Point(13, 37)
+        Me.CurrentValue.Location = New System.Drawing.Point(6, 36)
         Me.CurrentValue.Name = "CurrentValue"
         Me.CurrentValue.ReadOnly = True
         Me.CurrentValue.Size = New System.Drawing.Size(72, 20)
@@ -255,6 +257,8 @@ Partial Class RegisterGUI
         '
         'GroupBox5
         '
+        Me.GroupBox5.Controls.Add(Me.numDecimals)
+        Me.GroupBox5.Controls.Add(Me.numDecimals_label)
         Me.GroupBox5.Controls.Add(Me.ButtonRead)
         Me.GroupBox5.Controls.Add(Me.contRead)
         Me.GroupBox5.Controls.Add(Me.scaledData)
@@ -264,6 +268,24 @@ Partial Class RegisterGUI
         Me.GroupBox5.TabIndex = 29
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Control"
+        '
+        'numDecimals
+        '
+        Me.numDecimals.Location = New System.Drawing.Point(75, 62)
+        Me.numDecimals.Name = "numDecimals"
+        Me.numDecimals.Size = New System.Drawing.Size(39, 20)
+        Me.numDecimals.TabIndex = 28
+        Me.numDecimals.Text = "3"
+        Me.numDecimals.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'numDecimals_label
+        '
+        Me.numDecimals_label.AutoSize = True
+        Me.numDecimals_label.Location = New System.Drawing.Point(6, 65)
+        Me.numDecimals_label.Name = "numDecimals_label"
+        Me.numDecimals_label.Size = New System.Drawing.Size(63, 13)
+        Me.numDecimals_label.TabIndex = 27
+        Me.numDecimals_label.Text = "# Decimals:"
         '
         'btn_DumpRegmap
         '
@@ -277,7 +299,7 @@ Partial Class RegisterGUI
         'drActive
         '
         Me.drActive.AutoSize = True
-        Me.drActive.Location = New System.Drawing.Point(410, 307)
+        Me.drActive.Location = New System.Drawing.Point(407, 307)
         Me.drActive.Name = "drActive"
         Me.drActive.Size = New System.Drawing.Size(145, 17)
         Me.drActive.TabIndex = 31
@@ -348,4 +370,6 @@ Partial Class RegisterGUI
     Friend WithEvents drActive As CheckBox
     Friend WithEvents CurrentValue As TextBox
     Friend WithEvents btn_writeRegMap As Button
+    Friend WithEvents numDecimals As TextBox
+    Friend WithEvents numDecimals_label As Label
 End Class

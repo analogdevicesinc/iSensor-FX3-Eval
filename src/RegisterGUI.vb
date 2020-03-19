@@ -19,7 +19,6 @@ Public Class RegisterGUI
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
     Private originalDRSetting As Boolean
-
     Private m_pageMessageList As List(Of Integer)
 
     Public Sub FormSetup() Handles Me.Load
@@ -30,6 +29,8 @@ Public Class RegisterGUI
         m_TopGUI.FX3.DrActive = False
 
         scaleData = False
+        numDecimals.Visible = False
+        numDecimals_label.Visible = False
 
         'get list of pages
         pageList = New List(Of Integer)
@@ -104,6 +105,7 @@ Public Class RegisterGUI
 
     Private Sub ReadPage()
         Dim readRegList As New List(Of RegClass)
+        Dim numDecimalPlaces As UInteger
 
         For Each reg In currentRegList
             If reg.IsReadable Then
@@ -115,12 +117,19 @@ Public Class RegisterGUI
         Next
 
         If scaleData Then
+            Try
+                numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
+            Catch ex As Exception
+                MsgBox("Invalid number Of Decimal places!" + ex.Message)
+                numDecimalPlaces = 3
+                numDecimals.Text = "3"
+            End Try
             Dim DutValuesDoub() As Double
             DutValuesDoub = m_TopGUI.Dut.ReadScaledValue(readRegList)
             Dim regIndex As Integer = 0
             For Each value In DutValuesDoub
                 If currentRegList(regIndex).IsReadable Then
-                    regView.Item("Contents", regIndex).Value = value.ToString()
+                    regView.Item("Contents", regIndex).Value = value.ToString("f" + numDecimalPlaces.ToString())
                 Else
                     regView.Item("Contents", regIndex).Value = "Cannot Read"
                 End If
@@ -157,14 +166,16 @@ Public Class RegisterGUI
     Private Sub regView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles regView.CellClick
         Dim regLabel As String
         Dim reg As RegClass
+        Dim numDecimalPlaces As UInteger
         Try
             regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
             reg = m_TopGUI.RegMap(regLabel)
             If scaleData Then
+                numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
                 Dim value As Double
                 value = m_TopGUI.Dut.ReadScaledValue(reg)
-                CurrentValue.Text = value.ToString()
-                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString()
+                CurrentValue.Text = value.ToString("f" + numDecimalPlaces.ToString())
+                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("f" + numDecimalPlaces.ToString())
             Else
                 Dim value As UInteger
                 value = m_TopGUI.Dut.ReadUnsigned(reg)
@@ -241,10 +252,17 @@ Public Class RegisterGUI
         If scaleData Then
             readLabel.Text = "Current Value (Decimal)"
             writeLabel.Text = "New Value (Decimal)"
+            numDecimals.Visible = True
+            numDecimals_label.Visible = True
+            regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         Else
             readLabel.Text = "Current Value (Hex)"
             writeLabel.Text = "New Value (Hex)"
+            numDecimals.Visible = False
+            numDecimals_label.Visible = False
+            regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
         End If
+
     End Sub
 
     Private Sub initializedDataGrid()

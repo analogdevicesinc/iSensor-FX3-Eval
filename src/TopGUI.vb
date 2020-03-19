@@ -694,10 +694,12 @@ Public Class TopGUI
         End If
 
         'Check that the ready pin is high
-        If FX3.PulseWait(FX3.DrPin, 1, 0, 500) > 500 Then
-            label_DUTStatus.Text = "ERROR: DUT data ready pin not active"
-            label_DUTStatus.BackColor = Color.Red
-            Exit Sub
+        If FX3.DrActive Then
+            If FX3.PulseWait(FX3.DrPin, 1, 0, 500) > 500 Then
+                label_DUTStatus.Text = "ERROR: DUT data ready pin not active"
+                label_DUTStatus.BackColor = Color.Red
+                Exit Sub
+            End If
         End If
 
         Dim scratchReg As RegClass = Nothing
