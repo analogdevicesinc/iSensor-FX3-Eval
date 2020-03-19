@@ -401,10 +401,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /S /Q T:\~Lab_SW_Tools\iSensor-FX3-Gui\iSensor-FX3-Gui-Build\*
-XCOPY /y "$(TargetDir)*" "T:\~Lab_SW_Tools\iSensor-FX3-Gui\iSensor-FX3-Gui-Build"
-del /S /Q T:\~Lab_SW_Tools\iSensor-FX3-Gui\iSensor-FX3-Gui-Build\*.pdb
-del /S /Q T:\~Lab_SW_Tools\iSensor-FX3-Gui\iSensor-FX3-Gui-Build\*.vshost.exe</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

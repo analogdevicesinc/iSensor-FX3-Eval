@@ -40,6 +40,11 @@ Public Class PWMSetupGUI
 
     End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_PWMSetup.Enabled = True
+    End Sub
+
     Private Sub pinSelect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles pinSelect.SelectedIndexChanged
         UpdateButton(pinSelect.SelectedIndex)
     End Sub

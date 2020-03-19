@@ -15,6 +15,11 @@ Public Class ApiInfoGUI
         label_info.Text = m_TopGUI.FX3.GetFX3ApiInfo.ToString()
     End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_APIInfo.Enabled = True
+    End Sub
+
     Private Sub ButtonOpenBrowser_Click(sender As Object, e As EventArgs) Handles ButtonOpenBrowser.Click
         Try
             Dim proc = New Process()

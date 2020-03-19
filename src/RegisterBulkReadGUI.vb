@@ -104,6 +104,9 @@ Public Class RegisterBulkReadGUI
         m_TopGUI.linesPerFile = Convert.ToInt32(linesPerFile.Text)
         m_TopGUI.samplesPerWrite = Convert.ToInt32(SamplesPerWrite.Text)
 
+        're-enable button
+        m_TopGUI.btn_BulkRegRead.Enabled = True
+
         'dispose
         If Not IsNothing(fileManager) Then
             fileManager.Dispose()

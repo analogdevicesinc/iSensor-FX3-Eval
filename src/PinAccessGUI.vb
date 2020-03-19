@@ -70,6 +70,11 @@ Public Class PinAccessGUI
         ' TODO: add options for mode selection
     End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_PinAccess.Enabled = True
+    End Sub
+
     Private Sub updatePinGrid()
         For Each row As DataGridViewRow In dgvPinList.Rows
             Dim currPin As IPinObject = pins(row.Cells(0).Value.ToUpper)

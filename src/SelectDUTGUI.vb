@@ -17,6 +17,11 @@ Public Class SelectDUTGUI
         sensorInput.SelectedItem = m_TopGUI.FX3.SensorType
     End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_SelectDUT.Enabled = True
+    End Sub
+
     Private Sub btn_ApplySetting_Click(sender As Object, e As EventArgs) Handles btn_ApplySetting.Click
 
         m_TopGUI.FX3.SensorType = sensorInput.SelectedItem

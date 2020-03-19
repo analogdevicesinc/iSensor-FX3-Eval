@@ -56,6 +56,11 @@ Public Class FX3ConfigGUI
         StatusLabel.BackColor = Color.Yellow
     End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_FX3Config.Enabled = True
+    End Sub
+
     Private Sub UpdateFields()
         ' Populate the combo boxes and set initial values
 

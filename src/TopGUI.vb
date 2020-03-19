@@ -193,27 +193,6 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
-    Private Sub btn_bit_bang_Click(sender As Object, e As EventArgs)
-
-        FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
-        FX3.StreamTimeoutSeconds = 100000
-        FX3.SetBitBangSpiFreq(0.9)
-
-        Dim running As Boolean = True
-
-        While running
-            Try
-                MsgBox(FX3.BitBangReadReg16(Convert.ToUInt32(InputBox("Read Address: "))).ToString("X4"))
-            Catch ex As Exception
-                running = False
-            End Try
-
-        End While
-
-        FX3.RestoreHardwareSpi()
-
-    End Sub
-
     Private Sub btn_Connect_Click(sender As Object, e As EventArgs) Handles btn_Connect.Click
 
         Select Case btn_Connect.Text
@@ -231,7 +210,7 @@ Public Class TopGUI
         Dim subGUI As New SelectDUTGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Hide()
+        btn_SelectDUT.Enabled = False
     End Sub
 
     Private Sub btn_ResetDUT_Click(sender As Object, e As EventArgs) Handles btn_ResetDUT.Click
@@ -253,14 +232,15 @@ Public Class TopGUI
             Dim subGUI As New IMUStreamingGUI()
             subGUI.SetTopGUI(Me)
             subGUI.Show()
-            Me.Hide()
         Else
             'For machine health create a ADcmXLStreamingGUI
             Dim subGUI As New ADcmXLStreamingGUI()
             subGUI.SetTopGUI(Me)
             subGUI.Show()
-            Me.Hide()
         End If
+
+        'disable button
+        btn_RealTime.Enabled = False
 
     End Sub
 
@@ -270,28 +250,35 @@ Public Class TopGUI
             Dim subGUI As New RegisterBulkReadGUI()
             subGUI.SetTopGUI(Me)
             subGUI.Show()
-            Me.Hide()
         Else
             'For machine health create a ADcmXLStreamingGUI
             Dim subGUI As New ADcmXLBufferedLog()
             subGUI.SetTopGUI(Me)
             subGUI.Show()
-            Me.Hide()
         End If
+
+        'disable button
+        btn_BulkRegRead.Enabled = False
+
     End Sub
 
-    Private Sub btn_PinAccess_Click(sender As Object, e As EventArgs) Handles btn_PWMSetup.Click
+
+    Private Sub btn_PWMSetup_Click(sender As Object, e As EventArgs) Handles btn_PWMSetup.Click
         Dim subGUI As New PWMSetupGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
+
+        'disable button
+        btn_PWMSetup.Enabled = False
     End Sub
 
     Private Sub btn_FX3Config_Click(sender As Object, e As EventArgs) Handles btn_FX3Config.Click
         Dim subGUI As New FX3ConfigGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
+
+        'disable button
+        btn_FX3Config.Enabled = False
     End Sub
 
     Private Sub btn_CheckDUTConnection_Click(sender As Object, e As EventArgs) Handles btn_CheckDUTConnection.Click
@@ -306,32 +293,45 @@ Public Class TopGUI
         Dim subGUI As New ApiInfoGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
+
+        'disable button
+        btn_APIInfo.Enabled = False
     End Sub
 
     Private Sub btn_plotFFT_Click(sender As Object, e As EventArgs) Handles btn_plotFFT.Click
         Dim subGUI As New FrequencyPlotGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
+
+        'disable button
+        btn_plotFFT.Enabled = False
     End Sub
 
-    Private Sub btn_PinAccess_Click_1(sender As Object, e As EventArgs) Handles btn_PinAccess.Click
+    Private Sub btn_PinAccess_Click(sender As Object, e As EventArgs) Handles btn_PinAccess.Click
         Dim subGUI As New PinAccessGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        Me.Hide()
+
+        'disable button
+        btn_PinAccess.Enabled = False
     End Sub
 
     Private Sub btn_OtherApps_Click(sender As Object, e As EventArgs) Handles btn_OtherApps.Click
         Dim subGUI As New AppBrowseGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
+
+        'disable button
+        btn_OtherApps.Enabled = False
     End Sub
 
     Private Sub btn_plotData_Click(sender As Object, e As EventArgs) Handles btn_plotData.Click
         Dim subGUI As New DataPlotGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
+
+        'disable button
+        btn_plotData.Enabled = False
     End Sub
 
 #End Region

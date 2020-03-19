@@ -44,8 +44,9 @@ Public Class IMUStreamingGUI
         m_TopGUI.FX3.DrActive = True
     End Sub
 
-    Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
-        m_TopGUI.Show()
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_RealTime.Enabled = True
     End Sub
 
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click

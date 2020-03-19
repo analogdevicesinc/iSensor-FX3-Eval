@@ -15,36 +15,51 @@ Public Class AppBrowseGUI
         tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
         tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
         tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
+    End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_OtherApps.Enabled = True
     End Sub
 
     Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_BurstTest.Click
         Dim subGUI As New BurstTestGUI()
-        subGUI.SetTopGUI(Me.m_TopGUI)
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetAppGUI(Me)
         subGUI.Show()
+        btn_BurstTest.Enabled = False
     End Sub
 
     Private Sub btn_BitBangSpi_Click(sender As Object, e As EventArgs) Handles btn_BitBangSpi.Click
         Dim subGUI As New BitBangSpiGUI()
-        subGUI.SetTopGUI(Me.m_TopGUI)
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetAppGUI(Me)
         subGUI.Show()
+        btn_BitBangSpi.Enabled = False
     End Sub
 
     Private Sub btn_ADXL375_Click(sender As Object, e As EventArgs) Handles btn_ADXL375.Click
         Dim subGUI As New ADXl375GUI()
-        subGUI.SetTopGUI(Me.m_TopGUI)
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetAppGUI(Me)
         subGUI.Show()
+        btn_ADXL375.Enabled = False
     End Sub
 
     Private Sub btn_pulseMeasure_Click(sender As Object, e As EventArgs) Handles btn_pulseMeasure.Click
         Dim subGUI As New PulseMeasureGUI()
-        subGUI.SetTopGUI(Me.m_TopGUI)
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetAppGUI(Me)
         subGUI.Show()
+        btn_pulseMeasure.Enabled = False
     End Sub
 
     Private Sub btn_resistorConfig_Click(sender As Object, e As EventArgs) Handles btn_resistorConfig.Click
         Dim subGUI As New ResistorConfigGUI()
-        subGUI.SetTopGUI(Me.m_TopGUI)
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetAppGUI(Me)
         subGUI.Show()
+        btn_resistorConfig.Enabled = False
     End Sub
+
 End Class

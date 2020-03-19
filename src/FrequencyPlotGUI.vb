@@ -69,6 +69,8 @@ Public Class FrequencyPlotGUI
         m_FFTStream.Dispose()
         'show other forms
         InteractWithOtherForms(False)
+        're-enable main form button
+        m_TopGUI.btn_plotFFT.Enabled = True
     End Sub
 
     Private Sub SetupPlot()

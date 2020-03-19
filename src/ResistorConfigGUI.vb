@@ -1,6 +1,16 @@
 ﻿Public Class ResistorConfigGUI
     Inherits FormBase
 
+    Private m_AppGUI As AppBrowseGUI
+
+    Friend Sub SetAppGUI(AppGUI As AppBrowseGUI)
+        m_AppGUI = AppGUI
+    End Sub
+
+    Private Sub Shutdown() Handles Me.Closing
+        m_AppGUI.btn_resistorConfig.Enabled = True
+    End Sub
+
     Private Sub btn_pullUp_Click(sender As Object, e As EventArgs) Handles btn_pullUp.Click
         Dim pinNum As UInteger
         Try

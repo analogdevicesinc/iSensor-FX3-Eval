@@ -114,6 +114,11 @@ Public Class ADcmXLStreamingGUI
 
     End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        're-enable button
+        m_TopGUI.btn_RealTime.Enabled = True
+    End Sub
+
     Private Sub startButton_Click(sender As Object, e As EventArgs) Handles startButton.Click
 
         'Get data output save location

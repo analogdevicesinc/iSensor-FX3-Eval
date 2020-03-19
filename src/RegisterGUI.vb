@@ -218,7 +218,7 @@ Public Class RegisterGUI
         End If
     End Sub
 
-    Private Sub closingTimerKill() Handles Me.FormClosing
+    Private Sub Shutdown() Handles Me.Closing
         'Kill any running timers
         pageReadTimer.Enabled = False
         drReadTimer.Enabled = False

@@ -86,6 +86,7 @@ Public Class DataPlotGUI
         playBackRunning = False
         playBackMutex.WaitOne()
         plotMutex.WaitOne()
+        m_TopGUI.btn_plotData.Enabled = True
     End Sub
 
     Private Sub PlotTimerCallback()
