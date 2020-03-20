@@ -260,7 +260,7 @@ Public Class RegisterGUI
             writeLabel.Text = "New Value (Hex)"
             numDecimals.Visible = False
             numDecimals_label.Visible = False
-            regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
         End If
 
     End Sub
