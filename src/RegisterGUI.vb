@@ -121,8 +121,8 @@ Public Class RegisterGUI
                 numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
             Catch ex As Exception
                 MsgBox("Invalid number Of Decimal places!" + ex.Message)
-                numDecimalPlaces = 3
-                numDecimals.Text = "3"
+                numDecimalPlaces = 2
+                numDecimals.Text = "2"
             End Try
             Dim DutValuesDoub() As Double
             DutValuesDoub = m_TopGUI.Dut.ReadScaledValue(readRegList)
@@ -255,13 +255,64 @@ Public Class RegisterGUI
             numDecimals.Visible = True
             numDecimals_label.Visible = True
             regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            CovertTextFields()
         Else
             readLabel.Text = "Current Value (Hex)"
             writeLabel.Text = "New Value (Hex)"
             numDecimals.Visible = False
             numDecimals_label.Visible = False
             regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+            CovertTextFields()
         End If
+
+    End Sub
+
+    Private Sub CovertTextFields()
+
+        Dim newText As String
+        Dim val As Double
+        Dim valU As UInteger
+        Dim reg As RegClass
+        Dim numDecimalPlaces As UInteger
+
+        'regview
+        For i As Integer = 0 To regView.RowCount - 1
+            newText = regView.Item("Contents", i).Value
+            If newText <> "Not Read" Then
+                Try
+                    'get the reg associated with entry
+                    reg = m_TopGUI.RegMap(regView.Item("Label", i).Value)
+                    If scaleData Then
+                        'data is in hex, need to scale to decimal
+                        valU = Convert.ToUInt32(newText, 16)
+                        'scale using DUT function
+                        val = m_TopGUI.Dut.ScaleRegData(reg, valU)
+                        'get number of decimal places
+                        numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
+                        'scale value
+                        newText = val.ToString("f" + numDecimalPlaces.ToString())
+                    Else
+                        'data is in decimal, need to scale to hex
+                        val = Convert.ToDouble(newText)
+                        'un-scale using DUT function
+                        valU = m_TopGUI.Dut.UnscaleRegData(reg, val)
+                        'set string
+                        newText = valU.ToString("X" + (reg.NumBytes * 2).ToString())
+                    End If
+                Catch ex As Exception
+                    'don't need to explicitly handle anything here
+                End Try
+                regView.Item("Contents", i).Value = newText
+            End If
+        Next
+
+        'copy from regview to current value
+        newText = CurrentValue.Text
+        Try
+            CurrentValue.Text = regView.Item("Contents", regView.CurrentCell.RowIndex).Value
+        Catch ex As Exception
+            CurrentValue.Text = newText
+        End Try
 
     End Sub
 
