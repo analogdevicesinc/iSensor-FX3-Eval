@@ -200,8 +200,12 @@ Public Class TopGUI
                 btn_Connect.Text = "Connecting to FX3..."
                 ConnectWork()
             Case "Reboot FX3"
-                RebootFX3()
-                btn_Connect.Text = "Connect to FX3"
+                Dim result = MessageBox.Show("This will reboot the FX3 and close all running applications. Are you sure you wish to continue?", "Reboot FX3", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                If result = DialogResult.Yes Then
+                    CloseAllForms()
+                    RebootFX3()
+                    btn_Connect.Text = "Connect to FX3"
+                End If
         End Select
 
     End Sub
@@ -374,11 +378,7 @@ Public Class TopGUI
         SaveAppSettings()
 
         'close all other forms
-        For Each runningForm As Form In Application.OpenForms
-            If Me.InvokeRequired Then
-                Me.BeginInvoke(Sub() runningForm.Close())
-            End If
-        Next
+        CloseAllForms()
 
         'Disconnect the FX3 (does nothing if not already connected)
         FX3.Disconnect()
@@ -738,6 +738,22 @@ Public Class TopGUI
     Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
         report_issue.LinkVisited = True
         System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-ExampleGui/issues/new")
+    End Sub
+
+    Private Sub CloseAllForms()
+        Dim openForms As New List(Of Form)
+        For Each form In Application.OpenForms
+            If Not ReferenceEquals(Me, form) Then
+                openForms.Add(form)
+            End If
+        Next
+        For Each runningForm As Form In openForms
+            If Me.InvokeRequired Then
+                Me.BeginInvoke(Sub() runningForm.Close())
+            Else
+                runningForm.Close()
+            End If
+        Next
     End Sub
 
 #End Region
