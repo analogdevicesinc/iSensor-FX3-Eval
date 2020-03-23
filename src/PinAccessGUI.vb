@@ -112,6 +112,7 @@ Public Class PinAccessGUI
             Dim message As String = pinName & " is in PWM mode, writing to it will terminate that. Do you wish to perform the write?"
             answer = MsgBox(message, vbQuestion + vbYesNo + vbDefaultButton2)
             If answer = vbYes Then
+                m_TopGUI.FX3.StopPWM(currPin)
                 m_TopGUI.FX3.SetPin(currPin, level)
             End If
         Else
