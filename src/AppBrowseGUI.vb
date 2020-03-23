@@ -15,6 +15,36 @@ Public Class AppBrowseGUI
         tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
         tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
         tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
+
+        'check other open forms to dis-allow duplicate forms being open
+        For Each openForm As Form In Application.OpenForms
+            If TypeOf (openForm) Is BurstTestGUI Then
+                btn_BurstTest.Enabled = False
+                Dim subGUI As BurstTestGUI = DirectCast(openForm, BurstTestGUI)
+                subGUI.SetAppGUI(Me)
+            End If
+            If TypeOf (openForm) Is BitBangSpiGUI Then
+                btn_BitBangSpi.Enabled = False
+                Dim subGUI As BitBangSpiGUI = DirectCast(openForm, BitBangSpiGUI)
+                subGUI.SetAppGUI(Me)
+            End If
+            If TypeOf (openForm) Is ADXl375GUI Then
+                btn_ADXL375.Enabled = False
+                Dim subGUI As ADXl375GUI = DirectCast(openForm, ADXl375GUI)
+                subGUI.SetAppGUI(Me)
+            End If
+            If TypeOf (openForm) Is PulseMeasureGUI Then
+                btn_pulseMeasure.Enabled = False
+                Dim subGUI As PulseMeasureGUI = DirectCast(openForm, PulseMeasureGUI)
+                subGUI.SetAppGUI(Me)
+            End If
+            If TypeOf (openForm) Is ResistorConfigGUI Then
+                btn_resistorConfig.Enabled = False
+                Dim subGUI As ResistorConfigGUI = DirectCast(openForm, ResistorConfigGUI)
+                subGUI.SetAppGUI(Me)
+            End If
+        Next
+
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
