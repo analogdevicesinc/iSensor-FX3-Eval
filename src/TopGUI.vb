@@ -94,7 +94,7 @@ Public Class TopGUI
             RegMapPath = My.Settings.SelectedRegMap
         End If
 
-        'Set FX3 connection (defaults to ADcmXL)
+        'Set FX3 connection (defaults to IMU)
         FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, flashProgrammerPath, FX3Api.DeviceType.IMU)
 
         'Set bulk reg list
@@ -330,12 +330,14 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_plotData_Click(sender As Object, e As EventArgs) Handles btn_plotData.Click
+
         Dim subGUI As New DataPlotGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
 
         'disable button
         btn_plotData.Enabled = False
+
     End Sub
 
 #End Region

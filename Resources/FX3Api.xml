@@ -1100,13 +1100,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="P:FX3Api.FX3Connection.BootloaderPath">
  <summary>
- Set/get the blink firmware .img file used for multi-board identification
+ Set/get the blink USB bootloader firmware .img file used for multi-board identification
  </summary>
  <returns>A string representing the path to the firmware on the user machine</returns>
 </member>
 <member name="P:FX3Api.FX3Connection.FlashProgrammerPath">
  <summary>
- Path to the programmer firmware which is loaded in RAM to allow flashing the EEPROM.
+ Path to the programmer firmware which is loaded in RAM to allow flashing the EEPROM with the bootloader.
  </summary>
  <returns></returns>
 </member>
@@ -1578,6 +1578,12 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  This class contains information about the connected FX3 board
  </summary>
+</member>
+<member name="P:FX3Api.FX3Board.BoardType">
+ <summary>
+ The FX3 board type (iSensor FX3 board or Cypress eval FX3 board)
+ </summary>
+ <returns></returns>
 </member>
 <member name="M:FX3Api.FX3Board.ToString">
  <summary>
