@@ -140,80 +140,73 @@ Public Class FX3ConfigGUI
         m_TopGUI.FX3.ChipSelectLagTime = lagTimeInput.SelectedItem
         m_TopGUI.FX3.ChipSelectLeadTime = leadTimeInput.SelectedItem
 
+        'clock phase
         If phaseInput.SelectedItem.ToString().Substring(0, 1) = "T" Then
             m_TopGUI.FX3.Cpha = True
         Else
             m_TopGUI.FX3.Cpha = False
         End If
 
+        'clock polarity
         If polarityInput.SelectedItem.ToString().Substring(0, 1) = "T" Then
             m_TopGUI.FX3.Cpol = True
         Else
             m_TopGUI.FX3.Cpol = False
         End If
 
+        'cs polarity
         If chipSelectPolarityInput.SelectedItem.ToString().Substring(0, 1) = "T" Then
             m_TopGUI.FX3.ChipSelectPolarity = True
         Else
             m_TopGUI.FX3.ChipSelectPolarity = False
         End If
 
+        'sclk freq
         Dim frequency As UInt32
         Try
             frequency = Convert.ToUInt32(frequencyInput.Text)
+            If frequency > 33000000 Then
+                Throw New ArgumentException("ERROR: Frequency must be lower than 33MHz")
+            End If
+            m_TopGUI.FX3.SclkFrequency = frequency
         Catch ex As Exception
-            MsgBox("ERROR: Invalid Frequency Value")
+            MsgBox("ERROR: Invalid Frequency Value: " + ex.Message)
             StatusLabel.Text = "ERROR"
             StatusLabel.BackColor = Color.Red
-            Exit Sub
         End Try
 
-        If frequency > 33000000 Then
-            MsgBox("ERROR: Frequency must be lower than 33MHz")
-            StatusLabel.Text = "ERROR"
-            StatusLabel.BackColor = Color.Red
-            Exit Sub
-        End If
-
-        m_TopGUI.FX3.SclkFrequency = frequency
-
+        'SPI word length
         Dim wordLen As Byte
         Try
-            wordLen = Convert.ToInt16(wordLenInput.Text)
+            wordLen = Convert.ToByte(wordLenInput.Text)
+            If wordLen > 32 Or wordLen < 4 Then
+                Throw New ArgumentException("ERROR: Word Length must be between 4 and 32 bits")
+            End If
+            m_TopGUI.FX3.WordLength = wordLen
         Catch ex As Exception
-            MsgBox("ERROR: Invalid word length")
+            MsgBox("ERROR: Invalid word length: " + ex.Message)
             StatusLabel.Text = "ERROR"
             StatusLabel.BackColor = Color.Red
-            Exit Sub
         End Try
 
-        If wordLen > 32 Or wordLen < 4 Then
-            MsgBox("ERROR: Word Length must be between 4 and 32 bits")
-            StatusLabel.Text = "ERROR"
-            StatusLabel.BackColor = Color.Red
-            Exit Sub
-        End If
-
-        m_TopGUI.FX3.WordLength = wordLen
-
+        'stall time (us)
         Dim stallTime As UInt16
-        Dim stallTimeSet As Boolean = False
         Try
             stallTime = Convert.ToUInt16(stallTimeInput.Text)
+            m_TopGUI.FX3.StallTime = stallTime
         Catch ex As Exception
-            MsgBox("ERROR: Invalid stall time")
+            MsgBox("ERROR: Invalid stall time: " + ex.Message)
             StatusLabel.Text = "ERROR"
             StatusLabel.BackColor = Color.Red
-            Exit Sub
         End Try
 
-        If Not stallTime = m_TopGUI.FX3.StallTime Then
-            m_TopGUI.FX3.StallTime = stallTime
-        End If
-
+        'dr active
         If dataReadyActiveInput.SelectedItem = "True: Data ready active" Then
             m_TopGUI.FX3.DrActive = True
         ElseIf dataReadyActiveInput.SelectedItem = "False: Ignore data ready" Then
+            m_TopGUI.FX3.DrActive = False
+        Else
+            MsgBox("ERROR: Invalid data ready active selection. Defaulting to false (asynchronous reads)")
             m_TopGUI.FX3.DrActive = False
         End If
 
@@ -221,6 +214,9 @@ Public Class FX3ConfigGUI
             m_TopGUI.FX3.DrPolarity = True
         ElseIf dataReadyPolarityInput.SelectedItem = "High-to-Low: Trigger on falling edge" Then
             m_TopGUI.FX3.DrPolarity = False
+        Else
+            MsgBox("ERROR: Invalid data ready polarity selection. Defaulting to true (rising edge)")
+            m_TopGUI.FX3.DrPolarity = True
         End If
 
         Dim dio As String = dataReadyPinInput.SelectedItem
@@ -234,12 +230,19 @@ Public Class FX3ConfigGUI
             Case "DIO4"
                 m_TopGUI.FX3.ReadyPin = m_TopGUI.FX3.DIO4
             Case Else
+                MsgBox("ERROR: Invalid DR pin selected. Defaulting to DIO1")
                 m_TopGUI.FX3.ReadyPin = m_TopGUI.FX3.DIO1
         End Select
 
         'set regmap
         If Not m_regmappath = "" Then
-            m_TopGUI.RegMapPath = m_regmappath
+            Try
+                m_TopGUI.RegMapPath = m_regmappath
+            Catch ex As Exception
+                MsgBox("ERROR: Invalid register map path: " + ex.Message)
+                StatusLabel.Text = "ERROR"
+                StatusLabel.BackColor = Color.Red
+            End Try
         End If
 
         'set power supply mode
@@ -254,7 +257,14 @@ Public Class FX3ConfigGUI
 
         Dim watchdogTime As Integer = Convert.ToInt32(WatchdogTimeout.Text)
         If watchdogTime <> m_TopGUI.FX3.WatchdogTimeoutSeconds Then
-            m_TopGUI.FX3.WatchdogTimeoutSeconds = watchdogTime
+            Try
+                m_TopGUI.FX3.WatchdogTimeoutSeconds = watchdogTime
+            Catch ex As Exception
+                MsgBox("ERROR: Invalid watchdog period. Defaulting to 10s: " + ex.Message)
+                StatusLabel.Text = "ERROR"
+                StatusLabel.BackColor = Color.Red
+                m_TopGUI.FX3.WatchdogTimeoutSeconds = 10
+            End Try
         End If
 
         'save app settings
