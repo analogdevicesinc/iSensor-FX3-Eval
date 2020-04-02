@@ -143,6 +143,7 @@ Partial Class FX3ConfigGUI
         '
         'chipSelectControlInput
         '
+        Me.chipSelectControlInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.chipSelectControlInput.FormattingEnabled = True
         Me.chipSelectControlInput.Location = New System.Drawing.Point(135, 121)
         Me.chipSelectControlInput.Name = "chipSelectControlInput"
@@ -151,6 +152,7 @@ Partial Class FX3ConfigGUI
         '
         'phaseInput
         '
+        Me.phaseInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.phaseInput.FormattingEnabled = True
         Me.phaseInput.Location = New System.Drawing.Point(135, 67)
         Me.phaseInput.Name = "phaseInput"
@@ -159,6 +161,7 @@ Partial Class FX3ConfigGUI
         '
         'polarityInput
         '
+        Me.polarityInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.polarityInput.FormattingEnabled = True
         Me.polarityInput.Location = New System.Drawing.Point(135, 40)
         Me.polarityInput.Name = "polarityInput"
@@ -167,6 +170,7 @@ Partial Class FX3ConfigGUI
         '
         'chipSelectPolarityInput
         '
+        Me.chipSelectPolarityInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.chipSelectPolarityInput.FormattingEnabled = True
         Me.chipSelectPolarityInput.Location = New System.Drawing.Point(135, 94)
         Me.chipSelectPolarityInput.Name = "chipSelectPolarityInput"
@@ -175,6 +179,7 @@ Partial Class FX3ConfigGUI
         '
         'leadTimeInput
         '
+        Me.leadTimeInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.leadTimeInput.FormattingEnabled = True
         Me.leadTimeInput.Location = New System.Drawing.Point(135, 148)
         Me.leadTimeInput.Name = "leadTimeInput"
@@ -183,6 +188,7 @@ Partial Class FX3ConfigGUI
         '
         'lagTimeInput
         '
+        Me.lagTimeInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.lagTimeInput.FormattingEnabled = True
         Me.lagTimeInput.Location = New System.Drawing.Point(135, 175)
         Me.lagTimeInput.Name = "lagTimeInput"
@@ -234,6 +240,7 @@ Partial Class FX3ConfigGUI
         '
         'lsbFirstInput
         '
+        Me.lsbFirstInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.lsbFirstInput.FormattingEnabled = True
         Me.lsbFirstInput.Location = New System.Drawing.Point(135, 228)
         Me.lsbFirstInput.Name = "lsbFirstInput"
@@ -274,6 +281,7 @@ Partial Class FX3ConfigGUI
         '
         'dataReadyPinInput
         '
+        Me.dataReadyPinInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.dataReadyPinInput.FormattingEnabled = True
         Me.dataReadyPinInput.Location = New System.Drawing.Point(135, 307)
         Me.dataReadyPinInput.Name = "dataReadyPinInput"
@@ -282,6 +290,7 @@ Partial Class FX3ConfigGUI
         '
         'dataReadyActiveInput
         '
+        Me.dataReadyActiveInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.dataReadyActiveInput.FormattingEnabled = True
         Me.dataReadyActiveInput.Location = New System.Drawing.Point(135, 334)
         Me.dataReadyActiveInput.Name = "dataReadyActiveInput"
@@ -290,6 +299,7 @@ Partial Class FX3ConfigGUI
         '
         'dataReadyPolarityInput
         '
+        Me.dataReadyPolarityInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.dataReadyPolarityInput.FormattingEnabled = True
         Me.dataReadyPolarityInput.Location = New System.Drawing.Point(135, 361)
         Me.dataReadyPolarityInput.Name = "dataReadyPolarityInput"
@@ -385,6 +395,7 @@ Partial Class FX3ConfigGUI
         '
         'DutVoltage
         '
+        Me.DutVoltage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.DutVoltage.FormattingEnabled = True
         Me.DutVoltage.Location = New System.Drawing.Point(135, 437)
         Me.DutVoltage.Name = "DutVoltage"
