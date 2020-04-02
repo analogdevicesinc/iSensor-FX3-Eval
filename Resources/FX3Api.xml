@@ -637,6 +637,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="pins">An enumerable list of FX3PinObjects to read (maximum of 32)</param>
  <returns>The pin values, as a UInteger. The first pin is in bit 0, second is in bit 1, and so on</returns>
 </member>
+<member name="M:FX3Api.FX3Connection.ReadTime(System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32)">
+ <summary>
+ Not implemented
+ </summary>
+ <param name="start_pin">Not implemented</param>
+ <param name="start_polarity">Not implemented</param>
+ <param name="stop_pin">Not implemented</param>
+ <param name="stop_polarity">Not implemented</param>
+ <param name="delay">Not implemented</param>
+ <returns>Not implemented</returns>
+</member>
 <member name="M:FX3Api.FX3Connection.SetPin(AdisApi.IPinObject,System.UInt32)">
  <summary>
  Sets the value of a FX3 GPIO pin. This value will persist until the pin is set to a different value, or read from
@@ -968,7 +979,8 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Overload of Disconnect which lets you specify the FX3 serial number to disconnect. Returns a boolean
  indicating if the board was disconnected.
  </summary>
- <param name="FX3SerialNumber"></param>
+ <param name="FX3SerialNumber">Serial number of board to disconnect from</param>
+ <returns>Success status of the board disconnect operation</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.GetFX3BoardType">
  <summary>
@@ -1375,6 +1387,46 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  This class stores all the relevant information about a given bit bang SPI connection.
  </summary>
 </member>
+<member name="F:FX3Api.BitBangSpiConfig.CS">
+ <summary>
+ Chip select pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.SCLK">
+ <summary>
+ SCLK pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.MOSI">
+ <summary>
+ MOSI (master out, slave in) pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.MISO">
+ <summary>
+ MISO (master is, slave out) pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CSLeadTicks">
+ <summary>
+ Number of timer ticks from CS falling edge to first sclk edge
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CSLagTicks">
+ <summary>
+ Number of timer ticks from last sclk edge to CS rising edge
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.SCLKHalfPeriodTicks">
+ <summary>
+ Half SCLK period timer ticks
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.StallTicks">
+ <summary>
+ Stall time timer ticks
+ </summary>
+</member>
 <member name="M:FX3Api.BitBangSpiConfig.#ctor(System.Boolean)">
  <summary>
  Constructor which lets you specify set of default pins to use as bit bang SPI pins
@@ -1390,6 +1442,66 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 <member name="T:FX3Api.FX3SPIConfig">
  <summary>
  Class for all the programmable SPI configuration options on the FX3.
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.WordLength">
+ <summary>
+ SPI word length (in bits)
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.Cpol">
+ <summary>
+ SCLK polarity
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectPolarity">
+ <summary>
+ CS polarity
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.Cpha">
+ <summary>
+ Clock phase
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.IsLSBFirst">
+ <summary>
+ Select if SPI controller works LSB first or MSB first
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectControl">
+ <summary>
+ Chip select control mode
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectLeadTime">
+ <summary>
+ Chip select lead delay mode
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectLagTime">
+ <summary>
+ Chip select lag delay mode
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.DUTType">
+ <summary>
+ Connected DUT type
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.DrActive">
+ <summary>
+ Enable/Disable data ready interrupt triggering for SPI
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.DrPolarity">
+ <summary>
+ Data ready polarity for interrupt triggering (posedge or negedge)
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.SecondsToTimerTicks">
+ <summary>
+ Scale factor to convert seconds to timer ticks)
  </summary>
 </member>
 <member name="P:FX3Api.FX3SPIConfig.SCLKFrequency">
@@ -1579,6 +1691,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  This class contains information about the connected FX3 board
  </summary>
 </member>
+<member name="M:FX3Api.FX3Board.#ctor(System.String,System.DateTime)">
+ <summary>
+ Constructor, should be only called by FX3Connection instance
+ </summary>
+ <param name="SerialNumber">Board SN</param>
+ <param name="BootTime">Board boot time</param>
+</member>
 <member name="P:FX3Api.FX3Board.BoardType">
  <summary>
  The FX3 board type (iSensor FX3 board or Cypress eval FX3 board)
@@ -1589,7 +1708,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  Override of the ToString function
  </summary>
- <returns></returns>
+ <returns>String with board information</returns>
 </member>
 <member name="P:FX3Api.FX3Board.Uptime">
  <summary>
