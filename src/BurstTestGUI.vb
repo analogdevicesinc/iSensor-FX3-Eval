@@ -50,7 +50,7 @@ Public Class BurstTestGUI
         m_TopGUI.FX3.StripBurstTriggerWord = False
         m_TopGUI.FX3.BurstByteCount = 4 * numWords
         m_TopGUI.FX3.SetupBurstMode()
-        m_TopGUI.FX3.StartBurstStream(4, burstTrigger)
+        m_TopGUI.FX3.StartBurstStream(1, burstTrigger)
         m_TopGUI.FX3.WaitForStreamCompletion(250)
         Dim buf() As UShort
         buf = m_TopGUI.FX3.GetBuffer()
