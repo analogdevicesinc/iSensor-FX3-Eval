@@ -466,6 +466,9 @@ Public Class RegisterGUI
         'exception
         Dim ex As adisInterface.SpiException
 
+        'number of exceptions logged
+        Dim logLength As Integer = 0
+
         'exit if not set to validate
         If Not validateSpiData.Checked Then Exit Sub
 
@@ -474,8 +477,18 @@ Public Class RegisterGUI
             ex = m_TopGUI.m_AutoSpi.DequeueLoggedException()
             While Not IsNothing(ex)
                 msg += Environment.NewLine + ex.Message
+                logLength += 1
+                If logLength > 9 Then
+                    msg += Environment.NewLine + "and " + m_TopGUI.m_AutoSpi.LoggedExceptionCount.ToString() + " more..."
+                    'clear queue
+                    m_TopGUI.m_AutoSpi.LogExceptions = False
+                    m_TopGUI.m_AutoSpi.LogExceptions = validateSpiData.Checked
+                    Exit While
+                End If
                 ex = m_TopGUI.m_AutoSpi.DequeueLoggedException()
             End While
+            'disable continuous reads in case of error
+            contRead.Checked = False
             MsgBox(msg)
         End If
     End Sub
