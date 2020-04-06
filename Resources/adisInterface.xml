@@ -196,6 +196,49 @@ adisInterface
  </summary>
  <returns></returns>
 </member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.IgnoreStateVectorExceptions">
+ <summary>
+ Selectively ignores SPI state vector exceptions
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.IgnoreCRCExceptions">
+ <summary>
+ Selectively ignores SPI CRC exceptions
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.IgnoreTransactionCounterExceptions">
+ <summary>
+ Selectively ignores SPI transaction counter exceptions
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.IgnoreSpiAddressExceptions">
+ <summary>
+ Selectively ignores SPI address echo exceptions
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.LogExceptions">
+ <summary>
+ Enables or disables exception logging. When exception logging is turned on, exceptions are placed into a queue. This allows for down the
+ line analysis/notification of any SPI protocol errors, without having to wrap everything in a try catch / interrupt program flow.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.iSensorAutomotiveSpi.LoggedExceptionCount">
+ <summary>
+ Number of logged exceptions
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.DequeueLoggedException">
+ <summary>
+ Dequeue a logged exception. Returns nothing if there is no exception to dequeue
+ </summary>
+ <returns></returns>
+</member>
 <member name="M:adisInterface.iSensorAutomotiveSpi.SetDefaultValues">
  <summary>
  This function sets all the default values for the class
@@ -2400,19 +2443,6 @@ adisInterface
  <param name="u16data"></param>
  <returns></returns>
  <remarks></remarks>
-</member>
-<member name="M:adisInterface.ZeusBurstClass.#ctor(AdisApi.IBurstSpiInterface)">
- <summary>
- Zeus burst constructor. Must be given instance of IBurstSpiInterface, which acts as interface to the DUT
- </summary>
- <param name="IBurstSpi">The IBurstSpi interface to the DUT</param>
-</member>
-<member name="M:adisInterface.ZeusBurstClass.CalculateDataCrc(System.Collections.Generic.IEnumerable{System.UInt16})">
- <summary>
- Override of the CRC calculation function
- </summary>
- <param name="data">Data to calculate CRC on</param>
- <returns></returns>
 </member>
 <member name="T:adisInterface.ZeusInterface">
  <summary>

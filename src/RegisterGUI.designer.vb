@@ -49,6 +49,7 @@ Partial Class RegisterGUI
         Me.btn_DumpRegmap = New System.Windows.Forms.Button()
         Me.drActive = New System.Windows.Forms.CheckBox()
         Me.btn_writeRegMap = New System.Windows.Forms.Button()
+        Me.validateSpiData = New System.Windows.Forms.CheckBox()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox4.SuspendLayout()
@@ -315,11 +316,22 @@ Partial Class RegisterGUI
         Me.btn_writeRegMap.Text = "Write RegMap"
         Me.btn_writeRegMap.UseVisualStyleBackColor = True
         '
+        'validateSpiData
+        '
+        Me.validateSpiData.AutoSize = True
+        Me.validateSpiData.Location = New System.Drawing.Point(407, 330)
+        Me.validateSpiData.Name = "validateSpiData"
+        Me.validateSpiData.Size = New System.Drawing.Size(110, 17)
+        Me.validateSpiData.TabIndex = 33
+        Me.validateSpiData.Text = "Validate SPI Data"
+        Me.validateSpiData.UseVisualStyleBackColor = True
+        '
         'RegisterGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(624, 538)
+        Me.Controls.Add(Me.validateSpiData)
         Me.Controls.Add(Me.btn_writeRegMap)
         Me.Controls.Add(Me.drActive)
         Me.Controls.Add(Me.btn_DumpRegmap)
@@ -372,4 +384,5 @@ Partial Class RegisterGUI
     Friend WithEvents btn_writeRegMap As Button
     Friend WithEvents numDecimals As TextBox
     Friend WithEvents numDecimals_label As Label
+    Friend WithEvents validateSpiData As CheckBox
 End Class

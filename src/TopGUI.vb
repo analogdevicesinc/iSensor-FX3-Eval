@@ -31,7 +31,7 @@ Public Class TopGUI
     Private m_FX3Connected As Boolean
     Private WithEvents m_disconnectTimer As Timers.Timer
     Private m_RegMapPath As String
-    Private m_AutoSpi As iSensorAutomotiveSpi
+    Friend m_AutoSpi As iSensorAutomotiveSpi
 
     ''' <summary>
     ''' This event is raised when the active board is disconnected unexpectedly (IE unplugged)
@@ -124,6 +124,7 @@ Public Class TopGUI
         'Set up autospi
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
+        m_AutoSpi.LogExceptions = True
         'm_AutoSpi.IgnoreCRCExceptions = False
 
         'Set the API version and build date

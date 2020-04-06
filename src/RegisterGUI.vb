@@ -49,6 +49,13 @@ Public Class RegisterGUI
             drActive.Checked = m_TopGUI.FX3.DrActive
         End If
 
+        validateSpiData.Checked = False
+        If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then
+            validateSpiData.Visible = True
+        Else
+            validateSpiData.Visible = False
+        End If
+
         'Set the selected index
         selectPage.SelectedIndex = 0
         lastPageIndex = 0
@@ -101,6 +108,10 @@ Public Class RegisterGUI
                 MsgBox("ERROR: Invalid write - " + ex.ToString())
             End Try
         End If
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
     End Sub
 
     Private Sub ReadPage()
@@ -161,6 +172,9 @@ Public Class RegisterGUI
             MsgBox("ERROR: Unable to load page " + expectedPage.ToString())
         End If
 
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
     End Sub
 
     Private Sub regView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles regView.CellClick
@@ -185,6 +199,10 @@ Public Class RegisterGUI
         Catch ex As Exception
             CurrentValue.Text = "ERROR"
         End Try
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
     End Sub
 
     Private Sub PageReadCallback()
@@ -373,6 +391,9 @@ Public Class RegisterGUI
             index += 1
         Next
         saveCSV("RegDump", strValues.ToArray(), m_TopGUI.lastFilePath)
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
     End Sub
 
     Private Sub measureDr_CheckedChanged(sender As Object, e As EventArgs) Handles measureDr.CheckedChanged
@@ -432,5 +453,35 @@ Public Class RegisterGUI
         'apply data to DUT
         m_TopGUI.Dut.WriteUnsigned(writeRegs, writeVals)
 
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
     End Sub
+
+    Private Sub ValidateAutomotiveSpiData()
+
+        'message string
+        Dim msg As String
+
+        'exception
+        Dim ex As adisInterface.SpiException
+
+        'exit if not set to validate
+        If Not validateSpiData.Checked Then Exit Sub
+
+        If m_TopGUI.m_AutoSpi.LoggedExceptionCount > 0 Then
+            msg = m_TopGUI.m_AutoSpi.LoggedExceptionCount.ToString() + " SPI exception(s) have occurred: "
+            ex = m_TopGUI.m_AutoSpi.DequeueLoggedException()
+            While Not IsNothing(ex)
+                msg += Environment.NewLine + ex.Message
+                ex = m_TopGUI.m_AutoSpi.DequeueLoggedException()
+            End While
+            MsgBox(msg)
+        End If
+    End Sub
+
+    Private Sub validateSpiData_CheckedChanged(sender As Object, e As EventArgs) Handles validateSpiData.CheckedChanged
+        m_TopGUI.m_AutoSpi.LogExceptions = validateSpiData.Checked
+    End Sub
+
 End Class
