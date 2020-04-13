@@ -47,6 +47,7 @@ Partial Class TopGUI
         Me.btn_plotData = New System.Windows.Forms.Button()
         Me.regMapPath_Label = New System.Windows.Forms.Label()
         Me.report_issue = New System.Windows.Forms.LinkLabel()
+        Me.checkVersion = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -269,11 +270,22 @@ Partial Class TopGUI
         Me.report_issue.TabStop = True
         Me.report_issue.Text = "Report Issue"
         '
+        'checkVersion
+        '
+        Me.checkVersion.AutoSize = True
+        Me.checkVersion.Location = New System.Drawing.Point(318, 286)
+        Me.checkVersion.Name = "checkVersion"
+        Me.checkVersion.Size = New System.Drawing.Size(94, 13)
+        Me.checkVersion.TabIndex = 34
+        Me.checkVersion.TabStop = True
+        Me.checkVersion.Text = "Check For Update"
+        '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(424, 326)
+        Me.Controls.Add(Me.checkVersion)
         Me.Controls.Add(Me.report_issue)
         Me.Controls.Add(Me.regMapPath_Label)
         Me.Controls.Add(Me.btn_plotData)
@@ -331,4 +343,5 @@ Partial Class TopGUI
     Friend WithEvents btn_plotData As Button
     Friend WithEvents regMapPath_Label As Label
     Friend WithEvents report_issue As LinkLabel
+    Friend WithEvents checkVersion As LinkLabel
 End Class

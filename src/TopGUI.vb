@@ -10,6 +10,8 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Timers
 Imports System.Threading
+Imports System.Net
+Imports System.Web.Script.Serialization
 
 Public Class TopGUI
 
@@ -164,6 +166,7 @@ Public Class TopGUI
         tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
         tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Example GUI. Requires a GitHub account")
         tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 500ms, waits for data ready to be asserted, and checks the DUT connection")
+        tip0.SetToolTip(Me.checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
 
     End Sub
 
@@ -414,7 +417,7 @@ Public Class TopGUI
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Sub ThreadErrorHandler(sender As Object, e As ThreadExceptionEventArgs)
-        LogError(e.Exception )
+        LogError(e.Exception)
     End Sub
 
     Private Sub LogError(e As Exception)
@@ -738,11 +741,6 @@ Public Class TopGUI
 
     End Sub
 
-    Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
-        report_issue.LinkVisited = True
-        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-ExampleGui/issues/new")
-    End Sub
-
     Private Sub CloseAllForms()
         Dim openForms As New List(Of Form)
         For Each form In Application.OpenForms
@@ -757,6 +755,76 @@ Public Class TopGUI
                 runningForm.Close()
             End If
         Next
+    End Sub
+
+    Private Sub checkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles checkVersion.LinkClicked
+        checkVersion.LinkVisited = True
+
+        Dim response As WebResponse
+        Dim request As HttpWebRequest
+        Dim content As Dictionary(Of String, Object)
+        Dim contentStr As String
+        Dim parser As New JavaScriptSerializer()
+        Dim newestVersion, currentVersion As Version
+        Dim promptResult As MsgBoxResult
+
+        'get response
+        Try
+            ServicePointManager.Expect100Continue = True
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            request = WebRequest.Create("https://api.github.com/repos/juchong/iSensor-FX3-ExampleGui/releases/latest")
+            request.ContentType = "application/json"
+            request.UserAgent = "request"
+            request.Method = "GET"
+            request.Accept = "application/json"
+            response = request.GetResponse()
+        Catch ex As Exception
+            MsgBox("Error communicating with GitHub: " + ex.Message)
+            Exit Sub
+        End Try
+
+        'get content
+        Using reader As StreamReader = New StreamReader(response.GetResponseStream())
+            contentStr = reader.ReadToEnd()
+        End Using
+
+        'parse JSON
+        Try
+            content = parser.Deserialize(Of Dictionary(Of String, Object))(contentStr)
+            contentStr = content("tag_name").ToString()
+            contentStr = contentStr.Replace("-pub", "")
+            contentStr = contentStr.Replace("v", "")
+            newestVersion = Version.Parse(contentStr)
+        Catch ex As Exception
+            MsgBox("Error: Failed to parse HTTP response: " + ex.Message)
+            Exit Sub
+        End Try
+
+        'get version of application and latest
+        currentVersion = Version.Parse(Me.ProductVersion)
+        If currentVersion.CompareTo(newestVersion) < 0 Then
+            promptResult = MsgBox("Version " + content("tag_name").ToString() + " available. Download now?", MsgBoxStyle.YesNo)
+        Else
+            MsgBox("Already up to date! Latest version: " + content("tag_name").ToString())
+            Exit Sub
+        End If
+
+        If promptResult <> MsgBoxResult.Yes Then
+            Exit Sub
+        End If
+
+        'get the url to the zip resource to download and open in browser
+        Dim proc = New Process()
+        Dim assets As ArrayList = DirectCast(content("assets"), ArrayList)
+        proc.StartInfo.UseShellExecute = True
+        proc.StartInfo.FileName = assets(0)("browser_download_url")
+        proc.Start()
+
+    End Sub
+
+    Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
+        report_issue.LinkVisited = True
+        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-ExampleGui/issues/new")
     End Sub
 
 #End Region
