@@ -131,9 +131,9 @@ Public Class RegisterGUI
             Try
                 numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
             Catch ex As Exception
-                MsgBox("Invalid number Of Decimal places!" + ex.Message)
                 numDecimalPlaces = 2
                 numDecimals.Text = "2"
+                MsgBox("Invalid number Of Decimal places!" + ex.Message)
             End Try
             Dim DutValuesDoub() As Double
             DutValuesDoub = m_TopGUI.Dut.ReadScaledValue(readRegList)
