@@ -200,7 +200,7 @@ Public Class RegisterBulkReadGUI
             'remove last stall time
             calcPeriod = calcPeriod - (m_TopGUI.FX3.StallTime / 1000000)
 
-            If calcPeriod > drPeriod Then
+            If calcPeriod > (drPeriod * 0.9) Then
                 Dim result1 As DialogResult = MessageBox.Show("Register capture time exceeds data ready period. Would you like to continue?", "Data will take too long to read!", MessageBoxButtons.YesNo)
                 If result1 = DialogResult.No Then
                     Exit Sub
