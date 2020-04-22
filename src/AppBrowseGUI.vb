@@ -15,6 +15,7 @@ Public Class AppBrowseGUI
         tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
         tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
         tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
+        tip0.SetToolTip(Me.btn_binFile, "Generate a binary data file filled with an arbitrary pattern")
 
         'check other open forms to dis-allow duplicate forms being open
         For Each openForm As Form In Application.OpenForms
@@ -41,6 +42,11 @@ Public Class AppBrowseGUI
             If TypeOf (openForm) Is ResistorConfigGUI Then
                 btn_resistorConfig.Enabled = False
                 Dim subGUI As ResistorConfigGUI = DirectCast(openForm, ResistorConfigGUI)
+                subGUI.SetAppGUI(Me)
+            End If
+            If TypeOf (openForm) Is BinaryFileWriterGUI Then
+                btn_binFile.Enabled = False
+                Dim subGUI As BinaryFileWriterGUI = DirectCast(openForm, BinaryFileWriterGUI)
                 subGUI.SetAppGUI(Me)
             End If
         Next
@@ -92,4 +98,11 @@ Public Class AppBrowseGUI
         btn_resistorConfig.Enabled = False
     End Sub
 
+    Private Sub btn_binFile_Click(sender As Object, e As EventArgs) Handles btn_binFile.Click
+        Dim subGUI As New BinaryFileWriterGUI()
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetAppGUI(Me)
+        subGUI.Show()
+        btn_binFile.Enabled = False
+    End Sub
 End Class

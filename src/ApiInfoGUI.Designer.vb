@@ -21,49 +21,72 @@ Partial Class ApiInfoGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.label_info = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.ButtonOpenBrowser = New System.Windows.Forms.Button()
+        Me.nameLabel = New System.Windows.Forms.Label()
+        Me.desc = New System.Windows.Forms.Label()
+        Me.ver = New System.Windows.Forms.Label()
+        Me.buildDate = New System.Windows.Forms.Label()
+        Me.commitLink = New System.Windows.Forms.LinkLabel()
         Me.SuspendLayout()
         '
-        'label_info
+        'nameLabel
         '
-        Me.label_info.AutoSize = True
-        Me.label_info.Location = New System.Drawing.Point(12, 9)
-        Me.label_info.Name = "label_info"
-        Me.label_info.Size = New System.Drawing.Size(0, 13)
-        Me.label_info.TabIndex = 0
+        Me.nameLabel.AutoSize = True
+        Me.nameLabel.Location = New System.Drawing.Point(12, 10)
+        Me.nameLabel.Name = "nameLabel"
+        Me.nameLabel.Size = New System.Drawing.Size(39, 13)
+        Me.nameLabel.TabIndex = 0
+        Me.nameLabel.Text = "Label1"
         '
-        'Label4
+        'desc
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(12, 27)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(0, 13)
-        Me.Label4.TabIndex = 3
+        Me.desc.AutoSize = True
+        Me.desc.Location = New System.Drawing.Point(12, 32)
+        Me.desc.Name = "desc"
+        Me.desc.Size = New System.Drawing.Size(39, 13)
+        Me.desc.TabIndex = 1
+        Me.desc.Text = "Label2"
         '
-        'ButtonOpenBrowser
+        'ver
         '
-        Me.ButtonOpenBrowser.Location = New System.Drawing.Point(221, 193)
-        Me.ButtonOpenBrowser.Margin = New System.Windows.Forms.Padding(2)
-        Me.ButtonOpenBrowser.Name = "ButtonOpenBrowser"
-        Me.ButtonOpenBrowser.Size = New System.Drawing.Size(67, 57)
-        Me.ButtonOpenBrowser.TabIndex = 4
-        Me.ButtonOpenBrowser.Text = "View the Commit"
-        Me.ButtonOpenBrowser.UseVisualStyleBackColor = True
+        Me.ver.AutoSize = True
+        Me.ver.Location = New System.Drawing.Point(12, 54)
+        Me.ver.Name = "ver"
+        Me.ver.Size = New System.Drawing.Size(39, 13)
+        Me.ver.TabIndex = 2
+        Me.ver.Text = "Label3"
+        '
+        'buildDate
+        '
+        Me.buildDate.AutoSize = True
+        Me.buildDate.Location = New System.Drawing.Point(12, 76)
+        Me.buildDate.Name = "buildDate"
+        Me.buildDate.Size = New System.Drawing.Size(39, 13)
+        Me.buildDate.TabIndex = 3
+        Me.buildDate.Text = "Label4"
+        '
+        'commitLink
+        '
+        Me.commitLink.AutoSize = True
+        Me.commitLink.Location = New System.Drawing.Point(12, 98)
+        Me.commitLink.Name = "commitLink"
+        Me.commitLink.Size = New System.Drawing.Size(67, 13)
+        Me.commitLink.TabIndex = 4
+        Me.commitLink.TabStop = True
+        Me.commitLink.Text = "View Commit"
         '
         'ApiInfoGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(514, 261)
-        Me.Controls.Add(Me.ButtonOpenBrowser)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.label_info)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.ClientSize = New System.Drawing.Size(449, 121)
+        Me.Controls.Add(Me.commitLink)
+        Me.Controls.Add(Me.buildDate)
+        Me.Controls.Add(Me.ver)
+        Me.Controls.Add(Me.desc)
+        Me.Controls.Add(Me.nameLabel)
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
-        Me.MaximumSize = New System.Drawing.Size(530, 300)
-        Me.MinimumSize = New System.Drawing.Size(530, 300)
+        Me.MaximumSize = New System.Drawing.Size(465, 160)
+        Me.MinimumSize = New System.Drawing.Size(465, 160)
         Me.Name = "ApiInfoGUI"
         Me.Text = "FX3 API Info"
         Me.ResumeLayout(False)
@@ -71,7 +94,9 @@ Partial Class ApiInfoGUI
 
     End Sub
 
-    Friend WithEvents label_info As Label
-    Friend WithEvents Label4 As Label
-    Friend WithEvents ButtonOpenBrowser As Button
+    Friend WithEvents nameLabel As Label
+    Friend WithEvents desc As Label
+    Friend WithEvents ver As Label
+    Friend WithEvents buildDate As Label
+    Friend WithEvents commitLink As LinkLabel
 End Class

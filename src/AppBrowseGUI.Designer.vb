@@ -26,6 +26,7 @@ Partial Class AppBrowseGUI
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
         Me.btn_resistorConfig = New System.Windows.Forms.Button()
+        Me.btn_binFile = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'btn_BurstTest
@@ -73,11 +74,21 @@ Partial Class AppBrowseGUI
         Me.btn_resistorConfig.Text = "Input Pin Resistor Config"
         Me.btn_resistorConfig.UseVisualStyleBackColor = True
         '
+        'btn_binFile
+        '
+        Me.btn_binFile.Location = New System.Drawing.Point(93, 82)
+        Me.btn_binFile.Name = "btn_binFile"
+        Me.btn_binFile.Size = New System.Drawing.Size(75, 64)
+        Me.btn_binFile.TabIndex = 5
+        Me.btn_binFile.Text = "Binary File Writer"
+        Me.btn_binFile.UseVisualStyleBackColor = True
+        '
         'AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(344, 161)
+        Me.Controls.Add(Me.btn_binFile)
         Me.Controls.Add(Me.btn_resistorConfig)
         Me.Controls.Add(Me.btn_pulseMeasure)
         Me.Controls.Add(Me.btn_ADXL375)
@@ -96,4 +107,5 @@ Partial Class AppBrowseGUI
     Friend WithEvents btn_ADXL375 As Button
     Friend WithEvents btn_pulseMeasure As Button
     Friend WithEvents btn_resistorConfig As Button
+    Friend WithEvents btn_binFile As Button
 End Class

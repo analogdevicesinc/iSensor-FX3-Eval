@@ -8,11 +8,14 @@ Imports System.ComponentModel
 Public Class ApiInfoGUI
     Inherits FormBase
 
-    Public Sub FormSetup() Handles Me.Load
-        ButtonOpenBrowser.Location = New Point((ClientSize.Width - ButtonOpenBrowser.Width) / 2,
-                                       ClientSize.Height - ButtonOpenBrowser.Height - 10)
+    Private info As FX3Api.FX3ApiInfo
 
-        label_info.Text = m_TopGUI.FX3.GetFX3ApiInfo.ToString()
+    Public Sub FormSetup() Handles Me.Load
+        info = m_TopGUI.FX3.GetFX3ApiInfo()
+        nameLabel.Text = "Project: " + info.Name
+        desc.Text = "Description: " + info.Description
+        buildDate.Text = "Build Date: " + info.BuildDateTime
+        ver.Text = "Version: " + info.VersionNumber
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -20,14 +23,9 @@ Public Class ApiInfoGUI
         m_TopGUI.btn_APIInfo.Enabled = True
     End Sub
 
-    Private Sub ButtonOpenBrowser_Click(sender As Object, e As EventArgs) Handles ButtonOpenBrowser.Click
-        Try
-            Dim proc = New Process()
-            proc.StartInfo.UseShellExecute = True
-            proc.StartInfo.FileName = m_TopGUI.FX3.GetFX3ApiInfo.GitCommitURL
-            proc.Start()
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        End Try
+    Private Sub commitLink_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles commitLink.LinkClicked
+        commitLink.LinkVisited = True
+        System.Diagnostics.Process.Start(info.GitCommitURL)
     End Sub
+
 End Class

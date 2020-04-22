@@ -165,6 +165,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="BinaryFileWriterGUI.Designer.vb">
+      <DependentUpon>BinaryFileWriterGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="BinaryFileWriterGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="BitBangSpiGUI.Designer.vb">
       <DependentUpon>BitBangSpiGUI.vb</DependentUpon>
     </Compile>
@@ -299,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AppBrowseGUI.resx">
       <DependentUpon>AppBrowseGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BinaryFileWriterGUI.resx">
+      <DependentUpon>BinaryFileWriterGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BitBangSpiGUI.resx">
       <DependentUpon>BitBangSpiGUI.vb</DependentUpon>
