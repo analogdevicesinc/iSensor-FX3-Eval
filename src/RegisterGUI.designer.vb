@@ -341,6 +341,7 @@ Partial Class RegisterGUI
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.selectPage)
         Me.Controls.Add(Me.regView)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(2)
         Me.MaximumSize = New System.Drawing.Size(640, 1000)

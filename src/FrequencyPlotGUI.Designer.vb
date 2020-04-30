@@ -21,9 +21,9 @@ Partial Class FrequencyPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.RegisterList = New System.Windows.Forms.ListView()
         Me.regSelect = New System.Windows.Forms.ComboBox()
@@ -54,16 +54,16 @@ Partial Class FrequencyPlotGUI
         '
         'dataPlot
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend2)
+        ChartArea1.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend1)
         Me.dataPlot.Location = New System.Drawing.Point(237, 9)
         Me.dataPlot.Name = "dataPlot"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.dataPlot.Series.Add(Series2)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.dataPlot.Series.Add(Series1)
         Me.dataPlot.Size = New System.Drawing.Size(587, 511)
         Me.dataPlot.TabIndex = 0
         Me.dataPlot.Text = "dataPlot"
@@ -311,6 +311,7 @@ Partial Class FrequencyPlotGUI
         Me.Controls.Add(Me.regSelect)
         Me.Controls.Add(Me.RegisterList)
         Me.Controls.Add(Me.dataPlot)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
         Me.MinimumSize = New System.Drawing.Size(850, 570)
         Me.Name = "FrequencyPlotGUI"
         Me.Text = "Frequency Plotting"

@@ -69,4 +69,8 @@ Public Class BinaryFileWriterGUI
         fillPattern.Width = Me.Width - 40
     End Sub
 
+    Private Sub Shutdown() Handles Me.Closing
+        m_AppGUI.btn_binFile.Enabled = True
+    End Sub
+
 End Class

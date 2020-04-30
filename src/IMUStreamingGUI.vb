@@ -120,7 +120,7 @@ Public Class IMUStreamingGUI
         DRDIO.Enabled = False
         NumberDRToCapture.Enabled = False
         MeasureDR.Enabled = False
-        ListView1.Enabled = False
+        burstRegList.Enabled = False
         MainButton.Enabled = False
 
     End Sub
@@ -140,7 +140,7 @@ Public Class IMUStreamingGUI
         DRDIO.Enabled = True
         NumberDRToCapture.Enabled = True
         MeasureDR.Enabled = True
-        ListView1.Enabled = True
+        burstRegList.Enabled = True
         MainButton.Enabled = True
 
         'Clear burst mode
@@ -205,13 +205,13 @@ Public Class IMUStreamingGUI
                 End If
             Next
             'Refresh the register list in the GUI
-            ListView1.Clear()
-            ListView1.View = View.Details
-            ListView1.Columns.Add("Register", 182, HorizontalAlignment.Left)
+            burstRegList.Clear()
+            burstRegList.View = View.Details
+            burstRegList.Columns.Add("Register", burstRegList.Width - 3, HorizontalAlignment.Left)
             For Each reg In tempRegList
                 Dim newItem As New ListViewItem()
                 newItem.SubItems(0).Text = reg.Label
-                ListView1.Items.Add(newItem)
+                burstRegList.Items.Add(newItem)
             Next
         Else
             'Handle 16-bit registers
@@ -225,13 +225,13 @@ Public Class IMUStreamingGUI
                 End If
             Next
             'Refresh the register list in the GUI
-            ListView1.Clear()
-            ListView1.View = View.Details
-            ListView1.Columns.Add("Register", 182, HorizontalAlignment.Left)
+            burstRegList.Clear()
+            burstRegList.View = View.Details
+            burstRegList.Columns.Add("Register", burstRegList.Width - 3, HorizontalAlignment.Left)
             For Each reg In tempRegList
                 Dim newItem As New ListViewItem()
                 newItem.SubItems(0).Text = reg.Label
-                ListView1.Items.Add(newItem)
+                burstRegList.Items.Add(newItem)
             Next
         End If
 

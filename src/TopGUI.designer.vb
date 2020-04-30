@@ -310,6 +310,7 @@ Partial Class TopGUI
         Me.Controls.Add(Me.btn_Connect)
         Me.Controls.Add(Me.label_FX3Status)
         Me.Controls.Add(Me.text_FX3Status)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximumSize = New System.Drawing.Size(440, 365)
         Me.MinimumSize = New System.Drawing.Size(440, 365)

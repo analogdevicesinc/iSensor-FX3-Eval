@@ -29,7 +29,7 @@ Partial Class IMUStreamingGUI
         Me.NumberDRToCapture = New System.Windows.Forms.TextBox()
         Me.BurstStreamCancelButton = New System.Windows.Forms.Button()
         Me.MainButton = New System.Windows.Forms.Button()
-        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.burstRegList = New System.Windows.Forms.ListView()
         Me.statusLabel = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -106,13 +106,13 @@ Partial Class IMUStreamingGUI
         Me.MainButton.Text = "Start"
         Me.MainButton.UseVisualStyleBackColor = True
         '
-        'ListView1
+        'burstRegList
         '
-        Me.ListView1.Location = New System.Drawing.Point(200, 11)
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(200, 288)
-        Me.ListView1.TabIndex = 20
-        Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.burstRegList.Location = New System.Drawing.Point(200, 11)
+        Me.burstRegList.Name = "burstRegList"
+        Me.burstRegList.Size = New System.Drawing.Size(200, 288)
+        Me.burstRegList.TabIndex = 20
+        Me.burstRegList.UseCompatibleStateImageBehavior = False
         '
         'statusLabel
         '
@@ -179,7 +179,7 @@ Partial Class IMUStreamingGUI
         Me.Controls.Add(Me.NumberDRToCapture)
         Me.Controls.Add(Me.BurstStreamCancelButton)
         Me.Controls.Add(Me.MainButton)
-        Me.Controls.Add(Me.ListView1)
+        Me.Controls.Add(Me.burstRegList)
         Me.MaximumSize = New System.Drawing.Size(430, 350)
         Me.MinimumSize = New System.Drawing.Size(430, 350)
         Me.Name = "IMUStreamingGUI"
@@ -197,7 +197,7 @@ Partial Class IMUStreamingGUI
     Friend WithEvents NumberDRToCapture As TextBox
     Friend WithEvents BurstStreamCancelButton As Button
     Friend WithEvents MainButton As Button
-    Friend WithEvents ListView1 As ListView
+    Friend WithEvents burstRegList As ListView
     Friend WithEvents statusLabel As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label1 As Label

@@ -81,6 +81,7 @@ Partial Class BinaryFileWriterGUI
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.btn_GenFile)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
         Me.MaximumSize = New System.Drawing.Size(500, 190)
         Me.MinimumSize = New System.Drawing.Size(200, 190)
         Me.Name = "BinaryFileWriterGUI"

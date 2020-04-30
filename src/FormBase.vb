@@ -12,7 +12,6 @@ Public Class FormBase
         'Set the start position
         Me.Left = TopGUI.Left
         Me.Top = TopGUI.Top
-
     End Sub
 
     Public Sub Cleanup() Handles Me.Closing
