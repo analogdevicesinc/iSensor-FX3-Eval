@@ -62,10 +62,8 @@ Public Class FrequencyPlotGUI
     Private Sub Shutdown() Handles Me.Closing
         If m_FFTStream.IsBusy Then
             m_FFTStream.CancelAsync()
-        End If
-        While m_FFTStream.IsBusy
             System.Threading.Thread.Sleep(100)
-        End While
+        End If
         m_FFTStream.Dispose()
         'show other forms
         InteractWithOtherForms(False)
