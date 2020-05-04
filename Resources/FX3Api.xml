@@ -597,6 +597,31 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  real time streaming mode. If the settings are not compatible, a FX3ConfigException is thrown.
  </summary>
 </member>
+<member name="M:FX3Api.FX3Connection.ReadFlash(System.UInt32,System.UInt16)">
+ <summary>
+ Read data from the FX3 non-volatile memory
+ </summary>
+ <param name="ByteAddress">The flash byte address to read from (valid range 0x0 - 0x40000)</param>
+ <param name="ReadLength">The number of bytes to read. Max 4096</param>
+ <returns>The data read from the FX3 flash memory</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ClearErrorLog">
+ <summary>
+ Clear the error log stored in flash
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GetErrorLogCount">
+ <summary>
+ Get the number of errors logged to the FX3 flash memory
+ </summary>
+ <returns>The error log count in flash</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetErrorLog">
+ <summary>
+ Gets the current error log from FX3 flash memory
+ </summary>
+ <returns>The stored error log, as a list of FX3ErrorLog objects</returns>
+</member>
 <member name="M:FX3Api.FX3Connection.PulseDrive(AdisApi.IPinObject,System.UInt32,System.Double,System.UInt32)">
  <summary>
  This function drives a pin to the specified level for a given time interval in ms
@@ -1777,6 +1802,42 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Set the Date/time string after connecting
  </summary>
  <param name="DateTime"></param>
+</member>
+<member name="T:FX3Api.FX3ErrorLog">
+ <summary>
+ FX3 flash error log class. These are generated and stored on the FX3 board
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.Line">
+ <summary>
+ The FX3 firmware line which generated the error
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.FileIdentifier">
+ <summary>
+ The FX3 firmware file which generated the error. See FileIdentifier enum in firmware docs for details
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.BootTimeStamp">
+ <summary>
+ The FX3 boot time when the error occurred. This is a 32-bit unix timestamp
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.ErrorCode">
+ <summary>
+ The error code supplied with the error. Usually sourced from RTOS
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.FirmwareRev">
+ <summary>
+ The firmware revision the FX3 was running when the error log was generated. Can be used with the File/Line to track down exact source of error
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ErrorLog.#ctor(System.Byte[])">
+ <summary>
+ Error log constructor
+ </summary>
+ <param name="FlashData">The 32 byte block of data read from flash which contains the error log struct</param>
 </member>
 <member name="T:FX3Api.FX3ConfigurationException">
  <summary>

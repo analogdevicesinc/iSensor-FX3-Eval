@@ -190,6 +190,11 @@ adisInterface
  </summary>
  <param name="SpiInterface">The SPI interface to be used.</param>
 </member>
+<member name="M:adisInterface.iSensorAutomotiveSpi.#ctor">
+ <summary>
+ Empty constructor. Must set the Spi32Interface afterwards if this constructor is used
+ </summary>
+</member>
 <member name="P:adisInterface.iSensorAutomotiveSpi.IgnoreExceptions">
  <summary>
  Property to enable error exceptions. When enabled, exceptions are thrown for invalid CRC, state vector, transaction counter, address.

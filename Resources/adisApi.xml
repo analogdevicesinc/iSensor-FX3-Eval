@@ -721,6 +721,11 @@
             </summary>
             <param name="SpiInterface">The ISpi32Interface implementation to wrap around</param>
         </member>
+        <member name="M:AdisApi.Spi32Wrapper.#ctor">
+            <summary>
+            Default constructor which takes no arguments. Do not use.
+            </summary>
+        </member>
         <member name="T:AdisApi.SpiCortexM4">
             <summary>
             
