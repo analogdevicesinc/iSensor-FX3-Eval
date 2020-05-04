@@ -189,6 +189,12 @@
     <Compile Include="DataPlotGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FlashInterfaceGUI.Designer.vb">
+      <DependentUpon>FlashInterfaceGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="FlashInterfaceGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormBase.Designer.vb">
       <DependentUpon>FormBase.vb</DependentUpon>
     </Compile>
@@ -317,6 +323,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataPlotGUI.resx">
       <DependentUpon>DataPlotGUI.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlashInterfaceGUI.resx">
+      <DependentUpon>FlashInterfaceGUI.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>

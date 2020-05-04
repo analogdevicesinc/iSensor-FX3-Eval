@@ -49,6 +49,11 @@ Public Class AppBrowseGUI
                 Dim subGUI As BinaryFileWriterGUI = DirectCast(openForm, BinaryFileWriterGUI)
                 subGUI.SetAppGUI(Me)
             End If
+            If TypeOf (openForm) Is FlashInterfaceGUI Then
+                btn_checkError.Enabled = False
+                Dim subGUI As FlashInterfaceGUI = DirectCast(openForm, FlashInterfaceGUI)
+                subGUI.SetAppGUI(Me)
+            End If
         Next
 
     End Sub
@@ -105,4 +110,13 @@ Public Class AppBrowseGUI
         subGUI.Show()
         btn_binFile.Enabled = False
     End Sub
+
+    Private Sub btn_checkError_Click(sender As Object, e As EventArgs) Handles btn_checkError.Click
+        Dim subGUI As New FlashInterfaceGUI()
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetAppGUI(Me)
+        subGUI.Show()
+        btn_checkError.Enabled = False
+    End Sub
+
 End Class
