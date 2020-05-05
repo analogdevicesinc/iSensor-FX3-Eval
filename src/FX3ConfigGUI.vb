@@ -161,6 +161,13 @@ Public Class FX3ConfigGUI
             m_TopGUI.FX3.ChipSelectPolarity = False
         End If
 
+        'LSB first mode
+        If lsbFirstInput.SelectedItem = "True: LSB comes first" Then
+            m_TopGUI.FX3.IsLSBFirst = True
+        Else
+            m_TopGUI.FX3.IsLSBFirst = False
+        End If
+
         'sclk freq
         Dim frequency As UInt32
         Try
@@ -210,6 +217,7 @@ Public Class FX3ConfigGUI
             m_TopGUI.FX3.DrActive = False
         End If
 
+        'dr polarity
         If dataReadyPolarityInput.SelectedItem = "Low-to-High: Trigger on rising edge" Then
             m_TopGUI.FX3.DrPolarity = True
         ElseIf dataReadyPolarityInput.SelectedItem = "High-to-Low: Trigger on falling edge" Then
@@ -219,6 +227,7 @@ Public Class FX3ConfigGUI
             m_TopGUI.FX3.DrPolarity = True
         End If
 
+        'selected DIO for dr
         Dim dio As String = dataReadyPinInput.SelectedItem
         Select Case dio
             Case "DIO1"
@@ -250,7 +259,7 @@ Public Class FX3ConfigGUI
             m_TopGUI.FX3.DutSupplyMode = DutVoltage.SelectedItem
         End If
 
-        'set watchdog paramters
+        'set watchdog parameters
         If WatchdogEnable.Checked <> m_TopGUI.FX3.WatchdogEnable Then
             m_TopGUI.FX3.WatchdogEnable = WatchdogEnable.Checked
         End If
@@ -271,7 +280,7 @@ Public Class FX3ConfigGUI
         m_TopGUI.SaveAppSettings()
 
         StatusLabel.Text = "Done"
-        StatusLabel.BackColor = Color.Green
+        StatusLabel.BackColor = m_TopGUI.GOOD_COLOR
 
         UpdateFields()
 

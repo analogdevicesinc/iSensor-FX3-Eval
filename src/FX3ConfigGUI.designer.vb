@@ -232,9 +232,10 @@ Partial Class FX3ConfigGUI
         Me.StatusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.StatusLabel.Location = New System.Drawing.Point(360, 83)
         Me.StatusLabel.Name = "StatusLabel"
-        Me.StatusLabel.Size = New System.Drawing.Size(75, 16)
+        Me.StatusLabel.Size = New System.Drawing.Size(75, 18)
         Me.StatusLabel.TabIndex = 18
         Me.StatusLabel.Text = "Label10"
+        Me.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
         'Label10
         '
