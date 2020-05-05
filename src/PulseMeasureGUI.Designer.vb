@@ -74,6 +74,7 @@ Partial Class PulseMeasureGUI
         Me.triggerData.Name = "triggerData"
         Me.triggerData.Size = New System.Drawing.Size(232, 20)
         Me.triggerData.TabIndex = 7
+        Me.triggerData.Text = "BF08"
         '
         'Label2
         '
@@ -106,6 +107,7 @@ Partial Class PulseMeasureGUI
         Me.drivePolarity.Name = "drivePolarity"
         Me.drivePolarity.Size = New System.Drawing.Size(141, 20)
         Me.drivePolarity.TabIndex = 11
+        Me.drivePolarity.Text = "0"
         '
         'driveTime
         '
@@ -113,6 +115,7 @@ Partial Class PulseMeasureGUI
         Me.driveTime.Name = "driveTime"
         Me.driveTime.Size = New System.Drawing.Size(141, 20)
         Me.driveTime.TabIndex = 10
+        Me.driveTime.Text = "10"
         '
         'Label6
         '
@@ -151,7 +154,7 @@ Partial Class PulseMeasureGUI
         '
         'startBtn
         '
-        Me.startBtn.Location = New System.Drawing.Point(103, 233)
+        Me.startBtn.Location = New System.Drawing.Point(89, 229)
         Me.startBtn.Name = "startBtn"
         Me.startBtn.Size = New System.Drawing.Size(75, 42)
         Me.startBtn.TabIndex = 4
@@ -189,6 +192,7 @@ Partial Class PulseMeasureGUI
         Me.timeout.Name = "timeout"
         Me.timeout.Size = New System.Drawing.Size(160, 20)
         Me.timeout.TabIndex = 8
+        Me.timeout.Text = "1000"
         '
         'Label8
         '
@@ -213,9 +217,9 @@ Partial Class PulseMeasureGUI
         Me.Label10.AutoSize = True
         Me.Label10.Location = New System.Drawing.Point(9, 194)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(48, 13)
+        Me.Label10.Size = New System.Drawing.Size(70, 13)
         Me.Label10.TabIndex = 12
-        Me.Label10.Text = "Timeout:"
+        Me.Label10.Text = "Timeout (ms):"
         '
         'busyPolarity
         '
@@ -223,6 +227,7 @@ Partial Class PulseMeasureGUI
         Me.busyPolarity.Name = "busyPolarity"
         Me.busyPolarity.Size = New System.Drawing.Size(160, 20)
         Me.busyPolarity.TabIndex = 13
+        Me.busyPolarity.Text = "0"
         '
         'PulseMeasureGUI
         '

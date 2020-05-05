@@ -53,7 +53,7 @@ Public Class FX3ConfigGUI
         UpdateFields()
 
         StatusLabel.Text = "Waiting..."
-        StatusLabel.BackColor = Color.Yellow
+        StatusLabel.BackColor = m_TopGUI.IDLE_COLOR
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -179,7 +179,7 @@ Public Class FX3ConfigGUI
         Catch ex As Exception
             MsgBox("ERROR: Invalid Frequency Value: " + ex.Message)
             StatusLabel.Text = "ERROR"
-            StatusLabel.BackColor = Color.Red
+            StatusLabel.BackColor = m_TopGUI.ERROR_COLOR
         End Try
 
         'SPI word length
@@ -193,7 +193,7 @@ Public Class FX3ConfigGUI
         Catch ex As Exception
             MsgBox("ERROR: Invalid word length: " + ex.Message)
             StatusLabel.Text = "ERROR"
-            StatusLabel.BackColor = Color.Red
+            StatusLabel.BackColor = m_TopGUI.ERROR_COLOR
         End Try
 
         'stall time (us)
@@ -204,7 +204,7 @@ Public Class FX3ConfigGUI
         Catch ex As Exception
             MsgBox("ERROR: Invalid stall time: " + ex.Message)
             StatusLabel.Text = "ERROR"
-            StatusLabel.BackColor = Color.Red
+            StatusLabel.BackColor = m_TopGUI.ERROR_COLOR
         End Try
 
         'dr active
@@ -250,7 +250,7 @@ Public Class FX3ConfigGUI
             Catch ex As Exception
                 MsgBox("ERROR: Invalid register map path: " + ex.Message)
                 StatusLabel.Text = "ERROR"
-                StatusLabel.BackColor = Color.Red
+                StatusLabel.BackColor = m_TopGUI.ERROR_COLOR
             End Try
         End If
 
@@ -271,7 +271,7 @@ Public Class FX3ConfigGUI
             Catch ex As Exception
                 MsgBox("ERROR: Invalid watchdog period. Defaulting to 10s: " + ex.Message)
                 StatusLabel.Text = "ERROR"
-                StatusLabel.BackColor = Color.Red
+                StatusLabel.BackColor = m_TopGUI.ERROR_COLOR
                 m_TopGUI.FX3.WatchdogTimeoutSeconds = 10
             End Try
         End If
@@ -305,6 +305,14 @@ Public Class FX3ConfigGUI
         Else
             WatchdogTimeout.ReadOnly = True
         End If
+    End Sub
+
+    Private Sub btn_edit_colors_Click(sender As Object, e As EventArgs) Handles btn_edit_colors.Click
+        btn_edit_colors.Enabled = False
+        Dim subGUI As New ColorPaletteGUI
+        subGUI.SetTopGUI(m_TopGUI)
+        subGUI.SetEnableButton(btn_edit_colors)
+        subGUI.Show()
     End Sub
 
 End Class

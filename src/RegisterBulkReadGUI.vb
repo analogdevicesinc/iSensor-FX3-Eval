@@ -272,7 +272,7 @@ Public Class RegisterBulkReadGUI
 
     Private Sub DoneWork()
         statusLabel.Text = "Done"
-        statusLabel.BackColor = Color.Green
+        statusLabel.BackColor = m_TopGUI.GOOD_COLOR
         StreamingAVARCancelButton.Enabled = False
         DRDIO.Enabled = True
         NumberDRToCapture.Enabled = True
@@ -294,7 +294,7 @@ Public Class RegisterBulkReadGUI
         If fileManager.Busy Then
             fileManager.CancelAsync()
             statusLabel.Text = "Canceling"
-            statusLabel.BackColor = Color.Red
+            statusLabel.BackColor = m_TopGUI.ERROR_COLOR
         End If
     End Sub
 

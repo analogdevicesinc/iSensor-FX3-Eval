@@ -125,6 +125,42 @@ Namespace My
                 Me("LastFilePath") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Chartreuse")>  _
+        Public Property GoodColor() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("GoodColor"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("GoodColor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Yellow")>  _
+        Public Property IdleColor() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("IdleColor"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("IdleColor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Red")>  _
+        Public Property ErrorColor() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("ErrorColor"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("ErrorColor") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

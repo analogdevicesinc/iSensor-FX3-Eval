@@ -139,7 +139,7 @@ Public Class ADcmXLStreamingGUI
             numSampleCaptures = Convert.ToInt32(numSamples.Text)
         Catch ex As Exception
             statusLabel.Text = "Invalid number of samples"
-            statusLabel.BackColor = Color.Red
+            statusLabel.BackColor = m_TopGUI.ERROR_COLOR
             Exit Sub
         End Try
 
@@ -147,7 +147,7 @@ Public Class ADcmXLStreamingGUI
             captureTime = Convert.ToUInt32(timeSelect.Text)
         Catch ex As Exception
             statusLabel.Text = "Invalid time selection"
-            statusLabel.BackColor = Color.Red
+            statusLabel.BackColor = m_TopGUI.ERROR_COLOR
             Exit Sub
         End Try
 
@@ -209,7 +209,7 @@ Public Class ADcmXLStreamingGUI
 
                 'Perform sample
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = m_TopGUI.IDLE_COLOR))
                 CaptureSample()
 
                 'Wait for sample completion
@@ -231,7 +231,7 @@ Public Class ADcmXLStreamingGUI
 
                 'timer delay mode
                 Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
+                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = m_TopGUI.IDLE_COLOR))
                 CaptureSample()
 
                 'wait for sample completion
@@ -255,7 +255,7 @@ Public Class ADcmXLStreamingGUI
 
     Private Sub UpdateLabelsStop()
 
-        statusLabel.BackColor = Color.Green
+        statusLabel.BackColor = m_TopGUI.GOOD_COLOR
         If CancelCapture Then
             statusLabel.Text = "Cancel Finished"
         Else
@@ -276,7 +276,7 @@ Public Class ADcmXLStreamingGUI
     Private Sub CaptureSample()
 
         Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
-        Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.Yellow))
+        Invoke(New MethodInvoker(Sub() statusLabel.BackColor = m_TopGUI.IDLE_COLOR))
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
@@ -339,7 +339,7 @@ Public Class ADcmXLStreamingGUI
             If fileManager.Busy Then
                 fileManager.CancelAsync()
                 statusLabel.Text = "Canceling in capture"
-                statusLabel.BackColor = Color.Red
+                statusLabel.BackColor = m_TopGUI.ERROR_COLOR
             End If
         End If
     End Sub

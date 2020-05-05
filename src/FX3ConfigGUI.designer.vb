@@ -60,6 +60,8 @@ Partial Class FX3ConfigGUI
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.DutVoltage = New System.Windows.Forms.ComboBox()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.btn_edit_colors = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -415,11 +417,31 @@ Partial Class FX3ConfigGUI
         Me.DutVoltage.Size = New System.Drawing.Size(219, 21)
         Me.DutVoltage.TabIndex = 40
         '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Location = New System.Drawing.Point(12, 495)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(89, 13)
+        Me.Label20.TabIndex = 42
+        Me.Label20.Text = "Set Color Palette:"
+        '
+        'btn_edit_colors
+        '
+        Me.btn_edit_colors.Location = New System.Drawing.Point(135, 490)
+        Me.btn_edit_colors.Name = "btn_edit_colors"
+        Me.btn_edit_colors.Size = New System.Drawing.Size(219, 22)
+        Me.btn_edit_colors.TabIndex = 43
+        Me.btn_edit_colors.Text = "Edit Colors"
+        Me.btn_edit_colors.UseVisualStyleBackColor = True
+        '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(444, 497)
+        Me.ClientSize = New System.Drawing.Size(444, 520)
+        Me.Controls.Add(Me.btn_edit_colors)
+        Me.Controls.Add(Me.Label20)
         Me.Controls.Add(Me.Label19)
         Me.Controls.Add(Me.DutVoltage)
         Me.Controls.Add(Me.Label13)
@@ -459,8 +481,6 @@ Partial Class FX3ConfigGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.MaximumSize = New System.Drawing.Size(460, 536)
-        Me.MinimumSize = New System.Drawing.Size(460, 536)
         Me.Name = "FX3ConfigGUI"
         Me.Text = "FX3 Configuration"
         Me.ResumeLayout(False)
@@ -507,4 +527,6 @@ Partial Class FX3ConfigGUI
     Friend WithEvents Label13 As Label
     Friend WithEvents Label19 As Label
     Friend WithEvents DutVoltage As ComboBox
+    Friend WithEvents Label20 As Label
+    Friend WithEvents btn_edit_colors As Button
 End Class

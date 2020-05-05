@@ -15,6 +15,11 @@ Imports System.Web.Script.Serialization
 
 Public Class TopGUI
 
+    'Global colors for application
+    Public GOOD_COLOR As Color = Color.Chartreuse
+    Public ERROR_COLOR As Color = Color.Red
+    Public IDLE_COLOR As Color = Color.Yellow
+
     'Public member variables accessible to all forms
     Public WithEvents FX3 As FX3Connection
     Public RegMap As RegMapCollection
@@ -80,6 +85,11 @@ Public Class TopGUI
         assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
         outputStream.Close()
 
+        'load colors from settings
+        GOOD_COLOR = My.Settings.GoodColor
+        ERROR_COLOR = My.Settings.ErrorColor
+        IDLE_COLOR = My.Settings.IdleColor
+
         'Set the regmap path using the SelectRegMap GUI
         If Not File.Exists(My.Settings.SelectedRegMap) Then
             Dim regMapSelector As New SelectRegmapGUI()
@@ -127,10 +137,9 @@ Public Class TopGUI
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
         m_AutoSpi.LogExceptions = True
-        'm_AutoSpi.IgnoreCRCExceptions = False
 
         'Set the API version and build date
-        label_apiVersion.Text = "ADI iSensor FX3 Example GUI v" + System.Windows.Forms.Application.ProductVersion
+        label_apiVersion.Text = "ADI iSensor FX3 Example GUI v" + Application.ProductVersion
 
         'load the last used file path
         lastFilePath = My.Settings.LastFilePath
@@ -402,6 +411,9 @@ Public Class TopGUI
         My.Settings.LastTop = Me.Top
         My.Settings.LastFilePath = lastFilePath
         My.Settings.SelectedRegMap = m_RegMapPath
+        My.Settings.GoodColor = GOOD_COLOR
+        My.Settings.ErrorColor = ERROR_COLOR
+        My.Settings.IdleColor = IDLE_COLOR
         My.Settings.Save()
     End Sub
 
@@ -479,9 +491,9 @@ Public Class TopGUI
 
         'Special error message
         label_FX3Status.Text = "ERROR: FX3 Connection Lost"
-        label_FX3Status.BackColor = Color.Red
+        label_FX3Status.BackColor = ERROR_COLOR
         label_DUTStatus.Text = "ERROR: FX3 Connection Lost"
-        label_DUTStatus.BackColor = Color.Red
+        label_DUTStatus.BackColor = ERROR_COLOR
 
         RaiseEvent UnexpectedDisconnect(FX3SerialNumber)
 
@@ -495,7 +507,7 @@ Public Class TopGUI
     Public Sub DisconnectFinishedHandler(FX3SN As String, DisconnectTime As Integer) Handles FX3.DisconnectFinished
         btn_Connect.Enabled = True
         label_FX3Status.Text = "FX3 Reset"
-        label_FX3Status.BackColor = Color.Yellow
+        label_FX3Status.BackColor = IDLE_COLOR
         m_disconnectTimer.Enabled = False
     End Sub
 
@@ -522,7 +534,7 @@ Public Class TopGUI
     ''' </summary>
     ''' <param name="DutType"></param>
     Friend Sub UpdateDutLabel(DutType As DUTType)
-        label_DUTType.BackColor = Color.Chartreuse
+        label_DUTType.BackColor = GOOD_COLOR
         label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
 
         'Set the DUT
@@ -570,12 +582,12 @@ Public Class TopGUI
                 ConnectWork()
                 Exit Sub
             Else
-                label_FX3Status.BackColor = Color.Red
+                label_FX3Status.BackColor = ERROR_COLOR
                 label_FX3Status.Text = "ERROR: All FX3s in Use"
                 btn_Connect.Text = "Connect to FX3"
             End If
         Else
-            label_FX3Status.BackColor = Color.Red
+            label_FX3Status.BackColor = ERROR_COLOR
             label_FX3Status.Text = "ERROR: No FX3 board connected"
             btn_Connect.Text = "Connect to FX3"
             Exit Sub
@@ -608,7 +620,7 @@ Public Class TopGUI
         btn_plotData.Enabled = True
 
         label_FX3Status.Text = "Connected to " + [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType) + " (SN: " + FX3.ActiveFX3SerialNumber + ")"
-        label_FX3Status.BackColor = Color.Chartreuse
+        label_FX3Status.BackColor = GOOD_COLOR
         btn_Connect.Text = "Reboot FX3"
 
         'Select register access button initially
@@ -637,7 +649,7 @@ Public Class TopGUI
         End If
         btn_Connect.Enabled = False
         label_FX3Status.Text = "Resetting all FX3 board(s)"
-        label_FX3Status.BackColor = Color.Yellow
+        label_FX3Status.BackColor = IDLE_COLOR
         FX3.ResetAllFX3s()
         'Spin up async timer to check the device list
         m_disconnectTimer.Enabled = True
@@ -671,10 +683,10 @@ Public Class TopGUI
     ''' </summary>
     Private Sub ResetLabels()
         label_DUTStatus.Text = "Waiting for FX3 to connect"
-        label_DUTStatus.BackColor = Color.Yellow
+        label_DUTStatus.BackColor = IDLE_COLOR
         label_FX3Status.Text = "Not Connected"
-        label_FX3Status.BackColor = Color.Yellow
-        label_DUTType.BackColor = Color.Chartreuse
+        label_FX3Status.BackColor = IDLE_COLOR
+        label_DUTType.BackColor = GOOD_COLOR
         label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
     End Sub
 
@@ -685,7 +697,7 @@ Public Class TopGUI
         ResetButtons()
         ResetLabels()
         label_FX3Status.Text = "Error: Disconnect timed out"
-        label_FX3Status.BackColor = Color.Red
+        label_FX3Status.BackColor = ERROR_COLOR
     End Sub
 
     ''' <summary>
@@ -696,14 +708,14 @@ Public Class TopGUI
         'Exit if FX3 not connected
         If Not m_FX3Connected Then
             label_DUTStatus.Text = "Waiting for FX3 to Connect"
-            label_DUTStatus.BackColor = Color.Yellow
+            label_DUTStatus.BackColor = IDLE_COLOR
         End If
 
         'Check that the ready pin is high
         If FX3.DrActive Then
             If FX3.PulseWait(FX3.DrPin, 1, 0, 500) > 500 Then
                 label_DUTStatus.Text = "ERROR: DUT data ready pin not active"
-                label_DUTStatus.BackColor = Color.Red
+                label_DUTStatus.BackColor = ERROR_COLOR
                 Exit Sub
             End If
         End If
@@ -720,7 +732,7 @@ Public Class TopGUI
 
         If IsNothing(scratchReg) Then
             label_DUTStatus.Text = "ERROR: No Scratch Register in RegMap"
-            label_DUTStatus.BackColor = Color.Red
+            label_DUTStatus.BackColor = ERROR_COLOR
             Exit Sub
         End If
 
@@ -731,10 +743,10 @@ Public Class TopGUI
         Dut.WriteUnsigned(scratchReg, randomValue)
         If Not Dut.ReadUnsigned(scratchReg) = randomValue Then
             label_DUTStatus.Text = "ERROR: DUT Read/Write Failed"
-            label_DUTStatus.BackColor = Color.Red
+            label_DUTStatus.BackColor = ERROR_COLOR
         Else
             label_DUTStatus.Text = "DUT Connected"
-            label_DUTStatus.BackColor = Color.Chartreuse
+            label_DUTStatus.BackColor = GOOD_COLOR
         End If
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)

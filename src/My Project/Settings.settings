@@ -20,5 +20,14 @@
     <Setting Name="LastFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\</Value>
     </Setting>
+    <Setting Name="GoodColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Chartreuse</Value>
+    </Setting>
+    <Setting Name="IdleColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Yellow</Value>
+    </Setting>
+    <Setting Name="ErrorColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Red</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

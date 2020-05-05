@@ -135,7 +135,7 @@ Public Class IMUStreamingGUI
 
     Private Sub CaptureDoneWork()
         statusLabel.Text = "Done"
-        statusLabel.BackColor = Color.Green
+        statusLabel.BackColor = m_TopGUI.GOOD_COLOR
         BurstStreamCancelButton.Enabled = False
         DRDIO.Enabled = True
         NumberDRToCapture.Enabled = True
@@ -152,7 +152,7 @@ Public Class IMUStreamingGUI
         If fileManager.Busy Then
             fileManager.CancelAsync()
             statusLabel.Text = "Canceling"
-            statusLabel.BackColor = Color.Red
+            statusLabel.BackColor = m_TopGUI.ERROR_COLOR
         End If
     End Sub
 

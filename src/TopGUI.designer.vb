@@ -266,7 +266,7 @@ Partial Class TopGUI
         Me.report_issue.Location = New System.Drawing.Point(344, 304)
         Me.report_issue.Name = "report_issue"
         Me.report_issue.Size = New System.Drawing.Size(67, 13)
-        Me.report_issue.TabIndex = 15
+        Me.report_issue.TabIndex = 16
         Me.report_issue.TabStop = True
         Me.report_issue.Text = "Report Issue"
         '
@@ -276,7 +276,7 @@ Partial Class TopGUI
         Me.checkVersion.Location = New System.Drawing.Point(318, 286)
         Me.checkVersion.Name = "checkVersion"
         Me.checkVersion.Size = New System.Drawing.Size(94, 13)
-        Me.checkVersion.TabIndex = 34
+        Me.checkVersion.TabIndex = 15
         Me.checkVersion.TabStop = True
         Me.checkVersion.Text = "Check For Update"
         '

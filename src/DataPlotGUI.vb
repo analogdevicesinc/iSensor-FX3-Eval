@@ -149,7 +149,7 @@ Public Class DataPlotGUI
                 minScale.BackColor = Color.White
             Catch ex As Exception
                 goodscale = False
-                minScale.BackColor = Color.Red
+                minScale.BackColor = m_TopGUI.ERROR_COLOR
             End Try
 
             'max
@@ -158,7 +158,7 @@ Public Class DataPlotGUI
                 maxscale.BackColor = Color.White
             Catch ex As Exception
                 goodscale = False
-                maxscale.BackColor = Color.Red
+                maxscale.BackColor = m_TopGUI.ERROR_COLOR
             End Try
 
             'check values
