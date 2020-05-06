@@ -408,16 +408,31 @@ Public Class FrequencyPlotGUI
         Dim minIndex, maxIndex As Integer
         Dim minFreq, maxFreq As Double
 
+        input_3db_max.BackColor = Color.White
+        input_3db_min.BackColor = Color.White
+
         Try
             minFreq = Convert.ToDouble(input_3db_min.Text)
-            maxFreq = Convert.ToDouble(input_3db_max.Text)
-            If minFreq > maxFreq Then
-                Throw New ArgumentException("ERROR: Min freq must be less than max freq")
-            End If
         Catch ex As Exception
-            MsgBox("ERROR: Invalid pass band entered. " + ex.Message)
+            MsgBox("ERROR: Invalid min freq entered. " + ex.Message)
+            input_3db_min.BackColor = m_TopGUI.ERROR_COLOR
             Return Double.PositiveInfinity
         End Try
+
+        Try
+            maxFreq = Convert.ToDouble(input_3db_max.Text)
+        Catch ex As Exception
+            MsgBox("ERROR: Invalid max freq entered. " + ex.Message)
+            input_3db_max.BackColor = m_TopGUI.ERROR_COLOR
+            Return Double.PositiveInfinity
+        End Try
+
+        If minFreq > maxFreq Then
+            MsgBox("ERROR: Min freq must be less than max freq")
+            input_3db_max.BackColor = m_TopGUI.ERROR_COLOR
+            input_3db_min.BackColor = m_TopGUI.ERROR_COLOR
+            Return Double.PositiveInfinity
+        End If
 
         'get the index corresponding to those frequencies
         Dim i As Integer = 0

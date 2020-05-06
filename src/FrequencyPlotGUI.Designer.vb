@@ -267,6 +267,7 @@ Partial Class FrequencyPlotGUI
         '
         'input_3db_min
         '
+        Me.input_3db_min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.input_3db_min.Location = New System.Drawing.Point(140, 474)
         Me.input_3db_min.Name = "input_3db_min"
         Me.input_3db_min.Size = New System.Drawing.Size(91, 20)
@@ -275,6 +276,7 @@ Partial Class FrequencyPlotGUI
         '
         'input_3db_max
         '
+        Me.input_3db_max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.input_3db_max.Location = New System.Drawing.Point(140, 500)
         Me.input_3db_max.Name = "input_3db_max"
         Me.input_3db_max.Size = New System.Drawing.Size(91, 20)
