@@ -196,8 +196,10 @@ Public Class RegisterGUI
                 CurrentValue.Text = value.ToString("X" + (reg.NumBytes * 2).ToString())
                 regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("X" + (reg.NumBytes * 2).ToString())
             End If
+            CurrentValue.BackColor = Color.White
         Catch ex As Exception
             CurrentValue.Text = "ERROR"
+            CurrentValue.BackColor = m_TopGUI.ERROR_COLOR
         End Try
 
         'check if exceptions occurred
