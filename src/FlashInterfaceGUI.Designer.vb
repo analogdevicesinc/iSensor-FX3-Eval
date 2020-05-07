@@ -83,7 +83,7 @@ Partial Class FlashInterfaceGUI
         Me.Controls.Add(Me.btn_dumpLog)
         Me.Controls.Add(Me.btn_dumpFlash)
         Me.Name = "FlashInterfaceGUI"
-        Me.Text = "FlashInterfaceGUI"
+        Me.Text = "FX3 Error Log"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
