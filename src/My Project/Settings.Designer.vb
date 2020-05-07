@@ -161,6 +161,18 @@ Namespace My
                 Me("ErrorColor") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Control")>  _
+        Public Property BackColor() As Global.System.Drawing.Color
+            Get
+                Return CType(Me("BackColor"),Global.System.Drawing.Color)
+            End Get
+            Set
+                Me("BackColor") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

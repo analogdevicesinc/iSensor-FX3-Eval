@@ -16,6 +16,9 @@
 
         idle_color.BackColor = m_TopGUI.IDLE_COLOR
         idle_color.Text = "0x" + idle_color.BackColor.ToArgb.ToString("X4")
+
+        back_color.BackColor = m_TopGUI.BACK_COLOR
+        back_color.Text = "0x" + back_color.BackColor.ToArgb.ToString("X4")
     End Sub
 
     Private Sub good_color_Click(sender As Object, e As EventArgs) Handles good_color.Click
@@ -42,10 +45,20 @@
         End If
     End Sub
 
+    Private Sub back_color_Click(sender As Object, e As EventArgs) Handles back_color.Click
+        Dim c As Color = GetUserColor()
+        If goodColor Then
+            back_color.BackColor = c
+            back_color.Text = "0x" + back_color.BackColor.ToArgb.ToString("X4")
+        End If
+    End Sub
+
     Private Sub btn_applysettings_Click(sender As Object, e As EventArgs) Handles btn_applysettings.Click
         m_TopGUI.ERROR_COLOR = error_color.BackColor
         m_TopGUI.GOOD_COLOR = good_color.BackColor
         m_TopGUI.IDLE_COLOR = idle_color.BackColor
+        m_TopGUI.BACK_COLOR = back_color.BackColor
+        m_TopGUI.BackColor = m_TopGUI.BACK_COLOR
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -64,5 +77,10 @@
             Return Nothing
         End If
     End Function
+
+    Private Sub btn_restoreDefaults_Click(sender As Object, e As EventArgs) Handles btn_restoreDefaults.Click
+        m_TopGUI.LoadDefaultColors()
+        SetColors()
+    End Sub
 
 End Class

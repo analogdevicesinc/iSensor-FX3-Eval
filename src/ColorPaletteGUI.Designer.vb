@@ -29,12 +29,15 @@ Partial Class ColorPaletteGUI
         Me.error_color = New System.Windows.Forms.TextBox()
         Me.idle_color = New System.Windows.Forms.TextBox()
         Me.btn_applysettings = New System.Windows.Forms.Button()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.back_color = New System.Windows.Forms.TextBox()
+        Me.btn_restoreDefaults = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(12, 15)
+        Me.Label1.Location = New System.Drawing.Point(12, 14)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(78, 13)
         Me.Label1.TabIndex = 0
@@ -43,7 +46,7 @@ Partial Class ColorPaletteGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(12, 41)
+        Me.Label2.Location = New System.Drawing.Point(12, 40)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(59, 13)
         Me.Label2.TabIndex = 1
@@ -52,7 +55,7 @@ Partial Class ColorPaletteGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(12, 67)
+        Me.Label3.Location = New System.Drawing.Point(12, 66)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(54, 13)
         Me.Label3.TabIndex = 2
@@ -87,18 +90,48 @@ Partial Class ColorPaletteGUI
         '
         'btn_applysettings
         '
-        Me.btn_applysettings.Location = New System.Drawing.Point(63, 107)
+        Me.btn_applysettings.Location = New System.Drawing.Point(12, 124)
         Me.btn_applysettings.Name = "btn_applysettings"
         Me.btn_applysettings.Size = New System.Drawing.Size(75, 64)
         Me.btn_applysettings.TabIndex = 6
         Me.btn_applysettings.Text = "Apply Settings"
         Me.btn_applysettings.UseVisualStyleBackColor = True
         '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(12, 92)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(62, 13)
+        Me.Label4.TabIndex = 7
+        Me.Label4.Text = "Back Color:"
+        '
+        'back_color
+        '
+        Me.back_color.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.back_color.Location = New System.Drawing.Point(102, 90)
+        Me.back_color.Name = "back_color"
+        Me.back_color.ReadOnly = True
+        Me.back_color.Size = New System.Drawing.Size(100, 20)
+        Me.back_color.TabIndex = 8
+        '
+        'btn_restoreDefaults
+        '
+        Me.btn_restoreDefaults.Location = New System.Drawing.Point(127, 124)
+        Me.btn_restoreDefaults.Name = "btn_restoreDefaults"
+        Me.btn_restoreDefaults.Size = New System.Drawing.Size(75, 64)
+        Me.btn_restoreDefaults.TabIndex = 9
+        Me.btn_restoreDefaults.Text = "Restore Default Colors"
+        Me.btn_restoreDefaults.UseVisualStyleBackColor = True
+        '
         'ColorPaletteGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(221, 183)
+        Me.ClientSize = New System.Drawing.Size(218, 200)
+        Me.Controls.Add(Me.btn_restoreDefaults)
+        Me.Controls.Add(Me.back_color)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.btn_applysettings)
         Me.Controls.Add(Me.idle_color)
         Me.Controls.Add(Me.error_color)
@@ -107,7 +140,7 @@ Partial Class ColorPaletteGUI
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Name = "ColorPaletteGUI"
-        Me.Text = "ColorPaletteGUI"
+        Me.Text = "Color Palette"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -120,4 +153,7 @@ Partial Class ColorPaletteGUI
     Friend WithEvents error_color As TextBox
     Friend WithEvents idle_color As TextBox
     Friend WithEvents btn_applysettings As Button
+    Friend WithEvents Label4 As Label
+    Friend WithEvents back_color As TextBox
+    Friend WithEvents btn_restoreDefaults As Button
 End Class

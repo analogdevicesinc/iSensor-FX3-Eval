@@ -19,6 +19,7 @@ Public Class TopGUI
     Public GOOD_COLOR As Color = Color.Chartreuse
     Public ERROR_COLOR As Color = Color.Red
     Public IDLE_COLOR As Color = Color.Yellow
+    Public BACK_COLOR As Color = SystemColors.Control
 
     'Public member variables accessible to all forms
     Public WithEvents FX3 As FX3Connection
@@ -89,6 +90,10 @@ Public Class TopGUI
         GOOD_COLOR = My.Settings.GoodColor
         ERROR_COLOR = My.Settings.ErrorColor
         IDLE_COLOR = My.Settings.IdleColor
+        BACK_COLOR = My.Settings.BackColor
+
+        'apply back color
+        Me.BackColor = BACK_COLOR
 
         'Set the regmap path using the SelectRegMap GUI
         If Not File.Exists(My.Settings.SelectedRegMap) Then
@@ -414,6 +419,7 @@ Public Class TopGUI
         My.Settings.GoodColor = GOOD_COLOR
         My.Settings.ErrorColor = ERROR_COLOR
         My.Settings.IdleColor = IDLE_COLOR
+        My.Settings.BackColor = BACK_COLOR
         My.Settings.Save()
     End Sub
 
@@ -514,6 +520,20 @@ Public Class TopGUI
 #End Region
 
 #Region "Helper Functions"
+
+    ''' <summary>
+    ''' Loads default color scheme
+    ''' </summary>
+    Friend Sub LoadDefaultColors()
+
+        GOOD_COLOR = Color.Chartreuse
+        ERROR_COLOR = Color.Red
+        IDLE_COLOR = Color.Yellow
+        BACK_COLOR = SystemColors.Control
+
+        Me.BackColor = BACK_COLOR
+
+    End Sub
 
     Private Sub RebootFX3()
 
