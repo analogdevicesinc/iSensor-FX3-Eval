@@ -39,16 +39,22 @@
             MsgBox("No errors logged!")
             Exit Sub
         End If
-        logData.Add("FileIdentifier,Line,ErrorCode,BootTimeStamp,FirmwareRev")
+        logData.Add("FileIdentifier,Line,ErrorCode,BootTimeStamp,ParsedBootTimeStamp,FirmwareRev")
         For Each item In log
             logData.Add(item.FileIdentifier.ToString() + "," +
                         item.Line.ToString() + "," +
                         "0x" + item.ErrorCode.ToString("X4") + "," +
                         item.BootTimeStamp.ToString() + "," +
+                        GetDateTime(item.BootTimeStamp).ToString() + "," +
                         item.FirmwareRev)
         Next
         saveCSV("fx3_error_log", logData.ToArray())
     End Sub
+
+    Private Function GetDateTime(Timestamp As UInteger) As Date
+        Dim result As System.DateTime = New System.DateTime(1970, 1, 1, 0, 0, 0, 0)
+        Return result.AddSeconds(Timestamp)
+    End Function
 
     Private Sub btn_clearError_Click(sender As Object, e As EventArgs) Handles btn_clearError.Click
         If MessageBox.Show("This cannot be reversed! Are you sure you wish to continue?", "Confirmation", MessageBoxButtons.YesNo) <> MsgBoxResult.Yes Then
