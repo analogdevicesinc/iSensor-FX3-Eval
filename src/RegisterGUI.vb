@@ -222,7 +222,12 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub ReadDrFreq()
-        Dim dr As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 2500, 2)
+        Dim dr As Double
+        Try
+            dr = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 3000, 2)
+        Catch ex As Exception
+            dr = Double.PositiveInfinity
+        End Try
         DrFreq.Text = FormatNumber(dr).ToString() + "Hz"
         If dr = Double.PositiveInfinity Then
             measureDr.Checked = False
