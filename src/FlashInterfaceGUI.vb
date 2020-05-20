@@ -39,13 +39,14 @@
             MsgBox("No errors logged!")
             Exit Sub
         End If
-        logData.Add("FileIdentifier,Line,ErrorCode,BootTimeStamp,ParsedBootTimeStamp,FirmwareRev")
+        logData.Add("FileIdentifier,Line,ErrorCode,BootTimeStamp,ParsedBootTimeStamp,Uptime(ms),FirmwareRev")
         For Each item In log
             logData.Add(item.FileIdentifier.ToString() + "," +
                         item.Line.ToString() + "," +
                         "0x" + item.ErrorCode.ToString("X4") + "," +
                         item.BootTimeStamp.ToString() + "," +
                         GetDateTime(item.BootTimeStamp).ToString() + "," +
+                        item.OSUptime.ToString() + "," +
                         item.FirmwareRev)
         Next
         saveCSV("fx3_error_log", logData.ToArray())

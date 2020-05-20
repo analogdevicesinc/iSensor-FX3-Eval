@@ -27,7 +27,7 @@ Public Class FX3ConfigGUI
         lagTimeInput.DataSource = ([Enum].GetValues(GetType(SpiLagLeadTime)))
 
         DutVoltage.DataSource = ([Enum].GetValues(GetType(DutVoltage)))
-        If m_TopGUI.FX3.ActiveFX3.BoardType <> FX3BoardType.iSensorFX3Board Then
+        If m_TopGUI.FX3.ActiveFX3.BoardType = FX3BoardType.CypressFX3Board Then
             DutVoltage.Enabled = False
         End If
 
