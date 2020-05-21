@@ -36,6 +36,10 @@ Public Class BurstTestGUI
         SetupResultView()
     End Sub
 
+    Public Sub ResizeHandler() Handles Me.Resize
+        result.Height = Me.Height - 217
+    End Sub
+
     Private Sub captureData_Click(sender As Object, e As EventArgs) Handles captureData.Click
         Dim burstTrigger As New List(Of Byte)
         Dim valueLng As ULong
@@ -66,11 +70,13 @@ Public Class BurstTestGUI
     End Sub
 
     Private Sub applySettings_Click(sender As Object, e As EventArgs) Handles applySettings.Click
-        m_TopGUI.FX3.SclkFrequency = Convert.ToInt32(sclk.Text)
-        m_TopGUI.FX3.DrActive = drActive.Checked
-        m_TopGUI.FX3.ChipSelectLeadTime = csDelay.SelectedItem
-        numWords = Convert.ToInt32(num32words.Text)
-        SetupResultView()
+        Try
+            m_TopGUI.FX3.SclkFrequency = Convert.ToInt32(sclk.Text)
+            m_TopGUI.FX3.DrActive = drActive.Checked
+            m_TopGUI.FX3.ChipSelectLeadTime = csDelay.SelectedItem
+        Catch ex As Exception
+            MsgBox("ERROR: Invalid settings! " + ex.Message)
+        End Try
     End Sub
 
     Private Sub SetupResultView()
@@ -90,6 +96,14 @@ Public Class BurstTestGUI
     Private Sub Shutdown() Handles Me.Closing
         m_TopGUI.FX3.StripBurstTriggerWord = True
         m_AppGUI.btn_BurstTest.Enabled = True
+    End Sub
+
+    Private Sub num32words_TextChanged(sender As Object, e As EventArgs) Handles num32words.TextChanged
+        Try
+            numWords = Convert.ToInt32(num32words.Text)
+            SetupResultView()
+        Catch ex As Exception
+        End Try
     End Sub
 
 End Class

@@ -83,6 +83,7 @@ Partial Class BurstTestGUI
         Me.num32words.Name = "num32words"
         Me.num32words.Size = New System.Drawing.Size(216, 20)
         Me.num32words.TabIndex = 5
+        Me.num32words.Text = "12"
         '
         'Label1
         '
@@ -138,8 +139,9 @@ Partial Class BurstTestGUI
         Me.Controls.Add(Me.sclk)
         Me.Controls.Add(Me.csDelay)
         Me.Controls.Add(Me.drActive)
-        Me.MaximumSize = New System.Drawing.Size(345, 510)
-        Me.MinimumSize = New System.Drawing.Size(345, 510)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
+        Me.MaximumSize = New System.Drawing.Size(345, 1000)
+        Me.MinimumSize = New System.Drawing.Size(345, 400)
         Me.Name = "BurstTestGUI"
         Me.Text = "Burst Mode Test"
         CType(Me.result, System.ComponentModel.ISupportInitialize).EndInit()
