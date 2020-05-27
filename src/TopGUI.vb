@@ -656,6 +656,9 @@ Public Class TopGUI
         'Test the DUT
         UpdateDutLabel(FX3.PartType)
 
+        'disable buttons for any existing open forms
+        DisableOpenFormButtons()
+
     End Sub
 
     ''' <summary>
@@ -786,6 +789,23 @@ Public Class TopGUI
             Else
                 runningForm.Close()
             End If
+        Next
+    End Sub
+
+    Private Sub DisableOpenFormButtons()
+        For Each openForm As Form In Application.OpenForms
+            If TypeOf (openForm) Is FX3ConfigGUI Then btn_FX3Config.Enabled = False
+            If TypeOf (openForm) Is RegisterBulkReadGUI Then btn_BulkRegRead.Enabled = False
+            If TypeOf (openForm) Is ApiInfoGUI Then btn_APIInfo.Enabled = False
+            If TypeOf (openForm) Is FrequencyPlotGUI Then btn_plotFFT.Enabled = False
+            If TypeOf (openForm) Is DataPlotGUI Then btn_plotData.Enabled = False
+            If TypeOf (openForm) Is IMUStreamingGUI Then btn_RealTime.Enabled = False
+            If TypeOf (openForm) Is ADcmXLStreamingGUI Then btn_RealTime.Enabled = False
+            If TypeOf (openForm) Is PinAccessGUI Then btn_PinAccess.Enabled = False
+            If TypeOf (openForm) Is SelectDUTGUI Then btn_SelectDUT.Enabled = False
+            If TypeOf (openForm) Is PWMSetupGUI Then btn_PWMSetup.Enabled = False
+            If TypeOf (openForm) Is AppBrowseGUI Then btn_OtherApps.Enabled = False
+            If TypeOf (openForm) Is RegisterGUI Then btn_RegAccess.Enabled = False
         Next
     End Sub
 
