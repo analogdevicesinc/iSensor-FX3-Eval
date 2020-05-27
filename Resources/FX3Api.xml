@@ -1955,6 +1955,22 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <param name="FlashData">The 32 byte block of data read from flash which contains the error log struct</param>
 </member>
+<member name="M:FX3Api.FX3ErrorLog.op_Equality(FX3Api.FX3ErrorLog,FX3Api.FX3ErrorLog)">
+ <summary>
+ Value-wise equality comparison
+ </summary>
+ <param name="Right">FX3ErrorLog object to compare to left for equality</param>
+ <param name="Left">FX3ErrorLog object to compare to right for equality</param>
+ <returns>True if all fields are equal, else false</returns>
+</member>
+<member name="M:FX3Api.FX3ErrorLog.op_Inequality(FX3Api.FX3ErrorLog,FX3Api.FX3ErrorLog)">
+ <summary>
+ Inequality operator for FX3ErrorLog object
+ </summary>
+ <param name="Right">FX3ErrorLog object to compare to left for inequality</param>
+ <param name="Left">FX3ErrorLog object to compare to right for inequality</param>
+ <returns>!(Right == Left)</returns>
+</member>
 <member name="T:FX3Api.FX3ConfigurationException">
  <summary>
  This exception is used when the FX3 is configured with an invalid setting. Typically, these exceptions will not cause the board or interface
