@@ -41,12 +41,6 @@ Public Class TopGUI
     Private m_RegMapPath As String
     Friend m_AutoSpi As iSensorAutomotiveSpi
 
-    ''' <summary>
-    ''' This event is raised when the active board is disconnected unexpectedly (IE unplugged)
-    ''' </summary>
-    ''' <param name="FX3SerialNum">Serial number of the board which was disconnected</param>
-    Event UnexpectedDisconnect(ByVal FX3SerialNum As String)
-
     Public Sub New()
 
         ' This call is required by the designer.'
@@ -501,7 +495,8 @@ Public Class TopGUI
         label_DUTStatus.Text = "ERROR: FX3 Connection Lost"
         label_DUTStatus.BackColor = ERROR_COLOR
 
-        RaiseEvent UnexpectedDisconnect(FX3SerialNumber)
+        Show()
+        BringToFront()
 
     End Sub
 

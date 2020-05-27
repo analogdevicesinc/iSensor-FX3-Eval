@@ -23,8 +23,4 @@ Public Class FormBase
         Me.BackColor = m_TopGUI.BACK_COLOR
     End Sub
 
-    Public Sub DisconnectHandler(FX3SerialNumber As String) Handles m_TopGUI.UnexpectedDisconnect
-        m_TopGUI.Show()
-    End Sub
-
 End Class
