@@ -287,7 +287,7 @@ Partial Class RegisterBulkReadGUI
         Me.ValidateDR.Location = New System.Drawing.Point(11, 272)
         Me.ValidateDR.Name = "ValidateDR"
         Me.ValidateDR.Size = New System.Drawing.Size(140, 21)
-        Me.ValidateDR.TabIndex = 101
+        Me.ValidateDR.TabIndex = 9
         Me.ValidateDR.Text = "Validate DR Period"
         Me.ValidateDR.UseVisualStyleBackColor = True
         '

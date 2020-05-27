@@ -34,7 +34,7 @@ Partial Class FlashInterfaceGUI
         Me.btn_dumpFlash.Location = New System.Drawing.Point(174, 12)
         Me.btn_dumpFlash.Name = "btn_dumpFlash"
         Me.btn_dumpFlash.Size = New System.Drawing.Size(75, 64)
-        Me.btn_dumpFlash.TabIndex = 0
+        Me.btn_dumpFlash.TabIndex = 2
         Me.btn_dumpFlash.Text = "Dump Flash"
         Me.btn_dumpFlash.UseVisualStyleBackColor = True
         '
@@ -43,7 +43,7 @@ Partial Class FlashInterfaceGUI
         Me.btn_dumpLog.Location = New System.Drawing.Point(12, 12)
         Me.btn_dumpLog.Name = "btn_dumpLog"
         Me.btn_dumpLog.Size = New System.Drawing.Size(75, 64)
-        Me.btn_dumpLog.TabIndex = 1
+        Me.btn_dumpLog.TabIndex = 0
         Me.btn_dumpLog.Text = "Dump Error Log"
         Me.btn_dumpLog.UseVisualStyleBackColor = True
         '
@@ -52,7 +52,7 @@ Partial Class FlashInterfaceGUI
         Me.btn_clearError.Location = New System.Drawing.Point(93, 12)
         Me.btn_clearError.Name = "btn_clearError"
         Me.btn_clearError.Size = New System.Drawing.Size(75, 64)
-        Me.btn_clearError.TabIndex = 2
+        Me.btn_clearError.TabIndex = 1
         Me.btn_clearError.Text = "Clear Error Log"
         Me.btn_clearError.UseVisualStyleBackColor = True
         '
@@ -70,7 +70,8 @@ Partial Class FlashInterfaceGUI
         Me.logCount.Location = New System.Drawing.Point(102, 82)
         Me.logCount.Name = "logCount"
         Me.logCount.Size = New System.Drawing.Size(147, 20)
-        Me.logCount.TabIndex = 4
+        Me.logCount.TabIndex = 3
+        Me.logCount.TabStop = False
         '
         'FlashInterfaceGUI
         '

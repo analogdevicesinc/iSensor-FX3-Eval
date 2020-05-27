@@ -216,7 +216,7 @@ Partial Class FX3ConfigGUI
         Me.SetConfig.Location = New System.Drawing.Point(360, 12)
         Me.SetConfig.Name = "SetConfig"
         Me.SetConfig.Size = New System.Drawing.Size(75, 42)
-        Me.SetConfig.TabIndex = 16
+        Me.SetConfig.TabIndex = 19
         Me.SetConfig.Text = "Set Config"
         Me.SetConfig.UseVisualStyleBackColor = True
         '
@@ -361,14 +361,14 @@ Partial Class FX3ConfigGUI
         Me.SelectedRegMap.Location = New System.Drawing.Point(135, 464)
         Me.SelectedRegMap.Name = "SelectedRegMap"
         Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
-        Me.SelectedRegMap.TabIndex = 14
+        Me.SelectedRegMap.TabIndex = 17
         '
         'WatchdogTimeout
         '
         Me.WatchdogTimeout.Location = New System.Drawing.Point(135, 411)
         Me.WatchdogTimeout.Name = "WatchdogTimeout"
         Me.WatchdogTimeout.Size = New System.Drawing.Size(219, 20)
-        Me.WatchdogTimeout.TabIndex = 36
+        Me.WatchdogTimeout.TabIndex = 15
         '
         'WatchdogEnable
         '
@@ -376,7 +376,7 @@ Partial Class FX3ConfigGUI
         Me.WatchdogEnable.Location = New System.Drawing.Point(135, 388)
         Me.WatchdogEnable.Name = "WatchdogEnable"
         Me.WatchdogEnable.Size = New System.Drawing.Size(174, 17)
-        Me.WatchdogEnable.TabIndex = 37
+        Me.WatchdogEnable.TabIndex = 14
         Me.WatchdogEnable.Text = "Watchdog Functionality Enable"
         Me.WatchdogEnable.UseVisualStyleBackColor = True
         '
@@ -415,7 +415,7 @@ Partial Class FX3ConfigGUI
         Me.DutVoltage.Location = New System.Drawing.Point(135, 437)
         Me.DutVoltage.Name = "DutVoltage"
         Me.DutVoltage.Size = New System.Drawing.Size(219, 21)
-        Me.DutVoltage.TabIndex = 40
+        Me.DutVoltage.TabIndex = 16
         '
         'Label20
         '
@@ -431,7 +431,7 @@ Partial Class FX3ConfigGUI
         Me.btn_edit_colors.Location = New System.Drawing.Point(135, 490)
         Me.btn_edit_colors.Name = "btn_edit_colors"
         Me.btn_edit_colors.Size = New System.Drawing.Size(219, 22)
-        Me.btn_edit_colors.TabIndex = 43
+        Me.btn_edit_colors.TabIndex = 18
         Me.btn_edit_colors.Text = "Edit Colors"
         Me.btn_edit_colors.UseVisualStyleBackColor = True
         '
