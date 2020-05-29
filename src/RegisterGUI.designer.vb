@@ -276,7 +276,7 @@ Partial Class RegisterGUI
         Me.numDecimals.Name = "numDecimals"
         Me.numDecimals.Size = New System.Drawing.Size(39, 20)
         Me.numDecimals.TabIndex = 28
-        Me.numDecimals.Text = "3"
+        Me.numDecimals.Text = "0"
         Me.numDecimals.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'numDecimals_label
