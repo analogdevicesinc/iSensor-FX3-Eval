@@ -878,6 +878,22 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="Pin">The pin to check</param>
  <returns>True if Pin is an FX3 pin, false if not</returns>
 </member>
+<member name="M:FX3Api.FX3Connection.UserLEDOn">
+ <summary>
+ Turn on user LED (not available on Cypress Explorer FX3 board)
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.UserLEDOff">
+ <summary>
+ Turn off user LED (not available on Cypress Explorer FX3 board)
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.UserLEDBlink(System.Double)">
+ <summary>
+ Blink user LED using timer hardware (not available on Cypress Explorer FX3 board)
+ </summary>
+ <param name="BlinkFreq">Frequency to blink LED at</param>
+</member>
 <member name="P:FX3Api.FX3Connection.ResetPin">
  <summary>
  Read-only property to get the reset pin
