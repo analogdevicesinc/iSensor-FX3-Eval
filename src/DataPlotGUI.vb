@@ -86,6 +86,7 @@ Public Class DataPlotGUI
         playBackRunning = False
         playBackMutex.WaitOne()
         plotMutex.WaitOne()
+        m_TopGUI.FX3.UserLEDOn()
         m_TopGUI.btn_plotData.Enabled = True
     End Sub
 
@@ -245,6 +246,7 @@ Public Class DataPlotGUI
             samplesRendered.Enabled = True
             playFromCSV.Enabled = True
             playFromCSV.Visible = True
+            m_TopGUI.FX3.UserLEDOn()
             btn_startStop.Text = "Start Plotting"
         Else
             BuildPlotRegList()
@@ -262,6 +264,7 @@ Public Class DataPlotGUI
             playFromCSV.Enabled = False
             playFromCSV.Visible = False
             btn_startStop.Text = "Stop Plotting"
+            m_TopGUI.FX3.UserLEDBlink(250 / samplePeriodMs)
             logTimer.Restart()
         End If
     End Sub
