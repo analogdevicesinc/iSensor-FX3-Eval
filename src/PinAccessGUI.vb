@@ -67,7 +67,9 @@ Public Class PinAccessGUI
         ComboBoxHighLow.DropDownStyle = ComboBoxStyle.DropDownList
         ComboBoxHighLow.SelectedIndex = 0
         TextBoxPeriod.Text = "100"
-        ' TODO: add options for mode selection
+
+        'resize form based on pin list height
+        Me.Height = dgvPinList.Height + 60
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
