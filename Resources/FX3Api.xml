@@ -953,6 +953,28 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <returns>Returns the GPIO pin, as an IPinObject</returns>
 </member>
+<member name="P:FX3Api.FX3Connection.FX3_LOOPBACK1">
+ <summary>
+ Read-only property to get loop back pin 1. This pin (CTL8) is wired directly to 
+ loop back pin 2 (CTL9) on the iSensor FX3 Board, Revision C or newer. These loop
+ back pins allow for fixed transaction timing on "asynchronous" SPI/I2C reads. One 
+ of the loop back pins can be configured as a PWM output using the "StartPWM" API, 
+ and the other loop back pin can be set as the DrPin, allowing the FX3 to trigger 
+ itself at a known rate.
+ </summary>
+ <returns>The first loop back pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3_LOOPBACK2">
+ <summary>
+ Read-only property to get loop back pin 2. This pin (CTL9) is wired directly to 
+ loop back pin 1 (CTL8) on the iSensor FX3 Board, Revision C or newer. These loop
+ back pins allow for fixed transaction timing on "asynchronous" SPI/I2C reads. One 
+ of the loop back pins can be configured as a PWM output using the "StartPWM" API, 
+ and the other loop back pin can be set as the DrPin, allowing the FX3 to trigger 
+ itself at a known rate.
+ </summary>
+ <returns>The second loop back pin, as an IPinObject</returns>
+</member>
 <member name="P:FX3Api.FX3Connection.DrActive">
  <summary>
  If the data ready is used for register reads
@@ -1106,7 +1128,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="M:FX3Api.FX3Connection.Reset">
  <summary>
- Drives the Reset pin low for 500ms and then sleeps for another 500ms
+ Drives the Reset pin low for 10ms, sleeps for 100ms, and then blocks until the ReadyPin is high (500ms timeout)
  </summary>
 </member>
 <member name="M:FX3Api.FX3Connection.Start">
@@ -1495,7 +1517,8 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
 </member>
 <member name="T:FX3Api.FX3BoardType">
  <summary>
- Possible FX3 board types. Used to differentiate iSensors FX3 board from Cypress Explorer kit.
+ Possible FX3 board types. Used to differentiate iSensors FX3 board from Cypress Explorer kit. This list enumerates 
+ all possible hardware ID's provided by the FX3 ID pins. Most are not used.
  </summary>
 </member>
 <member name="T:FX3Api.FX3PinResistorSetting">

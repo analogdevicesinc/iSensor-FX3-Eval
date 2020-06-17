@@ -1,0 +1,432 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FX3ApiWrapper</name>
+    </assembly>
+    <members>
+        <member name="T:FX3ApiWrapper.SensorType">
+            <summary>
+            Simplified enum for configuring sensor type
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.SensorType.StandardImu">
+            <summary>
+            Standard IMU. This includes the following IMU families:
+            ADIS1647x
+            ADIS1649x
+            ADIS1650x
+            ADIS1655x
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.SensorType.AutomotiveSpiImu">
+            <summary>
+            Automotive SPI IMU. This includes the following IMU families:
+            ADXC1500
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.SensorType.LegacyImu">
+            <summary>
+            Legacy IMU. This includes the following IMU families
+            ADIS1644x
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.SensorType.ADcmXL1021">
+            <summary>
+            Single axis ADcmXL
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.SensorType.ADcmXL2021">
+            <summary>
+            Dual axis ADcmXL
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.SensorType.ADcmXL3021">
+            <summary>
+            Tri axis ADcmXL
+            </summary>
+        </member>
+        <member name="T:FX3ApiWrapper.Wrapper">
+            <summary>
+            Simplified wrapper around FX3 connection object
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.Wrapper.FX3">
+            <summary>
+            Underlying FX3 connection object
+            </summary>
+        </member>
+        <member name="F:FX3ApiWrapper.Wrapper.Dut">
+            <summary>
+            Underlying DUT interface object
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.#ctor(System.String,System.String,FX3ApiWrapper.SensorType)">
+            <summary>
+            Wrapper constructor. Loads resources and connects to FX3
+            </summary>
+            <param name="FX3ResourcePath">Path the FX3 firmware binaries</param>
+            <param name="RegMapPath">Path to register map file</param>
+            <param name="Type"></param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.Finalize">
+            <summary>
+            Class destructor. Disconnects FX3
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.Disconnect">
+            <summary>
+            Disconnect FX3 board
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ResetDut">
+            <summary>
+            Reset DUT via reset pin
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.UserLEDBlink(System.Double)">
+            <summary>
+            Blink user LED
+            </summary>
+            <param name="freq">Blink freq, in Hz</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.UserLEDOn">
+            <summary>
+            Turn on user LED
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.UserLEDOff">
+            <summary>
+            Turn off user LED
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.DutSupplyOff">
+            <summary>
+            Turn off DUT supply
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.DutSupplyOn3_3">
+            <summary>
+            Turn on 3.3V DUT supply
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.DutSupplyOn5_0">
+            <summary>
+            Turn on 5V DUT supply
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.SetSCLKFreq(System.Int32)">
+            <summary>
+            Set SPI clock freq
+            </summary>
+            <param name="freq">Freq to set, in Hz. Valid up to 40MHz</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.SetSpiStallTime(System.Int32)">
+            <summary>
+            Sets the stall time between SPI words
+            </summary>
+            <param name="stallTimeMicroseconds">Stall time, in microseconds</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.SetDrActive(System.Boolean)">
+            <summary>
+            Enable/disable data ready triggering for register reads
+            </summary>
+            <param name="DrActive">Data ready trigger enable</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.SetDrPin(System.Int32)">
+            <summary>
+            Configure which DIO pin acts as a data ready signal
+            </summary>
+            <param name="DIONumber">DIO pin number (1-4)</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.SetDrPolarity(System.Boolean)">
+            <summary>
+            Set data ready triggering polarity. True -> trigger on posedge, false -> trigger on negedge
+            </summary>
+            <param name="DrPolarity">Polarity setting</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.StartPWM(System.Double,System.Double,System.Int32)">
+            <summary>
+            Start a PWM signal output
+            </summary>
+            <param name="Freq">Signal freq</param>
+            <param name="DutyCycle">Signal duty cycle</param>
+            <param name="DIONumber">DIO pin number (1-4)</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.StopPWM(System.Int32)">
+            <summary>
+            Stop PWM signal being driven
+            </summary>
+            <param name="DIONumber">DIO pin number (1-4)</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadPin(System.Int32)">
+            <summary>
+            Read the level on a DIO pin
+            </summary>
+            <param name="DIONumber">DIO pin number (1-4)</param>
+            <returns>DIO pin level (0 or 1)</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.SetPin(System.Int32,System.Int32)">
+            <summary>
+            Set pin to a level
+            </summary>
+            <param name="DIONumber">DIO pin number (1-4)</param>
+            <param name="Level">Level to set (0 or 1)</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.MeasurePinFreq(System.Int32)">
+            <summary>
+            Measure frequency at which a pin toggles
+            </summary>
+            <param name="DIONumber">DIO pin number (1-4)</param>
+            <returns>Pin signal freq (in Hz)</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.UpdateDutType(FX3ApiWrapper.SensorType)">
+            <summary>
+            Update the IDutInterface type based on the current FX3 setting.
+            For SensorType of ADcmXL will use the appropriate ADcmXL Interface (ADcmXLx021)
+            For SensorType of AutomotiveSpi will use ZeusInterface (ADIS1655x)
+            For SensorType of IMU, PartType LegacyIMU will use aducInterface (ADIS1644x)
+            For SensorType of IMU, PartType IMU, will use adbfInterface (ADIS1647x, ADIS1649x, ADIS1650x)
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.UpdateRegMap(System.String)">
+            <summary>
+            Reload the regmap based on provided CSV path
+            </summary>
+            <param name="RegMapPath">Path to RegMap CSV file</param>
+        </member>
+        <member name="P:FX3ApiWrapper.Wrapper.RegNumBytes">
+            <summary>
+            Get or set number of bytes per register. Used when directly addressing registers (not using RegMap)
+            </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.String)">
+            <summary>
+            Read single unsigned register
+            </summary>
+            <param name="RegName">Name of register to read. Must be in RegMap</param>
+            <returns>Unsigned register value</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.String[])">
+            <summary>
+            Read multiple unsigned registers
+            </summary>
+            <param name="RegNames">Names of all registers to read</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.String[],System.UInt32)">
+            <summary>
+            Read set of multiple unsigned registers, numCaptures times
+            </summary>
+            <param name="RegNames">Names of all registers to read</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.String[],System.UInt32,System.UInt32)">
+            <summary>
+            Read set of multiple unsigned registers, numCaptures times per data ready, numBuffers total captures
+            </summary>
+            <param name="RegNames">Names of all registers to read</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <param name="NumBuffers">Number of register captures to read</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.String)">
+            <summary>
+            Read single signed register
+            </summary>
+            <param name="RegName">Name of register to read. Must be in RegMap</param>
+            <returns>Signed register value</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.String[])">
+            <summary>
+            Read multiple signed registers
+            </summary>
+            <param name="RegNames">Names of all registers to read</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.String[],System.UInt32)">
+            <summary>
+            Read set of multiple signed registers, numCaptures times
+            </summary>
+            <param name="RegNames">Names of all registers to read</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.String[],System.UInt32,System.UInt32)">
+            <summary>
+            Read set of multiple signed registers, numCaptures times per data ready, numBuffers total captures
+            </summary>
+            <param name="RegNames">Names of all registers to read</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <param name="NumBuffers">Number of register captures to read</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.UInt32,System.UInt32)">
+            <summary>
+            Read single unsigned register based on page/address
+            </summary>
+            <param name="RegAddr">Register address to read</param>
+            <param name="RegPage">Register page</param>
+            <returns>Register read value</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.UInt32[],System.UInt32)">
+            <summary>
+            Read unsigned registers based on page/address
+            </summary>
+            <param name="RegAddrs">Register addresses to read</param>
+            <param name="RegPage">Register page</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.UInt32[],System.UInt32,System.UInt32)">
+            <summary>
+            Read unsigned registers based on page/address
+            </summary>
+            <param name="RegAddrs">Register addresses to read</param>
+            <param name="RegPage">Register page</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadUnsigned(System.UInt32[],System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            Read unsigned registers based on page/address
+            </summary>
+            <param name="RegAddrs">Register addresses to read</param>
+            <param name="RegPage">Register page</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <param name="NumBuffers">Number of register captures to read</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.UInt32,System.UInt32)">
+            <summary>
+            Read single signed register based on page/address
+            </summary>
+            <param name="RegAddr">Register address to read</param>
+            <param name="RegPage">Register page</param>
+            <returns>Register read value</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.UInt32[],System.UInt32)">
+            <summary>
+            Read signed registers based on page/address
+            </summary>
+            <param name="RegAddrs">Register addresses to read</param>
+            <param name="RegPage">Register page</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.UInt32[],System.UInt32,System.UInt32)">
+            <summary>
+            Read signed registers based on page/address
+            </summary>
+            <param name="RegAddrs">Register addresses to read</param>
+            <param name="RegPage">Register page</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ReadSigned(System.UInt32[],System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            Read signed registers based on page/address
+            </summary>
+            <param name="RegAddrs">Register addresses to read</param>
+            <param name="RegPage">Register page</param>
+            <param name="NumCaptures">Number of times to read the register list</param>
+            <param name="NumBuffers">Number of register captures to read</param>
+            <returns>Array of register read values</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteUnsigned(System.String,System.UInt32)">
+            <summary>
+            Write an unsigned value to a single register in the RegMap
+            </summary>
+            <param name="RegName">Name of register to write</param>
+            <param name="WriteData">Data to write to the register</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteUnsigned(System.String[],System.UInt32[])">
+            <summary>
+            Write unsigned values to multiple registers in the RegMap
+            </summary>
+            <param name="RegNames">Names of registers to write</param>
+            <param name="WriteData">Data to write to the registers</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteSigned(System.String,System.Int32)">
+            <summary>
+            Write a signed value to a single register in the RegMap
+            </summary>
+            <param name="RegName">Name of register to write</param>
+            <param name="WriteData">Data to write to the register</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteSigned(System.String[],System.Int32[])">
+            <summary>
+            Write signed values to multiple registers in the RegMap
+            </summary>
+            <param name="RegNames">Names of registers to write</param>
+            <param name="WriteData">Data to write to the registers</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteUnsigned(System.UInt32,System.UInt32,System.UInt32)">
+            <summary>
+            Write a single unsigned register, based on register addr/page
+            </summary>
+            <param name="RegAddr">register address to write to</param>
+            <param name="RegPage">Register page</param>
+            <param name="WriteData">Data to write to the register</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteUnsigned(System.UInt32[],System.UInt32,System.UInt32[])">
+            <summary>
+            Write unsigned data based on register addr/page
+            </summary>
+            <param name="RegAddrs">Array of register addresses to write to</param>
+            <param name="RegPage">Register page</param>
+            <param name="WriteData">Data to write to the registers. Must be same size as RegAddrs</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteSigned(System.UInt32,System.UInt32,System.Int32)">
+            <summary>
+            Write a single signed register, based on register addr/page
+            </summary>
+            <param name="RegAddr">register address to write to</param>
+            <param name="RegPage">Register page</param>
+            <param name="WriteData">Data to write to the register</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.WriteSigned(System.UInt32[],System.UInt32,System.Int32[])">
+            <summary>
+            Write signed data based on register addr/page
+            </summary>
+            <param name="RegAddrs">Array of register addresses to write to</param>
+            <param name="RegPage">Register page</param>
+            <param name="WriteData">Data to write to the registers. Must be same size as RegAddrs</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.StartBufferedStream(System.String[],System.UInt32,System.UInt32,System.Int32)">
+            <summary>
+            Start an asynchronous buffered register read stream
+            </summary>
+            <param name="RegNames">List of register names to read</param>
+            <param name="NumCaptures">Number of times to read register list per data ready</param>
+            <param name="NumBuffers">Total number of captures to perform</param>
+            <param name="TimeoutSeconds">Stream timeout time, in seconds</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.StartBufferedStream(System.UInt32[],System.UInt32,System.UInt32,System.UInt32,System.Int32)">
+            <summary>
+            Start an asynchronous buffered register read stream based on register address/page
+            </summary>
+            <param name="RegAddrs">Array of register addresses to read</param>
+            <param name="RegPage">Register page</param>
+            <param name="NumCaptures">Number of times to read register list per data ready</param>
+            <param name="NumBuffers">Total number of captures to perform</param>
+            <param name="TimeoutSeconds">Stream timeout time, in seconds</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.GetBufferedStreamDataPacket">
+            <summary>
+            Get a buffered stream data packet
+            </summary>
+            <returns>A single buffer from a stream. Will be null if no data available</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ConvertBufferDataToU32(System.UInt16[])">
+            <summary>
+            Converted buffered stream data packet to 32-bit array, based on the size of the registers read
+            </summary>
+            <param name="buf">Raw buffer packet to convert</param>
+            <returns>32-bit unsigned array representing the value of each register read</returns>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.ConnectToBoard">
+            <summary>
+            Connect to FX3 board
+            </summary>
+        </member>
+    </members>
+</doc>
