@@ -184,9 +184,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.FX3ExampleGUI.My.MySettings
+        Friend ReadOnly Property Settings() As Global.iSensorFX3Eval.My.MySettings
             Get
-                Return Global.FX3ExampleGUI.My.MySettings.Default
+                Return Global.iSensorFX3Eval.My.MySettings.Default
             End Get
         End Property
     End Module

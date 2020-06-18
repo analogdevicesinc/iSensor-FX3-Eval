@@ -1,7 +1,7 @@
 ﻿'File:          TopGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Date:          7/25/2019
-'Description:   Top level GUI for the FX3 example application
+'Description:   Top level GUI for the FX3 iSensor eval application
 
 Imports FX3Api
 Imports adisInterface
@@ -46,12 +46,14 @@ Public Class TopGUI
         ' This call is required by the designer.'
         InitializeComponent()
 
+        Me.Text = "iSensor FX3 Eval"
+
         Dim firmwarePath As String
         Dim blinkFirmwarePath As String
         Dim flashProgrammerPath As String
 
         'Create a local copy of embedded firmware file
-        Dim firmwareResource As String = "FX3ExampleGUI.FX3_Firmware.img"
+        Dim firmwareResource As String = "iSensorFX3Eval.FX3_Firmware.img"
         firmwarePath = System.Reflection.Assembly.GetExecutingAssembly.Location
         firmwarePath = firmwarePath.Substring(0, firmwarePath.LastIndexOf("\") + 1)
         firmwarePath = firmwarePath + "FX3_Firmware.img"
@@ -61,17 +63,17 @@ Public Class TopGUI
         outputStream.Close()
 
         'Create a local copy of bootloader firmware file
-        firmwareResource = "FX3ExampleGUI.boot_fw.img"
+        firmwareResource = "iSensorFX3Eval.boot_fw.img"
         blinkFirmwarePath = System.Reflection.Assembly.GetExecutingAssembly.Location
         blinkFirmwarePath = blinkFirmwarePath.Substring(0, blinkFirmwarePath.LastIndexOf("\") + 1)
         blinkFirmwarePath = blinkFirmwarePath + "boot_fw.img"
-        assembly = System.Reflection.Assembly.GetExecutingAssembly()
+        assembly = Assembly.GetExecutingAssembly()
         outputStream = New FileStream(blinkFirmwarePath, FileMode.Create)
         assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
         outputStream.Close()
 
         'Create a local copy of the flash programmer
-        firmwareResource = "FX3ExampleGUI.USBFlashProg.img"
+        firmwareResource = "iSensorFX3Eval.USBFlashProg.img"
         flashProgrammerPath = System.Reflection.Assembly.GetExecutingAssembly.Location
         flashProgrammerPath = flashProgrammerPath.Substring(0, flashProgrammerPath.LastIndexOf("\") + 1)
         flashProgrammerPath = flashProgrammerPath + "USBFlashProg.img"
@@ -106,7 +108,7 @@ Public Class TopGUI
         End If
 
         'Set FX3 connection (defaults to IMU)
-        FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, flashProgrammerPath, FX3Api.DeviceType.IMU)
+        FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, flashProgrammerPath, DeviceType.IMU)
 
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
@@ -138,7 +140,7 @@ Public Class TopGUI
         m_AutoSpi.LogExceptions = True
 
         'Set the API version and build date
-        label_apiVersion.Text = "ADI iSensor FX3 Example GUI v" + Application.ProductVersion
+        label_apiVersion.Text = "ADI iSensor FX3 Eval GUI v" + Application.ProductVersion
 
         'load the last used file path
         lastFilePath = My.Settings.LastFilePath
@@ -163,16 +165,16 @@ Public Class TopGUI
         tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
         tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
         tip0.SetToolTip(Me.btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
-        tip0.SetToolTip(Me.btn_OtherApps, "Other misc. applications developed for the iSensor FX3 Example GUI")
+        tip0.SetToolTip(Me.btn_OtherApps, "Other misc. applications developed for the iSensor FX3 Eval GUI")
         tip0.SetToolTip(Me.btn_SelectDUT, "Select the DUT type. Loads the default values for that DUT type")
         tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
         tip0.SetToolTip(Me.btn_RegAccess, "Read or write all registers in the loaded register map")
         tip0.SetToolTip(Me.btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
         tip0.SetToolTip(Me.btn_PinAccess, "Read or set all FX3 digital IO pins (DIO1 - DIO4, FX3GPIO1 - FX3GPIO4)")
         tip0.SetToolTip(Me.btn_PWMSetup, "Configure PWM signal generation on the FX3 digital IO")
-        tip0.SetToolTip(Me.label_apiVersion, "The current version of the iSensor FX3 Example GUI. The three highest version numbers will match the FX3 API version in use")
+        tip0.SetToolTip(Me.label_apiVersion, "The current version of the iSensor FX3 Eval GUI. The three highest version numbers will match the FX3 API version in use")
         tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
-        tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Example GUI. Requires a Internet connection and a GitHub account")
+        tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Eval GUI. Requires a Internet connection and a GitHub account")
         tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 500ms, waits for data ready to be asserted, and checks the DUT connection")
         tip0.SetToolTip(Me.checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
 
@@ -445,6 +447,7 @@ Public Class TopGUI
         Dim currentTimeStr As String = currentTime.ToString("s")
         Dim FX3Uptime As String = "ERROR"
         Dim FX3SN As String = "ERROR"
+        Dim FX3BoardType As String = "ERROR"
         If Not firstException Then
             'force kill after first exception
             Environment.Exit(1)
@@ -456,10 +459,11 @@ Public Class TopGUI
             If Not IsNothing(FX3.ActiveFX3) Then
                 FX3Uptime = FX3.ActiveFX3.Uptime.ToString() + "ms"
                 FX3SN = FX3.ActiveFX3.SerialNumber
+                FX3BoardType = [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType)
             End If
         End If
         currentTimeStr = currentTimeStr.Replace(":", "-")
-        Dim logPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Analog Devices", "FX3ExampleGUI")
+        Dim logPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Analog Devices", "iSensorFX3Eval")
         'check dir
         If Not Directory.Exists(logPath) Then
             Directory.CreateDirectory(logPath)
@@ -467,13 +471,21 @@ Public Class TopGUI
         'check file
         logPath = Path.Combine(logPath, "ERROR_LOG.csv")
         If Not File.Exists(logPath) Then
-            File.WriteAllLines(logPath, {"DATE,USER,OS,FX3VERSION,REGMAP,FX3UPTIME,FX3SN,EXCEPTION"})
+            File.WriteAllLines(logPath, {"DATE,USER,OS,REGMAP,FX3VERSION,FX3UPTIME,FX3SN,FX3TYPE,EXCEPTION"})
         End If
         'log error
         exStr = e.ToString()
         exStr = exStr.Replace(Environment.NewLine, " ")
         exStr = exStr.Replace(",", " ")
-        File.AppendAllLines(logPath, {currentTimeStr + "," + Environment.UserName + "," + Environment.OSVersion.ToString() + "," + Application.ProductVersion + "," + RegMapPath + "," + FX3Uptime + "," + FX3SN + "," + exStr})
+        File.AppendAllLines(logPath, {currentTimeStr + "," +
+                            Environment.UserName + "," +
+                            Environment.OSVersion.ToString() + "," +
+                            RegMapPath + "," +
+                            Application.ProductVersion + "," +
+                            FX3Uptime + "," +
+                            FX3SN + "," +
+                            FX3BoardType + "," +
+                            exStr})
         MsgBox("ERROR: Un-handled exception has occurred. Detailed data has been stored at " + logPath)
     End Sub
 
@@ -819,7 +831,7 @@ Public Class TopGUI
         Try
             ServicePointManager.Expect100Continue = True
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-            request = WebRequest.Create("https://api.github.com/repos/juchong/iSensor-FX3-ExampleGui/releases/latest")
+            request = WebRequest.Create("https://api.github.com/repos/juchong/iSensor-FX3-Eval/releases/latest")
             request.ContentType = "application/json"
             request.UserAgent = "request"
             request.Method = "GET"
@@ -871,7 +883,7 @@ Public Class TopGUI
 
     Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
         report_issue.LinkVisited = True
-        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-ExampleGui/issues/new")
+        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-Eval/issues/new")
     End Sub
 
 #End Region

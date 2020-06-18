@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("FX3ExampleGUI")>
-<Assembly: AssemblyDescription("Example GUI for the Analog Devices iSensor FX3 Demonstration Platform")>
+<Assembly: AssemblyTitle("iSensorFX3Eval")>
+<Assembly: AssemblyDescription("Sensor Evaluation GUI for the Analog Devices iSensor FX3 Demonstration Platform")>
 <Assembly: AssemblyCompany("Analog Devices")>
-<Assembly: AssemblyProduct("FX3ExampleGUI")>
-<Assembly: AssemblyCopyright("Copyright ©  2019")>
+<Assembly: AssemblyProduct("iSensorFX3Eval")>
+<Assembly: AssemblyCopyright("Copyright ©  2019 - 2020")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

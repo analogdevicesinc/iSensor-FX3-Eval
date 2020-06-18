@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A9BF8777-02E2-4429-82B0-99063E8EC9EF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>FX3ExampleGUI.My.MyApplication</StartupObject>
-    <RootNamespace>FX3ExampleGUI</RootNamespace>
-    <AssemblyName>FX3ExampleGUI</AssemblyName>
+    <StartupObject>iSensorFX3Eval.My.MyApplication</StartupObject>
+    <RootNamespace>iSensorFX3Eval</RootNamespace>
+    <AssemblyName>iSensorFX3Eval</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -309,45 +309,59 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ADcmXLStreamingGUI.resx">
       <DependentUpon>ADcmXLStreamingGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ADXl375GUI.resx">
       <DependentUpon>ADXl375GUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ApiInfoGUI.resx">
       <DependentUpon>ApiInfoGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AppBrowseGUI.resx">
       <DependentUpon>AppBrowseGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="BinaryFileWriterGUI.resx">
       <DependentUpon>BinaryFileWriterGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="BitBangSpiGUI.resx">
       <DependentUpon>BitBangSpiGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="BurstTestGUI.resx">
       <DependentUpon>BurstTestGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPaletteGUI.resx">
       <DependentUpon>ColorPaletteGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DataPlotGUI.resx">
       <DependentUpon>DataPlotGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FlashInterfaceGUI.resx">
       <DependentUpon>FlashInterfaceGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBase.resx">
       <DependentUpon>FormBase.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FrequencyPlotGUI.resx">
       <DependentUpon>FrequencyPlotGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FX3ConfigGUI.resx">
       <DependentUpon>FX3ConfigGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="IMUStreamingGUI.resx">
       <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -387,33 +401,43 @@
     <None Include="App.config" />
     <EmbeddedResource Include="PinAccessGUI.resx">
       <DependentUpon>PinAccessGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PulseMeasureGUI.resx">
       <DependentUpon>PulseMeasureGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="PWMSetupGUI.resx">
       <DependentUpon>PWMSetupGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RegisterBulkReadGUI.resx">
       <DependentUpon>RegisterBulkReadGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="RegisterGUI.resx">
       <DependentUpon>RegisterGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ResistorConfigGUI.resx">
       <DependentUpon>ResistorConfigGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectDUTGUI.resx">
       <DependentUpon>SelectDUTGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectFX3GUI.resx">
       <DependentUpon>SelectFX3GUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectRegmapGUI.resx">
       <DependentUpon>SelectRegmapGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="TopGUI.resx">
       <DependentUpon>TopGUI.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="USBFlashProg.img" />
   </ItemGroup>
