@@ -9,7 +9,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("iSensorFX3Eval")>
-<Assembly: AssemblyDescription("Sensor Evaluation GUI for the Analog Devices iSensor FX3 Demonstration Platform")>
+<Assembly: AssemblyDescription("Inertial Sensor Evaluation GUI for the Analog Devices iSensor FX3 Demonstration Platform")>
 <Assembly: AssemblyCompany("Analog Devices")>
 <Assembly: AssemblyProduct("iSensorFX3Eval")>
 <Assembly: AssemblyCopyright("Copyright ©  2019 - 2020")>
@@ -32,4 +32,4 @@ Imports System.Runtime.InteropServices
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("2.8.4.0")>
+<Assembly: AssemblyFileVersion("2.8.4.1")>
