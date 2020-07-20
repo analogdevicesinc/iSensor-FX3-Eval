@@ -264,7 +264,11 @@ Public Class DataPlotGUI
             playFromCSV.Enabled = False
             playFromCSV.Visible = False
             btn_startStop.Text = "Stop Plotting"
-            m_TopGUI.FX3.UserLEDBlink(250 / samplePeriodMs)
+            Try
+                m_TopGUI.FX3.UserLEDBlink(250 / samplePeriodMs)
+            Catch ex As Exception
+                'don't do anything, just don't want the program to crash if user is driving a PWM using that timer block on the FX3
+            End Try
             logTimer.Restart()
         End If
     End Sub
