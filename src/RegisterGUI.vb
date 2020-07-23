@@ -85,6 +85,23 @@ Public Class RegisterGUI
         End If
     End Sub
 
+    Private Sub WriteEnterHandler(sender As Object, e As KeyEventArgs) Handles newValue.KeyUp
+
+        If e.KeyCode = Keys.Return Then
+            e.Handled = True
+            e.SuppressKeyPress = True
+            ButtonWrite.PerformClick()
+        End If
+
+    End Sub
+
+    Private Sub AnnoyingNoiseHandler(sender As Object, e As KeyEventArgs) Handles newValue.KeyDown
+        If e.KeyCode = Keys.Return Then
+            e.Handled = True
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
     Private Sub ButtonWrite_Click(sender As Object, e As EventArgs) Handles ButtonWrite.Click
 
         Dim regLabel As String
