@@ -41,7 +41,7 @@ Public Class IMUStreamingGUI
         NumberDRToCapture.Text = "10000"
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
-        m_TopGUI.FX3.DrActive = True
+        check_drActive.Checked = m_TopGUI.FX3.DrActive
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -65,9 +65,13 @@ Public Class IMUStreamingGUI
         End If
 
         'Check whether the measured DR is valid
-        If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
-            MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
-            Exit Sub
+        If check_drActive.Checked Then
+            m_TopGUI.FX3.DrActive = True
+            If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
+                If MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+                    Exit Sub
+                End If
+            End If
         End If
 
         'Get data output save location
@@ -189,7 +193,6 @@ Public Class IMUStreamingGUI
             MsgBox("ERROR: Invalid Input")
             Exit Sub
         End Try
-
     End Sub
 
     Private Sub UpdateRegmap()
@@ -264,4 +267,9 @@ Public Class IMUStreamingGUI
     Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs) Handles Use32BitRegs.CheckedChanged
         UpdateRegmap()
     End Sub
+
+    Private Sub check_drActive_CheckedChanged(sender As Object, e As EventArgs) Handles check_drActive.CheckedChanged
+        m_TopGUI.FX3.DrActive = check_drActive.Checked
+    End Sub
+
 End Class
