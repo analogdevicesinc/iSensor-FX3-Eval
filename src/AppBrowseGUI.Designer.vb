@@ -22,7 +22,6 @@ Partial Class AppBrowseGUI
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.btn_BurstTest = New System.Windows.Forms.Button()
-        Me.btn_BitBangSpi = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
         Me.btn_resistorConfig = New System.Windows.Forms.Button()
@@ -39,18 +38,9 @@ Partial Class AppBrowseGUI
         Me.btn_BurstTest.Text = "Burst Mode Test"
         Me.btn_BurstTest.UseVisualStyleBackColor = True
         '
-        'btn_BitBangSpi
-        '
-        Me.btn_BitBangSpi.Location = New System.Drawing.Point(93, 12)
-        Me.btn_BitBangSpi.Name = "btn_BitBangSpi"
-        Me.btn_BitBangSpi.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BitBangSpi.TabIndex = 1
-        Me.btn_BitBangSpi.Text = "Bit Bang SPI Interface"
-        Me.btn_BitBangSpi.UseVisualStyleBackColor = True
-        '
         'btn_ADXL375
         '
-        Me.btn_ADXL375.Location = New System.Drawing.Point(255, 12)
+        Me.btn_ADXL375.Location = New System.Drawing.Point(12, 82)
         Me.btn_ADXL375.Name = "btn_ADXL375"
         Me.btn_ADXL375.Size = New System.Drawing.Size(75, 64)
         Me.btn_ADXL375.TabIndex = 3
@@ -68,7 +58,7 @@ Partial Class AppBrowseGUI
         '
         'btn_resistorConfig
         '
-        Me.btn_resistorConfig.Location = New System.Drawing.Point(12, 82)
+        Me.btn_resistorConfig.Location = New System.Drawing.Point(93, 12)
         Me.btn_resistorConfig.Name = "btn_resistorConfig"
         Me.btn_resistorConfig.Size = New System.Drawing.Size(75, 64)
         Me.btn_resistorConfig.TabIndex = 4
@@ -97,16 +87,14 @@ Partial Class AppBrowseGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(344, 161)
+        Me.ClientSize = New System.Drawing.Size(264, 157)
         Me.Controls.Add(Me.btn_checkError)
         Me.Controls.Add(Me.btn_binFile)
         Me.Controls.Add(Me.btn_resistorConfig)
         Me.Controls.Add(Me.btn_pulseMeasure)
         Me.Controls.Add(Me.btn_ADXL375)
-        Me.Controls.Add(Me.btn_BitBangSpi)
         Me.Controls.Add(Me.btn_BurstTest)
         Me.MaximumSize = New System.Drawing.Size(360, 200)
-        Me.MinimumSize = New System.Drawing.Size(360, 200)
         Me.Name = "AppBrowseGUI"
         Me.Text = "App Browser"
         Me.ResumeLayout(False)
@@ -114,7 +102,6 @@ Partial Class AppBrowseGUI
     End Sub
 
     Friend WithEvents btn_BurstTest As Button
-    Friend WithEvents btn_BitBangSpi As Button
     Friend WithEvents btn_ADXL375 As Button
     Friend WithEvents btn_pulseMeasure As Button
     Friend WithEvents btn_resistorConfig As Button

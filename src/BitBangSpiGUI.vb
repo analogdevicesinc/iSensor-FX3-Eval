@@ -8,8 +8,6 @@ Imports FX3Api
 Public Class BitBangSpiGUI
     Inherits FormBase
 
-    Private m_AppGUI As AppBrowseGUI
-
     Private Sub BitBangSpiGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         m_TopGUI.FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
         csLag.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks.ToString()
@@ -17,14 +15,10 @@ Public Class BitBangSpiGUI
         stallTicks.Text = 10.0
     End Sub
 
-    Friend Sub SetAppGUI(AppGUI As AppBrowseGUI)
-        m_AppGUI = AppGUI
-    End Sub
-
     Private Sub Shutdown() Handles Me.Closing
         'restore hardware SPI
         m_TopGUI.FX3.RestoreHardwareSpi()
-        m_AppGUI.btn_BitBangSpi.Enabled = True
+        m_TopGUI.btn_bitBangSPI.Enabled = True
     End Sub
 
     Private Sub btn_Transfer_Click(sender As Object, e As EventArgs) Handles btn_Transfer.Click

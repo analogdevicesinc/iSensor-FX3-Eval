@@ -38,7 +38,7 @@ Partial Class TopGUI
         Me.btn_CheckDUTConnection = New System.Windows.Forms.Button()
         Me.btn_FX3Config = New System.Windows.Forms.Button()
         Me.btn_APIInfo = New System.Windows.Forms.Button()
-        Me.btn_BoardInfo = New System.Windows.Forms.Button()
+        Me.btn_bitBangSPI = New System.Windows.Forms.Button()
         Me.btn_PWMSetup = New System.Windows.Forms.Button()
         Me.btn_plotFFT = New System.Windows.Forms.Button()
         Me.btn_OtherApps = New System.Windows.Forms.Button()
@@ -181,21 +181,21 @@ Partial Class TopGUI
         '
         'btn_APIInfo
         '
-        Me.btn_APIInfo.Location = New System.Drawing.Point(173, 221)
+        Me.btn_APIInfo.Location = New System.Drawing.Point(255, 221)
         Me.btn_APIInfo.Name = "btn_APIInfo"
         Me.btn_APIInfo.Size = New System.Drawing.Size(75, 62)
         Me.btn_APIInfo.TabIndex = 12
-        Me.btn_APIInfo.Text = "FX3 API Info."
+        Me.btn_APIInfo.Text = "Connected FX3 Info."
         Me.btn_APIInfo.UseVisualStyleBackColor = True
         '
-        'btn_BoardInfo
+        'btn_bitBangSPI
         '
-        Me.btn_BoardInfo.Location = New System.Drawing.Point(255, 221)
-        Me.btn_BoardInfo.Name = "btn_BoardInfo"
-        Me.btn_BoardInfo.Size = New System.Drawing.Size(75, 62)
-        Me.btn_BoardInfo.TabIndex = 13
-        Me.btn_BoardInfo.Text = "FX3 Board Info."
-        Me.btn_BoardInfo.UseVisualStyleBackColor = True
+        Me.btn_bitBangSPI.Location = New System.Drawing.Point(173, 221)
+        Me.btn_bitBangSPI.Name = "btn_bitBangSPI"
+        Me.btn_bitBangSPI.Size = New System.Drawing.Size(75, 62)
+        Me.btn_bitBangSPI.TabIndex = 13
+        Me.btn_bitBangSPI.Text = "Bit Bang SPI Interface"
+        Me.btn_bitBangSPI.UseVisualStyleBackColor = True
         '
         'btn_PWMSetup
         '
@@ -293,7 +293,7 @@ Partial Class TopGUI
         Me.Controls.Add(Me.btn_PinAccess)
         Me.Controls.Add(Me.btn_OtherApps)
         Me.Controls.Add(Me.btn_plotFFT)
-        Me.Controls.Add(Me.btn_BoardInfo)
+        Me.Controls.Add(Me.btn_bitBangSPI)
         Me.Controls.Add(Me.btn_PWMSetup)
         Me.Controls.Add(Me.btn_APIInfo)
         Me.Controls.Add(Me.btn_FX3Config)
@@ -335,7 +335,7 @@ Partial Class TopGUI
     Friend WithEvents btn_CheckDUTConnection As Button
     Friend WithEvents btn_FX3Config As Button
     Friend WithEvents btn_APIInfo As Button
-    Friend WithEvents btn_BoardInfo As Button
+    Friend WithEvents btn_bitBangSPI As Button
     Friend WithEvents btn_PWMSetup As Button
     Friend WithEvents btn_plotFFT As Button
     Friend WithEvents btn_OtherApps As Button

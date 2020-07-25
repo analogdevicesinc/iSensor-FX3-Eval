@@ -158,8 +158,8 @@ Public Class TopGUI
     Private Sub SetupToolTips()
 
         Dim tip0 As ToolTip = New ToolTip()
-        tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used")
-        tip0.SetToolTip(Me.btn_BoardInfo, "Get information about the connected FX3 board")
+        tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used, and the connected FX3 hardware")
+        tip0.SetToolTip(Me.btn_bitBangSPI, "Bit-bang custom SPI traffic to a DUT")
         tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register values to a .CSV file")
         tip0.SetToolTip(Me.btn_CheckDUTConnection, "Check the SPI connection to the DUT by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
         tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
@@ -303,8 +303,11 @@ Public Class TopGUI
         TestDUT()
     End Sub
 
-    Private Sub btn_BoardInfo_Click(sender As Object, e As EventArgs) Handles btn_BoardInfo.Click
-        MsgBox(FX3.ActiveFX3.ToString())
+    Private Sub btn_bitBangSPI_Click(sender As Object, e As EventArgs) Handles btn_bitBangSPI.Click
+        Dim subGUI As New BitBangSpiGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_bitBangSPI.Enabled = False
     End Sub
 
     Private Sub btn_APIInfo_Click(sender As Object, e As EventArgs) Handles btn_APIInfo.Click
@@ -631,7 +634,7 @@ Public Class TopGUI
         End If
 
         btn_APIInfo.Enabled = True
-        btn_BoardInfo.Enabled = True
+        btn_bitBangSPI.Enabled = True
         btn_BulkRegRead.Enabled = True
         btn_CheckDUTConnection.Enabled = True
         btn_Connect.Enabled = True
@@ -691,7 +694,7 @@ Public Class TopGUI
     ''' </summary>
     Private Sub ResetButtons()
         btn_APIInfo.Enabled = False
-        btn_BoardInfo.Enabled = False
+        btn_bitBangSPI.Enabled = False
         btn_BulkRegRead.Enabled = False
         btn_CheckDUTConnection.Enabled = False
         btn_Connect.Enabled = True 'Connect should be enabled by default

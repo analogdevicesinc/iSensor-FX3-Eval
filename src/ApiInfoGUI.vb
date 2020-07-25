@@ -16,6 +16,7 @@ Public Class ApiInfoGUI
         desc.Text = "Description: " + info.Description
         buildDate.Text = "Build Date: " + info.BuildDateTime
         ver.Text = "Version: " + info.VersionNumber
+        board_info.Text = m_TopGUI.FX3.ActiveFX3.ToString()
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
