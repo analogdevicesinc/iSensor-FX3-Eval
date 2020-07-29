@@ -55,7 +55,7 @@ Public Class BitBangSpiGUI
         m_TopGUI.FX3.RestoreHardwareSpi()
     End Sub
 
-    Private Sub RestoreSPI() Handles Me.LostFocus
+    Private Sub RestoreSPI() Handles Me.Deactivate
         m_TopGUI.FX3.RestoreHardwareSpi()
     End Sub
 End Class
