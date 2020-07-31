@@ -44,6 +44,10 @@ Public Class BitBangSpiGUI
         Dim MOSI As New List(Of Byte)
         Dim MISO As Byte()
         Try
+            m_TopGUI.FX3.SetBitBangSpiFreq(Convert.ToDouble(sclk_freq.Text))
+            m_TopGUI.FX3.SetBitBangStallTime(Convert.ToDouble(stallTicks.Text))
+            m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks = Convert.ToUInt16(csLag.Text)
+            m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks = Convert.ToUInt16(csLead.Text)
             'parse input data
             For i As Integer = 0 To numBytes - 1
                 MOSI.Add(Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16))
