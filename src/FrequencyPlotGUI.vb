@@ -62,7 +62,7 @@ Public Class FrequencyPlotGUI
     Private Sub Shutdown() Handles Me.Closing
         If m_FFTStream.IsBusy Then
             m_FFTStream.CancelAsync()
-            System.Threading.Thread.Sleep(100)
+            System.Threading.Thread.Sleep(250)
         End If
         m_FFTStream.Dispose()
         'show other forms
@@ -239,7 +239,7 @@ Public Class FrequencyPlotGUI
     Private Sub btn_stopPlot_Click(sender As Object, e As EventArgs) Handles btn_stopPlot.Click
         'cancel running stream
         m_FFTStream.CancelAsync()
-        System.Threading.Thread.Sleep(500)
+        System.Threading.Thread.Sleep(250)
 
         'enable inputs
         NFFT.Enabled = True
