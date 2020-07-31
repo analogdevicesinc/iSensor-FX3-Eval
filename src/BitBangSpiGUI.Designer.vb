@@ -70,7 +70,7 @@ Partial Class BitBangSpiGUI
         '
         Me.bitsPerTransfer.Location = New System.Drawing.Point(105, 6)
         Me.bitsPerTransfer.Name = "bitsPerTransfer"
-        Me.bitsPerTransfer.Size = New System.Drawing.Size(167, 20)
+        Me.bitsPerTransfer.Size = New System.Drawing.Size(141, 20)
         Me.bitsPerTransfer.TabIndex = 6
         Me.bitsPerTransfer.Text = "16"
         '
@@ -78,13 +78,13 @@ Partial Class BitBangSpiGUI
         '
         Me.numTransfers.Location = New System.Drawing.Point(105, 32)
         Me.numTransfers.Name = "numTransfers"
-        Me.numTransfers.Size = New System.Drawing.Size(167, 20)
+        Me.numTransfers.Size = New System.Drawing.Size(141, 20)
         Me.numTransfers.TabIndex = 8
         Me.numTransfers.Text = "1"
         '
         'btn_restoreSpi
         '
-        Me.btn_restoreSpi.Location = New System.Drawing.Point(182, 163)
+        Me.btn_restoreSpi.Location = New System.Drawing.Point(156, 163)
         Me.btn_restoreSpi.Name = "btn_restoreSpi"
         Me.btn_restoreSpi.Size = New System.Drawing.Size(90, 42)
         Me.btn_restoreSpi.TabIndex = 9
@@ -95,7 +95,7 @@ Partial Class BitBangSpiGUI
         '
         Me.sclk_freq.Location = New System.Drawing.Point(105, 59)
         Me.sclk_freq.Name = "sclk_freq"
-        Me.sclk_freq.Size = New System.Drawing.Size(167, 20)
+        Me.sclk_freq.Size = New System.Drawing.Size(141, 20)
         Me.sclk_freq.TabIndex = 11
         Me.sclk_freq.Text = "750000"
         '
@@ -112,7 +112,7 @@ Partial Class BitBangSpiGUI
         '
         Me.csLead.Location = New System.Drawing.Point(105, 111)
         Me.csLead.Name = "csLead"
-        Me.csLead.Size = New System.Drawing.Size(167, 20)
+        Me.csLead.Size = New System.Drawing.Size(141, 20)
         Me.csLead.TabIndex = 13
         Me.csLead.Text = "5"
         '
@@ -129,7 +129,7 @@ Partial Class BitBangSpiGUI
         '
         Me.stallTicks.Location = New System.Drawing.Point(105, 85)
         Me.stallTicks.Name = "stallTicks"
-        Me.stallTicks.Size = New System.Drawing.Size(167, 20)
+        Me.stallTicks.Size = New System.Drawing.Size(141, 20)
         Me.stallTicks.TabIndex = 15
         Me.stallTicks.Text = "10.0"
         '
@@ -146,7 +146,7 @@ Partial Class BitBangSpiGUI
         '
         Me.csLag.Location = New System.Drawing.Point(105, 137)
         Me.csLag.Name = "csLag"
-        Me.csLag.Size = New System.Drawing.Size(167, 20)
+        Me.csLag.Size = New System.Drawing.Size(141, 20)
         Me.csLag.TabIndex = 17
         Me.csLag.Text = "5"
         '
@@ -169,14 +169,14 @@ Partial Class BitBangSpiGUI
         Me.result.Location = New System.Drawing.Point(15, 211)
         Me.result.Name = "result"
         Me.result.RowHeadersVisible = False
-        Me.result.Size = New System.Drawing.Size(257, 238)
+        Me.result.Size = New System.Drawing.Size(231, 238)
         Me.result.TabIndex = 18
         '
         'BitBangSpiGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(284, 461)
+        Me.ClientSize = New System.Drawing.Size(259, 461)
         Me.Controls.Add(Me.result)
         Me.Controls.Add(Me.csLag)
         Me.Controls.Add(Me.Label8)
@@ -193,8 +193,8 @@ Partial Class BitBangSpiGUI
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
-        Me.MaximumSize = New System.Drawing.Size(300, 1200)
-        Me.MinimumSize = New System.Drawing.Size(300, 300)
+        Me.MaximumSize = New System.Drawing.Size(275, 1200)
+        Me.MinimumSize = New System.Drawing.Size(275, 300)
         Me.Name = "BitBangSpiGUI"
         Me.Text = "Bit Bang SPI"
         CType(Me.result, System.ComponentModel.ISupportInitialize).EndInit()

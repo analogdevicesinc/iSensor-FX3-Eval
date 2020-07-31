@@ -21,10 +21,13 @@ Public Class BitBangSpiGUI
 
         result.ColumnCount = 3
         result.Columns(0).Name = ("Byte Number")
-        result.Columns(1).Name = ("MISO Value")
-        result.Columns(2).Name = ("MOSI Value")
+        result.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
         result.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+        result.Columns(1).Name = ("MISO Value")
+        result.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
         result.Columns(1).AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
+        result.Columns(2).Name = ("MOSI Value")
+        result.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
         result.Columns(2).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         UpdateParameters()
         SetupResultView()
