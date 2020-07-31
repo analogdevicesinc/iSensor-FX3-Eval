@@ -32,5 +32,8 @@
     <Setting Name="BackColor" Type="System.Drawing.Color" Scope="User">
       <Value Profile="(Default)">Control</Value>
     </Setting>
+    <Setting Name="LastFX3Board" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

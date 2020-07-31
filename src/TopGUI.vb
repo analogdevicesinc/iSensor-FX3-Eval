@@ -419,6 +419,7 @@ Public Class TopGUI
         My.Settings.ErrorColor = ERROR_COLOR
         My.Settings.IdleColor = IDLE_COLOR
         My.Settings.BackColor = BACK_COLOR
+        My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
         My.Settings.Save()
     End Sub
 
@@ -530,6 +531,16 @@ Public Class TopGUI
 #End Region
 
 #Region "Helper Functions"
+
+    ''' <summary>
+    ''' Friend getter for last connected FX3 board SN
+    ''' </summary>
+    ''' <returns></returns>
+    Friend ReadOnly Property LastFX3SN As String
+        Get
+            Return My.Settings.LastFX3Board
+        End Get
+    End Property
 
     ''' <summary>
     ''' Loads default color scheme

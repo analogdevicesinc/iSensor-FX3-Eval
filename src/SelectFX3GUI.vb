@@ -18,6 +18,11 @@ Public Class SelectFX3GUI
 
         'Set combo box to read-only
         SelectFX3ComboBox.DropDownStyle = ComboBoxStyle.DropDownList
+
+        'if last connected fx3 is available select it by default
+        If m_TopGUI.FX3.AvailableFX3s.Contains(m_TopGUI.LastFX3SN) Then
+            SelectFX3ComboBox.SelectedItem = m_TopGUI.LastFX3SN
+        End If
     End Sub
 
     Private Sub SelectFX3ComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles SelectFX3ComboBox.SelectedIndexChanged

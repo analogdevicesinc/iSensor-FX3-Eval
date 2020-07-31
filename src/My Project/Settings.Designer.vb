@@ -173,6 +173,18 @@ Namespace My
                 Me("BackColor") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastFX3Board() As String
+            Get
+                Return CType(Me("LastFX3Board"),String)
+            End Get
+            Set
+                Me("LastFX3Board") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
