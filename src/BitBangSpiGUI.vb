@@ -15,9 +15,9 @@ Public Class BitBangSpiGUI
 
     Private Sub BitBangSpiGUI_Load(sender As Object, e As EventArgs) Handles Me.Load
         m_TopGUI.FX3.BitBangSpiConfig = New BitBangSpiConfig(True)
-        csLag.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks.ToString()
-        csLead.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks.ToString()
+        csLeadLag.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks.ToString()
         stallTicks.Text = 10.0
+        useHardwareSpi.Checked = True
 
         result.ColumnCount = 3
         result.Columns(0).Name = ("Byte Number")
@@ -46,8 +46,10 @@ Public Class BitBangSpiGUI
         Try
             m_TopGUI.FX3.SetBitBangSpiFreq(Convert.ToDouble(sclk_freq.Text))
             m_TopGUI.FX3.SetBitBangStallTime(Convert.ToDouble(stallTicks.Text))
-            m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks = Convert.ToUInt16(csLag.Text)
-            m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks = Convert.ToUInt16(csLead.Text)
+            m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks = Convert.ToUInt16(csLeadLag.Text)
+            m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks = Convert.ToUInt16(csLeadLag.Text)
+            m_TopGUI.FX3.BitBangSpiConfig.CPHA = m_TopGUI.FX3.Cpha
+            m_TopGUI.FX3.BitBangSpiConfig.CPOL = m_TopGUI.FX3.Cpol
             'parse input data
             For i As Integer = 0 To numBytes - 1
                 MOSI.Add(Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16))
@@ -83,10 +85,6 @@ Public Class BitBangSpiGUI
             transfers = Convert.ToUInt32(numTransfers.Text)
             bptransfer = Convert.ToUInt32(bitsPerTransfer.Text)
             numBytes = CUInt(Math.Ceiling(bptransfer / 8)) * transfers
-            m_TopGUI.FX3.SetBitBangSpiFreq(Convert.ToDouble(sclk_freq.Text))
-            m_TopGUI.FX3.SetBitBangStallTime(Convert.ToDouble(stallTicks.Text))
-            m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks = Convert.ToUInt16(csLag.Text)
-            m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks = Convert.ToUInt16(csLead.Text)
         Catch ex As Exception
             'squash
             goodParams = False
@@ -113,4 +111,7 @@ Public Class BitBangSpiGUI
         result.Height = Me.Height - 262
     End Sub
 
+    Private Sub useHardwareSpi_CheckedChanged(sender As Object, e As EventArgs) Handles useHardwareSpi.CheckedChanged
+        m_TopGUI.FX3.BitBangSpiConfig = New BitBangSpiConfig(useHardwareSpi.Checked)
+    End Sub
 End Class

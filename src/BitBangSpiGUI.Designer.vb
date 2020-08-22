@@ -29,13 +29,12 @@ Partial Class BitBangSpiGUI
         Me.btn_restoreSpi = New System.Windows.Forms.Button()
         Me.sclk_freq = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.csLead = New System.Windows.Forms.TextBox()
+        Me.csLeadLag = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.stallTicks = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.csLag = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.result = New System.Windows.Forms.DataGridView()
+        Me.useHardwareSpi = New System.Windows.Forms.CheckBox()
         CType(Me.result, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -68,17 +67,17 @@ Partial Class BitBangSpiGUI
         '
         'bitsPerTransfer
         '
-        Me.bitsPerTransfer.Location = New System.Drawing.Point(105, 6)
+        Me.bitsPerTransfer.Location = New System.Drawing.Point(121, 6)
         Me.bitsPerTransfer.Name = "bitsPerTransfer"
-        Me.bitsPerTransfer.Size = New System.Drawing.Size(141, 20)
+        Me.bitsPerTransfer.Size = New System.Drawing.Size(125, 20)
         Me.bitsPerTransfer.TabIndex = 6
         Me.bitsPerTransfer.Text = "16"
         '
         'numTransfers
         '
-        Me.numTransfers.Location = New System.Drawing.Point(105, 32)
+        Me.numTransfers.Location = New System.Drawing.Point(121, 32)
         Me.numTransfers.Name = "numTransfers"
-        Me.numTransfers.Size = New System.Drawing.Size(141, 20)
+        Me.numTransfers.Size = New System.Drawing.Size(125, 20)
         Me.numTransfers.TabIndex = 8
         Me.numTransfers.Text = "1"
         '
@@ -93,9 +92,9 @@ Partial Class BitBangSpiGUI
         '
         'sclk_freq
         '
-        Me.sclk_freq.Location = New System.Drawing.Point(105, 59)
+        Me.sclk_freq.Location = New System.Drawing.Point(121, 59)
         Me.sclk_freq.Name = "sclk_freq"
-        Me.sclk_freq.Size = New System.Drawing.Size(141, 20)
+        Me.sclk_freq.Size = New System.Drawing.Size(125, 20)
         Me.sclk_freq.TabIndex = 11
         Me.sclk_freq.Text = "750000"
         '
@@ -108,28 +107,28 @@ Partial Class BitBangSpiGUI
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "SCLK Freq (Hz):"
         '
-        'csLead
+        'csLeadLag
         '
-        Me.csLead.Location = New System.Drawing.Point(105, 111)
-        Me.csLead.Name = "csLead"
-        Me.csLead.Size = New System.Drawing.Size(141, 20)
-        Me.csLead.TabIndex = 13
-        Me.csLead.Text = "5"
+        Me.csLeadLag.Location = New System.Drawing.Point(121, 111)
+        Me.csLeadLag.Name = "csLeadLag"
+        Me.csLeadLag.Size = New System.Drawing.Size(125, 20)
+        Me.csLeadLag.TabIndex = 13
+        Me.csLeadLag.Text = "5"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Location = New System.Drawing.Point(12, 114)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(80, 13)
+        Me.Label6.Size = New System.Drawing.Size(103, 13)
         Me.Label6.TabIndex = 12
-        Me.Label6.Text = "CS Lead Ticks:"
+        Me.Label6.Text = "CS Lead/Lag Ticks:"
         '
         'stallTicks
         '
-        Me.stallTicks.Location = New System.Drawing.Point(105, 85)
+        Me.stallTicks.Location = New System.Drawing.Point(121, 85)
         Me.stallTicks.Name = "stallTicks"
-        Me.stallTicks.Size = New System.Drawing.Size(141, 20)
+        Me.stallTicks.Size = New System.Drawing.Size(125, 20)
         Me.stallTicks.TabIndex = 15
         Me.stallTicks.Text = "10.0"
         '
@@ -141,23 +140,6 @@ Partial Class BitBangSpiGUI
         Me.Label7.Size = New System.Drawing.Size(76, 13)
         Me.Label7.TabIndex = 14
         Me.Label7.Text = "Stall Time (us):"
-        '
-        'csLag
-        '
-        Me.csLag.Location = New System.Drawing.Point(105, 137)
-        Me.csLag.Name = "csLag"
-        Me.csLag.Size = New System.Drawing.Size(141, 20)
-        Me.csLag.TabIndex = 17
-        Me.csLag.Text = "5"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(12, 140)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(74, 13)
-        Me.Label8.TabIndex = 16
-        Me.Label8.Text = "CS Lag Ticks:"
         '
         'result
         '
@@ -172,17 +154,26 @@ Partial Class BitBangSpiGUI
         Me.result.Size = New System.Drawing.Size(231, 238)
         Me.result.TabIndex = 18
         '
+        'useHardwareSpi
+        '
+        Me.useHardwareSpi.AutoSize = True
+        Me.useHardwareSpi.Location = New System.Drawing.Point(15, 138)
+        Me.useHardwareSpi.Name = "useHardwareSpi"
+        Me.useHardwareSpi.Size = New System.Drawing.Size(135, 17)
+        Me.useHardwareSpi.TabIndex = 19
+        Me.useHardwareSpi.Text = "Override Hardware SPI"
+        Me.useHardwareSpi.UseVisualStyleBackColor = True
+        '
         'BitBangSpiGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(259, 461)
+        Me.Controls.Add(Me.useHardwareSpi)
         Me.Controls.Add(Me.result)
-        Me.Controls.Add(Me.csLag)
-        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.stallTicks)
         Me.Controls.Add(Me.Label7)
-        Me.Controls.Add(Me.csLead)
+        Me.Controls.Add(Me.csLeadLag)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.sclk_freq)
         Me.Controls.Add(Me.Label5)
@@ -211,11 +202,10 @@ Partial Class BitBangSpiGUI
     Friend WithEvents btn_restoreSpi As Button
     Friend WithEvents sclk_freq As TextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents csLead As TextBox
+    Friend WithEvents csLeadLag As TextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents stallTicks As TextBox
     Friend WithEvents Label7 As Label
-    Friend WithEvents csLag As TextBox
-    Friend WithEvents Label8 As Label
     Friend WithEvents result As DataGridView
+    Friend WithEvents useHardwareSpi As CheckBox
 End Class
