@@ -48,8 +48,8 @@ Public Class BitBangSpiGUI
             m_TopGUI.FX3.SetBitBangStallTime(Convert.ToDouble(stallTicks.Text))
             m_TopGUI.FX3.BitBangSpiConfig.CSLagTicks = Convert.ToUInt16(csLeadLag.Text)
             m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks = Convert.ToUInt16(csLeadLag.Text)
-            m_TopGUI.FX3.BitBangSpiConfig.CPHA = m_TopGUI.FX3.Cpha
-            m_TopGUI.FX3.BitBangSpiConfig.CPOL = m_TopGUI.FX3.Cpol
+            m_TopGUI.FX3.BitBangSpiConfig.CPHA = Cpha.Checked
+            m_TopGUI.FX3.BitBangSpiConfig.CPOL = cpol.Checked
             'parse input data
             For i As Integer = 0 To numBytes - 1
                 MOSI.Add(Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16))
@@ -114,4 +114,5 @@ Public Class BitBangSpiGUI
     Private Sub useHardwareSpi_CheckedChanged(sender As Object, e As EventArgs) Handles useHardwareSpi.CheckedChanged
         m_TopGUI.FX3.BitBangSpiConfig = New BitBangSpiConfig(useHardwareSpi.Checked)
     End Sub
+
 End Class
