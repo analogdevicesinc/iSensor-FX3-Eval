@@ -436,7 +436,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  Sets the SCLK frequency for a bit bang SPI connection. 
  </summary>
- <param name="Freq">The desired SPI frequency. Can go from 800KHz to approx 0.001Hz</param>
+ <param name="Freq">The desired SPI frequency. Can go from 1.5MHz to approx 0.001Hz</param>
  <returns></returns>
 </member>
 <member name="P:FX3Api.FX3Connection.CrcFirstIndex">
@@ -1602,6 +1602,21 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Stall time timer ticks
  </summary>
 </member>
+<member name="F:FX3Api.BitBangSpiConfig.CPHA">
+ <summary>
+ Bit bang SPI clock phase. If set to false (0) data is sampled
+ on the clock active to inactive edge, and updated on the inactive to active
+ edge. If set to true (1), data is updated on the clock 
+ active to inactive transition, and data is sampled on the inactive to 
+ active edge.
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CPOL">
+ <summary>
+ Bit bang SPI clock polarity. True (1) is idle high, False (0) is
+ idle low. 
+ </summary>
+</member>
 <member name="M:FX3Api.BitBangSpiConfig.#ctor(System.Boolean)">
  <summary>
  Constructor which lets you specify set of default pins to use as bit bang SPI pins
@@ -1613,6 +1628,13 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  Get a parameters array for the current bit bang SPI configuration
  </summary>
  <returns>The parameter array to send to the FX3 for a bit bang vendor command</returns>
+</member>
+<member name="P:FX3Api.BitBangSpiConfig.UpdatePinsRequired">
+ <summary>
+ Kinda jank. Flag pin update required at construction so FX3 Connection can fix pin assignments.
+ Will only return true one time (if pin update is required)
+ </summary>
+ <returns>If GPIO re-assignment is required</returns>
 </member>
 <member name="T:FX3Api.FX3SPIConfig">
  <summary>
