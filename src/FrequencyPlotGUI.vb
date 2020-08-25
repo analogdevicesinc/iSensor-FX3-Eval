@@ -37,6 +37,8 @@ Public Class FrequencyPlotGUI
         RegisterList.View = View.Details
         RegisterList.Columns.Add("Register", RegisterList.Width - 1, HorizontalAlignment.Left)
 
+        dataPlot.Series.Clear()
+
         'initialize variables
         selectedRegList = New List(Of RegClass)
         btn_stopPlot.Enabled = False
@@ -376,6 +378,11 @@ Public Class FrequencyPlotGUI
         Dim i As Integer
         Dim val As Double
         Dim temp As Series
+
+        If seriesCnt = 0 Then
+            MsgBox("ERROR: No data plotted")
+            Return
+        End If
 
         seriesIndex = selectedRegList.Count
         i = 0

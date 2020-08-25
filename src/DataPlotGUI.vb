@@ -36,6 +36,8 @@ Public Class DataPlotGUI
         selectedRegList = New List(Of RegOffsetPair)
         sampleFreq.Text = "20"
 
+        dataPlot.Series.Clear()
+
         'Set color list
         plotColors = New List(Of Color)
 
