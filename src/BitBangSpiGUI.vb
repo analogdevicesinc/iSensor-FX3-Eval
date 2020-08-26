@@ -18,6 +18,8 @@ Public Class BitBangSpiGUI
         csLeadLag.Text = m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks.ToString()
         stallTicks.Text = 10.0
         useHardwareSpi.Checked = True
+        cpol.Checked = True
+        cpha.Checked = True
 
         result.ColumnCount = 3
         result.Columns(0).Name = ("Byte Number")
