@@ -26,7 +26,7 @@ Partial Class BurstTestGUI
         Me.sclk = New System.Windows.Forms.TextBox()
         Me.applySettings = New System.Windows.Forms.Button()
         Me.captureData = New System.Windows.Forms.Button()
-        Me.num32words = New System.Windows.Forms.TextBox()
+        Me.numBytes = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -37,7 +37,7 @@ Partial Class BurstTestGUI
         'drActive
         '
         Me.drActive.AutoSize = True
-        Me.drActive.Location = New System.Drawing.Point(99, 12)
+        Me.drActive.Location = New System.Drawing.Point(72, 12)
         Me.drActive.Name = "drActive"
         Me.drActive.Size = New System.Drawing.Size(75, 17)
         Me.drActive.TabIndex = 0
@@ -47,16 +47,16 @@ Partial Class BurstTestGUI
         'csDelay
         '
         Me.csDelay.FormattingEnabled = True
-        Me.csDelay.Location = New System.Drawing.Point(99, 35)
+        Me.csDelay.Location = New System.Drawing.Point(72, 35)
         Me.csDelay.Name = "csDelay"
-        Me.csDelay.Size = New System.Drawing.Size(216, 21)
+        Me.csDelay.Size = New System.Drawing.Size(175, 21)
         Me.csDelay.TabIndex = 1
         '
         'sclk
         '
-        Me.sclk.Location = New System.Drawing.Point(99, 62)
+        Me.sclk.Location = New System.Drawing.Point(72, 62)
         Me.sclk.Name = "sclk"
-        Me.sclk.Size = New System.Drawing.Size(216, 20)
+        Me.sclk.Size = New System.Drawing.Size(175, 20)
         Me.sclk.TabIndex = 2
         '
         'applySettings
@@ -70,20 +70,20 @@ Partial Class BurstTestGUI
         '
         'captureData
         '
-        Me.captureData.Location = New System.Drawing.Point(240, 114)
+        Me.captureData.Location = New System.Drawing.Point(172, 114)
         Me.captureData.Name = "captureData"
         Me.captureData.Size = New System.Drawing.Size(75, 45)
         Me.captureData.TabIndex = 4
         Me.captureData.Text = "Capture Data"
         Me.captureData.UseVisualStyleBackColor = True
         '
-        'num32words
+        'numBytes
         '
-        Me.num32words.Location = New System.Drawing.Point(99, 88)
-        Me.num32words.Name = "num32words"
-        Me.num32words.Size = New System.Drawing.Size(216, 20)
-        Me.num32words.TabIndex = 5
-        Me.num32words.Text = "12"
+        Me.numBytes.Location = New System.Drawing.Point(72, 88)
+        Me.numBytes.Name = "numBytes"
+        Me.numBytes.Size = New System.Drawing.Size(175, 20)
+        Me.numBytes.TabIndex = 5
+        Me.numBytes.Text = "48"
         '
         'Label1
         '
@@ -108,9 +108,9 @@ Partial Class BurstTestGUI
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(12, 91)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(81, 13)
+        Me.Label3.Size = New System.Drawing.Size(46, 13)
         Me.Label3.TabIndex = 8
-        Me.Label3.Text = "# 32-Bit Words:"
+        Me.Label3.Text = "# Bytes:"
         '
         'result
         '
@@ -121,27 +121,27 @@ Partial Class BurstTestGUI
         Me.result.Location = New System.Drawing.Point(12, 165)
         Me.result.Name = "result"
         Me.result.RowHeadersVisible = False
-        Me.result.Size = New System.Drawing.Size(303, 293)
+        Me.result.Size = New System.Drawing.Size(235, 293)
         Me.result.TabIndex = 9
         '
         'BurstTestGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(329, 471)
+        Me.ClientSize = New System.Drawing.Size(259, 471)
         Me.Controls.Add(Me.result)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.num32words)
+        Me.Controls.Add(Me.numBytes)
         Me.Controls.Add(Me.captureData)
         Me.Controls.Add(Me.applySettings)
         Me.Controls.Add(Me.sclk)
         Me.Controls.Add(Me.csDelay)
         Me.Controls.Add(Me.drActive)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
-        Me.MaximumSize = New System.Drawing.Size(345, 1000)
-        Me.MinimumSize = New System.Drawing.Size(345, 400)
+        Me.MaximumSize = New System.Drawing.Size(275, 1500)
+        Me.MinimumSize = New System.Drawing.Size(275, 300)
         Me.Name = "BurstTestGUI"
         Me.Text = "Burst Mode Test"
         CType(Me.result, System.ComponentModel.ISupportInitialize).EndInit()
@@ -155,7 +155,7 @@ Partial Class BurstTestGUI
     Friend WithEvents sclk As TextBox
     Friend WithEvents applySettings As Button
     Friend WithEvents captureData As Button
-    Friend WithEvents num32words As TextBox
+    Friend WithEvents numBytes As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label

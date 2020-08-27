@@ -11,7 +11,7 @@ Public Class BurstTestGUI
 
     Private m_AppGUI As AppBrowseGUI
 
-    Private numWords As Integer
+    Private m_numBytes As Integer
 
     Friend Sub SetAppGUI(AppGUI As AppBrowseGUI)
         m_AppGUI = AppGUI
@@ -22,12 +22,12 @@ Public Class BurstTestGUI
         drActive.Checked = m_TopGUI.FX3.DrActive
         csDelay.DataSource = ([Enum].GetValues(GetType(SpiLagLeadTime)))
         csDelay.SelectedItem = m_TopGUI.FX3.ChipSelectLeadTime
-        num32words.Text = "12"
-        numWords = 12
+        numBytes.Text = "48"
+        m_numBytes = 48
         m_TopGUI.FX3.StripBurstTriggerWord = False
         m_TopGUI.FX3.TriggerReg = New RegClass With {.Address = 0, .Page = 0}
         result.ColumnCount = 3
-        result.Columns(0).Name = ("Word Number")
+        result.Columns(0).Name = ("Byte")
         result.Columns(1).Name = ("MISO Value")
         result.Columns(2).Name = ("MOSI Value")
         result.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells
@@ -42,30 +42,32 @@ Public Class BurstTestGUI
 
     Private Sub captureData_Click(sender As Object, e As EventArgs) Handles captureData.Click
         Dim burstTrigger As New List(Of Byte)
-        Dim valueLng As ULong
-        For i As Integer = 0 To numWords - 1
-            valueLng = Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16)
-            burstTrigger.Add((valueLng >> 24) And &HFF)
-            burstTrigger.Add((valueLng >> 16) And &HFF)
-            burstTrigger.Add((valueLng >> 8) And &HFF)
-            burstTrigger.Add((valueLng >> 0) And &HFF)
-        Next
+        Dim byteVal As Byte
+        Try
+            For i As Integer = 0 To m_numBytes - 1
+                byteVal = Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16)
+                burstTrigger.Add(byteVal)
+            Next
+        Catch ex As Exception
+            MsgBox("ERROR: Invalid MOSI data. " + ex.Message)
+        End Try
         m_TopGUI.FX3.TriggerReg = New RegMapClasses.RegClass With {.Address = 0}
         m_TopGUI.FX3.StripBurstTriggerWord = False
-        m_TopGUI.FX3.BurstByteCount = 4 * numWords
+        m_TopGUI.FX3.BurstByteCount = m_numBytes
         m_TopGUI.FX3.SetupBurstMode()
         m_TopGUI.FX3.StartBurstStream(1, burstTrigger)
-        m_TopGUI.FX3.WaitForStreamCompletion(250)
+        While m_TopGUI.FX3.GetNumBuffersRead < 1
+            System.Threading.Thread.Sleep(10)
+        End While
         Dim buf() As UShort
         buf = m_TopGUI.FX3.GetBuffer()
         If IsNothing(buf) Then
             MsgBox("Error: Null buffer received...")
             Exit Sub
         End If
-        For i As Integer = 0 To numWords - 1
-            valueLng = buf(2 * i + 1)
-            valueLng += (buf(2 * i) * 2 ^ 16)
-            result.Item("MISO Value", i).Value = "0x" + valueLng.ToString("X8")
+        Dim miso As Byte() = UShortToByteArray(buf)
+        For i As Integer = 0 To m_numBytes - 1
+            result.Item("MISO Value", i).Value = "0x" + miso(i).ToString("X2")
         Next
     End Sub
 
@@ -80,17 +82,20 @@ Public Class BurstTestGUI
     End Sub
 
     Private Sub SetupResultView()
-        If result.RowCount < numWords Then
-            For i As Integer = result.RowCount To numWords - 1
-                result.Rows.Add({i.ToString(), "", "0x00000000"})
+        If (m_numBytes And 1UI) <> 0 Then
+            m_numBytes += 1
+            numBytes.Text = m_numBytes.ToString()
+        End If
+        If result.RowCount < m_numBytes Then
+            For i As Integer = result.RowCount To m_numBytes - 1
+                result.Rows.Add({i.ToString(), "", "0x00"})
             Next
-        ElseIf result.RowCount > numWords Then
-            Dim numRows = result.RowCount - numWords
+        ElseIf result.RowCount > m_numBytes Then
+            Dim numRows = result.RowCount - m_numBytes
             For i As Integer = 0 To numRows - 1
                 result.Rows.RemoveAt(result.RowCount - 1)
             Next
         End If
-
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -98,9 +103,9 @@ Public Class BurstTestGUI
         m_AppGUI.btn_BurstTest.Enabled = True
     End Sub
 
-    Private Sub num32words_TextChanged(sender As Object, e As EventArgs) Handles num32words.TextChanged
+    Private Sub num32words_TextChanged(sender As Object, e As EventArgs) Handles numBytes.LostFocus
         Try
-            numWords = Convert.ToInt32(num32words.Text)
+            m_numBytes = Convert.ToInt32(numBytes.Text)
             SetupResultView()
         Catch ex As Exception
         End Try
