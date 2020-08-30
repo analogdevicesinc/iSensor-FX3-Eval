@@ -15,6 +15,27 @@ End Class
 
 Module helperFunctions
 
+    Public Sub InteractWithOtherForms(hide As Boolean, ByRef caller As Form)
+        'hide other forms
+        For Each openForm As Form In Application.OpenForms
+            If Not ReferenceEquals(openForm, caller) Then
+                If hide Then
+                    If openForm.InvokeRequired Then
+                        openForm.Invoke(Sub() openForm.Hide())
+                    Else
+                        openForm.Hide()
+                    End If
+                Else
+                    If openForm.InvokeRequired Then
+                        openForm.Invoke(Sub() openForm.Show())
+                    Else
+                        openForm.Show()
+                    End If
+                End If
+            End If
+        Next
+    End Sub
+
     ''' <summary>
     ''' Converts an unsigned integer to signed
     ''' </summary>

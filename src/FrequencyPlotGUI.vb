@@ -48,19 +48,6 @@ Public Class FrequencyPlotGUI
 
     End Sub
 
-    Private Sub InteractWithOtherForms(hide As Boolean)
-        'hide other forms
-        For Each openForm As Form In Application.OpenForms
-            If Not ReferenceEquals(openForm, Me) Then
-                If hide Then
-                    openForm.Hide()
-                Else
-                    openForm.Show()
-                End If
-            End If
-        Next
-    End Sub
-
     Private Sub Shutdown() Handles Me.Closing
         If m_FFTStream.IsBusy Then
             m_FFTStream.CancelAsync()
@@ -68,7 +55,7 @@ Public Class FrequencyPlotGUI
         End If
         m_FFTStream.Dispose()
         'show other forms
-        InteractWithOtherForms(False)
+        InteractWithOtherForms(False, Me)
         're-enable main form button
         m_TopGUI.btn_plotFFT.Enabled = True
     End Sub
@@ -234,7 +221,7 @@ Public Class FrequencyPlotGUI
         btn_run.Enabled = False
 
         'hide other forms
-        InteractWithOtherForms(True)
+        InteractWithOtherForms(True, Me)
 
     End Sub
 
@@ -257,7 +244,7 @@ Public Class FrequencyPlotGUI
         m_TopGUI.FX3.DrActive = False
 
         'show other forms
-        InteractWithOtherForms(False)
+        InteractWithOtherForms(False, Me)
 
     End Sub
 

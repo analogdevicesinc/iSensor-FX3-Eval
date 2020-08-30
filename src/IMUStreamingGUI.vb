@@ -113,6 +113,9 @@ Public Class IMUStreamingGUI
         fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
         fileManager.BuffersPerWrite = 10000
 
+        'hide other forms
+        InteractWithOtherForms(True, Me)
+
         'run async
         fileManager.RunAsync()
 
@@ -149,6 +152,9 @@ Public Class IMUStreamingGUI
 
         'Clear burst mode
         m_TopGUI.FX3.ClearBurstMode()
+
+        'show forms
+        InteractWithOtherForms(False, Me)
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles BurstStreamCancelButton.Click

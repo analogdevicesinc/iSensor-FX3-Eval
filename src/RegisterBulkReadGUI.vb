@@ -237,6 +237,9 @@ Public Class RegisterBulkReadGUI
         End Try
         fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
 
+        'hide other forms during stream
+        InteractWithOtherForms(True, Me)
+
         'run async
         fileManager.RunAsync()
 
@@ -287,6 +290,7 @@ Public Class RegisterBulkReadGUI
         linesPerFile.Enabled = True
         btn_loadregs.Enabled = True
         btn_saveregs.Enabled = True
+        InteractWithOtherForms(False, Me)
     End Sub
 
     Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles StreamingAVARCancelButton.Click
