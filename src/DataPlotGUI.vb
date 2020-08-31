@@ -519,4 +519,12 @@ Public Class DataPlotGUI
             maxscale.Enabled = True
         End If
     End Sub
+
+    Private Sub HiddenHandler() Handles Me.VisibleChanged
+        If Not Me.Visible Then
+            'disable plotting
+            If plotting Then btn_startStop_Click(Me, Nothing)
+        End If
+    End Sub
+
 End Class
