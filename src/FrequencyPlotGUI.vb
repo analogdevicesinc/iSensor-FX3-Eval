@@ -116,6 +116,10 @@ Public Class FrequencyPlotGUI
         Next
         m_FFTStream.RegList = selectedRegList
 
+        'try and cancel any running stream
+        m_TopGUI.FX3.StopStream()
+        System.Threading.Thread.Sleep(20)
+
         'set dr active
         m_TopGUI.FX3.DrActive = True
 
