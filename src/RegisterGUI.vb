@@ -113,7 +113,7 @@ Public Class RegisterGUI
                 regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
                 m_TopGUI.Dut.WriteSigned(m_TopGUI.RegMap(regLabel), writeValue)
             Catch ex As Exception
-                MsgBox("ERROR: Invalid write - " + ex.ToString())
+                MsgBox("ERROR: Invalid write - " + ex.Message())
             End Try
         Else
             Dim writeValue As UInteger
@@ -122,7 +122,7 @@ Public Class RegisterGUI
                 regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
                 m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap(regLabel), writeValue)
             Catch ex As Exception
-                MsgBox("ERROR: Invalid write - " + ex.ToString())
+                MsgBox("ERROR: Invalid write - " + ex.Message())
             End Try
         End If
 
@@ -159,7 +159,7 @@ Public Class RegisterGUI
                 If currentRegList(regIndex).IsReadable Then
                     regView.Item("Contents", regIndex).Value = value.ToString("f" + numDecimalPlaces.ToString())
                 Else
-                    regView.Item("Contents", regIndex).Value = "Cannot Read"
+                    regView.Item("Contents", regIndex).Value = "Write Only"
                 End If
                 regIndex += 1
             Next
@@ -171,7 +171,7 @@ Public Class RegisterGUI
                 If currentRegList(regIndex).IsReadable Then
                     regView.Item("Contents", regIndex).Value = value.ToString("X" + (currentRegList(regIndex).NumBytes * 2).ToString())
                 Else
-                    regView.Item("Contents", regIndex).Value = "Cannot Read"
+                    regView.Item("Contents", regIndex).Value = "Write Only"
                 End If
                 regIndex += 1
             Next
@@ -215,7 +215,7 @@ Public Class RegisterGUI
             End If
             CurrentValue.BackColor = Color.White
         Catch ex As Exception
-            CurrentValue.Text = "ERROR"
+            CurrentValue.Text = "Write Only"
             CurrentValue.BackColor = m_TopGUI.ERROR_COLOR
         End Try
 
@@ -376,7 +376,7 @@ Public Class RegisterGUI
                 If reg.IsReadable Then
                     readStr = "Not Read"
                 Else
-                    readStr = "Cannot Read"
+                    readStr = "Write Only"
                 End If
                 If regIndex >= regView.RowCount Then
                     regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr}
@@ -430,7 +430,7 @@ Public Class RegisterGUI
             'perform quick check of dr freq
             freq = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 100, 2)
             If freq = Double.PositiveInfinity Then
-                Dim res As DialogResult = MessageBox.Show("Warning: Data Ready Not Toggling! Continue?", "Warning", MessageBoxButtons.OKCancel)
+                Dim res As DialogResult = MessageBox.Show("Warning, Data Ready not Toggling! Continue?", "Confirm Data Ready Sync", MessageBoxButtons.OKCancel)
                 If res <> DialogResult.OK Then drActive.Checked = False
             End If
         End If
