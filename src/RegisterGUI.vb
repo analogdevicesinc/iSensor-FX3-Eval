@@ -425,6 +425,15 @@ Public Class RegisterGUI
     End Sub
 
     Private Sub drActive_CheckedChanged(sender As Object, e As EventArgs) Handles drActive.CheckedChanged
+        Dim freq As Double
+        If drActive.Checked Then
+            'perform quick check of dr freq
+            freq = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 100, 2)
+            If freq = Double.PositiveInfinity Then
+                Dim res As DialogResult = MessageBox.Show("Warning: Data Ready Not Toggling! Continue?", "Warning", MessageBoxButtons.OKCancel)
+                If res <> DialogResult.OK Then drActive.Checked = False
+            End If
+        End If
         m_TopGUI.FX3.DrActive = drActive.Checked
     End Sub
 
