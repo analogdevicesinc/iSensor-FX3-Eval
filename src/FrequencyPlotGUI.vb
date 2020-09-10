@@ -127,7 +127,7 @@ Public Class FrequencyPlotGUI
     End Function
 
     Private Function UpdateSampleFreq() As Boolean
-        Dim freq As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2)
+        Dim freq As Double = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 1000, 2)
         m_FFTStream.SampleFrequency = freq
         drFreq.Text = FormatNumber(freq, 1).ToString() + "Hz"
         If freq = Double.PositiveInfinity Then
