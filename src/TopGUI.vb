@@ -755,17 +755,9 @@ Public Class TopGUI
             label_DUTStatus.BackColor = IDLE_COLOR
         End If
 
-        'Check that the ready pin is high
-        If FX3.DrActive Then
-            If FX3.PulseWait(FX3.DrPin, 1, 0, 500) > 500 Then
-                label_DUTStatus.Text = "ERROR: DUT data ready pin not active"
-                label_DUTStatus.BackColor = ERROR_COLOR
-                Exit Sub
-            End If
-        End If
-
         Dim scratchReg As RegClass = Nothing
         Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1"}
+        Dim drActive As Boolean = FX3.DrActive
 
         For Each regName In scratchRegNames
             If RegMap.Contains(regName) Then
@@ -779,6 +771,9 @@ Public Class TopGUI
             label_DUTStatus.BackColor = ERROR_COLOR
             Exit Sub
         End If
+
+        'make DR active false for this test
+        FX3.DrActive = False
 
         Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
 
@@ -794,6 +789,9 @@ Public Class TopGUI
         End If
 
         Dut.WriteUnsigned(scratchReg, orignalScratch)
+
+        'restore dr active setting
+        FX3.DrActive = drActive
 
     End Sub
 
