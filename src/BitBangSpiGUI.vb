@@ -43,8 +43,8 @@ Public Class BitBangSpiGUI
     End Sub
 
     Private Sub btn_Transfer_Click(sender As Object, e As EventArgs) Handles btn_Transfer.Click
-        Dim MOSI As New List(Of Byte)
-        Dim MISO As Byte()
+        Dim MOSIData As New List(Of Byte)
+        Dim MISOData As Byte()
         Try
             m_TopGUI.FX3.SetBitBangSpiFreq(Convert.ToDouble(sclk_freq.Text))
             m_TopGUI.FX3.SetBitBangStallTime(Convert.ToDouble(stallTicks.Text))
@@ -52,24 +52,24 @@ Public Class BitBangSpiGUI
             m_TopGUI.FX3.BitBangSpiConfig.CSLeadTicks = Convert.ToUInt16(csLeadLag.Text)
             m_TopGUI.FX3.BitBangSpiConfig.CPHA = Cpha.Checked
             m_TopGUI.FX3.BitBangSpiConfig.CPOL = cpol.Checked
+            m_TopGUI.FX3.BitBangSpiConfig.CS = New FX3PinObject(Convert.ToUInt32(CS.Text))
+            m_TopGUI.FX3.BitBangSpiConfig.SCLK = New FX3PinObject(Convert.ToUInt32(SCLK.Text))
+            m_TopGUI.FX3.BitBangSpiConfig.MISO = New FX3PinObject(Convert.ToUInt32(MISO.Text))
+            m_TopGUI.FX3.BitBangSpiConfig.MOSI = New FX3PinObject(Convert.ToUInt32(MOSI.Text))
             'parse input data
             For i As Integer = 0 To numBytes - 1
-                MOSI.Add(Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16))
+                MOSIData.Add(Convert.ToUInt32(result.Item("MOSI Value", i).Value, 16))
             Next
             'transfer SPI data
-            MISO = m_TopGUI.FX3.BitBangSpi(bptransfer, transfers, MOSI.ToArray(), 5000)
+            MISOData = m_TopGUI.FX3.BitBangSpi(bptransfer, transfers, MOSIData.ToArray(), 5000)
             'update output
             For i As Integer = 0 To numBytes - 1
-                result.Item("MISO Value", i).Value = "0x" + MISO(i).ToString("X2")
+                result.Item("MISO Value", i).Value = "0x" + MISOData(i).ToString("X2")
             Next
         Catch ex As Exception
             MsgBox("ERROR: " + ex.Message())
         End Try
 
-    End Sub
-
-    Private Sub btn_restoreSpi_Click(sender As Object, e As EventArgs) Handles btn_restoreSpi.Click
-        m_TopGUI.FX3.RestoreHardwareSpi()
     End Sub
 
     Private Sub RestoreSPI() Handles Me.Deactivate
@@ -110,11 +110,19 @@ Public Class BitBangSpiGUI
     End Sub
 
     Private Sub ResizeHandler() Handles Me.SizeChanged
-        result.Height = Me.Height - 262
+        result.Height = Me.Height - 320
     End Sub
 
     Private Sub useHardwareSpi_CheckedChanged(sender As Object, e As EventArgs) Handles useHardwareSpi.CheckedChanged
         m_TopGUI.FX3.BitBangSpiConfig = New BitBangSpiConfig(useHardwareSpi.Checked)
+        UpdatePinLabels()
+    End Sub
+
+    Private Sub UpdatePinLabels()
+        CS.Text = m_TopGUI.FX3.BitBangSpiConfig.CS.PinNumber.ToString()
+        SCLK.Text = m_TopGUI.FX3.BitBangSpiConfig.SCLK.PinNumber.ToString()
+        MOSI.Text = m_TopGUI.FX3.BitBangSpiConfig.MOSI.PinNumber.ToString()
+        MISO.Text = m_TopGUI.FX3.BitBangSpiConfig.MISO.PinNumber.ToString()
     End Sub
 
 End Class
