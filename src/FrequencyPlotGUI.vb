@@ -61,10 +61,12 @@ Public Class FrequencyPlotGUI
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
-        If m_FFTStream.IsBusy Then
-            m_FFTStream.CancelAsync()
-            System.Threading.Thread.Sleep(250)
-        End If
+        m_FFTStream.CancelAsync()
+        Dim timer As New Stopwatch()
+        timer.Start()
+        While timer.ElapsedMilliseconds < 500 And m_FFTStream.IsBusy
+            System.Threading.Thread.Sleep(10)
+        End While
         m_FFTStream.Dispose()
         'save register list
         m_TopGUI.fftPlotRegs.Clear()
