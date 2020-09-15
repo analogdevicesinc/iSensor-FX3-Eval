@@ -36,6 +36,7 @@ Public Class DataPlotGUI
         selectedRegList = New List(Of RegOffsetPair)
         sampleFreq.Text = "20"
         dataPlot.Series.Clear()
+        runTime = Long.MaxValue
 
         'Set up timer
         plotTimer = New System.Timers.Timer(500)
