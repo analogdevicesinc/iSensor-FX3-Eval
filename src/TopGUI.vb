@@ -35,6 +35,10 @@ Public Class TopGUI
     'data visualization color palette
     Friend PlotColorPalette As List(Of Color)
 
+    'plotting register lists
+    Friend dataPlotRegs As New List(Of String)
+    Friend fftPlotRegs As New List(Of String)
+
     'Last browsed to file location
     Public lastFilePath As String
 

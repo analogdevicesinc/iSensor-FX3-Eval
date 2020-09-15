@@ -46,7 +46,6 @@ Public Class DataPlotGUI
         samplesRendered.Text = "200"
         minScale.Text = "-1000"
         maxscale.Text = "1000"
-
         btn_stopPlayback.Enabled = False
         btn_stopPlayback.Visible = False
         axis_autoscale.Checked = True
@@ -87,6 +86,11 @@ Public Class DataPlotGUI
         playBackMutex.WaitOne()
         plotMutex.WaitOne()
         m_TopGUI.FX3.UserLEDOn()
+        'save regs which were plotted
+        m_TopGUI.dataPlotRegs.Clear()
+        For Each item In selectedRegList
+            m_TopGUI.dataPlotRegs.Add(item.Reg.Label)
+        Next
         m_TopGUI.btn_plotData.Enabled = True
     End Sub
 
@@ -229,9 +233,11 @@ Public Class DataPlotGUI
                     regView.Item("Page", regIndex).Value = reg.Page
                     regView.Item("Address", regIndex).Value = reg.Address
                     regView.Item("Contents", regIndex).Value = readStr
-                    regView.Item("Plot", regIndex).Value = True
+                    regView.Item("Plot", regIndex).Value = False
                     regView.Item("Offset", regIndex).Value = "0"
                 End If
+                'check if previously selected
+                If m_TopGUI.dataPlotRegs.Contains(reg.Label) Then regView.Item("Plot", regIndex).Value = True
                 regIndex += 1
             End If
         Next

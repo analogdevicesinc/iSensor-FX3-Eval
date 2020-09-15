@@ -16,6 +16,13 @@ Public Class FrequencyPlotGUI
     'selected register list
     Private selectedRegList As List(Of RegClass)
 
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+    End Sub
+
     Private Sub FrequencyPlotGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         'instantiate fft streamer
@@ -26,6 +33,11 @@ Public Class FrequencyPlotGUI
             regSelect.Items.Add(reg.Label)
         Next
         regSelect.SelectedIndex = 0
+
+        'check for previously plotted regs
+        For Each item In m_TopGUI.fftPlotRegs
+            If regSelect.Items.Contains(item) Then RegisterList.Items.Add(item)
+        Next
 
         'populate NFFT setting dropdown
         For n As Integer = 3 To 14
@@ -54,6 +66,11 @@ Public Class FrequencyPlotGUI
             System.Threading.Thread.Sleep(250)
         End If
         m_FFTStream.Dispose()
+        'save register list
+        m_TopGUI.fftPlotRegs.Clear()
+        For Each reg In selectedRegList
+            m_TopGUI.fftPlotRegs.Add(reg.Label)
+        Next
         'show other forms
         InteractWithOtherForms(False, Me)
         're-enable main form button
