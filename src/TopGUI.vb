@@ -32,6 +32,9 @@ Public Class TopGUI
     Friend samplesPerWrite As Integer
     Friend linesPerFile As Integer
 
+    'data visualization color palette
+    Friend PlotColorPalette As List(Of Color)
+
     'Last browsed to file location
     Public lastFilePath As String
 
@@ -43,44 +46,17 @@ Public Class TopGUI
 
     Public Sub New()
 
-        ' This call is required by the designer.'
+        Dim firmwarePath As String
+        Dim colorPath As String
+        Dim colors As String()
+
+        'This call is required by the designer
         InitializeComponent()
 
         Me.Text = "iSensor FX3 Eval"
 
-        Dim firmwarePath As String
-        Dim blinkFirmwarePath As String
-        Dim flashProgrammerPath As String
-
-        'Create a local copy of embedded firmware file
-        Dim firmwareResource As String = "iSensorFX3Eval.FX3_Firmware.img"
-        firmwarePath = System.Reflection.Assembly.GetExecutingAssembly.Location
-        firmwarePath = firmwarePath.Substring(0, firmwarePath.LastIndexOf("\") + 1)
-        firmwarePath = firmwarePath + "FX3_Firmware.img"
-        Dim assembly = System.Reflection.Assembly.GetExecutingAssembly()
-        Dim outputStream As New FileStream(firmwarePath, FileMode.Create)
-        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
-        outputStream.Close()
-
-        'Create a local copy of bootloader firmware file
-        firmwareResource = "iSensorFX3Eval.boot_fw.img"
-        blinkFirmwarePath = System.Reflection.Assembly.GetExecutingAssembly.Location
-        blinkFirmwarePath = blinkFirmwarePath.Substring(0, blinkFirmwarePath.LastIndexOf("\") + 1)
-        blinkFirmwarePath = blinkFirmwarePath + "boot_fw.img"
-        assembly = Assembly.GetExecutingAssembly()
-        outputStream = New FileStream(blinkFirmwarePath, FileMode.Create)
-        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
-        outputStream.Close()
-
-        'Create a local copy of the flash programmer
-        firmwareResource = "iSensorFX3Eval.USBFlashProg.img"
-        flashProgrammerPath = System.Reflection.Assembly.GetExecutingAssembly.Location
-        flashProgrammerPath = flashProgrammerPath.Substring(0, flashProgrammerPath.LastIndexOf("\") + 1)
-        flashProgrammerPath = flashProgrammerPath + "USBFlashProg.img"
-        assembly = System.Reflection.Assembly.GetExecutingAssembly()
-        outputStream = New FileStream(flashProgrammerPath, FileMode.Create)
-        assembly.GetManifestResourceStream(firmwareResource).CopyTo(outputStream)
-        outputStream.Close()
+        'firmware images should be in executing assembly directory
+        firmwarePath = AppDomain.CurrentDomain.BaseDirectory
 
         'load colors from settings
         GOOD_COLOR = My.Settings.GoodColor
@@ -90,6 +66,18 @@ Public Class TopGUI
 
         'apply back color
         Me.BackColor = BACK_COLOR
+
+        'load plotting color palette
+        colorPath = AppDomain.CurrentDomain.BaseDirectory + "\plot_colors.txt"
+        PlotColorPalette = New List(Of Color)
+        Try
+            colors = File.ReadAllLines(colorPath)
+            For Each color In colors
+                PlotColorPalette.Add(ColorTranslator.FromHtml("#" + color))
+            Next
+        Catch ex As Exception
+            'squash
+        End Try
 
         'Set the regmap path using the SelectRegMap GUI
         If Not File.Exists(My.Settings.SelectedRegMap) Then
@@ -108,7 +96,11 @@ Public Class TopGUI
         End If
 
         'Set FX3 connection (defaults to IMU)
-        FX3 = New FX3Connection(firmwarePath, blinkFirmwarePath, flashProgrammerPath, DeviceType.IMU)
+        Try
+            FX3 = New FX3Connection(firmwarePath, firmwarePath, firmwarePath, DeviceType.IMU)
+        Catch ex As Exception
+            MsgBox("Error loading resources! " + ex.Message)
+        End Try
 
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)

@@ -79,11 +79,15 @@ Public Class FrequencyPlotGUI
 
         'Add series for each register
         Dim temp As Series
+        Dim count As Integer = 0
         For Each reg In selectedRegList
             temp = New Series
             temp.ChartType = SeriesChartType.Line
             temp.BorderWidth = 2
             temp.Name = reg.Label
+            If count < m_TopGUI.PlotColorPalette.Count Then
+                temp.Color = m_TopGUI.PlotColorPalette(count)
+            End If
             dataPlot.Series.Add(temp)
         Next
 
