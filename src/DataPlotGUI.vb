@@ -294,7 +294,9 @@ Public Class DataPlotGUI
     Private Sub GetPlotDuration()
         If check_fixedTime.Checked Then
             Try
-                runTime = Convert.ToInt64(InputBox("Enter Plot Duration (seconds)", "Plot Time", "60"))
+                Dim defaultVal As String = "60"
+                If runTime <> Long.MaxValue Then defaultVal = runTime.ToString()
+                runTime = Convert.ToInt64(InputBox("Enter Plot Duration (seconds):", "Plot Duration", defaultVal))
             Catch ex As Exception
                 MsgBox("ERROR: Invalid plot time!")
                 check_fixedTime.Checked = False
