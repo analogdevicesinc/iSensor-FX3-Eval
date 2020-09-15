@@ -47,6 +47,7 @@ Partial Class DataPlotGUI
         Me.minScale = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.check_fixedTime = New System.Windows.Forms.CheckBox()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -260,11 +261,22 @@ Partial Class DataPlotGUI
         Me.Label4.TabIndex = 20
         Me.Label4.Text = "Max:"
         '
+        'check_fixedTime
+        '
+        Me.check_fixedTime.AutoSize = True
+        Me.check_fixedTime.Location = New System.Drawing.Point(186, 57)
+        Me.check_fixedTime.Name = "check_fixedTime"
+        Me.check_fixedTime.Size = New System.Drawing.Size(98, 17)
+        Me.check_fixedTime.TabIndex = 21
+        Me.check_fixedTime.Text = "Fixed Time Plot"
+        Me.check_fixedTime.UseVisualStyleBackColor = True
+        '
         'DataPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1390, 513)
+        Me.Controls.Add(Me.check_fixedTime)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.minScale)
@@ -316,4 +328,5 @@ Partial Class DataPlotGUI
     Friend WithEvents minScale As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
+    Friend WithEvents check_fixedTime As CheckBox
 End Class

@@ -18,10 +18,10 @@ Public Class DataPlotGUI
     Private plotXPosition As Integer
     Private plotYMin As Integer
     Private plotYMax As Integer
-    Private plotColors As List(Of Color)
     Private numSamples As UInteger
     Private logData As List(Of String)
     Private logTimer As Stopwatch
+    Private runTime As Long
     Private playBackRunning As Boolean
     Private playBackMutex As Mutex
     Private plotMutex As Mutex
@@ -35,27 +35,24 @@ Public Class DataPlotGUI
         samplePeriodMs = 100
         selectedRegList = New List(Of RegOffsetPair)
         sampleFreq.Text = "20"
-
         dataPlot.Series.Clear()
-
-        'Set color list
-        plotColors = New List(Of Color)
 
         'Set up timer
         plotTimer = New System.Timers.Timer(500)
         plotTimer.Enabled = False
         AddHandler plotTimer.Elapsed, New ElapsedEventHandler(AddressOf PlotTimerCallback)
 
+        'set up display
         samplesRendered.Text = "200"
         minScale.Text = "-1000"
         maxscale.Text = "1000"
-
-        logTimer = New Stopwatch()
 
         btn_stopPlayback.Enabled = False
         btn_stopPlayback.Visible = False
         axis_autoscale.Checked = True
 
+        'create synchronization structures
+        logTimer = New Stopwatch()
         playBackMutex = New Mutex()
         plotMutex = New Mutex()
 
@@ -72,6 +69,7 @@ Public Class DataPlotGUI
         tip0.SetToolTip(Me.playFromCSV, "Play back data plot from a CSV plot log")
         tip0.SetToolTip(Me.logToCSV, "Save plot data to a CSV log")
         tip0.SetToolTip(Me.regView, "Select registers to plot, and supply register offset values. The data plotted for each register is scaled by the scale factor defined in the register map CSV file")
+        tip0.SetToolTip(Me.check_fixedTime, "Stop plotting automatically after a fixed time interval. This is useful when the data plotting application is being used for logging")
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
@@ -178,7 +176,14 @@ Public Class DataPlotGUI
             dataPlot.ChartAreas(0).AxisY.Minimum = yMin
         End If
 
+        'move to next plot position
         plotXPosition = plotXPosition + 1
+
+        'check if run time has elapsed
+        If (logTimer.ElapsedMilliseconds / 1000.0) >= runTime Then
+            'generate click event on plot stop
+            btn_startStop.PerformClick()
+        End If
 
         'release plot mutex
         plotMutex.ReleaseMutex()
@@ -246,11 +251,13 @@ Public Class DataPlotGUI
             End If
             sampleFreq.Enabled = True
             samplesRendered.Enabled = True
+            check_fixedTime.Enabled = True
             playFromCSV.Enabled = True
             playFromCSV.Visible = True
             m_TopGUI.FX3.UserLEDOn()
             btn_startStop.Text = "Start Plotting"
         Else
+            'start
             BuildPlotRegList()
             If selectedRegList.Count() = 0 Then
                 MsgBox("ERROR: Must select at least one register to plot")
@@ -260,11 +267,14 @@ Public Class DataPlotGUI
             plotting = True
             ConfigurePlot()
             plotTimer.Interval = samplePeriodMs
+            'ask for plot duration
+            GetPlotDuration()
             plotTimer.Enabled = True
             sampleFreq.Enabled = False
             samplesRendered.Enabled = False
             playFromCSV.Enabled = False
             playFromCSV.Visible = False
+            check_fixedTime.Enabled = False
             btn_startStop.Text = "Stop Plotting"
             Try
                 m_TopGUI.FX3.UserLEDBlink(250 / samplePeriodMs)
@@ -275,15 +285,29 @@ Public Class DataPlotGUI
         End If
     End Sub
 
+    Private Sub GetPlotDuration()
+        If check_fixedTime.Checked Then
+            Try
+                runTime = Convert.ToInt64(InputBox("Enter Plot Duration (seconds)", "Plot Time", "60"))
+            Catch ex As Exception
+                MsgBox("ERROR: Invalid plot time!")
+                check_fixedTime.Checked = False
+                runTime = Long.MaxValue
+            End Try
+        Else
+            runTime = Long.MaxValue
+        End If
+    End Sub
+
     Private Sub BuildPlotRegList()
         Dim headers As String
         selectedRegList.Clear()
         For index As Integer = 0 To regView.RowCount() - 1
             If regView.Item("Plot", index).Value = True Then
-                If plotColors.Count() <= selectedRegList.Count() Then
-                    plotColors.Add(Color.FromArgb(CByte(Math.Floor(Rnd() * &HFF)), CByte(Math.Floor(Rnd() * &HFF)), CByte(Math.Floor(Rnd() * &HFF))))
+                If m_TopGUI.PlotColorPalette.Count() <= selectedRegList.Count() Then
+                    m_TopGUI.PlotColorPalette.Add(Color.FromArgb(CByte(Math.Floor(Rnd() * &HFF)), CByte(Math.Floor(Rnd() * &HFF)), CByte(Math.Floor(Rnd() * &HFF))))
                 End If
-                selectedRegList.Add(New RegOffsetPair With {.Reg = m_TopGUI.RegMap(regView.Item("Label", index).Value), .Offset = Convert.ToDouble(regView.Item("Offset", index).Value), .Index = index, .Color = plotColors(selectedRegList.Count())})
+                selectedRegList.Add(New RegOffsetPair With {.Reg = m_TopGUI.RegMap(regView.Item("Label", index).Value), .Offset = Convert.ToDouble(regView.Item("Offset", index).Value), .Index = index, .Color = m_TopGUI.PlotColorPalette(selectedRegList.Count())})
             End If
         Next
         logData = New List(Of String)
@@ -410,6 +434,7 @@ Public Class DataPlotGUI
             Exit Sub
         End If
         logToCSV.Checked = False
+        check_fixedTime.Checked = False
         BuildPlotRegList()
         ConfigurePlot()
         DisablePlaybackButtons()
@@ -494,6 +519,7 @@ Public Class DataPlotGUI
         btn_stopPlayback.Enabled = False
         btn_startStop.Enabled = True
         samplesRendered.Enabled = True
+        check_fixedTime.Enabled = True
         sampleFreq.Enabled = True
     End Sub
 
@@ -504,6 +530,7 @@ Public Class DataPlotGUI
         btn_stopPlayback.Enabled = True
         btn_startStop.Enabled = False
         logToCSV.Enabled = False
+        check_fixedTime.Enabled = False
         samplesRendered.Enabled = False
         sampleFreq.Enabled = False
     End Sub
