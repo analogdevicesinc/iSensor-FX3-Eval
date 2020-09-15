@@ -87,6 +87,7 @@ Public Class FrequencyPlotGUI
             temp.Name = reg.Label
             If count < m_TopGUI.PlotColorPalette.Count Then
                 temp.Color = m_TopGUI.PlotColorPalette(count)
+                count += 1
             End If
             dataPlot.Series.Add(temp)
         Next
