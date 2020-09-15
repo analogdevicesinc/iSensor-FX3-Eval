@@ -44,6 +44,9 @@ Public Class FX3ConfigGUI
         dataReadyPinInput.Items.Add("DIO2")
         dataReadyPinInput.Items.Add("DIO3")
         dataReadyPinInput.Items.Add("DIO4")
+        If m_TopGUI.FX3.ActiveFX3.BoardType > FX3BoardType.iSensorFX3Board_A Then
+            dataReadyPinInput.Items.Add("LOOPBACK1")
+        End If
 
         SelectedRegMap.Text = m_TopGUI.RegMapPath.Substring(m_TopGUI.RegMapPath.LastIndexOf("\") + 1)
         m_regmappath = ""
@@ -123,6 +126,10 @@ Public Class FX3ConfigGUI
             dataReadyPinInput.SelectedItem = "DIO3"
         ElseIf m_TopGUI.FX3.ReadyPin.pinConfig = m_TopGUI.FX3.DIO4.pinConfig Then
             dataReadyPinInput.SelectedItem = "DIO4"
+        ElseIf m_TopGUI.FX3.ReadyPin.pinConfig = m_TopGUI.FX3.FX3_LOOPBACK1.pinConfig Then
+            dataReadyPinInput.SelectedItem = "LOOPBACK1"
+        Else
+            dataReadyPinInput.SelectedItem = "DIO1"
         End If
 
         WatchdogEnable.Checked = m_TopGUI.FX3.WatchdogEnable
@@ -238,6 +245,8 @@ Public Class FX3ConfigGUI
                 m_TopGUI.FX3.ReadyPin = m_TopGUI.FX3.DIO3
             Case "DIO4"
                 m_TopGUI.FX3.ReadyPin = m_TopGUI.FX3.DIO4
+            Case "LOOPBACK1"
+                m_TopGUI.FX3.ReadyPin = m_TopGUI.FX3.FX3_LOOPBACK1
             Case Else
                 MsgBox("ERROR: Invalid DR pin selected. Defaulting to DIO1")
                 m_TopGUI.FX3.ReadyPin = m_TopGUI.FX3.DIO1
