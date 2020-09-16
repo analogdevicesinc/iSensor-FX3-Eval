@@ -26,6 +26,11 @@ Public Class TopGUI
     Public RegMap As RegMapCollection
     Public Dut As IDutInterface
 
+    'dut settings management
+    Friend SelectedPersonality As String
+    Friend OverridePersonality As Boolean
+    Friend DutOptions As List(Of DutPersonality)
+
     'List of listviewitems for bulk register read
     Friend BulkRegList As List(Of ListViewItem)
     Friend numRegSamples As Integer
@@ -60,6 +65,7 @@ Public Class TopGUI
         Dim firmwarePath As String
         Dim colorPath As String
         Dim colors As String()
+        Dim savedRegmapPath As String = ""
 
         Me.Text = "iSensor FX3 Eval"
 
@@ -87,8 +93,31 @@ Public Class TopGUI
             'squash
         End Try
 
+        'load dut personality settings
+        SelectedPersonality = My.Settings.DutPersonality
+        OverridePersonality = My.Settings.OverridePersonality
+
+        'load DUT personality file
+        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "\dut_personalities.txt")
+        If DutOptions.Count = 0 Then
+            MsgBox("Error loading personality file!")
+            SelectedPersonality = "Custom"
+            OverridePersonality = True
+        End If
+        If OverridePersonality Then SelectedPersonality = "Custom"
+
         'Set the regmap path using the SelectRegMap GUI
-        If Not File.Exists(My.Settings.SelectedRegMap) Then
+        If OverridePersonality Then
+            savedRegmapPath = My.Settings.SelectedRegMap
+        Else
+            For i As Integer = 0 To DutOptions.Count - 1
+                If DutOptions(i).DisplayName = SelectedPersonality Then
+                    savedRegmapPath = AppDomain.CurrentDomain.BaseDirectory + "\" + DutOptions(i).RegMapFileName
+                    Exit For
+                End If
+            Next
+        End If
+        If Not File.Exists(savedRegmapPath) Then
             Dim regMapSelector As New SelectRegmapGUI()
             If Not IsNothing(regMapSelector.SelectedPath) Then
                 RegMapPath = regMapSelector.SelectedPath
@@ -100,7 +129,7 @@ Public Class TopGUI
             End If
             regMapSelector.Dispose()
         Else
-            RegMapPath = My.Settings.SelectedRegMap
+            RegMapPath = savedRegmapPath
         End If
 
         'Set FX3 connection (defaults to IMU)
@@ -417,6 +446,8 @@ Public Class TopGUI
         My.Settings.IdleColor = IDLE_COLOR
         My.Settings.BackColor = BACK_COLOR
         My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
+        My.Settings.DutPersonality = SelectedPersonality
+        My.Settings.OverridePersonality = OverridePersonality
         My.Settings.Save()
     End Sub
 
@@ -572,8 +603,7 @@ Public Class TopGUI
     ''' </summary>
     ''' <param name="DutType"></param>
     Friend Sub UpdateDutLabel(DutType As DUTType)
-        label_DUTType.BackColor = GOOD_COLOR
-        label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
+        SetDUTTypeLabel()
 
         'Set the DUT
         If FX3.PartType = DUTType.ADcmXL3021 Then
@@ -665,8 +695,17 @@ Public Class TopGUI
         btn_RegAccess.Select()
 
         'Load settings
-        FX3.SensorType = My.Settings.SensorType
-        FX3.PartType = My.Settings.DeviceType
+        If OverridePersonality Then
+            FX3.SensorType = My.Settings.SensorType
+            FX3.PartType = My.Settings.DeviceType
+        Else
+            For i As Integer = 0 To DutOptions.Count - 1
+                If SelectedPersonality = DutOptions(i).DisplayName Then
+                    DutOptions(i).ApplySettingsToFX3(FX3)
+                    Exit For
+                End If
+            Next
+        End If
 
         'disable watchdog
         FX3.WatchdogEnable = False
@@ -727,8 +766,12 @@ Public Class TopGUI
         label_DUTStatus.BackColor = IDLE_COLOR
         label_FX3Status.Text = "Not Connected"
         label_FX3Status.BackColor = IDLE_COLOR
+        SetDUTTypeLabel()
+    End Sub
+
+    Private Sub SetDUTTypeLabel()
         label_DUTType.BackColor = GOOD_COLOR
-        label_DUTType.Text = FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
+        label_DUTType.Text = SelectedPersonality + " - " + FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
     End Sub
 
     ''' <summary>

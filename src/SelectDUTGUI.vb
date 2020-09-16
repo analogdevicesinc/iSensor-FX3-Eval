@@ -8,13 +8,24 @@ Imports FX3Api
 Public Class SelectDUTGUI
     Inherits FormBase
 
-    Public Sub FormSetup() Handles Me.Load
-        ' Add any initialization after the InitializeComponent() call.
-        DutInput.DataSource = ([Enum].GetValues(GetType(DUTType)))
-        sensorInput.DataSource = ([Enum].GetValues(GetType(DeviceType)))
+    Public Sub New()
 
-        DutInput.SelectedItem = m_TopGUI.FX3.PartType
-        sensorInput.SelectedItem = m_TopGUI.FX3.SensorType
+        ' This call is required by the designer.
+        InitializeComponent()
+
+    End Sub
+
+    Public Sub FormSetup() Handles Me.Load
+
+        For Each item In m_TopGUI.DutOptions
+            deviceInput.Items.Add(item.DisplayName)
+        Next
+        If deviceInput.Items.Contains(m_TopGUI.SelectedPersonality) Then
+            deviceInput.SelectedItem = m_TopGUI.SelectedPersonality
+        Else
+            deviceInput.SelectedIndex = 0
+        End If
+
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -23,11 +34,29 @@ Public Class SelectDUTGUI
     End Sub
 
     Private Sub btn_ApplySetting_Click(sender As Object, e As EventArgs) Handles btn_ApplySetting.Click
+        'check for selected item
+        Dim selectedDut As Integer = -1
+        For i As Integer = 0 To m_TopGUI.DutOptions.Count - 1
+            If deviceInput.Text = m_TopGUI.DutOptions(i).DisplayName Then
+                selectedDut = i
+                Exit For
+            End If
+        Next
 
-        m_TopGUI.FX3.SensorType = sensorInput.SelectedItem
-        m_TopGUI.FX3.PartType = DutInput.SelectedItem
-        m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
-        m_TopGUI.SaveAppSettings()
+        If selectedDut < 0 Then
+            MsgBox("Error: Invalid DUT selected!")
+        Else
+            Try
+                m_TopGUI.DutOptions(selectedDut).ApplySettingsToFX3(m_TopGUI.FX3)
+                m_TopGUI.RegMapPath = AppDomain.CurrentDomain.BaseDirectory + "\" + m_TopGUI.DutOptions(selectedDut).RegMapFileName
+                m_TopGUI.OverridePersonality = False
+                m_TopGUI.SelectedPersonality = m_TopGUI.DutOptions(selectedDut).DisplayName
+                m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
+                m_TopGUI.SaveAppSettings()
+            Catch ex As Exception
+                MsgBox("Error applying settings! " + ex.Message)
+            End Try
+        End If
         Me.Close()
     End Sub
 

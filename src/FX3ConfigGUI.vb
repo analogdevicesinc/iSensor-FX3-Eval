@@ -53,6 +53,9 @@ Public Class FX3ConfigGUI
 
         StallCyclesInput.ReadOnly = True
 
+        DutInput.DataSource = ([Enum].GetValues(GetType(DUTType)))
+        sensorInput.DataSource = ([Enum].GetValues(GetType(DeviceType)))
+
         UpdateFields()
 
         StatusLabel.Text = "Waiting..."
@@ -137,6 +140,9 @@ Public Class FX3ConfigGUI
         If Not WatchdogEnable.Checked Then
             WatchdogTimeout.ReadOnly = True
         End If
+
+        DutInput.SelectedItem = m_TopGUI.FX3.PartType
+        sensorInput.SelectedItem = m_TopGUI.FX3.SensorType
 
     End Sub
 
@@ -256,6 +262,8 @@ Public Class FX3ConfigGUI
         If Not m_regmappath = "" Then
             Try
                 m_TopGUI.RegMapPath = m_regmappath
+                m_TopGUI.OverridePersonality = True
+                m_TopGUI.SelectedPersonality = "Custom"
             Catch ex As Exception
                 MsgBox("ERROR: Invalid register map path: " + ex.Message)
                 StatusLabel.Text = "ERROR"
@@ -291,7 +299,19 @@ Public Class FX3ConfigGUI
             End Try
         End If
 
+        If m_TopGUI.FX3.SensorType <> sensorInput.SelectedItem Then
+            m_TopGUI.FX3.SensorType = sensorInput.SelectedItem
+            m_TopGUI.OverridePersonality = True
+            m_TopGUI.SelectedPersonality = "Custom"
+        End If
+        If m_TopGUI.FX3.PartType <> DutInput.SelectedItem Then
+            m_TopGUI.FX3.PartType = DutInput.SelectedItem
+            m_TopGUI.OverridePersonality = True
+            m_TopGUI.SelectedPersonality = "Custom"
+        End If
+
         'save app settings
+        m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
         m_TopGUI.SaveAppSettings()
 
         StatusLabel.Text = "Done"

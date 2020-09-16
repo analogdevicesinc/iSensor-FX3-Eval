@@ -62,6 +62,10 @@ Partial Class FX3ConfigGUI
         Me.DutVoltage = New System.Windows.Forms.ComboBox()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.btn_edit_colors = New System.Windows.Forms.Button()
+        Me.Label21 = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.DutInput = New System.Windows.Forms.ComboBox()
+        Me.sensorInput = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -350,7 +354,7 @@ Partial Class FX3ConfigGUI
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(12, 467)
+        Me.Label17.Location = New System.Drawing.Point(12, 523)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(96, 13)
         Me.Label17.TabIndex = 33
@@ -358,14 +362,14 @@ Partial Class FX3ConfigGUI
         '
         'SelectedRegMap
         '
-        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 464)
+        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 520)
         Me.SelectedRegMap.Name = "SelectedRegMap"
         Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
         Me.SelectedRegMap.TabIndex = 17
         '
         'WatchdogTimeout
         '
-        Me.WatchdogTimeout.Location = New System.Drawing.Point(135, 411)
+        Me.WatchdogTimeout.Location = New System.Drawing.Point(135, 467)
         Me.WatchdogTimeout.Name = "WatchdogTimeout"
         Me.WatchdogTimeout.Size = New System.Drawing.Size(219, 20)
         Me.WatchdogTimeout.TabIndex = 15
@@ -373,7 +377,7 @@ Partial Class FX3ConfigGUI
         'WatchdogEnable
         '
         Me.WatchdogEnable.AutoSize = True
-        Me.WatchdogEnable.Location = New System.Drawing.Point(135, 388)
+        Me.WatchdogEnable.Location = New System.Drawing.Point(135, 444)
         Me.WatchdogEnable.Name = "WatchdogEnable"
         Me.WatchdogEnable.Size = New System.Drawing.Size(174, 17)
         Me.WatchdogEnable.TabIndex = 14
@@ -383,7 +387,7 @@ Partial Class FX3ConfigGUI
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(12, 414)
+        Me.Label18.Location = New System.Drawing.Point(12, 470)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(107, 13)
         Me.Label18.TabIndex = 38
@@ -392,7 +396,7 @@ Partial Class FX3ConfigGUI
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(12, 389)
+        Me.Label13.Location = New System.Drawing.Point(12, 445)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(91, 13)
         Me.Label13.TabIndex = 39
@@ -401,7 +405,7 @@ Partial Class FX3ConfigGUI
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(12, 440)
+        Me.Label19.Location = New System.Drawing.Point(12, 496)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(72, 13)
         Me.Label19.TabIndex = 41
@@ -412,7 +416,7 @@ Partial Class FX3ConfigGUI
         Me.DutVoltage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.DutVoltage.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.DutVoltage.FormattingEnabled = True
-        Me.DutVoltage.Location = New System.Drawing.Point(135, 437)
+        Me.DutVoltage.Location = New System.Drawing.Point(135, 493)
         Me.DutVoltage.Name = "DutVoltage"
         Me.DutVoltage.Size = New System.Drawing.Size(219, 21)
         Me.DutVoltage.TabIndex = 16
@@ -420,7 +424,7 @@ Partial Class FX3ConfigGUI
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(12, 495)
+        Me.Label20.Location = New System.Drawing.Point(12, 551)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(89, 13)
         Me.Label20.TabIndex = 42
@@ -428,18 +432,60 @@ Partial Class FX3ConfigGUI
         '
         'btn_edit_colors
         '
-        Me.btn_edit_colors.Location = New System.Drawing.Point(135, 490)
+        Me.btn_edit_colors.Location = New System.Drawing.Point(135, 546)
         Me.btn_edit_colors.Name = "btn_edit_colors"
         Me.btn_edit_colors.Size = New System.Drawing.Size(219, 22)
         Me.btn_edit_colors.TabIndex = 18
         Me.btn_edit_colors.Text = "Edit Colors"
         Me.btn_edit_colors.UseVisualStyleBackColor = True
         '
+        'Label21
+        '
+        Me.Label21.AutoSize = True
+        Me.Label21.Location = New System.Drawing.Point(12, 418)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(60, 13)
+        Me.Label21.TabIndex = 46
+        Me.Label21.Text = "DUT Type:"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Location = New System.Drawing.Point(12, 391)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(70, 13)
+        Me.Label22.TabIndex = 45
+        Me.Label22.Text = "Sensor Type:"
+        '
+        'DutInput
+        '
+        Me.DutInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.DutInput.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.DutInput.FormattingEnabled = True
+        Me.DutInput.Location = New System.Drawing.Point(135, 415)
+        Me.DutInput.Name = "DutInput"
+        Me.DutInput.Size = New System.Drawing.Size(219, 21)
+        Me.DutInput.TabIndex = 44
+        '
+        'sensorInput
+        '
+        Me.sensorInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.sensorInput.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.sensorInput.FormattingEnabled = True
+        Me.sensorInput.Location = New System.Drawing.Point(135, 388)
+        Me.sensorInput.Name = "sensorInput"
+        Me.sensorInput.Size = New System.Drawing.Size(219, 21)
+        Me.sensorInput.TabIndex = 43
+        '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(444, 520)
+        Me.ClientSize = New System.Drawing.Size(444, 579)
+        Me.Controls.Add(Me.Label21)
+        Me.Controls.Add(Me.Label22)
+        Me.Controls.Add(Me.DutInput)
+        Me.Controls.Add(Me.sensorInput)
         Me.Controls.Add(Me.btn_edit_colors)
         Me.Controls.Add(Me.Label20)
         Me.Controls.Add(Me.Label19)
@@ -529,4 +575,8 @@ Partial Class FX3ConfigGUI
     Friend WithEvents DutVoltage As ComboBox
     Friend WithEvents Label20 As Label
     Friend WithEvents btn_edit_colors As Button
+    Friend WithEvents Label21 As Label
+    Friend WithEvents Label22 As Label
+    Friend WithEvents DutInput As ComboBox
+    Friend WithEvents sensorInput As ComboBox
 End Class

@@ -35,5 +35,11 @@
     <Setting Name="LastFX3Board" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="DutPersonality" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NotSet</Value>
+    </Setting>
+    <Setting Name="OverridePersonality" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

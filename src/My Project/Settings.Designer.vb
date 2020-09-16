@@ -185,6 +185,30 @@ Namespace My
                 Me("LastFX3Board") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("NotSet")>  _
+        Public Property DutPersonality() As String
+            Get
+                Return CType(Me("DutPersonality"),String)
+            End Get
+            Set
+                Me("DutPersonality") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property OverridePersonality() As Boolean
+            Get
+                Return CType(Me("OverridePersonality"),Boolean)
+            End Get
+            Set
+                Me("OverridePersonality") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
