@@ -48,6 +48,16 @@ Public Class DutPersonality
     ''' </summary>
     Public DrDIONumber As UInteger
 
+    ''' <summary>
+    ''' DUT supply (3.3V, 5V, or none (other))
+    ''' </summary>
+    Public Supply As DutVoltage
+
+    ''' <summary>
+    ''' IMU digital logic high voltage
+    ''' </summary>
+    Public VDDIO As Double
+
     Public Sub New()
         DisplayName = "NotSet"
         RegMapFileName = "NotSet"
@@ -58,6 +68,8 @@ Public Class DutPersonality
         SPIMode = 3
         DrPolarity = True
         DrDIONumber = 1
+        VDDIO = 3.3
+        Supply = DutVoltage.On3_3Volts
     End Sub
 
     ''' <summary>
@@ -92,29 +104,46 @@ Public Class DutPersonality
             Case 4
                 FX3.DrPin = FX3.DIO4
         End Select
+        FX3.DutSupplyMode = Supply
+        'cant set VDDIO currently
     End Sub
 
     Public Shared Function ParseFile(PersonalityFile As String) As List(Of DutPersonality)
         Dim ret As New List(Of DutPersonality)
         Dim lines(), line() As String
+        Dim indexes As New List(Of Integer)
         Dim item As DutPersonality
         If File.Exists(PersonalityFile) Then
             lines = File.ReadAllLines(PersonalityFile)
+            'get indexes for all parameters from header
+            line = lines(0).Split(",")
+            indexes.Add(Array.IndexOf(line, "DISPLAYNAME"))
+            indexes.Add(Array.IndexOf(line, "REGMAP"))
+            indexes.Add(Array.IndexOf(line, "SENSORTYPE"))
+            indexes.Add(Array.IndexOf(line, "PARTTYPE"))
+            indexes.Add(Array.IndexOf(line, "SPIMODE"))
+            indexes.Add(Array.IndexOf(line, "SPIFREQ"))
+            indexes.Add(Array.IndexOf(line, "SPISTALL"))
+            indexes.Add(Array.IndexOf(line, "DRDIONUMBER"))
+            indexes.Add(Array.IndexOf(line, "DRPOLARITY"))
+            indexes.Add(Array.IndexOf(line, "SUPPLY"))
+            indexes.Add(Array.IndexOf(line, "VDDIO"))
             'parse file
             For i As Integer = 1 To lines.Count - 1
                 line = lines(i).Split(",")
-                'TODO: Dynamic parsing based on header
                 item = New DutPersonality()
                 Try
-                    item.DisplayName = line(0)
-                    item.RegMapFileName = line(1)
-                    item.SensorType = [Enum].Parse(GetType(FX3Api.DeviceType), line(2))
-                    item.PartType = [Enum].Parse(GetType(FX3Api.DUTType), line(3))
-                    item.SPIMode = Convert.ToUInt32(line(4))
-                    item.SPIFreq = Convert.ToUInt32(line(5))
-                    item.SPIStall = Convert.ToUInt32(line(6))
-                    item.DrDIONumber = Convert.ToUInt32(line(7))
-                    item.DrPolarity = Convert.ToBoolean(line(8))
+                    item.DisplayName = line(indexes(0))
+                    item.RegMapFileName = line(indexes(1))
+                    item.SensorType = [Enum].Parse(GetType(DeviceType), line(indexes(2)))
+                    item.PartType = [Enum].Parse(GetType(DUTType), line(indexes(3)))
+                    item.SPIMode = Convert.ToUInt32(line(indexes(4)))
+                    item.SPIFreq = Convert.ToUInt32(line(indexes(5)))
+                    item.SPIStall = Convert.ToUInt32(line(indexes(6)))
+                    item.DrDIONumber = Convert.ToUInt32(line(indexes(7)))
+                    item.DrPolarity = Convert.ToBoolean(line(indexes(8)))
+                    item.Supply = [Enum].Parse(GetType(DutVoltage), line(indexes(9)))
+                    item.VDDIO = Convert.ToDouble(line(indexes(10)))
                     ret.Add(item)
                 Catch ex As Exception
                     'abort
