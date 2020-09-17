@@ -156,6 +156,7 @@ Public Class FrequencyPlotGUI
         drFreq.Text = FormatNumber(freq, 1).ToString() + "Hz"
         If freq = Double.PositiveInfinity Then
             MsgBox("ERROR: Data ready not toggling. Stopping plot operation...")
+            m_TopGUI.FX3.DrActive = False
             btn_stopPlot.PerformClick()
             Return False
         End If
