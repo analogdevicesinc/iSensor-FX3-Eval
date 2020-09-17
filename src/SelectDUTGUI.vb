@@ -47,10 +47,9 @@ Public Class SelectDUTGUI
             MsgBox("Error: Invalid DUT selected!")
         Else
             Try
-                m_TopGUI.DutOptions(selectedDut).ApplySettingsToFX3(m_TopGUI.FX3)
+                m_TopGUI.ApplyDutPersonality(deviceInput.Text)
                 m_TopGUI.RegMapPath = AppDomain.CurrentDomain.BaseDirectory + "\" + m_TopGUI.DutOptions(selectedDut).RegMapFileName
                 m_TopGUI.OverridePersonality = False
-                m_TopGUI.SelectedPersonality = m_TopGUI.DutOptions(selectedDut).DisplayName
                 m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
                 m_TopGUI.SaveAppSettings()
             Catch ex As Exception

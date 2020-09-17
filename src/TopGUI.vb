@@ -624,6 +624,40 @@ Public Class TopGUI
 
     End Sub
 
+    Friend Sub ApplyDutPersonality(displayName As String)
+
+        Dim personality As DutPersonality = Nothing
+
+        For i As Integer = 0 To DutOptions.Count - 1
+            If displayName = DutOptions(i).DisplayName Then
+                personality = DutOptions(i)
+                Exit For
+            End If
+        Next
+
+        If IsNothing(personality) Then
+            MsgBox("ERROR: Selected DUT personality " + displayName + " not found!")
+            Exit Sub
+        End If
+
+        If personality.Supply = DutVoltage.On5_0Volts Then
+            If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+                Exit Sub
+            End If
+        End If
+
+        If personality.VDDIO <> 3.3 Then
+            If MessageBox.Show("FX3 directly supports VDDIO of 3.3V, other values may cause damage - Continue?", "Confirmation", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+                Exit Sub
+            End If
+        End If
+
+        personality.ApplySettingsToFX3(FX3)
+
+        SelectedPersonality = displayName
+
+    End Sub
+
     ''' <summary>
     ''' Perform all work to connect to and program an FX3
     ''' </summary>
@@ -699,12 +733,7 @@ Public Class TopGUI
             FX3.SensorType = My.Settings.SensorType
             FX3.PartType = My.Settings.DeviceType
         Else
-            For i As Integer = 0 To DutOptions.Count - 1
-                If SelectedPersonality = DutOptions(i).DisplayName Then
-                    DutOptions(i).ApplySettingsToFX3(FX3)
-                    Exit For
-                End If
-            Next
+            ApplyDutPersonality(SelectedPersonality)
         End If
 
         'disable watchdog
