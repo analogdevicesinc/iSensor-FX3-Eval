@@ -476,9 +476,10 @@ Public Class RegisterGUI
                     writeVals.Add(Convert.ToUInt32(regLine(3)))
                 End If
             Catch ex As Exception
-                MsgBox("ERROR Parsing CSV file. " + ex.Message())
-                csvReader.Close()
-                Exit Sub
+                If MessageBox.Show("Error Parsing CSV file! Continue?", "Error", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+                    csvReader.Close()
+                    Exit Sub
+                End If
             End Try
         End While
         csvReader.Close()
