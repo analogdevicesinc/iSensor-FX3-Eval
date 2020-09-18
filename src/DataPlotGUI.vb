@@ -73,10 +73,10 @@ Public Class DataPlotGUI
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
-        regView.Height = Me.Height - 157
+        regView.Height = Me.Height - 172
         dataPlot.Top = 6
         dataPlot.Left = 511
-        dataPlot.Width = Me.Width - 534
+        dataPlot.Width = Me.Width - 532
         dataPlot.Height = Me.Height - 56
         dataPlot.ResetAutoValues()
     End Sub
@@ -141,7 +141,11 @@ Public Class DataPlotGUI
                 dataPlot.Series(i).Points.RemoveAt(0)
                 dataPlot.ResetAutoValues()
             End If
-            dataPlot.Series(i).Points.AddXY(plotXPosition, plotValues(i))
+            If x_timestamp.Checked Then
+                dataPlot.Series(i).Points.AddXY((logTimer.ElapsedMilliseconds / 1000.0), plotValues(i))
+            Else
+                dataPlot.Series(i).Points.AddXY(plotXPosition, plotValues(i))
+            End If
         Next
 
         'Set scale (if needed)
@@ -261,6 +265,7 @@ Public Class DataPlotGUI
             check_fixedTime.Enabled = True
             playFromCSV.Enabled = True
             playFromCSV.Visible = True
+            x_timestamp.Enabled = True
             m_TopGUI.FX3.UserLEDOn()
             btn_startStop.Text = "Start Plotting"
         Else
@@ -282,6 +287,7 @@ Public Class DataPlotGUI
             playFromCSV.Enabled = False
             playFromCSV.Visible = False
             check_fixedTime.Enabled = False
+            x_timestamp.Enabled = False
             btn_startStop.Text = "Stop Plotting"
             Try
                 m_TopGUI.FX3.UserLEDBlink(250 / samplePeriodMs)
@@ -358,8 +364,15 @@ Public Class DataPlotGUI
         'configure chart
         dataPlot.ChartAreas(0).AxisY.MajorGrid.Enabled = True
         dataPlot.ChartAreas(0).AxisX.MajorGrid.Enabled = True
-        dataPlot.ChartAreas(0).AxisX.Title = "Sample Number"
+
         dataPlot.ChartAreas(0).AxisY.Title = "Scaled Value"
+
+        If x_timestamp.Checked Then
+            dataPlot.ChartAreas(0).AxisX.Title = "Time (seconds)"
+            dataPlot.ChartAreas(0).AxisX.LabelStyle.Format = "f2"
+        Else
+            dataPlot.ChartAreas(0).AxisX.Title = "Sample Number"
+        End If
 
         'Set plotter position
         plotXPosition = 0
@@ -530,6 +543,7 @@ Public Class DataPlotGUI
         samplesRendered.Enabled = True
         check_fixedTime.Enabled = True
         sampleFreq.Enabled = True
+        x_timestamp.Enabled = True
     End Sub
 
     Private Sub DisablePlaybackButtons()
@@ -542,6 +556,7 @@ Public Class DataPlotGUI
         check_fixedTime.Enabled = False
         samplesRendered.Enabled = False
         sampleFreq.Enabled = False
+        x_timestamp.Enabled = False
     End Sub
 
     Private Sub axis_autoscale_CheckedChanged(sender As Object, e As EventArgs) Handles axis_autoscale.CheckedChanged
