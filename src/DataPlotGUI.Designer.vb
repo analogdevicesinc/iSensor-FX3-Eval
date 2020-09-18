@@ -21,9 +21,9 @@ Partial Class DataPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.regView = New System.Windows.Forms.DataGridView()
         Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -50,6 +50,7 @@ Partial Class DataPlotGUI
         Me.Label4 = New System.Windows.Forms.Label()
         Me.check_fixedTime = New System.Windows.Forms.CheckBox()
         Me.x_timestamp = New System.Windows.Forms.CheckBox()
+        Me.btn_SetLabel = New System.Windows.Forms.Button()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -150,16 +151,16 @@ Partial Class DataPlotGUI
         '
         'dataPlot
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend2)
+        ChartArea1.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend1)
         Me.dataPlot.Location = New System.Drawing.Point(531, 6)
         Me.dataPlot.Name = "dataPlot"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.dataPlot.Series.Add(Series2)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.dataPlot.Series.Add(Series1)
         Me.dataPlot.Size = New System.Drawing.Size(850, 508)
         Me.dataPlot.TabIndex = 7
         Me.dataPlot.Text = "Data Plot"
@@ -238,14 +239,14 @@ Partial Class DataPlotGUI
         '
         'maxscale
         '
-        Me.maxscale.Location = New System.Drawing.Point(321, 100)
+        Me.maxscale.Location = New System.Drawing.Point(310, 100)
         Me.maxscale.Name = "maxscale"
         Me.maxscale.Size = New System.Drawing.Size(111, 20)
         Me.maxscale.TabIndex = 9
         '
         'minScale
         '
-        Me.minScale.Location = New System.Drawing.Point(169, 100)
+        Me.minScale.Location = New System.Drawing.Point(157, 100)
         Me.minScale.Name = "minScale"
         Me.minScale.Size = New System.Drawing.Size(111, 20)
         Me.minScale.TabIndex = 8
@@ -253,7 +254,7 @@ Partial Class DataPlotGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(136, 104)
+        Me.Label3.Location = New System.Drawing.Point(124, 104)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(27, 13)
         Me.Label3.TabIndex = 19
@@ -262,7 +263,7 @@ Partial Class DataPlotGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(288, 104)
+        Me.Label4.Location = New System.Drawing.Point(274, 104)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(30, 13)
         Me.Label4.TabIndex = 20
@@ -288,11 +289,21 @@ Partial Class DataPlotGUI
         Me.x_timestamp.Text = "Timestamp X-Axis"
         Me.x_timestamp.UseVisualStyleBackColor = True
         '
+        'btn_SetLabel
+        '
+        Me.btn_SetLabel.Location = New System.Drawing.Point(438, 100)
+        Me.btn_SetLabel.Name = "btn_SetLabel"
+        Me.btn_SetLabel.Size = New System.Drawing.Size(88, 20)
+        Me.btn_SetLabel.TabIndex = 23
+        Me.btn_SetLabel.Text = "Set Label"
+        Me.btn_SetLabel.UseVisualStyleBackColor = True
+        '
         'DataPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1390, 524)
+        Me.Controls.Add(Me.btn_SetLabel)
         Me.Controls.Add(Me.x_timestamp)
         Me.Controls.Add(Me.check_fixedTime)
         Me.Controls.Add(Me.Label4)
@@ -349,4 +360,5 @@ Partial Class DataPlotGUI
     Friend WithEvents check_fixedTime As CheckBox
     Friend WithEvents x_timestamp As CheckBox
     Friend WithEvents Scale As DataGridViewTextBoxColumn
+    Friend WithEvents btn_SetLabel As Button
 End Class

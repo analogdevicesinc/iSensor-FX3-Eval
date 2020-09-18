@@ -26,6 +26,7 @@ Public Class DataPlotGUI
     Private playBackMutex As Mutex
     Private plotMutex As Mutex
     Private CSVRegData As List(Of String())
+    Private plotYLabel As String
 
     Public Sub FormSetup() Handles Me.Load
         PopulateRegView()
@@ -50,6 +51,7 @@ Public Class DataPlotGUI
         btn_stopPlayback.Enabled = False
         btn_stopPlayback.Visible = False
         axis_autoscale.Checked = True
+        plotYLabel = "Scaled Value"
 
         'create synchronization structures
         logTimer = New Stopwatch()
@@ -73,6 +75,7 @@ Public Class DataPlotGUI
         tip0.SetToolTip(Me.regView, "Select registers to plot, and supply register offset values. The data plotted for each register is scaled by the scale factor defined in the register map CSV file")
         tip0.SetToolTip(Me.check_fixedTime, "Stop plotting automatically after a fixed time interval. This is useful when the data plotting application is being used for logging")
         tip0.SetToolTip(Me.x_timestamp, "Plot sample timestamps on X-axis (default is sample counter)")
+        tip0.SetToolTip(Me.btn_SetLabel, "Set the Y-Axis label")
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
@@ -381,7 +384,7 @@ Public Class DataPlotGUI
         dataPlot.ChartAreas(0).AxisY.MajorGrid.Enabled = True
         dataPlot.ChartAreas(0).AxisX.MajorGrid.Enabled = True
 
-        dataPlot.ChartAreas(0).AxisY.Title = "Scaled Value"
+        dataPlot.ChartAreas(0).AxisY.Title = plotYLabel
 
         If x_timestamp.Checked Then
             dataPlot.ChartAreas(0).AxisX.Title = "Time (seconds)"
@@ -594,4 +597,11 @@ Public Class DataPlotGUI
         End If
     End Sub
 
+    Private Sub btn_SetLabel_Click(sender As Object, e As EventArgs) Handles btn_SetLabel.Click
+        Dim val As String = InputBox("Enter Y-Axis Label: ", "Input", plotYLabel)
+        'check for cancel
+        If val = "" Then Exit Sub
+        plotYLabel = val
+        dataPlot.ChartAreas(0).AxisY.Title = plotYLabel
+    End Sub
 End Class
