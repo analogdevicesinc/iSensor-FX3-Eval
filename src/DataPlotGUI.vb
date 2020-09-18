@@ -154,43 +154,6 @@ Public Class DataPlotGUI
             End If
         Next
 
-        'Set scale (if needed)
-        Dim yMin, yMax As Double
-        Dim goodscale As Boolean = False
-        If Not axis_autoscale.Checked Then
-            goodscale = True
-            'min
-            Try
-                yMin = Convert.ToDouble(minScale.Text())
-                minScale.BackColor = Color.White
-            Catch ex As Exception
-                goodscale = False
-                minScale.BackColor = m_TopGUI.ERROR_COLOR
-            End Try
-
-            'max
-            Try
-                yMax = Convert.ToDouble(maxscale.Text())
-                maxscale.BackColor = Color.White
-            Catch ex As Exception
-                goodscale = False
-                maxscale.BackColor = m_TopGUI.ERROR_COLOR
-            End Try
-
-            'check values
-            If yMin > yMax Then
-                yMax = yMin + 1
-                maxscale.Text = yMax.ToString()
-            End If
-
-        End If
-
-        If goodscale Then
-            'Value must be good
-            dataPlot.ChartAreas(0).AxisY.Maximum = yMax
-            dataPlot.ChartAreas(0).AxisY.Minimum = yMin
-        End If
-
         'move to next plot position
         plotXPosition = plotXPosition + 1
 
@@ -587,6 +550,7 @@ Public Class DataPlotGUI
         Else
             minScale.Enabled = True
             maxscale.Enabled = True
+            ScaleValuesChanges()
         End If
     End Sub
 
@@ -604,4 +568,65 @@ Public Class DataPlotGUI
         plotYLabel = val
         dataPlot.ChartAreas(0).AxisY.Title = plotYLabel
     End Sub
+
+    Private Sub ScaleValuesChanges() Handles minScale.LostFocus, maxscale.LostFocus
+
+        'Set scale (if needed)
+        Dim yMin, yMax As Double
+        Dim goodscale As Boolean = False
+        If Not axis_autoscale.Checked Then
+            goodscale = True
+            'min
+            Try
+                yMin = Convert.ToDouble(minScale.Text())
+                minScale.BackColor = Color.White
+            Catch ex As Exception
+                goodscale = False
+                minScale.BackColor = m_TopGUI.ERROR_COLOR
+            End Try
+
+            'max
+            Try
+                yMax = Convert.ToDouble(maxscale.Text())
+                maxscale.BackColor = Color.White
+            Catch ex As Exception
+                goodscale = False
+                maxscale.BackColor = m_TopGUI.ERROR_COLOR
+            End Try
+
+            'check values
+            If yMin > yMax Then
+                yMax = yMin + 1
+                maxscale.Text = yMax.ToString()
+            End If
+
+        End If
+
+        If goodscale Then
+            'Value must be good
+            dataPlot.ChartAreas(0).AxisY.Maximum = yMax
+            dataPlot.ChartAreas(0).AxisY.Minimum = yMin
+        End If
+
+    End Sub
+
+    Private Sub WriteEnterHandler(sender As Object, e As KeyEventArgs) Handles minScale.KeyUp, maxscale.KeyUp
+
+        If e.KeyCode = Keys.Return Then
+            e.Handled = True
+            e.SuppressKeyPress = True
+            If minScale.Focused Or maxscale.Focused Then
+                ScaleValuesChanges()
+            End If
+        End If
+
+    End Sub
+
+    Private Sub AnnoyingNoiseHandler(sender As Object, e As KeyEventArgs) Handles minScale.KeyDown, maxscale.KeyDown
+        If e.KeyCode = Keys.Return Then
+            e.Handled = True
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
 End Class
