@@ -325,6 +325,7 @@ Partial Class DataPlotGUI
         Me.Controls.Add(Me.regView)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable
         Me.Margin = New System.Windows.Forms.Padding(1)
+        Me.MinimumSize = New System.Drawing.Size(900, 400)
         Me.Name = "DataPlotGUI"
         Me.Text = "Data Plotting"
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
