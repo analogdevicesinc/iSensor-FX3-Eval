@@ -525,8 +525,8 @@ Public Class DataPlotGUI
             End If
             Me.Invoke(New MethodInvoker(AddressOf PlotWork))
         End While
-
         Me.Invoke(New MethodInvoker(AddressOf EnablePlaybackButtons))
+        playBackRunning = False
         playBackMutex.ReleaseMutex()
     End Sub
 
