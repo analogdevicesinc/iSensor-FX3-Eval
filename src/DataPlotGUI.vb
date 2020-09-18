@@ -56,6 +56,8 @@ Public Class DataPlotGUI
         playBackMutex = New Mutex()
         plotMutex = New Mutex()
 
+        regView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+
         RegisterToolTips()
     End Sub
 
@@ -70,14 +72,15 @@ Public Class DataPlotGUI
         tip0.SetToolTip(Me.logToCSV, "Save plot data to a CSV log")
         tip0.SetToolTip(Me.regView, "Select registers to plot, and supply register offset values. The data plotted for each register is scaled by the scale factor defined in the register map CSV file")
         tip0.SetToolTip(Me.check_fixedTime, "Stop plotting automatically after a fixed time interval. This is useful when the data plotting application is being used for logging")
+        tip0.SetToolTip(Me.x_timestamp, "Plot sample timestamps on X-axis (default is sample counter)")
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
         regView.Height = Me.Height - 172
         dataPlot.Top = 6
-        dataPlot.Left = 511
-        dataPlot.Width = Me.Width - 532
-        dataPlot.Height = Me.Height - 56
+        dataPlot.Left = 527
+        dataPlot.Width = Me.Width - 534
+        dataPlot.Height = Me.Height - 53
         dataPlot.ResetAutoValues()
     End Sub
 
@@ -231,7 +234,7 @@ Public Class DataPlotGUI
         For Each reg In m_TopGUI.RegMap
             If reg.IsReadable Then
                 If regIndex >= regView.RowCount Then
-                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr, "False", "0"}
+                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr, "False", "0", reg.Scale.ToString()}
                     regView.Rows.Add(regStr)
                 Else
                     regView.Item("Label", regIndex).Value = reg.Label
@@ -240,6 +243,7 @@ Public Class DataPlotGUI
                     regView.Item("Contents", regIndex).Value = readStr
                     regView.Item("Plot", regIndex).Value = False
                     regView.Item("Offset", regIndex).Value = "0"
+                    regView.Item("Scale", regIndex).Value = reg.Scale.ToString()
                 End If
                 'check if previously selected
                 If m_TopGUI.dataPlotRegs.Contains(reg.Label) Then regView.Item("Plot", regIndex).Value = True
@@ -316,19 +320,31 @@ Public Class DataPlotGUI
 
     Private Sub BuildPlotRegList()
         Dim headers As String
+        Dim reg As RegClass
+        Dim scale As Double
+        Dim offset As Double
         selectedRegList.Clear()
         For index As Integer = 0 To regView.RowCount() - 1
             If regView.Item("Plot", index).Value = True Then
                 If m_TopGUI.PlotColorPalette.Count() <= selectedRegList.Count() Then
                     m_TopGUI.PlotColorPalette.Add(Color.FromArgb(CByte(Math.Floor(Rnd() * &HFF)), CByte(Math.Floor(Rnd() * &HFF)), CByte(Math.Floor(Rnd() * &HFF))))
                 End If
-                selectedRegList.Add(New RegOffsetPair With {.Reg = m_TopGUI.RegMap(regView.Item("Label", index).Value), .Offset = Convert.ToDouble(regView.Item("Offset", index).Value), .Index = index, .Color = m_TopGUI.PlotColorPalette(selectedRegList.Count())})
+                Try
+                    reg = m_TopGUI.RegMap(regView.Item("Label", index).Value)
+                    scale = Convert.ToDouble(regView.Item("Scale", index).Value)
+                    reg.Scale = scale
+                    offset = Convert.ToDouble(regView.Item("Offset", index).Value)
+                    selectedRegList.Add(New RegOffsetPair With {.Reg = reg, .Offset = offset, .Index = index, .Color = m_TopGUI.PlotColorPalette(selectedRegList.Count())})
+                Catch ex As Exception
+                    MsgBox("Error loading register! " + ex.Message)
+                    regView.Item("Plot", index).Value = False
+                End Try
             End If
         Next
         logData = New List(Of String)
         headers = "TIMESTAMP_MS"
-        For Each reg In selectedRegList
-            headers = headers + "," + reg.Reg.Label
+        For Each selectedreg In selectedRegList
+            headers = headers + "," + selectedreg.Reg.Label
         Next
         logData.Add(headers)
     End Sub

@@ -21,9 +21,9 @@ Partial Class DataPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.regView = New System.Windows.Forms.DataGridView()
         Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -31,6 +31,7 @@ Partial Class DataPlotGUI
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Plot = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.Offset = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Scale = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.label_sampleFreq = New System.Windows.Forms.Label()
         Me.sampleFreq = New System.Windows.Forms.TextBox()
         Me.btn_startStop = New System.Windows.Forms.Button()
@@ -59,7 +60,7 @@ Partial Class DataPlotGUI
         Me.regView.AllowUserToDeleteRows = False
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Plot, Me.Offset})
+        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Plot, Me.Offset, Me.Scale})
         Me.regView.Location = New System.Drawing.Point(11, 125)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
@@ -69,7 +70,7 @@ Partial Class DataPlotGUI
         Me.regView.RowTemplate.Height = 24
         Me.regView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.regView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.regView.Size = New System.Drawing.Size(494, 389)
+        Me.regView.Size = New System.Drawing.Size(515, 389)
         Me.regView.TabIndex = 3
         '
         'Label
@@ -117,6 +118,11 @@ Partial Class DataPlotGUI
         Me.Offset.HeaderText = "Offset"
         Me.Offset.Name = "Offset"
         '
+        'Scale
+        '
+        Me.Scale.HeaderText = "Scale"
+        Me.Scale.Name = "Scale"
+        '
         'label_sampleFreq
         '
         Me.label_sampleFreq.AutoSize = True
@@ -135,7 +141,7 @@ Partial Class DataPlotGUI
         '
         'btn_startStop
         '
-        Me.btn_startStop.Location = New System.Drawing.Point(323, 6)
+        Me.btn_startStop.Location = New System.Drawing.Point(344, 6)
         Me.btn_startStop.Name = "btn_startStop"
         Me.btn_startStop.Size = New System.Drawing.Size(88, 35)
         Me.btn_startStop.TabIndex = 0
@@ -144,17 +150,17 @@ Partial Class DataPlotGUI
         '
         'dataPlot
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend1)
-        Me.dataPlot.Location = New System.Drawing.Point(511, 6)
+        ChartArea2.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend2)
+        Me.dataPlot.Location = New System.Drawing.Point(531, 6)
         Me.dataPlot.Name = "dataPlot"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.dataPlot.Series.Add(Series1)
-        Me.dataPlot.Size = New System.Drawing.Size(867, 508)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.dataPlot.Series.Add(Series2)
+        Me.dataPlot.Size = New System.Drawing.Size(850, 508)
         Me.dataPlot.TabIndex = 7
         Me.dataPlot.Text = "Data Plot"
         '
@@ -176,7 +182,7 @@ Partial Class DataPlotGUI
         '
         'btn_autonull
         '
-        Me.btn_autonull.Location = New System.Drawing.Point(417, 6)
+        Me.btn_autonull.Location = New System.Drawing.Point(438, 6)
         Me.btn_autonull.Name = "btn_autonull"
         Me.btn_autonull.Size = New System.Drawing.Size(88, 35)
         Me.btn_autonull.TabIndex = 1
@@ -195,7 +201,7 @@ Partial Class DataPlotGUI
         '
         'btn_saveChart
         '
-        Me.btn_saveChart.Location = New System.Drawing.Point(417, 47)
+        Me.btn_saveChart.Location = New System.Drawing.Point(438, 47)
         Me.btn_saveChart.Name = "btn_saveChart"
         Me.btn_saveChart.Size = New System.Drawing.Size(88, 35)
         Me.btn_saveChart.TabIndex = 2
@@ -204,7 +210,7 @@ Partial Class DataPlotGUI
         '
         'playFromCSV
         '
-        Me.playFromCSV.Location = New System.Drawing.Point(323, 47)
+        Me.playFromCSV.Location = New System.Drawing.Point(344, 47)
         Me.playFromCSV.Name = "playFromCSV"
         Me.playFromCSV.Size = New System.Drawing.Size(88, 35)
         Me.playFromCSV.TabIndex = 13
@@ -213,7 +219,7 @@ Partial Class DataPlotGUI
         '
         'btn_stopPlayback
         '
-        Me.btn_stopPlayback.Location = New System.Drawing.Point(323, 47)
+        Me.btn_stopPlayback.Location = New System.Drawing.Point(344, 47)
         Me.btn_stopPlayback.Name = "btn_stopPlayback"
         Me.btn_stopPlayback.Size = New System.Drawing.Size(88, 35)
         Me.btn_stopPlayback.TabIndex = 3
@@ -232,14 +238,14 @@ Partial Class DataPlotGUI
         '
         'maxscale
         '
-        Me.maxscale.Location = New System.Drawing.Point(394, 100)
+        Me.maxscale.Location = New System.Drawing.Point(321, 100)
         Me.maxscale.Name = "maxscale"
         Me.maxscale.Size = New System.Drawing.Size(111, 20)
         Me.maxscale.TabIndex = 9
         '
         'minScale
         '
-        Me.minScale.Location = New System.Drawing.Point(173, 100)
+        Me.minScale.Location = New System.Drawing.Point(169, 100)
         Me.minScale.Name = "minScale"
         Me.minScale.Size = New System.Drawing.Size(111, 20)
         Me.minScale.TabIndex = 8
@@ -247,7 +253,7 @@ Partial Class DataPlotGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(140, 104)
+        Me.Label3.Location = New System.Drawing.Point(136, 104)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(27, 13)
         Me.Label3.TabIndex = 19
@@ -256,7 +262,7 @@ Partial Class DataPlotGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(361, 104)
+        Me.Label4.Location = New System.Drawing.Point(288, 104)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(30, 13)
         Me.Label4.TabIndex = 20
@@ -342,4 +348,5 @@ Partial Class DataPlotGUI
     Friend WithEvents Label4 As Label
     Friend WithEvents check_fixedTime As CheckBox
     Friend WithEvents x_timestamp As CheckBox
+    Friend WithEvents Scale As DataGridViewTextBoxColumn
 End Class
