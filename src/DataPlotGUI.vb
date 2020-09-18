@@ -373,6 +373,9 @@ Public Class DataPlotGUI
             dataPlot.Series.Add(temp)
         Next
 
+        'update scaling based on check state
+        axis_autoscale_CheckedChanged(Me, Nothing)
+
     End Sub
 
     Private Sub StopPlot()
