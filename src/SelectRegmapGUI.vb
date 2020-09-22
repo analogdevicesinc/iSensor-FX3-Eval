@@ -19,6 +19,7 @@ Public Class SelectRegmapGUI
         'Look for a register map contained within the project directory
         m_searchpath = System.Reflection.Assembly.GetExecutingAssembly.Location
         m_searchpath = m_searchpath.Substring(0, m_searchpath.LastIndexOf("\") + 1)
+        m_searchpath += "RegMaps\"
         m_regmaps = Directory.GetFiles(m_searchpath, "*.csv", SearchOption.TopDirectoryOnly)
         'If there is a single Regmap use that, else use the form
         If m_regmaps.Count = 1 Then
