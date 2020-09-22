@@ -49,6 +49,7 @@ Partial Class FrequencyPlotGUI
         Me.Label6 = New System.Windows.Forms.Label()
         Me.input_3db_min = New System.Windows.Forms.TextBox()
         Me.input_3db_max = New System.Windows.Forms.TextBox()
+        Me.btn_SetLabel = New System.Windows.Forms.Button()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -177,7 +178,7 @@ Partial Class FrequencyPlotGUI
         'logYaxis
         '
         Me.logYaxis.AutoSize = True
-        Me.logYaxis.Location = New System.Drawing.Point(93, 87)
+        Me.logYaxis.Location = New System.Drawing.Point(87, 87)
         Me.logYaxis.Name = "logYaxis"
         Me.logYaxis.Size = New System.Drawing.Size(76, 17)
         Me.logYaxis.TabIndex = 15
@@ -283,11 +284,21 @@ Partial Class FrequencyPlotGUI
         Me.input_3db_max.TabIndex = 26
         Me.input_3db_max.Text = "100"
         '
+        'btn_SetLabel
+        '
+        Me.btn_SetLabel.Location = New System.Drawing.Point(163, 84)
+        Me.btn_SetLabel.Name = "btn_SetLabel"
+        Me.btn_SetLabel.Size = New System.Drawing.Size(68, 21)
+        Me.btn_SetLabel.TabIndex = 27
+        Me.btn_SetLabel.Text = "Set Label"
+        Me.btn_SetLabel.UseVisualStyleBackColor = True
+        '
         'FrequencyPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(834, 531)
+        Me.Controls.Add(Me.btn_SetLabel)
         Me.Controls.Add(Me.input_3db_max)
         Me.Controls.Add(Me.input_3db_min)
         Me.Controls.Add(Me.Label6)
@@ -348,4 +359,5 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents Label6 As Label
     Friend WithEvents input_3db_min As TextBox
     Friend WithEvents input_3db_max As TextBox
+    Friend WithEvents btn_SetLabel As Button
 End Class

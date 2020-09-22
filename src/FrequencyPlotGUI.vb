@@ -16,6 +16,9 @@ Public Class FrequencyPlotGUI
     'selected register list
     Private selectedRegList As List(Of RegClass)
 
+    'y-axis label
+    Private plotYLabel As String
+
     Public Sub New()
 
         ' This call is required by the designer.
@@ -58,6 +61,8 @@ Public Class FrequencyPlotGUI
         'set DR triggered register reads
         m_TopGUI.FX3.DrActive = True
 
+        plotYLabel = "FFT Magnitude"
+
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
@@ -89,7 +94,7 @@ Public Class FrequencyPlotGUI
         dataPlot.ChartAreas(0).AxisX.MajorGrid.Enabled = True
         dataPlot.ChartAreas(0).AxisX.Title = "Frequency (Hz)"
         dataPlot.ChartAreas(0).AxisX.LabelStyle.Format = "#.##"
-        dataPlot.ChartAreas(0).AxisY.Title = "FFT Magnitude"
+        dataPlot.ChartAreas(0).AxisY.Title = plotYLabel
         dataPlot.ChartAreas(0).AxisX.LogarithmBase = 10
         dataPlot.ChartAreas(0).AxisY.LogarithmBase = 10
 
@@ -517,4 +522,13 @@ Public Class FrequencyPlotGUI
         'recalculate scale based on newest values
         dataPlot.ChartAreas(0).RecalculateAxesScale()
     End Sub
+
+    Private Sub btn_SetLabel_Click(sender As Object, e As EventArgs) Handles btn_SetLabel.Click
+        Dim val As String = InputBox("Enter Y-Axis Label: ", "Input", plotYLabel)
+        'check for cancel
+        If val = "" Then Exit Sub
+        plotYLabel = val
+        dataPlot.ChartAreas(0).AxisY.Title = plotYLabel
+    End Sub
+
 End Class
