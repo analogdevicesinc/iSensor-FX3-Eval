@@ -48,7 +48,7 @@ Public Class SelectDUTGUI
         Else
             Try
                 m_TopGUI.ApplyDutPersonality(deviceInput.Text)
-                m_TopGUI.RegMapPath = AppDomain.CurrentDomain.BaseDirectory + "\" + m_TopGUI.DutOptions(selectedDut).RegMapFileName
+                m_TopGUI.RegMapPath = AppDomain.CurrentDomain.BaseDirectory + "\RegMaps\" + m_TopGUI.DutOptions(selectedDut).RegMapFileName
                 m_TopGUI.OverridePersonality = False
                 m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
                 m_TopGUI.SaveAppSettings()

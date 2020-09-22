@@ -70,7 +70,7 @@ Public Class TopGUI
         Me.Text = "iSensor FX3 Eval"
 
         'firmware images should be in executing assembly directory
-        firmwarePath = AppDomain.CurrentDomain.BaseDirectory
+        firmwarePath = AppDomain.CurrentDomain.BaseDirectory + "\FX3Binaries"
 
         'load colors from settings
         GOOD_COLOR = My.Settings.GoodColor
@@ -82,7 +82,7 @@ Public Class TopGUI
         Me.BackColor = BACK_COLOR
 
         'load plotting color palette
-        colorPath = AppDomain.CurrentDomain.BaseDirectory + "\plot_colors.txt"
+        colorPath = AppDomain.CurrentDomain.BaseDirectory + "\UserConfig\plot_colors.txt"
         PlotColorPalette = New List(Of Color)
         Try
             colors = File.ReadAllLines(colorPath)
@@ -98,7 +98,7 @@ Public Class TopGUI
         OverridePersonality = My.Settings.OverridePersonality
 
         'load DUT personality file
-        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "\dut_personalities.txt")
+        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "\UserConfig\dut_personalities.txt")
         If DutOptions.Count = 0 Then
             MsgBox("Error loading personality file!")
             SelectedPersonality = "Custom"
@@ -112,7 +112,7 @@ Public Class TopGUI
         Else
             For i As Integer = 0 To DutOptions.Count - 1
                 If DutOptions(i).DisplayName = SelectedPersonality Then
-                    savedRegmapPath = AppDomain.CurrentDomain.BaseDirectory + "\" + DutOptions(i).RegMapFileName
+                    savedRegmapPath = AppDomain.CurrentDomain.BaseDirectory + "\RegMaps\" + DutOptions(i).RegMapFileName
                     Exit For
                 End If
             Next
