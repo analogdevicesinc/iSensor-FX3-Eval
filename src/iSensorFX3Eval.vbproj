@@ -164,7 +164,6 @@
     <Compile Include="AppBrowseGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="BinaryFileWriterGUI.Designer.vb">
       <DependentUpon>BinaryFileWriterGUI.vb</DependentUpon>
     </Compile>
