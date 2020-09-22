@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+src/UserConfig/aux_dut_personalities.csv
+
 *.sln
 
 # User-specific files

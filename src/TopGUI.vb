@@ -97,8 +97,9 @@ Public Class TopGUI
         SelectedPersonality = My.Settings.DutPersonality
         OverridePersonality = My.Settings.OverridePersonality
 
-        'load DUT personality file
-        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\dut_personalities.txt")
+        'load DUT personality file(s)
+        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\dut_personalities.csv")
+        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\nda_dut_personalities.csv"))
         If DutOptions.Count = 0 Then
             MsgBox("Error loading personality file!")
             SelectedPersonality = "Custom"
