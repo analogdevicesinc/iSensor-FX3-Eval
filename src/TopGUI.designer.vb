@@ -212,7 +212,7 @@ Partial Class TopGUI
         Me.btn_plotFFT.Name = "btn_plotFFT"
         Me.btn_plotFFT.Size = New System.Drawing.Size(75, 62)
         Me.btn_plotFFT.TabIndex = 9
-        Me.btn_plotFFT.Text = "FFT Data Plotting"
+        Me.btn_plotFFT.Text = "Frequency Domain Plotting"
         Me.btn_plotFFT.UseVisualStyleBackColor = True
         '
         'btn_OtherApps
@@ -248,7 +248,7 @@ Partial Class TopGUI
         Me.btn_plotData.Name = "btn_plotData"
         Me.btn_plotData.Size = New System.Drawing.Size(75, 62)
         Me.btn_plotData.TabIndex = 8
-        Me.btn_plotData.Text = "Data Plotting"
+        Me.btn_plotData.Text = "Time Domain Plotting"
         Me.btn_plotData.UseVisualStyleBackColor = True
         '
         'regMapPath_Label
