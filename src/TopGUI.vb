@@ -663,6 +663,11 @@ Public Class TopGUI
                 RegMapPath = ""
             End If
             regMapSelector.Dispose()
+            For i As Integer = 0 To DutOptions.Count - 1
+                If DutOptions(i).DisplayName = "Custom" Then
+                    DutOptions(i).RegMapFileName = RegMapPath
+                End If
+            Next
         Else
             RegMapPath = savedRegmapPath
         End If
