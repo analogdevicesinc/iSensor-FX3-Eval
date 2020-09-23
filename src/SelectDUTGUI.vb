@@ -8,6 +8,8 @@ Imports FX3Api
 Public Class SelectDUTGUI
     Inherits FormBase
 
+    Friend isStartup As Boolean = False
+
     Public Sub New()
 
         ' This call is required by the designer.
@@ -30,7 +32,7 @@ Public Class SelectDUTGUI
 
     Private Sub Shutdown() Handles Me.Closing
         're-enable button
-        m_TopGUI.btn_SelectDUT.Enabled = True
+        If Not isStartup Then m_TopGUI.btn_SelectDUT.Enabled = True
     End Sub
 
     Private Sub btn_ApplySetting_Click(sender As Object, e As EventArgs) Handles btn_ApplySetting.Click

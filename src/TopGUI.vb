@@ -66,11 +66,19 @@ Public Class TopGUI
         Dim colorPath As String
         Dim colors As String()
         Dim savedRegmapPath As String = ""
+        Dim validPersonality As Boolean
 
         Me.Text = "iSensor FX3 Eval"
 
         'firmware images should be in executing assembly directory
         firmwarePath = AppDomain.CurrentDomain.BaseDirectory + "FX3Binaries\"
+
+        'Set FX3 connection (defaults to IMU)
+        Try
+            FX3 = New FX3Connection(firmwarePath, firmwarePath, firmwarePath, DeviceType.IMU)
+        Catch ex As Exception
+            MsgBox("Error loading resources! " + ex.Message)
+        End Try
 
         'load colors from settings
         GOOD_COLOR = My.Settings.GoodColor
@@ -105,7 +113,34 @@ Public Class TopGUI
             SelectedPersonality = "Custom"
             OverridePersonality = True
         End If
-        If OverridePersonality Then SelectedPersonality = "Custom"
+
+        If OverridePersonality Then
+            SelectedPersonality = "Custom"
+        Else
+            'check if valid personality saved
+            validPersonality = False
+            For Each item In DutOptions
+                If item.DisplayName = SelectedPersonality Then
+                    validPersonality = True
+                    Exit For
+                End If
+            Next
+            If Not validPersonality Then
+                Dim subGUI As New SelectDUTGUI()
+                subGUI.SetTopGUI(Me)
+                subGUI.isStartup = True
+                subGUI.ShowDialog()
+                'if valid personality not selected then override
+                validPersonality = False
+                For Each item In DutOptions
+                    If item.DisplayName = SelectedPersonality Then
+                        validPersonality = True
+                        Exit For
+                    End If
+                Next
+                If Not validPersonality Then OverridePersonality = True
+            End If
+        End If
 
         'Set the regmap path using the SelectRegMap GUI
         If OverridePersonality Then
@@ -132,13 +167,6 @@ Public Class TopGUI
         Else
             RegMapPath = savedRegmapPath
         End If
-
-        'Set FX3 connection (defaults to IMU)
-        Try
-            FX3 = New FX3Connection(firmwarePath, firmwarePath, firmwarePath, DeviceType.IMU)
-        Catch ex As Exception
-            MsgBox("Error loading resources! " + ex.Message)
-        End Try
 
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
@@ -621,7 +649,7 @@ Public Class TopGUI
             Dut = New adbfInterface(FX3, Nothing)
         End If
 
-        TestDUT()
+        If Not IsNothing(FX3.ActiveFX3) Then TestDUT()
 
     End Sub
 
@@ -653,7 +681,7 @@ Public Class TopGUI
             End If
         End If
 
-        personality.ApplySettingsToFX3(FX3)
+        If Not IsNothing(FX3.ActiveFX3) Then personality.ApplySettingsToFX3(FX3)
 
         SelectedPersonality = displayName
 
