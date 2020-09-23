@@ -2,15 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="SensorType" Type="FX3Api.DeviceType" Scope="User">
-      <Value Profile="(Default)">IMU</Value>
-    </Setting>
-    <Setting Name="DeviceType" Type="FX3Api.DUTType" Scope="User">
-      <Value Profile="(Default)">IMU</Value>
-    </Setting>
-    <Setting Name="SelectedRegMap" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="LastTop" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">100</Value>
     </Setting>
@@ -36,10 +27,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="DutPersonality" Type="System.String" Scope="User">
-      <Value Profile="(Default)">NotSet</Value>
-    </Setting>
-    <Setting Name="OverridePersonality" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

@@ -28,7 +28,6 @@ Public Class TopGUI
 
     'dut settings management
     Friend SelectedPersonality As String
-    Friend OverridePersonality As Boolean
     Friend DutOptions As List(Of DutPersonality)
 
     'List of listviewitems for bulk register read
@@ -65,7 +64,6 @@ Public Class TopGUI
         Dim firmwarePath As String
         Dim colorPath As String
         Dim colors As String()
-        Dim savedRegmapPath As String = ""
         Dim validPersonality As Boolean
 
         Me.Text = "iSensor FX3 Eval"
@@ -103,19 +101,31 @@ Public Class TopGUI
 
         'load dut personality settings
         SelectedPersonality = My.Settings.DutPersonality
-        OverridePersonality = My.Settings.OverridePersonality
 
         'load DUT personality file(s)
-        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\dut_personalities.csv")
-        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\aux_dut_personalities.csv"))
+        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv")
         If DutOptions.Count = 0 Then
-            MsgBox("Error loading personality file!")
-            SelectedPersonality = "Custom"
-            OverridePersonality = True
+            'generate custom personality
+            SaveCustomPersonality()
+            DutOptions.Add(New DutPersonality())
         End If
+        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\dut_personalities.csv"))
+        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\aux_dut_personalities.csv"))
 
-        If Not OverridePersonality Then
-            'check if valid personality saved
+        'load personality based on last selection
+        validPersonality = False
+        For Each item In DutOptions
+            If item.DisplayName = SelectedPersonality Then
+                validPersonality = True
+                Exit For
+            End If
+        Next
+        If Not validPersonality Then
+            Dim subGUI As New SelectDUTGUI()
+            subGUI.SetTopGUI(Me)
+            subGUI.isStartup = True
+            subGUI.ShowDialog()
+            'if valid personality not selected then override
             validPersonality = False
             For Each item In DutOptions
                 If item.DisplayName = SelectedPersonality Then
@@ -123,49 +133,12 @@ Public Class TopGUI
                     Exit For
                 End If
             Next
-            If Not validPersonality Then
-                Dim subGUI As New SelectDUTGUI()
-                subGUI.SetTopGUI(Me)
-                subGUI.isStartup = True
-                subGUI.ShowDialog()
-                'if valid personality not selected then override
-                validPersonality = False
-                For Each item In DutOptions
-                    If item.DisplayName = SelectedPersonality Then
-                        validPersonality = True
-                        Exit For
-                    End If
-                Next
-                If Not validPersonality Then OverridePersonality = True
-            End If
+            'go to custom if none set
+            If Not validPersonality Then SelectedPersonality = "Custom"
         End If
 
-        'Set the regmap path using the SelectRegMap GUI
-        If OverridePersonality Then
-            SelectedPersonality = "Custom"
-            savedRegmapPath = My.Settings.SelectedRegMap
-        Else
-            For i As Integer = 0 To DutOptions.Count - 1
-                If DutOptions(i).DisplayName = SelectedPersonality Then
-                    savedRegmapPath = AppDomain.CurrentDomain.BaseDirectory + "RegMaps\" + DutOptions(i).RegMapFileName
-                    Exit For
-                End If
-            Next
-        End If
-        If Not File.Exists(savedRegmapPath) Then
-            Dim regMapSelector As New SelectRegmapGUI()
-            If Not IsNothing(regMapSelector.SelectedPath) Then
-                RegMapPath = regMapSelector.SelectedPath
-            ElseIf regMapSelector.ShowDialog() = DialogResult.OK Then
-                RegMapPath = regMapSelector.SelectedPath
-            Else
-                'Bad path will complain without breaking anything
-                RegMapPath = ""
-            End If
-            regMapSelector.Dispose()
-        Else
-            RegMapPath = savedRegmapPath
-        End If
+        'load regmap
+        ApplyDutPersonalityRegmap(SelectedPersonality)
 
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
@@ -228,6 +201,19 @@ Public Class TopGUI
         Else
             MsgBox("ERROR: This application requires a screen to function properly...")
         End If
+
+    End Sub
+
+    Private Sub SaveCustomPersonality()
+
+        Dim path As String = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv"
+        Dim personality As New DutPersonality()
+        personality.DisplayName = "Custom"
+        personality.RegMapFileName = RegMapPath
+        If Not IsNothing(FX3.ActiveFX3) Then personality.GetSettingsFromFX3(FX3)
+
+        'save to CSV
+        DutPersonality.WriteToFile(path, personality)
 
     End Sub
 
@@ -356,7 +342,6 @@ Public Class TopGUI
 
     End Sub
 
-
     Private Sub btn_PWMSetup_Click(sender As Object, e As EventArgs) Handles btn_PWMSetup.Click
         Dim subGUI As New PWMSetupGUI()
         subGUI.SetTopGUI(Me)
@@ -463,20 +448,17 @@ Public Class TopGUI
     ''' </summary>
     Friend Sub SaveAppSettings()
         'Save settings
-        My.Settings.DeviceType = FX3.PartType
-        My.Settings.SensorType = FX3.SensorType
         My.Settings.LastLeft = Me.Left
         My.Settings.LastTop = Me.Top
         My.Settings.LastFilePath = lastFilePath
-        My.Settings.SelectedRegMap = m_RegMapPath
         My.Settings.GoodColor = GOOD_COLOR
         My.Settings.ErrorColor = ERROR_COLOR
         My.Settings.IdleColor = IDLE_COLOR
         My.Settings.BackColor = BACK_COLOR
         My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
         My.Settings.DutPersonality = SelectedPersonality
-        My.Settings.OverridePersonality = OverridePersonality
         My.Settings.Save()
+        If SelectedPersonality = "Custom" Then SaveCustomPersonality()
     End Sub
 
     'General exception handler
@@ -652,7 +634,42 @@ Public Class TopGUI
 
     End Sub
 
-    Friend Sub ApplyDutPersonality(displayName As String)
+    Friend Sub ApplyDutPersonalityRegmap(displayName As String)
+
+        Dim savedRegmapPath As String = ""
+
+        'Set the regmap path using the SelectRegMap GUI
+        For i As Integer = 0 To DutOptions.Count - 1
+            If DutOptions(i).DisplayName = displayName Then
+                If displayName = "Custom" Then
+                    'custom uses absolute path
+                    savedRegmapPath = DutOptions(i).RegMapFileName
+                Else
+                    savedRegmapPath = AppDomain.CurrentDomain.BaseDirectory + "RegMaps\" + DutOptions(i).RegMapFileName
+                End If
+                Exit For
+            End If
+        Next
+        If Not File.Exists(savedRegmapPath) Then
+            'go to custom personality and manually select regmap
+            SelectedPersonality = "Custom"
+            Dim regMapSelector As New SelectRegmapGUI()
+            If Not IsNothing(regMapSelector.SelectedPath) Then
+                RegMapPath = regMapSelector.SelectedPath
+            ElseIf regMapSelector.ShowDialog() = DialogResult.OK Then
+                RegMapPath = regMapSelector.SelectedPath
+            Else
+                'Bad path will complain without breaking anything
+                RegMapPath = ""
+            End If
+            regMapSelector.Dispose()
+        Else
+            RegMapPath = savedRegmapPath
+        End If
+
+    End Sub
+
+    Friend Function ApplyDutPersonality(displayName As String) As Boolean
 
         Dim personality As DutPersonality = Nothing
 
@@ -665,18 +682,18 @@ Public Class TopGUI
 
         If IsNothing(personality) Then
             MsgBox("ERROR: Selected DUT personality " + displayName + " not found!")
-            Exit Sub
+            Return False
         End If
 
         If personality.Supply = DutVoltage.On5_0Volts Then
             If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
-                Exit Sub
+                Return False
             End If
         End If
 
         If personality.VDDIO <> 3.3 Then
             If MessageBox.Show("FX3 directly supports VDDIO of 3.3V, other values may cause damage - Continue?", "Confirmation", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
-                Exit Sub
+                Return False
             End If
         End If
 
@@ -684,7 +701,9 @@ Public Class TopGUI
 
         SelectedPersonality = displayName
 
-    End Sub
+        Return True
+
+    End Function
 
     ''' <summary>
     ''' Perform all work to connect to and program an FX3
@@ -757,12 +776,7 @@ Public Class TopGUI
         btn_RegAccess.Select()
 
         'Load settings
-        If OverridePersonality Then
-            FX3.SensorType = My.Settings.SensorType
-            FX3.PartType = My.Settings.DeviceType
-        Else
-            ApplyDutPersonality(SelectedPersonality)
-        End If
+        ApplyDutPersonality(SelectedPersonality)
 
         'disable watchdog
         FX3.WatchdogEnable = False

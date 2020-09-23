@@ -56,42 +56,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("IMU")>  _
-        Public Property SensorType() As Global.FX3Api.DeviceType
-            Get
-                Return CType(Me("SensorType"),Global.FX3Api.DeviceType)
-            End Get
-            Set
-                Me("SensorType") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("IMU")>  _
-        Public Property DeviceType() As Global.FX3Api.DUTType
-            Get
-                Return CType(Me("DeviceType"),Global.FX3Api.DUTType)
-            End Get
-            Set
-                Me("DeviceType") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property SelectedRegMap() As String
-            Get
-                Return CType(Me("SelectedRegMap"),String)
-            End Get
-            Set
-                Me("SelectedRegMap") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
         Public Property LastTop() As Integer
             Get
@@ -188,25 +152,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("NotSet")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property DutPersonality() As String
             Get
                 Return CType(Me("DutPersonality"),String)
             End Get
             Set
                 Me("DutPersonality") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property OverridePersonality() As Boolean
-            Get
-                Return CType(Me("OverridePersonality"),Boolean)
-            End Get
-            Set
-                Me("OverridePersonality") = value
             End Set
         End Property
     End Class

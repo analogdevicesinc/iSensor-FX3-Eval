@@ -59,7 +59,7 @@ Public Class DutPersonality
     Public VDDIO As Double
 
     Public Sub New()
-        DisplayName = "NotSet"
+        DisplayName = "Custom"
         RegMapFileName = "NotSet"
         SensorType = DeviceType.IMU
         PartType = DUTType.IMU
@@ -106,6 +106,77 @@ Public Class DutPersonality
         End Select
         FX3.DutSupplyMode = Supply
         'cant set VDDIO currently
+    End Sub
+
+    Public Shared Sub WriteToFile(path As String, Personality As DutPersonality)
+        Dim personalities As New List(Of DutPersonality)
+        personalities.Add(Personality)
+        WriteToFile(path, personalities)
+    End Sub
+
+    Public Shared Sub WriteToFile(path As String, Personalities As IEnumerable(Of DutPersonality))
+        Dim header As New List(Of String)
+        Dim vals As New List(Of String)
+        Dim writer As New StreamWriter(path, False)
+        header.Add("DISPLAYNAME")
+        header.Add("REGMAP")
+        header.Add("SENSORTYPE")
+        header.Add("PARTTYPE")
+        header.Add("SPIMODE")
+        header.Add("SPIFREQ")
+        header.Add("SPISTALL")
+        header.Add("DRDIONUMBER")
+        header.Add("DRPOLARITY")
+        header.Add("SUPPLY")
+        header.Add("VDDIO")
+
+        For Each item In header
+            writer.Write(item + ",")
+        Next
+        writer.Write(Environment.NewLine)
+
+        For Each personality In Personalities
+            vals.Clear()
+            vals.Add(personality.DisplayName)
+            vals.Add(personality.RegMapFileName)
+            vals.Add([Enum].GetName(GetType(DeviceType), personality.SensorType))
+            vals.Add([Enum].GetName(GetType(DUTType), personality.PartType))
+            vals.Add(personality.SPIMode.ToString())
+            vals.Add(personality.SPIFreq.ToString())
+            vals.Add(personality.SPIStall.ToString())
+            vals.Add(personality.DrDIONumber.ToString())
+            vals.Add(personality.DrPolarity.ToString())
+            vals.Add([Enum].GetName(GetType(DutVoltage), personality.Supply))
+            vals.Add(personality.VDDIO.ToString())
+            For Each item In vals
+                writer.Write(item + ",")
+            Next
+            writer.Write(Environment.NewLine)
+        Next
+
+        writer.Close()
+    End Sub
+
+    Public Sub GetSettingsFromFX3(ByRef FX3 As FX3Connection)
+        PartType = FX3.PartType
+        SensorType = FX3.SensorType
+        SPIFreq = FX3.SclkFrequency
+        SPIStall = FX3.StallTime
+        SPIMode = 0
+        If FX3.Cpha Then
+            SPIMode = SPIMode Or &H1
+        End If
+        If FX3.Cpol Then
+            SPIMode = SPIMode Or &H2
+        End If
+        DrPolarity = FX3.DrPolarity
+        DrDIONumber = 1
+        If FX3.DrPin.pinConfig = FX3.DIO1.pinConfig Then DrDIONumber = 1
+        If FX3.DrPin.pinConfig = FX3.DIO2.pinConfig Then DrDIONumber = 2
+        If FX3.DrPin.pinConfig = FX3.DIO3.pinConfig Then DrDIONumber = 3
+        If FX3.DrPin.pinConfig = FX3.DIO4.pinConfig Then DrDIONumber = 4
+        Supply = FX3.DutSupplyMode
+        DrPolarity = FX3.DrPolarity
     End Sub
 
     Public Shared Function ParseFile(PersonalityFile As String) As List(Of DutPersonality)

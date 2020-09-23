@@ -49,11 +49,12 @@ Public Class SelectDUTGUI
             MsgBox("Error: Invalid DUT selected!")
         Else
             Try
-                m_TopGUI.ApplyDutPersonality(deviceInput.Text)
-                m_TopGUI.RegMapPath = AppDomain.CurrentDomain.BaseDirectory + "RegMaps\" + m_TopGUI.DutOptions(selectedDut).RegMapFileName
-                m_TopGUI.OverridePersonality = False
-                m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
-                m_TopGUI.SaveAppSettings()
+                If m_TopGUI.ApplyDutPersonality(deviceInput.Text) Then
+                    'only proceed if not canceled
+                    m_TopGUI.ApplyDutPersonalityRegmap(deviceInput.Text)
+                    m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
+                    m_TopGUI.SaveAppSettings()
+                End If
             Catch ex As Exception
                 MsgBox("Error applying settings! " + ex.Message)
             End Try

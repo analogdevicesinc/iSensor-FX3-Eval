@@ -148,6 +148,9 @@ Public Class FX3ConfigGUI
 
     Private Sub SetConfig_Click(sender As Object, e As EventArgs) Handles SetConfig.Click
 
+        'set config as custom for any change
+        m_TopGUI.SelectedPersonality = "Custom"
+
         'Get the current values from the form and check for validity
         m_TopGUI.FX3.ChipSelectControl = chipSelectControlInput.SelectedItem
         m_TopGUI.FX3.ChipSelectLagTime = lagTimeInput.SelectedItem
@@ -262,8 +265,6 @@ Public Class FX3ConfigGUI
         If Not m_regmappath = "" Then
             Try
                 m_TopGUI.RegMapPath = m_regmappath
-                m_TopGUI.OverridePersonality = True
-                m_TopGUI.SelectedPersonality = "Custom"
             Catch ex As Exception
                 MsgBox("ERROR: Invalid register map path: " + ex.Message)
                 StatusLabel.Text = "ERROR"
@@ -301,13 +302,9 @@ Public Class FX3ConfigGUI
 
         If m_TopGUI.FX3.SensorType <> sensorInput.SelectedItem Then
             m_TopGUI.FX3.SensorType = sensorInput.SelectedItem
-            m_TopGUI.OverridePersonality = True
-            m_TopGUI.SelectedPersonality = "Custom"
         End If
         If m_TopGUI.FX3.PartType <> DutInput.SelectedItem Then
             m_TopGUI.FX3.PartType = DutInput.SelectedItem
-            m_TopGUI.OverridePersonality = True
-            m_TopGUI.SelectedPersonality = "Custom"
         End If
 
         'save app settings
