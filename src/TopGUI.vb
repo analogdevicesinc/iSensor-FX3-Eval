@@ -114,9 +114,7 @@ Public Class TopGUI
             OverridePersonality = True
         End If
 
-        If OverridePersonality Then
-            SelectedPersonality = "Custom"
-        Else
+        If Not OverridePersonality Then
             'check if valid personality saved
             validPersonality = False
             For Each item In DutOptions
@@ -144,6 +142,7 @@ Public Class TopGUI
 
         'Set the regmap path using the SelectRegMap GUI
         If OverridePersonality Then
+            SelectedPersonality = "Custom"
             savedRegmapPath = My.Settings.SelectedRegMap
         Else
             For i As Integer = 0 To DutOptions.Count - 1
