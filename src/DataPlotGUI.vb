@@ -142,17 +142,19 @@ Public Class DataPlotGUI
 
         'Update the series for the plot area
         For i As Integer = 0 To selectedRegList.Count() - 1
-            'remove leading point if it exists
-            If dataPlot.Series(i).Points.Count() = numSamples Then
-                dataPlot.Series(i).Points.RemoveAt(0)
-                dataPlot.ResetAutoValues()
-            End If
             If x_timestamp.Checked Then
                 dataPlot.Series(i).Points.AddXY((logTimer.ElapsedMilliseconds / 1000.0), plotValues(i))
             Else
                 dataPlot.Series(i).Points.AddXY(plotXPosition, plotValues(i))
             End If
         Next
+        'set zoom
+        dataPlot.ChartAreas(0).AxisX.Minimum = Double.NaN
+        dataPlot.ChartAreas(0).AxisX.Maximum = Double.NaN
+        dataPlot.ChartAreas(0).RecalculateAxesScale()
+        If plotXPosition > numSamples Then
+            dataPlot.ChartAreas(0).AxisX.ScaleView.Zoom(dataPlot.Series(0).Points(plotXPosition - numSamples).XValue, dataPlot.Series(0).Points(plotXPosition).XValue)
+        End If
 
         'move to next plot position
         plotXPosition = plotXPosition + 1

@@ -51,6 +51,7 @@ Partial Class DataPlotGUI
         Me.check_fixedTime = New System.Windows.Forms.CheckBox()
         Me.x_timestamp = New System.Windows.Forms.CheckBox()
         Me.btn_SetLabel = New System.Windows.Forms.Button()
+        Me.x_axis_scroll = New System.Windows.Forms.CheckBox()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -272,7 +273,7 @@ Partial Class DataPlotGUI
         'check_fixedTime
         '
         Me.check_fixedTime.AutoSize = True
-        Me.check_fixedTime.Location = New System.Drawing.Point(169, 57)
+        Me.check_fixedTime.Location = New System.Drawing.Point(157, 57)
         Me.check_fixedTime.Name = "check_fixedTime"
         Me.check_fixedTime.Size = New System.Drawing.Size(115, 17)
         Me.check_fixedTime.TabIndex = 21
@@ -298,11 +299,22 @@ Partial Class DataPlotGUI
         Me.btn_SetLabel.Text = "Set Label"
         Me.btn_SetLabel.UseVisualStyleBackColor = True
         '
+        'x_axis_scroll
+        '
+        Me.x_axis_scroll.AutoSize = True
+        Me.x_axis_scroll.Location = New System.Drawing.Point(157, 80)
+        Me.x_axis_scroll.Name = "x_axis_scroll"
+        Me.x_axis_scroll.Size = New System.Drawing.Size(103, 17)
+        Me.x_axis_scroll.TabIndex = 24
+        Me.x_axis_scroll.Text = "X-Axis Scroll Bar"
+        Me.x_axis_scroll.UseVisualStyleBackColor = True
+        '
         'DataPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1390, 524)
+        Me.Controls.Add(Me.x_axis_scroll)
         Me.Controls.Add(Me.btn_SetLabel)
         Me.Controls.Add(Me.x_timestamp)
         Me.Controls.Add(Me.check_fixedTime)
@@ -362,4 +374,5 @@ Partial Class DataPlotGUI
     Friend WithEvents x_timestamp As CheckBox
     Friend WithEvents Scale As DataGridViewTextBoxColumn
     Friend WithEvents btn_SetLabel As Button
+    Friend WithEvents x_axis_scroll As CheckBox
 End Class
