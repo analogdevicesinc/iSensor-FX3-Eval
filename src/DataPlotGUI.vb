@@ -96,8 +96,8 @@ Public Class DataPlotGUI
         m_TopGUI.FX3.UserLEDOn()
         'save regs which were plotted
         m_TopGUI.dataPlotRegs.Clear()
-        For Each item In selectedRegList
-            m_TopGUI.dataPlotRegs.Add(item.Reg.Label)
+        For i As Integer = 0 To regView.ColumnCount - 1
+            If regView.Item("Plot", i).Value = True Then m_TopGUI.dataPlotRegs.Add(regView.Item("Label", i).Value)
         Next
         m_TopGUI.btn_plotData.Enabled = True
     End Sub
