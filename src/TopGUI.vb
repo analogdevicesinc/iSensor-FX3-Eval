@@ -458,7 +458,9 @@ Public Class TopGUI
         My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
         My.Settings.DutPersonality = SelectedPersonality
         My.Settings.Save()
-        If SelectedPersonality = "Custom" Then SaveCustomPersonality()
+        If SelectedPersonality = "Custom" Then
+            SaveCustomPersonality()
+        End If
     End Sub
 
     'General exception handler
@@ -890,6 +892,9 @@ Public Class TopGUI
 
         'make DR active false for this test
         FX3.DrActive = False
+
+        'wait for DR to reach DR polarity level (500ms timeout)
+        FX3.PulseWait(FX3.DrPin, FX3.DrPolarity, 100, 400)
 
         Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
 
