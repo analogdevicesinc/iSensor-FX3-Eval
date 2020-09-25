@@ -378,8 +378,15 @@ Public Class FrequencyPlotGUI
 
     Private Sub btn_saveplot_Click(sender As Object, e As EventArgs) Handles btn_saveplot.Click
         Dim filebrowser As New SaveFileDialog
-        filebrowser.FileName = "FFT_Plot"
-        filebrowser.Filter = "Image Files (*.png) | *.png"
+        Dim fileName As String = "FFT_plot_" + m_TopGUI.SelectedPersonality + "_" + GetTime() + ".png"
+        Try
+            filebrowser.FileName = fileName
+            filebrowser.Filter = "Image Files (*.png) | *.png"
+            filebrowser.InitialDirectory = m_TopGUI.lastFilePath.Substring(0, m_TopGUI.lastFilePath.LastIndexOf("\") + 1)
+        Catch ex As Exception
+            'squash
+        End Try
+
         If filebrowser.ShowDialog() = DialogResult.OK Then
             m_TopGUI.lastFilePath = filebrowser.FileName
             Dim bmpForm As Bitmap = New Bitmap(dataPlot.Width, dataPlot.Height)

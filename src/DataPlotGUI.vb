@@ -155,7 +155,7 @@ Public Class DataPlotGUI
                 dataPlot.Series(i).Points.AddXY(plotXPosition, plotValues(i))
             End If
         Next
-        If x_axis_scroll.Checked Then
+        If x_axis_scroll.Checked And plotting Then
             'set zoom
             dataPlot.ChartAreas(0).AxisX.Minimum = Double.NaN
             dataPlot.ChartAreas(0).AxisX.Maximum = Double.NaN
@@ -436,11 +436,13 @@ Public Class DataPlotGUI
 
     Private Sub saveChart_Click(sender As Object, e As EventArgs) Handles btn_saveChart.Click
         Dim filebrowser As New SaveFileDialog
+        Dim fileName As String = "data_plot_" + m_TopGUI.SelectedPersonality + "_" + GetTime() + ".png"
         Try
-            filebrowser.FileName = m_TopGUI.lastFilePath.Substring(0, m_TopGUI.lastFilePath.LastIndexOf("\") + 1) + "data_plot.png"
+            filebrowser.FileName = fileName
             filebrowser.Filter = "Image Files (*.png) | *.png"
+            filebrowser.InitialDirectory = m_TopGUI.lastFilePath.Substring(0, m_TopGUI.lastFilePath.LastIndexOf("\") + 1)
         Catch ex As Exception
-            filebrowser.FileName = "C:\data_plot.png"
+            'squash
         End Try
 
         If filebrowser.ShowDialog() = DialogResult.OK Then

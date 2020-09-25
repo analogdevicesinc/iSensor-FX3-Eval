@@ -15,6 +15,10 @@ End Class
 
 Module helperFunctions
 
+    Public Function GetTime() As String
+        Return Date.Now().ToString("s").Replace(":", "-")
+    End Function
+
     Public Sub InteractWithOtherForms(hide As Boolean, ByRef caller As Form)
         'hide other forms
         For Each openForm As Form In Application.OpenForms
@@ -52,11 +56,9 @@ Module helperFunctions
     End Function
 
     Public Sub saveCSV(ByVal fileHeader As String, ByVal inputData() As String, Optional ByRef Path As String = "")
-        Dim currentTime As Date = Date.Now()
         Dim outputStream As StreamWriter
         Dim saveData As New SaveFileDialog
-        Dim fileName As String = fileHeader + "_" + currentTime.ToString("s") + ".csv"
-        fileName = fileName.Replace(":", "-")
+        Dim fileName As String = fileHeader + "_" + GetTime() + ".csv"
         saveData.FileName = fileName
         saveData.Filter = "Output data file | .csv"
         If Path <> "" Then
@@ -92,10 +94,8 @@ Module helperFunctions
     End Function
 
     Public Sub saveMultipleCSVs(ByVal fileHeader As String, ByVal inputData() As String, ByVal savePath As String, ByVal fileNumber As String)
-        Dim currentTime As Date = Date.Now()
         Dim outputStream As StreamWriter
-        Dim fileName As String = "\" + fileNumber.PadLeft(4, "0"c) + "_" + fileHeader + "_" + currentTime.ToString("s") + ".csv"
-        fileName = fileName.Replace(":", "-")
+        Dim fileName As String = "\" + fileNumber.PadLeft(4, "0"c) + "_" + fileHeader + "_" + GetTime() + ".csv"
         fileName = savePath + fileName
         outputStream = New StreamWriter(fileName)
         For Each line In inputData
@@ -105,9 +105,7 @@ Module helperFunctions
     End Sub
 
     Public Sub saveText(ByVal fileHeader As String, ByRef inputData As String, Optional ByRef Path As String = "")
-        Dim currentTime As Date = Date.Now()
-        Dim fileName As String = fileHeader + "_" + currentTime.ToString("s") + ".csv"
-        fileName = fileName.Replace(":", "-")
+        Dim fileName As String = fileHeader + "_" + GetTime() + ".csv"
         Dim saveData As New SaveFileDialog
         saveData.FileName = fileName
         saveData.Filter = "Output data file | .csv"
@@ -123,9 +121,7 @@ Module helperFunctions
     End Sub
 
     Public Sub saveBinaryFile(ByVal fileHeader As String, ByRef inputData As Byte(), Optional ByRef Path As String = "")
-        Dim currentTime As Date = Date.Now()
-        Dim fileName As String = fileHeader + "_" + currentTime.ToString("s") + ".bin"
-        fileName = fileName.Replace(":", "-")
+        Dim fileName As String = fileHeader + "_" + GetTime() + ".bin"
         Dim saveData As New SaveFileDialog
         saveData.FileName = fileName
         saveData.Filter = "Output data file | .bin"
@@ -141,9 +137,7 @@ Module helperFunctions
     End Sub
 
     Public Sub saveMultipleBinaryFiles(ByVal fileHeader As String, ByVal inputData As Byte(), ByVal savePath As String, ByVal fileNumber As String)
-        Dim currentTime As Date = Date.Now()
-        Dim fileName As String = "\" + fileNumber.PadLeft(4, "0"c) + "_" + fileHeader + "_" + currentTime.ToString("s") + ".bin"
-        fileName = fileName.Replace(":", "-")
+        Dim fileName As String = "\" + fileNumber.PadLeft(4, "0"c) + "_" + fileHeader + "_" + GetTime() + ".bin"
         fileName = savePath + fileName
         File.WriteAllBytes(fileName, inputData)
     End Sub
