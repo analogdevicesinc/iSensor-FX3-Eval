@@ -185,6 +185,11 @@ Public Class FrequencyPlotGUI
         dataPlot.ChartAreas(0).AxisY.IsLogarithmic = logYaxis.Checked
         'recalculate scale based on newest values
         dataPlot.ChartAreas(0).RecalculateAxesScale()
+        'Add title
+        dataPlot.Titles.Clear()
+        dataPlot.Titles.Add("FFT Plot (Fs = " + drFreq.Text + ", NFFT = " + NFFT.Text + ", " + FFT_Averages.Text + " Averages)")
+        dataPlot.Titles(0).Font = New Font(NFFT.Font.Name, 16.0F)
+        'measure new sample freq for next render
         UpdateSampleFreq()
     End Sub
 
