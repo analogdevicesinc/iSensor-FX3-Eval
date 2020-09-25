@@ -298,7 +298,9 @@
     <Compile Include="TopGUI.designer.vb">
       <DependentUpon>TopGUI.vb</DependentUpon>
     </Compile>
-    <Compile Include="TopGUI.vb" />
+    <Compile Include="TopGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ADcmXLBufferedLog.resx">
