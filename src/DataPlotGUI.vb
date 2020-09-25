@@ -27,6 +27,7 @@ Public Class DataPlotGUI
     Private plotMutex As Mutex
     Private CSVRegData As List(Of String())
     Private plotYLabel As String
+    Private plotFocus As Boolean
 
     Public Sub FormSetup() Handles Me.Load
         PopulateRegView()
@@ -142,18 +143,29 @@ Public Class DataPlotGUI
 
         'Update the series for the plot area
         For i As Integer = 0 To selectedRegList.Count() - 1
+            If Not x_axis_scroll.Checked Then
+                If dataPlot.Series(i).Points.Count() = numSamples Then
+                    dataPlot.Series(i).Points.RemoveAt(0)
+                    dataPlot.ResetAutoValues()
+                End If
+            End If
             If x_timestamp.Checked Then
                 dataPlot.Series(i).Points.AddXY((logTimer.ElapsedMilliseconds / 1000.0), plotValues(i))
             Else
                 dataPlot.Series(i).Points.AddXY(plotXPosition, plotValues(i))
             End If
         Next
-        'set zoom
-        dataPlot.ChartAreas(0).AxisX.Minimum = Double.NaN
-        dataPlot.ChartAreas(0).AxisX.Maximum = Double.NaN
-        dataPlot.ChartAreas(0).RecalculateAxesScale()
-        If plotXPosition > numSamples Then
-            dataPlot.ChartAreas(0).AxisX.ScaleView.Zoom(dataPlot.Series(0).Points(plotXPosition - numSamples).XValue, dataPlot.Series(0).Points(plotXPosition).XValue)
+        If x_axis_scroll.Checked Then
+            'set zoom
+            dataPlot.ChartAreas(0).AxisX.Minimum = Double.NaN
+            dataPlot.ChartAreas(0).AxisX.Maximum = Double.NaN
+            dataPlot.ChartAreas(0).RecalculateAxesScale()
+            If plotXPosition > numSamples Then
+                'change zoom if chart does not have focus
+                If Not plotFocus Then
+                    dataPlot.ChartAreas(0).AxisX.ScaleView.Zoom(dataPlot.Series(0).Points(plotXPosition - numSamples).XValue, dataPlot.Series(0).Points(plotXPosition).XValue)
+                End If
+            End If
         End If
 
         'move to next plot position
@@ -168,6 +180,14 @@ Public Class DataPlotGUI
         'release plot mutex
         plotMutex.ReleaseMutex()
 
+    End Sub
+
+    Private Sub DataPlotMouseClick() Handles dataPlot.MouseClick
+        plotFocus = True
+    End Sub
+
+    Private Sub FormClick() Handles Me.Click
+        plotFocus = False
     End Sub
 
     Private Function GetPlotRegValues() As Double()
@@ -226,6 +246,8 @@ Public Class DataPlotGUI
             logToCSV.Enabled = True
             plotting = False
             plotTimer.Enabled = False
+            'get the plotter mutex (finish plot in progress)
+            plotMutex.WaitOne()
             StopPlot()
             'save log if there is data
             If logData.Count > 1 Then
@@ -238,6 +260,7 @@ Public Class DataPlotGUI
             playFromCSV.Enabled = True
             playFromCSV.Visible = True
             x_timestamp.Enabled = True
+            x_axis_scroll.Enabled = True
             m_TopGUI.FX3.UserLEDOn()
             btn_startStop.Text = "Start Plotting"
         Else
@@ -260,6 +283,7 @@ Public Class DataPlotGUI
             playFromCSV.Visible = False
             check_fixedTime.Enabled = False
             x_timestamp.Enabled = False
+            x_axis_scroll.Enabled = False
             btn_startStop.Text = "Stop Plotting"
             Try
                 m_TopGUI.FX3.UserLEDBlink(250 / samplePeriodMs)
@@ -348,7 +372,6 @@ Public Class DataPlotGUI
         'configure chart
         dataPlot.ChartAreas(0).AxisY.MajorGrid.Enabled = True
         dataPlot.ChartAreas(0).AxisX.MajorGrid.Enabled = True
-
         dataPlot.ChartAreas(0).AxisY.Title = plotYLabel
 
         If x_timestamp.Checked Then
@@ -358,8 +381,13 @@ Public Class DataPlotGUI
             dataPlot.ChartAreas(0).AxisX.Title = "Sample Number"
         End If
 
+        dataPlot.ChartAreas(0).AxisX.ScrollBar.IsPositionedInside = False
+
         'Set plotter position
         plotXPosition = 0
+
+        'plot out of focus
+        plotFocus = False
 
         'Remove all existing series
         dataPlot.Series.Clear()
@@ -409,10 +437,10 @@ Public Class DataPlotGUI
     Private Sub saveChart_Click(sender As Object, e As EventArgs) Handles btn_saveChart.Click
         Dim filebrowser As New SaveFileDialog
         Try
-            filebrowser.FileName = m_TopGUI.lastFilePath.Substring(0, m_TopGUI.lastFilePath.LastIndexOf("\") + 1) + "PLOT.png"
+            filebrowser.FileName = m_TopGUI.lastFilePath.Substring(0, m_TopGUI.lastFilePath.LastIndexOf("\") + 1) + "data_plot.png"
             filebrowser.Filter = "Image Files (*.png) | *.png"
         Catch ex As Exception
-            filebrowser.FileName = "C:\PLOT.png"
+            filebrowser.FileName = "C:\data_plot.png"
         End Try
 
         If filebrowser.ShowDialog() = DialogResult.OK Then
@@ -531,6 +559,7 @@ Public Class DataPlotGUI
         check_fixedTime.Enabled = True
         sampleFreq.Enabled = True
         x_timestamp.Enabled = True
+        x_axis_scroll.Enabled = True
     End Sub
 
     Private Sub DisablePlaybackButtons()
@@ -544,6 +573,7 @@ Public Class DataPlotGUI
         samplesRendered.Enabled = False
         sampleFreq.Enabled = False
         x_timestamp.Enabled = False
+        x_axis_scroll.Enabled = False
     End Sub
 
     Private Sub axis_autoscale_CheckedChanged(sender As Object, e As EventArgs) Handles axis_autoscale.CheckedChanged
