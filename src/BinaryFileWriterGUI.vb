@@ -6,8 +6,6 @@
 Public Class BinaryFileWriterGUI
     Inherits FormBase
 
-    Private m_AppGUI As AppBrowseGUI
-
     Private Sub btn_GenFile_Click(sender As Object, e As EventArgs) Handles btn_GenFile.Click
 
         Dim bytes As UInteger
@@ -61,16 +59,12 @@ Public Class BinaryFileWriterGUI
 
     End Sub
 
-    Friend Sub SetAppGUI(AppGUI As AppBrowseGUI)
-        m_AppGUI = AppGUI
-    End Sub
-
     Private Sub ResizeHandler() Handles Me.SizeChanged
         fillPattern.Width = Me.Width - 40
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
-        m_AppGUI.btn_binFile.Enabled = True
+        m_TopGUI.btn_binFile.Enabled = True
     End Sub
 
 End Class

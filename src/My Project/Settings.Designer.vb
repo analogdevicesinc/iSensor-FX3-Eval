@@ -161,6 +161,30 @@ Namespace My
                 Me("DutPersonality") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("650")>  _
+        Public Property LastWidth() As Integer
+            Get
+                Return CType(Me("LastWidth"),Integer)
+            End Get
+            Set
+                Me("LastWidth") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("775")>  _
+        Public Property LastHeight() As Integer
+            Get
+                Return CType(Me("LastHeight"),Integer)
+            End Get
+            Set
+                Me("LastHeight") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -1,13 +1,7 @@
 ﻿Public Class FlashInterfaceGUI
 
-    Private m_AppGUI As AppBrowseGUI
-
-    Friend Sub SetAppGUI(AppGUI As AppBrowseGUI)
-        m_AppGUI = AppGUI
-    End Sub
-
     Public Sub Shutdown() Handles Me.Closing
-        m_AppGUI.btn_checkError.Enabled = True
+        m_TopGUI.btn_checkError.Enabled = True
     End Sub
 
     Private Sub btn_dumpFlash_Click(sender As Object, e As EventArgs) Handles btn_dumpFlash.Click

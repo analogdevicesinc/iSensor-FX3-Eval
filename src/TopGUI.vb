@@ -7,13 +7,14 @@ Imports FX3Api
 Imports adisInterface
 Imports RegMapClasses
 Imports System.IO
-Imports System.Reflection
 Imports System.Timers
 Imports System.Threading
 Imports System.Net
 Imports System.Web.Script.Serialization
 
 Public Class TopGUI
+
+#Region "Variables"
 
     'Global colors for application
     Public GOOD_COLOR As Color = Color.Chartreuse
@@ -52,6 +53,10 @@ Public Class TopGUI
     Private m_RegMapPath As String
     Friend m_AutoSpi As iSensorAutomotiveSpi
 
+#End Region
+
+#Region "Constructor/Load"
+
     Public Sub New()
 
         'This call is required by the designer
@@ -67,6 +72,15 @@ Public Class TopGUI
         Dim validPersonality As Boolean
 
         Me.Text = "iSensor FX3 Eval"
+
+        'set up timers for regview
+        pageReadTimer = New System.Timers.Timer(500)
+        pageReadTimer.Enabled = False
+        AddHandler pageReadTimer.Elapsed, New ElapsedEventHandler(AddressOf PageReadCallback)
+
+        drReadTimer = New System.Timers.Timer(750)
+        drReadTimer.Enabled = False
+        AddHandler drReadTimer.Elapsed, New ElapsedEventHandler(AddressOf DrReadCallBack)
 
         'firmware images should be in executing assembly directory
         firmwarePath = AppDomain.CurrentDomain.BaseDirectory + "FX3Binaries\"
@@ -186,7 +200,7 @@ Public Class TopGUI
         'check screen settings
         Dim goodLoc As Boolean = False
         Dim screens As Screen() = Screen.AllScreens
-        Dim formRect As Rectangle = New Rectangle(My.Settings.LastLeft, My.Settings.LastTop, Me.Width, Me.Height)
+        Dim formRect As Rectangle = New Rectangle(My.Settings.LastLeft, My.Settings.LastTop, My.Settings.LastWidth, My.Settings.LastHeight)
         For Each screen In screens
             If screen.WorkingArea.Contains(formRect) Then
                 goodLoc = True
@@ -195,6 +209,8 @@ Public Class TopGUI
         If goodLoc Then
             Me.Top = My.Settings.LastTop
             Me.Left = My.Settings.LastLeft
+            Me.Width = My.Settings.LastWidth
+            Me.Height = My.Settings.LastHeight
         ElseIf screens.Count > 0 Then
             Me.Top = (screens(0).WorkingArea.Height / 2) - (Me.Height / 2)
             Me.Left = (screens(0).WorkingArea.Width / 2) - (Me.Width / 2)
@@ -204,43 +220,7 @@ Public Class TopGUI
 
     End Sub
 
-    Private Sub SaveCustomPersonality()
-
-        Dim path As String = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv"
-        Dim personality As New DutPersonality()
-        personality.DisplayName = "Custom"
-        personality.RegMapFileName = RegMapPath
-        If Not IsNothing(FX3.ActiveFX3) Then personality.GetSettingsFromFX3(FX3)
-
-        'save to CSV
-        DutPersonality.WriteToFile(path, personality)
-
-    End Sub
-
-    Private Sub SetupToolTips()
-
-        Dim tip0 As ToolTip = New ToolTip()
-        tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used, and the connected FX3 hardware")
-        tip0.SetToolTip(Me.btn_bitBangSPI, "Bit-bang custom SPI traffic to a DUT")
-        tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register values to a .CSV file")
-        tip0.SetToolTip(Me.btn_CheckDUTConnection, "Check the SPI connection to the DUT by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
-        tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
-        tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
-        tip0.SetToolTip(Me.btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
-        tip0.SetToolTip(Me.btn_OtherApps, "Other misc. applications developed for the iSensor FX3 Eval GUI")
-        tip0.SetToolTip(Me.btn_SelectDUT, "Select the DUT type. Loads the default values for that DUT type")
-        tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
-        tip0.SetToolTip(Me.btn_RegAccess, "Read or write all registers in the loaded register map")
-        tip0.SetToolTip(Me.btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
-        tip0.SetToolTip(Me.btn_PinAccess, "Read or set all FX3 digital IO pins (DIO1 - DIO4, FX3GPIO1 - FX3GPIO4)")
-        tip0.SetToolTip(Me.btn_PWMSetup, "Configure PWM signal generation on the FX3 digital IO")
-        tip0.SetToolTip(Me.label_apiVersion, "The current version of the iSensor FX3 Eval GUI. The three highest version numbers will match the FX3 API version in use")
-        tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
-        tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Eval GUI. Requires a Internet connection and a GitHub account")
-        tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 500ms, waits for data ready to be asserted, and checks the DUT connection")
-        tip0.SetToolTip(Me.checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
-
-    End Sub
+#End Region
 
 #Region "Properties"
 
@@ -259,6 +239,7 @@ Public Class TopGUI
                 End If
                 regMapPath_Label.Text = value.Substring(value.LastIndexOf("\") + 1)
                 SetupToolTips()
+                RegFormSetup()
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message() + " " + RegMap.ErrorText)
             End Try
@@ -268,6 +249,48 @@ Public Class TopGUI
 #End Region
 
 #Region "Button Event Handlers"
+
+    Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_BurstTest.Click
+        Dim subGUI As New BurstTestGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_BurstTest.Enabled = False
+    End Sub
+
+    Private Sub btn_ADXL375_Click(sender As Object, e As EventArgs) Handles btn_ADXL375.Click
+        Dim subGUI As New ADXl375GUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_ADXL375.Enabled = False
+    End Sub
+
+    Private Sub btn_pulseMeasure_Click(sender As Object, e As EventArgs) Handles btn_pulseMeasure.Click
+        Dim subGUI As New PulseMeasureGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_pulseMeasure.Enabled = False
+    End Sub
+
+    Private Sub btn_resistorConfig_Click(sender As Object, e As EventArgs) Handles btn_resistorConfig.Click
+        Dim subGUI As New ResistorConfigGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_resistorConfig.Enabled = False
+    End Sub
+
+    Private Sub btn_binFile_Click(sender As Object, e As EventArgs) Handles btn_binFile.Click
+        Dim subGUI As New BinaryFileWriterGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_binFile.Enabled = False
+    End Sub
+
+    Private Sub btn_checkError_Click(sender As Object, e As EventArgs) Handles btn_checkError.Click
+        Dim subGUI As New FlashInterfaceGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_checkError.Enabled = False
+    End Sub
 
     Private Sub btn_Connect_Click(sender As Object, e As EventArgs) Handles btn_Connect.Click
 
@@ -296,13 +319,6 @@ Public Class TopGUI
     Private Sub btn_ResetDUT_Click(sender As Object, e As EventArgs) Handles btn_ResetDUT.Click
         FX3.Reset()
         TestDUT()
-    End Sub
-
-    Private Sub btn_RegAccess_Click(sender As Object, e As EventArgs) Handles btn_RegAccess.Click
-        Dim subGUI As New RegisterGUI()
-        subGUI.SetTopGUI(Me)
-        subGUI.Show()
-        btn_RegAccess.Enabled = False
     End Sub
 
     Private Sub btn_RealTime_Click(sender As Object, e As EventArgs) Handles btn_RealTime.Click
@@ -364,11 +380,11 @@ Public Class TopGUI
         TestDUT()
     End Sub
 
-    Private Sub btn_bitBangSPI_Click(sender As Object, e As EventArgs) Handles btn_bitBangSPI.Click
+    Private Sub btn_bitBangSPI_Click(sender As Object, e As EventArgs) Handles btn_BitBangSPI.Click
         Dim subGUI As New BitBangSpiGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
-        btn_bitBangSPI.Enabled = False
+        btn_BitBangSPI.Enabled = False
     End Sub
 
     Private Sub btn_APIInfo_Click(sender As Object, e As EventArgs) Handles btn_APIInfo.Click
@@ -398,15 +414,6 @@ Public Class TopGUI
         btn_PinAccess.Enabled = False
     End Sub
 
-    Private Sub btn_OtherApps_Click(sender As Object, e As EventArgs) Handles btn_OtherApps.Click
-        Dim subGUI As New AppBrowseGUI()
-        subGUI.SetTopGUI(Me)
-        subGUI.Show()
-
-        'disable button
-        btn_OtherApps.Enabled = False
-    End Sub
-
     Private Sub btn_plotData_Click(sender As Object, e As EventArgs) Handles btn_plotData.Click
 
         Dim subGUI As New DataPlotGUI()
@@ -421,6 +428,23 @@ Public Class TopGUI
 #End Region
 
 #Region "Other Event Handlers"
+
+    'handle app resize events
+    Private Sub ResizeHandler() Handles Me.Resize
+        'resize regview
+        regView.Height = Me.Height - 348
+        btn_DumpRegmap.Top = Me.Height - 359
+        btn_writeRegMap.Top = Me.Height - 359
+
+        'resize tab control
+        dut_access.Height = Me.Height - 283
+
+        'bottom labels need to move too
+        label_apiVersion.Top = Me.Height - 76
+        checkVersion.Top = Me.Height - 76
+        report_issue.Top = Me.Height - 57
+        regMapPath_Label.Top = Me.Height - 57
+    End Sub
 
     ''' <summary>
     ''' This event handler is used to allow for asynchronous timeouts when reconnecting to an FX3 which was previously disconnected.
@@ -443,24 +467,74 @@ Public Class TopGUI
 
     End Sub
 
-    ''' <summary>
-    ''' Save app settings
-    ''' </summary>
-    Friend Sub SaveAppSettings()
-        'Save settings
-        My.Settings.LastLeft = Me.Left
-        My.Settings.LastTop = Me.Top
-        My.Settings.LastFilePath = lastFilePath
-        My.Settings.GoodColor = GOOD_COLOR
-        My.Settings.ErrorColor = ERROR_COLOR
-        My.Settings.IdleColor = IDLE_COLOR
-        My.Settings.BackColor = BACK_COLOR
-        My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
-        My.Settings.DutPersonality = SelectedPersonality
-        My.Settings.Save()
-        If SelectedPersonality = "Custom" Then
-            SaveCustomPersonality()
+    Private Sub checkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles checkVersion.LinkClicked
+        checkVersion.LinkVisited = True
+
+        Dim response As WebResponse
+        Dim request As HttpWebRequest
+        Dim content As Dictionary(Of String, Object)
+        Dim contentStr As String
+        Dim parser As New JavaScriptSerializer()
+        Dim newestVersion, currentVersion As Version
+        Dim promptResult As MsgBoxResult
+
+        'get response
+        Try
+            ServicePointManager.Expect100Continue = True
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
+            request = WebRequest.Create("https://api.github.com/repos/juchong/iSensor-FX3-Eval/releases/latest")
+            request.ContentType = "application/json"
+            request.UserAgent = "request"
+            request.Method = "GET"
+            request.Accept = "application/json"
+            response = request.GetResponse()
+        Catch ex As Exception
+            MsgBox("Error communicating with GitHub: " + ex.Message)
+            Exit Sub
+        End Try
+
+        'get content
+        Using reader As StreamReader = New StreamReader(response.GetResponseStream())
+            contentStr = reader.ReadToEnd()
+        End Using
+
+        'parse JSON
+        Try
+            content = parser.Deserialize(Of Dictionary(Of String, Object))(contentStr)
+            contentStr = content("tag_name").ToString()
+            contentStr = contentStr.Replace("-pub", "")
+            contentStr = contentStr.Replace("v", "")
+            newestVersion = Version.Parse(contentStr)
+        Catch ex As Exception
+            MsgBox("Error: Failed to parse HTTP response: " + ex.Message)
+            Exit Sub
+        End Try
+
+        'get version of application and latest
+        currentVersion = Version.Parse(Me.ProductVersion)
+        If currentVersion.CompareTo(newestVersion) < 0 Then
+            promptResult = MsgBox("Version " + content("tag_name").ToString() + " available. Download now?", MsgBoxStyle.YesNo)
+        Else
+            MsgBox("Already up to date! Latest version: " + content("tag_name").ToString())
+            Exit Sub
         End If
+
+        If promptResult <> MsgBoxResult.Yes Then
+            Exit Sub
+        End If
+
+        'get the url to the zip resource to download and open in browser
+        Dim proc = New Process()
+        Dim assets As ArrayList = DirectCast(content("assets"), ArrayList)
+        proc.StartInfo.UseShellExecute = True
+        proc.StartInfo.FileName = assets(0)("browser_download_url")
+        proc.Start()
+
+    End Sub
+
+    Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
+        report_issue.LinkVisited = True
+        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-Eval/issues/new")
     End Sub
 
     'General exception handler
@@ -571,6 +645,68 @@ Public Class TopGUI
 #End Region
 
 #Region "Helper Functions"
+
+    Private Sub SaveCustomPersonality()
+
+        Dim path As String = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv"
+        Dim personality As New DutPersonality()
+        personality.DisplayName = "Custom"
+        personality.RegMapFileName = RegMapPath
+        If Not IsNothing(FX3.ActiveFX3) Then personality.GetSettingsFromFX3(FX3)
+
+        'save to CSV
+        DutPersonality.WriteToFile(path, personality)
+
+    End Sub
+
+    Private Sub SetupToolTips()
+
+        Dim tip0 As ToolTip = New ToolTip()
+        tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used, and the connected FX3 hardware")
+        tip0.SetToolTip(Me.btn_BitBangSPI, "Bit-bang custom SPI traffic to a DUT")
+        tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register values to a .CSV file")
+        tip0.SetToolTip(Me.btn_CheckDUTConnection, "Check the SPI connection to the DUT by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
+        tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
+        tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
+        tip0.SetToolTip(Me.btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
+        tip0.SetToolTip(Me.btn_SelectDUT, "Select the DUT type. Loads the default values for that DUT type")
+        tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
+        tip0.SetToolTip(Me.btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
+        tip0.SetToolTip(Me.btn_PinAccess, "Read or set all FX3 digital IO pins (DIO1 - DIO4, FX3GPIO1 - FX3GPIO4)")
+        tip0.SetToolTip(Me.btn_PWMSetup, "Configure PWM signal generation on the FX3 digital IO")
+        tip0.SetToolTip(Me.label_apiVersion, "The current version of the iSensor FX3 Eval GUI. The three highest version numbers will match the FX3 API version in use")
+        tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
+        tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Eval GUI. Requires a Internet connection and a GitHub account")
+        tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 500ms, waits for data ready to be asserted, and checks the DUT connection")
+        tip0.SetToolTip(Me.checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
+        tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
+        tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
+        tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
+        tip0.SetToolTip(Me.btn_binFile, "Generate a binary data file filled with an arbitrary pattern")
+
+    End Sub
+
+    ''' <summary>
+    ''' Save app settings
+    ''' </summary>
+    Friend Sub SaveAppSettings()
+        'Save settings
+        My.Settings.LastLeft = Me.Left
+        My.Settings.LastTop = Me.Top
+        My.Settings.LastWidth = Me.Width
+        My.Settings.LastHeight = Me.Height
+        My.Settings.LastFilePath = lastFilePath
+        My.Settings.GoodColor = GOOD_COLOR
+        My.Settings.ErrorColor = ERROR_COLOR
+        My.Settings.IdleColor = IDLE_COLOR
+        My.Settings.BackColor = BACK_COLOR
+        My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
+        My.Settings.DutPersonality = SelectedPersonality
+        My.Settings.Save()
+        If SelectedPersonality = "Custom" Then
+            SaveCustomPersonality()
+        End If
+    End Sub
 
     ''' <summary>
     ''' Friend getter for last connected FX3 board SN
@@ -759,28 +895,21 @@ Public Class TopGUI
             Exit Sub
         End If
 
+        'enable buttons
         btn_APIInfo.Enabled = True
-        btn_bitBangSPI.Enabled = True
-        btn_BulkRegRead.Enabled = True
         btn_CheckDUTConnection.Enabled = True
         btn_Connect.Enabled = True
         btn_FX3Config.Enabled = True
-        btn_PWMSetup.Enabled = True
-        btn_RealTime.Enabled = True
-        btn_RegAccess.Enabled = True
         btn_ResetDUT.Enabled = True
         btn_SelectDUT.Enabled = True
-        btn_plotFFT.Enabled = True
-        btn_PinAccess.Enabled = True
-        btn_OtherApps.Enabled = True
-        btn_plotData.Enabled = True
+        dut_access.Enabled = True
 
         label_FX3Status.Text = "Connected to " + [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType) + " (SN: " + FX3.ActiveFX3SerialNumber + ")"
         label_FX3Status.BackColor = GOOD_COLOR
         btn_Connect.Text = "Reboot FX3"
 
-        'Select register access button initially
-        btn_RegAccess.Select()
+        'Select DUT access panel initially
+        dut_access.Select()
 
         'Load settings
         ApplyDutPersonality(SelectedPersonality)
@@ -819,21 +948,13 @@ Public Class TopGUI
     ''' </summary>
     Private Sub ResetButtons()
         btn_APIInfo.Enabled = False
-        btn_bitBangSPI.Enabled = False
-        btn_BulkRegRead.Enabled = False
         btn_CheckDUTConnection.Enabled = False
         btn_Connect.Enabled = True 'Connect should be enabled by default
         btn_Connect.Text = "Connect to FX3"
         btn_FX3Config.Enabled = False
-        btn_PWMSetup.Enabled = False
-        btn_RealTime.Enabled = False
-        btn_RegAccess.Enabled = False
         btn_ResetDUT.Enabled = False
         btn_SelectDUT.Enabled = False
-        btn_plotFFT.Enabled = False
-        btn_PinAccess.Enabled = False
-        btn_OtherApps.Enabled = False
-        btn_plotData.Enabled = False
+        dut_access.Enabled = False
     End Sub
 
     ''' <summary>
@@ -944,79 +1065,527 @@ Public Class TopGUI
             If TypeOf (openForm) Is PinAccessGUI Then btn_PinAccess.Enabled = False
             If TypeOf (openForm) Is SelectDUTGUI Then btn_SelectDUT.Enabled = False
             If TypeOf (openForm) Is PWMSetupGUI Then btn_PWMSetup.Enabled = False
-            If TypeOf (openForm) Is AppBrowseGUI Then btn_OtherApps.Enabled = False
-            If TypeOf (openForm) Is RegisterGUI Then btn_RegAccess.Enabled = False
+            If TypeOf (openForm) Is BurstTestGUI Then btn_BurstTest.Enabled = False
+            If TypeOf (openForm) Is ADXl375GUI Then btn_ADXL375.Enabled = False
+            If TypeOf (openForm) Is PulseMeasureGUI Then btn_pulseMeasure.Enabled = False
+            If TypeOf (openForm) Is ResistorConfigGUI Then btn_resistorConfig.Enabled = False
+            If TypeOf (openForm) Is BinaryFileWriterGUI Then btn_binFile.Enabled = False
+            If TypeOf (openForm) Is FlashInterfaceGUI Then btn_checkError.Enabled = False
         Next
     End Sub
 
-    Private Sub checkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles checkVersion.LinkClicked
-        checkVersion.LinkVisited = True
+#End Region
 
-        Dim response As WebResponse
-        Dim request As HttpWebRequest
-        Dim content As Dictionary(Of String, Object)
-        Dim contentStr As String
-        Dim parser As New JavaScriptSerializer()
-        Dim newestVersion, currentVersion As Version
-        Dim promptResult As MsgBoxResult
+#Region "Register Access Form"
 
-        'get response
-        Try
-            ServicePointManager.Expect100Continue = True
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-            request = WebRequest.Create("https://api.github.com/repos/juchong/iSensor-FX3-Eval/releases/latest")
-            request.ContentType = "application/json"
-            request.UserAgent = "request"
-            request.Method = "GET"
-            request.Accept = "application/json"
-            response = request.GetResponse()
-        Catch ex As Exception
-            MsgBox("Error communicating with GitHub: " + ex.Message)
-            Exit Sub
-        End Try
+    Private pageList As List(Of Integer)
+    Private pagePosition As List(Of Integer)
+    Private lastPageIndex As Integer
+    Private pageReadTimer As System.Timers.Timer
+    Private drReadTimer As System.Timers.Timer
+    Private drEnableTimer As System.Timers.Timer
+    Private currentRegList As List(Of RegClass)
+    Private scaleData As Boolean
+    Private originalDRSetting As Boolean
+    Private m_pageMessageList As List(Of Integer)
 
-        'get content
-        Using reader As StreamReader = New StreamReader(response.GetResponseStream())
-            contentStr = reader.ReadToEnd()
-        End Using
+    Private Sub RegFormSetup()
+        regView.ClearSelection()
+        drActive.Checked = False
+        scaleData = False
+        numDecimals.Visible = False
+        numDecimals_label.Visible = False
+        validateSpiData.Checked = False
+        validateSpiData.Visible = False
+        contRead.Checked = False
+        measureDr.Checked = False
+        pageReadTimer.Enabled = False
+        drReadTimer.Enabled = False
 
-        'parse JSON
-        Try
-            content = parser.Deserialize(Of Dictionary(Of String, Object))(contentStr)
-            contentStr = content("tag_name").ToString()
-            contentStr = contentStr.Replace("-pub", "")
-            contentStr = contentStr.Replace("v", "")
-            newestVersion = Version.Parse(contentStr)
-        Catch ex As Exception
-            MsgBox("Error: Failed to parse HTTP response: " + ex.Message)
-            Exit Sub
-        End Try
+        'get list of pages
+        pageList = New List(Of Integer)
+        pagePosition = New List(Of Integer)
+        selectPage.Items.Clear()
+        For Each reg In RegMap
+            If Not pageList.Contains(reg.Page) Then
+                pageList.Add(reg.Page)
+                pagePosition.Add(0) 'Start at top
+                selectPage.Items.Add(reg.Page)
+            End If
+        Next
 
-        'get version of application and latest
-        currentVersion = Version.Parse(Me.ProductVersion)
-        If currentVersion.CompareTo(newestVersion) < 0 Then
-            promptResult = MsgBox("Version " + content("tag_name").ToString() + " available. Download now?", MsgBoxStyle.YesNo)
-        Else
-            MsgBox("Already up to date! Latest version: " + content("tag_name").ToString())
-            Exit Sub
+        'Set the selected index
+        selectPage.SelectedIndex = 0
+        lastPageIndex = 0
+        m_pageMessageList = New List(Of Integer)
+
+        'enable register value copying
+        regView.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText
+
+        If Not IsNothing(FX3.ActiveFX3) Then
+            'save setting and disable dr active reads
+            originalDRSetting = FX3.DrActive
+            FX3.DrActive = False
+
+            'check if SPI data can be validated
+            If FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then
+                validateSpiData.Visible = True
+            Else
+                validateSpiData.Visible = False
+            End If
+
         End If
-
-        If promptResult <> MsgBoxResult.Yes Then
-            Exit Sub
-        End If
-
-        'get the url to the zip resource to download and open in browser
-        Dim proc = New Process()
-        Dim assets As ArrayList = DirectCast(content("assets"), ArrayList)
-        proc.StartInfo.UseShellExecute = True
-        proc.StartInfo.FileName = assets(0)("browser_download_url")
-        proc.Start()
 
     End Sub
 
-    Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
-        report_issue.LinkVisited = True
-        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-Eval/issues/new")
+    Private Sub HiddenHandler() Handles Me.VisibleChanged
+        If Not Me.Visible Then
+            'disable dr / cont reads
+            pageReadTimer.Enabled = False
+            drReadTimer.Enabled = False
+        Else
+            pageReadTimer.Enabled = contRead.Checked
+            drReadTimer.Enabled = measureDr.Checked
+        End If
+    End Sub
+
+    Private Sub WriteEnterHandler(sender As Object, e As KeyEventArgs) Handles newValue.KeyUp
+
+        If e.KeyCode = Keys.Return Then
+            e.Handled = True
+            e.SuppressKeyPress = True
+            ButtonWrite.PerformClick()
+        End If
+
+    End Sub
+
+    Private Sub AnnoyingNoiseHandler(sender As Object, e As KeyEventArgs) Handles newValue.KeyDown
+        If e.KeyCode = Keys.Return Then
+            e.Handled = True
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub ButtonWrite_Click(sender As Object, e As EventArgs) Handles ButtonWrite.Click
+
+        Dim regLabel As String
+
+        If scaleData Then
+            Dim writeValue As Integer
+            Try
+                writeValue = Convert.ToInt32(newValue.Text, 10)
+                regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
+                Dut.WriteSigned(RegMap(regLabel), writeValue)
+            Catch ex As Exception
+                MsgBox("ERROR: Invalid write - " + ex.Message())
+            End Try
+        Else
+            Dim writeValue As UInteger
+            Try
+                writeValue = Convert.ToUInt32(newValue.Text, 16)
+                regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
+                Dut.WriteUnsigned(RegMap(regLabel), writeValue)
+            Catch ex As Exception
+                MsgBox("ERROR: Invalid write - " + ex.Message())
+            End Try
+        End If
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
+    End Sub
+
+    Private Sub ReadPage()
+        Dim readRegList As New List(Of RegClass)
+        Dim numDecimalPlaces As UInteger
+
+        For Each reg In currentRegList
+            If reg.IsReadable Then
+                readRegList.Add(reg)
+            Else
+                'Dummy read reg for unreadable registers
+                readRegList.Add(New RegClass With {.Page = reg.Page, .Address = 0})
+            End If
+        Next
+
+        If scaleData Then
+            Try
+                numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
+            Catch ex As Exception
+                numDecimalPlaces = 2
+                numDecimals.Text = "2"
+                MsgBox("Invalid number Of Decimal places!" + ex.Message)
+            End Try
+            Dim DutValuesDoub() As Double
+            DutValuesDoub = Dut.ReadScaledValue(readRegList)
+            Dim regIndex As Integer = 0
+            For Each value In DutValuesDoub
+                If currentRegList(regIndex).IsReadable Then
+                    regView.Item("Contents", regIndex).Value = value.ToString("f" + numDecimalPlaces.ToString())
+                Else
+                    regView.Item("Contents", regIndex).Value = "Write Only"
+                End If
+                regIndex += 1
+            Next
+        Else
+            Dim DutValuesUInt() As UInteger
+            DutValuesUInt = Dut.ReadUnsigned(readRegList)
+            Dim regIndex As Integer = 0
+            For Each value In DutValuesUInt
+                If currentRegList(regIndex).IsReadable Then
+                    regView.Item("Contents", regIndex).Value = value.ToString("X" + (currentRegList(regIndex).NumBytes * 2).ToString())
+                Else
+                    regView.Item("Contents", regIndex).Value = "Write Only"
+                End If
+                regIndex += 1
+            Next
+        End If
+
+        'check the page register
+        If FX3.PartType = FX3Api.DUTType.LegacyIMU Then Exit Sub
+        Dim expectedPage As Integer = currentRegList(0).Page
+        If m_pageMessageList.Contains(expectedPage) Then
+            Exit Sub
+        End If
+        Dim dutPage As Integer = Dut.ReadUnsigned(New RegClass With {.Page = expectedPage, .Address = 0, .NumBytes = 2})
+        If dutPage <> expectedPage Then
+            m_pageMessageList.Add(expectedPage)
+            MsgBox("ERROR: Unable to load page " + expectedPage.ToString())
+        End If
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
+    End Sub
+
+    Private Sub regView_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles regView.CellClick
+        Dim regLabel As String
+        Dim reg As RegClass
+        Dim numDecimalPlaces As UInteger
+        Try
+            regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
+            reg = RegMap(regLabel)
+            If scaleData Then
+                numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
+                Dim value As Double
+                value = Dut.ReadScaledValue(reg)
+                CurrentValue.Text = value.ToString("f" + numDecimalPlaces.ToString())
+                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("f" + numDecimalPlaces.ToString())
+            Else
+                Dim value As UInteger
+                value = Dut.ReadUnsigned(reg)
+                CurrentValue.Text = value.ToString("X" + (reg.NumBytes * 2).ToString())
+                regView.Item("Contents", regView.CurrentCell.RowIndex).Value = value.ToString("X" + (reg.NumBytes * 2).ToString())
+            End If
+            CurrentValue.BackColor = Color.White
+        Catch ex As Exception
+            CurrentValue.Text = "Write Only"
+            CurrentValue.BackColor = ERROR_COLOR
+        End Try
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
+    End Sub
+
+    Private Sub PageReadCallback()
+        Me.BeginInvoke(New MethodInvoker(AddressOf ReadPage))
+    End Sub
+
+    Private Sub DrReadCallBack()
+        drReadTimer.Enabled = False
+        Me.BeginInvoke(New MethodInvoker(AddressOf ReadDrFreq))
+    End Sub
+
+    Private Sub EnableDrTimer()
+        drEnableTimer.Dispose()
+        drReadTimer.Enabled = measureDr.Checked
+    End Sub
+
+    Private Sub ReadDrFreq()
+        Dim dr As Double
+        Try
+            dr = FX3.MeasurePinFreq(FX3.DrPin, 1, 3000, 2)
+        Catch ex As Exception
+            dr = Double.PositiveInfinity
+        End Try
+        DrFreq.Text = FormatNumber(dr).ToString() + "Hz"
+        If dr = Double.PositiveInfinity Then
+            measureDr.Checked = False
+        End If
+        'if data ready is less than 10Hz want to shove some delays in here to prevent form from locking up a bunch
+        If dr < 10 Then
+            're-enable via timer, 5x the sample period delay
+            drEnableTimer = New System.Timers.Timer(5000 / dr)
+            AddHandler drEnableTimer.Elapsed, New ElapsedEventHandler(AddressOf EnableDrTimer)
+            drEnableTimer.Enabled = True
+        Else
+            drReadTimer.Enabled = measureDr.Checked
+        End If
+    End Sub
+
+    Private Sub Shutdown() Handles Me.Closing
+        'Kill any running timers
+        pageReadTimer.Enabled = False
+        drReadTimer.Enabled = False
+
+        'reset dr active setting
+        FX3.DrActive = originalDRSetting Or drActive.Checked
+    End Sub
+
+    Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged
+
+        'Load all the registers on the given page into the data grid view
+        InitializeDataGrid()
+
+        While regView.RowCount > currentRegList.Count()
+            regView.Rows.Remove(regView.Rows(regView.RowCount() - 1))
+        End While
+
+    End Sub
+
+    Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles ButtonRead.Click
+        ReadPage()
+    End Sub
+
+    Private Sub contRead_CheckedChanged(sender As Object, e As EventArgs) Handles contRead.CheckedChanged
+        pageReadTimer.Enabled = contRead.Checked
+    End Sub
+
+    Private Sub scaledData_CheckedChanged(sender As Object, e As EventArgs) Handles scaledData.CheckedChanged
+        scaleData = scaledData.Checked
+        If scaleData Then
+            readLabel.Text = "Current Value (Decimal)"
+            writeLabel.Text = "New Value (Decimal)"
+            numDecimals.Visible = True
+            numDecimals_label.Visible = True
+            regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            CovertTextFields()
+        Else
+            readLabel.Text = "Current Value (Hex)"
+            writeLabel.Text = "New Value (Hex)"
+            numDecimals.Visible = False
+            numDecimals_label.Visible = False
+            regView.Columns("Contents").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+            CovertTextFields()
+        End If
+
+    End Sub
+
+    Private Sub CovertTextFields()
+
+        Dim newText As String
+        Dim val As Double
+        Dim valU As UInteger
+        Dim reg As RegClass
+        Dim numDecimalPlaces As UInteger
+
+        'regview
+        For i As Integer = 0 To regView.RowCount - 1
+            newText = regView.Item("Contents", i).Value
+            If newText <> "Not Read" Then
+                Try
+                    'get the reg associated with entry
+                    reg = RegMap(regView.Item("Label", i).Value)
+                    If scaleData Then
+                        'data is in hex, need to scale to decimal
+                        valU = Convert.ToUInt32(newText, 16)
+                        'scale using DUT function
+                        val = Dut.ScaleRegData(reg, valU)
+                        'get number of decimal places
+                        numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
+                        'scale value
+                        newText = val.ToString("f" + numDecimalPlaces.ToString())
+                    Else
+                        'data is in decimal, need to scale to hex
+                        val = Convert.ToDouble(newText)
+                        'un-scale using DUT function
+                        valU = Dut.UnscaleRegData(reg, val)
+                        'set string
+                        newText = valU.ToString("X" + (reg.NumBytes * 2).ToString())
+                    End If
+                Catch ex As Exception
+                    'don't need to explicitly handle anything here
+                End Try
+                regView.Item("Contents", i).Value = newText
+            End If
+        Next
+
+        'copy from regview to current value
+        newText = CurrentValue.Text
+        Try
+            CurrentValue.Text = regView.Item("Contents", regView.CurrentCell.RowIndex).Value
+        Catch ex As Exception
+            CurrentValue.Text = newText
+        End Try
+
+    End Sub
+
+    Private Sub InitializeDataGrid()
+
+        'Save the scroll position for old page
+        If regView.FirstDisplayedScrollingRowIndex <> -1 Then
+            pagePosition(lastPageIndex) = regView.FirstDisplayedScrollingRowIndex
+        End If
+
+        'Repopulate new page
+        Dim regStr(3) As String
+        Dim readStr As String
+        Dim regIndex As Integer = 0
+        currentRegList = New List(Of RegClass)
+        For Each reg In RegMap
+            If reg.Page = selectPage.SelectedItem Then
+                currentRegList.Add(reg)
+                If reg.IsReadable Then
+                    readStr = "Not Read"
+                Else
+                    readStr = "Write Only"
+                End If
+                If regIndex >= regView.RowCount Then
+                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr}
+                    regView.Rows.Add(regStr)
+                Else
+                    regView.Item("Label", regIndex).Value = reg.Label
+                    regView.Item("Page", regIndex).Value = reg.Page
+                    regView.Item("Address", regIndex).Value = reg.Address
+                    regView.Item("Contents", regIndex).Value = readStr
+                End If
+                regIndex += 1
+            End If
+        Next
+
+        'set the start position
+        regView.FirstDisplayedScrollingRowIndex = pagePosition(selectPage.SelectedIndex)
+        lastPageIndex = selectPage.SelectedIndex
+    End Sub
+
+    Private Sub btn_DumpRegmap_Click(sender As Object, e As EventArgs) Handles btn_DumpRegmap.Click
+        Dim readableRegMap As New List(Of RegClass)
+        For Each reg In RegMap
+            If reg.IsReadable Then
+                readableRegMap.Add(reg)
+            End If
+        Next
+
+        Dim values() As UInteger
+        values = Dut.ReadUnsigned(readableRegMap)
+        Dim strValues As New List(Of String)
+
+        strValues.Add("Register, Page, Address, Value")
+        Dim index As Integer = 0
+        For Each reg In readableRegMap
+            strValues.Add(reg.Label + "," + reg.Page.ToString() + "," + reg.Address.ToString() + "," + values(index).ToString())
+            index += 1
+        Next
+        saveCSV("RegDump", strValues.ToArray(), lastFilePath)
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+    End Sub
+
+    Private Sub measureDr_CheckedChanged(sender As Object, e As EventArgs) Handles measureDr.CheckedChanged
+        drReadTimer.Enabled = measureDr.Checked
+    End Sub
+
+    Private Sub drActive_CheckedChanged(sender As Object, e As EventArgs) Handles drActive.CheckedChanged
+        Dim freq As Double
+        If drActive.Checked Then
+            'perform quick check of dr freq
+            freq = FX3.MeasurePinFreq(FX3.DrPin, 1, 100, 2)
+            If freq = Double.PositiveInfinity Then
+                Dim res As DialogResult = MessageBox.Show("Warning, Data Ready not Toggling! Continue?", "Confirm Data Ready Sync", MessageBoxButtons.OKCancel)
+                If res <> DialogResult.OK Then drActive.Checked = False
+            End If
+        End If
+        FX3.DrActive = drActive.Checked
+    End Sub
+
+    Private Sub btn_writeRegMap_Click(sender As Object, e As EventArgs) Handles btn_writeRegMap.Click
+        Dim fileBrowser As New OpenFileDialog
+        Dim fileBrowseResult As DialogResult
+        Dim loadPath As String
+        Dim writeRegs As New List(Of RegClass)
+        Dim writeVals As New List(Of UInteger)
+        fileBrowser.Title = "Please Select the Register Dump File"
+        fileBrowser.Filter = "Register Dump Files|*.csv"
+        fileBrowseResult = fileBrowser.ShowDialog()
+        If fileBrowseResult <> DialogResult.OK Then
+            Exit Sub
+        End If
+        loadPath = fileBrowser.FileName
+
+        Dim csvReader As New FileIO.TextFieldParser(loadPath)
+        csvReader.TextFieldType = FileIO.FieldType.Delimited
+        csvReader.SetDelimiters(",")
+
+        Dim regLine As String()
+        Dim reg As RegClass
+        'clear header
+        csvReader.ReadLine()
+        While Not csvReader.EndOfData
+            Try
+                regLine = csvReader.ReadFields()
+                'get register object
+                reg = RegMap(regLine(0))
+                'if readable then add value
+                If reg.IsWriteable Then
+                    writeRegs.Add(reg)
+                    writeVals.Add(Convert.ToUInt32(regLine(3)))
+                End If
+            Catch ex As Exception
+                If MessageBox.Show("Error Parsing CSV file! Continue?", "Error", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+                    csvReader.Close()
+                    Exit Sub
+                End If
+            End Try
+        End While
+        csvReader.Close()
+
+        'apply data to DUT
+        Dut.WriteUnsigned(writeRegs, writeVals)
+
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
+    End Sub
+
+    Private Sub ValidateAutomotiveSpiData()
+
+        'message string
+        Dim msg As String
+
+        'exception
+        Dim ex As adisInterface.SpiException
+
+        'number of exceptions logged
+        Dim logLength As Integer = 0
+
+        'exit if not set to validate
+        If Not validateSpiData.Checked Then Exit Sub
+
+        If m_AutoSpi.LoggedExceptionCount > 0 Then
+            msg = m_AutoSpi.LoggedExceptionCount.ToString() + " SPI exception(s) have occurred: "
+            ex = m_AutoSpi.DequeueLoggedException()
+            While Not IsNothing(ex)
+                msg += Environment.NewLine + ex.Message
+                logLength += 1
+                If logLength > 9 Then
+                    msg += Environment.NewLine + "and " + m_AutoSpi.LoggedExceptionCount.ToString() + " more..."
+                    'clear queue
+                    m_AutoSpi.LogExceptions = False
+                    m_AutoSpi.LogExceptions = validateSpiData.Checked
+                    Exit While
+                End If
+                ex = m_AutoSpi.DequeueLoggedException()
+            End While
+            'disable continuous reads in case of error
+            contRead.Checked = False
+            MsgBox(msg)
+        End If
+    End Sub
+
+    Private Sub validateSpiData_CheckedChanged(sender As Object, e As EventArgs) Handles validateSpiData.CheckedChanged
+        m_AutoSpi.LogExceptions = validateSpiData.Checked
     End Sub
 
 #End Region

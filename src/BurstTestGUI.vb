@@ -9,13 +9,7 @@ Imports RegMapClasses
 Public Class BurstTestGUI
     Inherits FormBase
 
-    Private m_AppGUI As AppBrowseGUI
-
     Private m_numBytes As Integer
-
-    Friend Sub SetAppGUI(AppGUI As AppBrowseGUI)
-        m_AppGUI = AppGUI
-    End Sub
 
     Public Sub FormSetup() Handles Me.Load
         sclk.Text = m_TopGUI.FX3.SclkFrequency.ToString()
@@ -100,7 +94,7 @@ Public Class BurstTestGUI
 
     Private Sub Shutdown() Handles Me.Closing
         m_TopGUI.FX3.StripBurstTriggerWord = True
-        m_AppGUI.btn_BurstTest.Enabled = True
+        m_TopGUI.btn_BurstTest.Enabled = True
     End Sub
 
     Private Sub num32words_TextChanged(sender As Object, e As EventArgs) Handles numBytes.LostFocus

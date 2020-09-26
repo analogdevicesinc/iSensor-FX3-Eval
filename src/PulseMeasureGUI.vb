@@ -11,14 +11,8 @@ Public Class PulseMeasureGUI
 
     Private PinList As List(Of IPinObject)
 
-    Private m_AppGUI As AppBrowseGUI
-
-    Friend Sub SetAppGUI(AppGUI As AppBrowseGUI)
-        m_AppGUI = AppGUI
-    End Sub
-
     Private Sub Shutdown() Handles Me.Closing
-        m_AppGUI.btn_pulseMeasure.Enabled = True
+        m_TopGUI.btn_pulseMeasure.Enabled = True
     End Sub
 
     Public Sub FormSetup() Handles Me.Load

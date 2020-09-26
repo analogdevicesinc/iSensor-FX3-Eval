@@ -29,5 +29,11 @@
     <Setting Name="DutPersonality" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="LastWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">650</Value>
+    </Setting>
+    <Setting Name="LastHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">775</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
