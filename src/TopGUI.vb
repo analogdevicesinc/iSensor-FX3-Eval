@@ -432,18 +432,18 @@ Public Class TopGUI
     'handle app resize events
     Private Sub ResizeHandler() Handles Me.Resize
         'resize regview
-        regView.Height = Me.Height - 348
-        btn_DumpRegmap.Top = Me.Height - 359
-        btn_writeRegMap.Top = Me.Height - 359
+        regView.Height = Me.Height - 351
+        btn_DumpRegmap.Top = Me.Height - 362
+        btn_writeRegMap.Top = Me.Height - 362
 
         'resize tab control
-        dut_access.Height = Me.Height - 283
+        dut_access.Height = Me.Height - 286
 
         'bottom labels need to move too
-        label_apiVersion.Top = Me.Height - 76
-        checkVersion.Top = Me.Height - 76
-        report_issue.Top = Me.Height - 57
-        regMapPath_Label.Top = Me.Height - 57
+        label_apiVersion.Top = Me.Height - 79
+        checkVersion.Top = Me.Height - 79
+        report_issue.Top = Me.Height - 60
+        regMapPath_Label.Top = Me.Height - 60
     End Sub
 
     ''' <summary>
