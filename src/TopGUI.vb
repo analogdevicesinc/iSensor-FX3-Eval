@@ -1039,6 +1039,8 @@ Public Class TopGUI
 
     Private Sub CloseAllForms()
         Dim openForms As New List(Of Form)
+        pageReadTimer.Enabled = False
+        drReadTimer.Enabled = False
         For Each form In Application.OpenForms
             If Not ReferenceEquals(Me, form) Then
                 openForms.Add(form)
