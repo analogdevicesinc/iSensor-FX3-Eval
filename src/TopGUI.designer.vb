@@ -679,7 +679,7 @@ Partial Class TopGUI
         Me.tab_dataLog.Padding = New System.Windows.Forms.Padding(3)
         Me.tab_dataLog.Size = New System.Drawing.Size(605, 466)
         Me.tab_dataLog.TabIndex = 2
-        Me.tab_dataLog.Text = "Data Visualization"
+        Me.tab_dataLog.Text = "Data Plotting"
         Me.tab_dataLog.UseVisualStyleBackColor = True
         '
         'tab_Pin
@@ -699,7 +699,7 @@ Partial Class TopGUI
         '
         Me.btn_resistorConfig.Location = New System.Drawing.Point(168, 6)
         Me.btn_resistorConfig.Name = "btn_resistorConfig"
-        Me.btn_resistorConfig.Size = New System.Drawing.Size(75, 64)
+        Me.btn_resistorConfig.Size = New System.Drawing.Size(75, 62)
         Me.btn_resistorConfig.TabIndex = 10
         Me.btn_resistorConfig.Text = "Pin Resistor Config"
         Me.btn_resistorConfig.UseVisualStyleBackColor = True
