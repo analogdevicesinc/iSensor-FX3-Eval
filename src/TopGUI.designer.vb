@@ -22,6 +22,7 @@ Partial Class TopGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(TopGUI))
         Me.text_FX3Status = New System.Windows.Forms.Label()
         Me.label_FX3Status = New System.Windows.Forms.Label()
@@ -37,9 +38,7 @@ Partial Class TopGUI
         Me.btn_CheckDUTConnection = New System.Windows.Forms.Button()
         Me.btn_FX3Config = New System.Windows.Forms.Button()
         Me.btn_APIInfo = New System.Windows.Forms.Button()
-        Me.btn_PWMSetup = New System.Windows.Forms.Button()
         Me.btn_plotFFT = New System.Windows.Forms.Button()
-        Me.btn_PinAccess = New System.Windows.Forms.Button()
         Me.label_apiVersion = New System.Windows.Forms.Label()
         Me.btn_plotData = New System.Windows.Forms.Button()
         Me.regMapPath_Label = New System.Windows.Forms.Label()
@@ -80,17 +79,49 @@ Partial Class TopGUI
         Me.tab_dataPlot = New System.Windows.Forms.TabPage()
         Me.tab_dataLog = New System.Windows.Forms.TabPage()
         Me.tab_Pin = New System.Windows.Forms.TabPage()
-        Me.btn_resistorConfig = New System.Windows.Forms.Button()
+        Me.GroupBox12 = New System.Windows.Forms.GroupBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.DutyCycle = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Freq = New System.Windows.Forms.TextBox()
+        Me.btn_StartPWM = New System.Windows.Forms.Button()
+        Me.manualGPIOGroupBox = New System.Windows.Forms.GroupBox()
+        Me.GroupBox14 = New System.Windows.Forms.GroupBox()
+        Me.btn_SetGPIOLow = New System.Windows.Forms.Button()
+        Me.btn_SetGPIOHigh = New System.Windows.Forms.Button()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.btn_ReadGPIO = New System.Windows.Forms.Button()
+        Me.GPIO_Value = New System.Windows.Forms.TextBox()
+        Me.GroupBox13 = New System.Windows.Forms.GroupBox()
+        Me.btn_pullDown = New System.Windows.Forms.Button()
+        Me.btn_disableResistor = New System.Windows.Forms.Button()
+        Me.btn_pullUp = New System.Windows.Forms.Button()
+        Me.GPIO_Num = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.TextBoxPeriod = New System.Windows.Forms.TextBox()
+        Me.LabelHighLow = New System.Windows.Forms.Label()
+        Me.btn_PulseDrive = New System.Windows.Forms.Button()
+        Me.LabelPeriod = New System.Windows.Forms.Label()
+        Me.ComboBoxHighLow = New System.Windows.Forms.ComboBox()
+        Me.ButtonReadSelected = New System.Windows.Forms.Button()
+        Me.dgvPinList = New System.Windows.Forms.DataGridView()
+        Me.ButtonReadAll = New System.Windows.Forms.Button()
+        Me.ButtonWriteHigh = New System.Windows.Forms.Button()
+        Me.ButtonWriteLow = New System.Windows.Forms.Button()
         Me.tab_advanced = New System.Windows.Forms.TabPage()
-        Me.btn_BitBangSPI = New System.Windows.Forms.Button()
-        Me.btn_checkError = New System.Windows.Forms.Button()
-        Me.btn_binFile = New System.Windows.Forms.Button()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
+        Me.btn_binFile = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.btn_BitBangSPI = New System.Windows.Forms.Button()
         Me.btn_BurstTest = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
-        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.btn_checkError = New System.Windows.Forms.Button()
+        Me.pinToggleFreq = New System.Windows.Forms.TextBox()
+        Me.btn_MeasureFreq = New System.Windows.Forms.Button()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -104,10 +135,16 @@ Partial Class TopGUI
         Me.tab_dataPlot.SuspendLayout()
         Me.tab_dataLog.SuspendLayout()
         Me.tab_Pin.SuspendLayout()
+        Me.GroupBox12.SuspendLayout()
+        Me.manualGPIOGroupBox.SuspendLayout()
+        Me.GroupBox14.SuspendLayout()
+        Me.GroupBox13.SuspendLayout()
+        Me.GroupBox11.SuspendLayout()
+        CType(Me.dgvPinList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tab_advanced.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        Me.GroupBox8.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -239,15 +276,6 @@ Partial Class TopGUI
         Me.btn_APIInfo.Text = "FX3 Board Info."
         Me.btn_APIInfo.UseVisualStyleBackColor = True
         '
-        'btn_PWMSetup
-        '
-        Me.btn_PWMSetup.Location = New System.Drawing.Point(87, 6)
-        Me.btn_PWMSetup.Name = "btn_PWMSetup"
-        Me.btn_PWMSetup.Size = New System.Drawing.Size(75, 62)
-        Me.btn_PWMSetup.TabIndex = 11
-        Me.btn_PWMSetup.Text = "Pin PWM Setup"
-        Me.btn_PWMSetup.UseVisualStyleBackColor = True
-        '
         'btn_plotFFT
         '
         Me.btn_plotFFT.Location = New System.Drawing.Point(87, 6)
@@ -256,15 +284,6 @@ Partial Class TopGUI
         Me.btn_plotFFT.TabIndex = 9
         Me.btn_plotFFT.Text = "Frequency Domain Plotting"
         Me.btn_plotFFT.UseVisualStyleBackColor = True
-        '
-        'btn_PinAccess
-        '
-        Me.btn_PinAccess.Location = New System.Drawing.Point(6, 6)
-        Me.btn_PinAccess.Name = "btn_PinAccess"
-        Me.btn_PinAccess.Size = New System.Drawing.Size(75, 62)
-        Me.btn_PinAccess.TabIndex = 10
-        Me.btn_PinAccess.Text = "Pin Read/Write Access"
-        Me.btn_PinAccess.UseVisualStyleBackColor = True
         '
         'label_apiVersion
         '
@@ -690,9 +709,17 @@ Partial Class TopGUI
         '
         'tab_Pin
         '
-        Me.tab_Pin.Controls.Add(Me.btn_PWMSetup)
-        Me.tab_Pin.Controls.Add(Me.btn_PinAccess)
-        Me.tab_Pin.Controls.Add(Me.btn_resistorConfig)
+        Me.tab_Pin.Controls.Add(Me.Label5)
+        Me.tab_Pin.Controls.Add(Me.btn_MeasureFreq)
+        Me.tab_Pin.Controls.Add(Me.pinToggleFreq)
+        Me.tab_Pin.Controls.Add(Me.GroupBox12)
+        Me.tab_Pin.Controls.Add(Me.manualGPIOGroupBox)
+        Me.tab_Pin.Controls.Add(Me.GroupBox11)
+        Me.tab_Pin.Controls.Add(Me.ButtonReadSelected)
+        Me.tab_Pin.Controls.Add(Me.dgvPinList)
+        Me.tab_Pin.Controls.Add(Me.ButtonReadAll)
+        Me.tab_Pin.Controls.Add(Me.ButtonWriteHigh)
+        Me.tab_Pin.Controls.Add(Me.ButtonWriteLow)
         Me.tab_Pin.Location = New System.Drawing.Point(4, 22)
         Me.tab_Pin.Name = "tab_Pin"
         Me.tab_Pin.Padding = New System.Windows.Forms.Padding(3)
@@ -701,14 +728,311 @@ Partial Class TopGUI
         Me.tab_Pin.Text = "Pin Access"
         Me.tab_Pin.UseVisualStyleBackColor = True
         '
-        'btn_resistorConfig
+        'GroupBox12
         '
-        Me.btn_resistorConfig.Location = New System.Drawing.Point(168, 6)
-        Me.btn_resistorConfig.Name = "btn_resistorConfig"
-        Me.btn_resistorConfig.Size = New System.Drawing.Size(75, 62)
-        Me.btn_resistorConfig.TabIndex = 10
-        Me.btn_resistorConfig.Text = "Pin Resistor Config"
-        Me.btn_resistorConfig.UseVisualStyleBackColor = True
+        Me.GroupBox12.Controls.Add(Me.Label4)
+        Me.GroupBox12.Controls.Add(Me.DutyCycle)
+        Me.GroupBox12.Controls.Add(Me.Label3)
+        Me.GroupBox12.Controls.Add(Me.Freq)
+        Me.GroupBox12.Controls.Add(Me.btn_StartPWM)
+        Me.GroupBox12.Location = New System.Drawing.Point(269, 6)
+        Me.GroupBox12.Name = "GroupBox12"
+        Me.GroupBox12.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.GroupBox12.Size = New System.Drawing.Size(154, 119)
+        Me.GroupBox12.TabIndex = 40
+        Me.GroupBox12.TabStop = False
+        Me.GroupBox12.Text = "PWM Setup"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(6, 22)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(53, 13)
+        Me.Label4.TabIndex = 29
+        Me.Label4.Text = "Freq (Hz):"
+        '
+        'DutyCycle
+        '
+        Me.DutyCycle.Location = New System.Drawing.Point(74, 19)
+        Me.DutyCycle.Name = "DutyCycle"
+        Me.DutyCycle.Size = New System.Drawing.Size(74, 20)
+        Me.DutyCycle.TabIndex = 33
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(7, 48)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.TabIndex = 30
+        Me.Label3.Text = "Duty Cycle:"
+        '
+        'Freq
+        '
+        Me.Freq.Location = New System.Drawing.Point(74, 45)
+        Me.Freq.Name = "Freq"
+        Me.Freq.Size = New System.Drawing.Size(74, 20)
+        Me.Freq.TabIndex = 34
+        '
+        'btn_StartPWM
+        '
+        Me.btn_StartPWM.Location = New System.Drawing.Point(36, 71)
+        Me.btn_StartPWM.Name = "btn_StartPWM"
+        Me.btn_StartPWM.Size = New System.Drawing.Size(75, 40)
+        Me.btn_StartPWM.TabIndex = 32
+        Me.btn_StartPWM.Text = "Start PWM"
+        Me.btn_StartPWM.UseVisualStyleBackColor = True
+        '
+        'manualGPIOGroupBox
+        '
+        Me.manualGPIOGroupBox.Controls.Add(Me.GroupBox14)
+        Me.manualGPIOGroupBox.Controls.Add(Me.GroupBox13)
+        Me.manualGPIOGroupBox.Controls.Add(Me.GPIO_Num)
+        Me.manualGPIOGroupBox.Controls.Add(Me.Label1)
+        Me.manualGPIOGroupBox.Location = New System.Drawing.Point(269, 131)
+        Me.manualGPIOGroupBox.Name = "manualGPIOGroupBox"
+        Me.manualGPIOGroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.manualGPIOGroupBox.Size = New System.Drawing.Size(330, 182)
+        Me.manualGPIOGroupBox.TabIndex = 27
+        Me.manualGPIOGroupBox.TabStop = False
+        Me.manualGPIOGroupBox.Text = "Manual GPIO Access"
+        '
+        'GroupBox14
+        '
+        Me.GroupBox14.Controls.Add(Me.btn_SetGPIOLow)
+        Me.GroupBox14.Controls.Add(Me.btn_SetGPIOHigh)
+        Me.GroupBox14.Controls.Add(Me.Label2)
+        Me.GroupBox14.Controls.Add(Me.btn_ReadGPIO)
+        Me.GroupBox14.Controls.Add(Me.GPIO_Value)
+        Me.GroupBox14.Location = New System.Drawing.Point(9, 45)
+        Me.GroupBox14.Name = "GroupBox14"
+        Me.GroupBox14.Size = New System.Drawing.Size(173, 117)
+        Me.GroupBox14.TabIndex = 41
+        Me.GroupBox14.TabStop = False
+        Me.GroupBox14.Text = "Read/Write"
+        '
+        'btn_SetGPIOLow
+        '
+        Me.btn_SetGPIOLow.Location = New System.Drawing.Point(92, 71)
+        Me.btn_SetGPIOLow.Name = "btn_SetGPIOLow"
+        Me.btn_SetGPIOLow.Size = New System.Drawing.Size(75, 40)
+        Me.btn_SetGPIOLow.TabIndex = 18
+        Me.btn_SetGPIOLow.Text = "Set Low"
+        Me.btn_SetGPIOLow.UseVisualStyleBackColor = True
+        '
+        'btn_SetGPIOHigh
+        '
+        Me.btn_SetGPIOHigh.Location = New System.Drawing.Point(92, 17)
+        Me.btn_SetGPIOHigh.Name = "btn_SetGPIOHigh"
+        Me.btn_SetGPIOHigh.Size = New System.Drawing.Size(75, 40)
+        Me.btn_SetGPIOHigh.TabIndex = 19
+        Me.btn_SetGPIOHigh.Text = "Set High"
+        Me.btn_SetGPIOHigh.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(5, 75)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(55, 13)
+        Me.Label2.TabIndex = 22
+        Me.Label2.Text = "Pin Value:"
+        '
+        'btn_ReadGPIO
+        '
+        Me.btn_ReadGPIO.Location = New System.Drawing.Point(8, 17)
+        Me.btn_ReadGPIO.Name = "btn_ReadGPIO"
+        Me.btn_ReadGPIO.Size = New System.Drawing.Size(75, 40)
+        Me.btn_ReadGPIO.TabIndex = 20
+        Me.btn_ReadGPIO.Text = "Read Pin"
+        Me.btn_ReadGPIO.UseVisualStyleBackColor = True
+        '
+        'GPIO_Value
+        '
+        Me.GPIO_Value.Location = New System.Drawing.Point(6, 91)
+        Me.GPIO_Value.Name = "GPIO_Value"
+        Me.GPIO_Value.Size = New System.Drawing.Size(75, 20)
+        Me.GPIO_Value.TabIndex = 21
+        '
+        'GroupBox13
+        '
+        Me.GroupBox13.Controls.Add(Me.btn_pullDown)
+        Me.GroupBox13.Controls.Add(Me.btn_disableResistor)
+        Me.GroupBox13.Controls.Add(Me.btn_pullUp)
+        Me.GroupBox13.Location = New System.Drawing.Point(226, 13)
+        Me.GroupBox13.Name = "GroupBox13"
+        Me.GroupBox13.Size = New System.Drawing.Size(95, 161)
+        Me.GroupBox13.TabIndex = 40
+        Me.GroupBox13.TabStop = False
+        Me.GroupBox13.Text = "Pin Resistor"
+        '
+        'btn_pullDown
+        '
+        Me.btn_pullDown.Location = New System.Drawing.Point(10, 110)
+        Me.btn_pullDown.Name = "btn_pullDown"
+        Me.btn_pullDown.Size = New System.Drawing.Size(75, 40)
+        Me.btn_pullDown.TabIndex = 36
+        Me.btn_pullDown.Text = "Pull-Down Resistor"
+        Me.btn_pullDown.UseVisualStyleBackColor = True
+        '
+        'btn_disableResistor
+        '
+        Me.btn_disableResistor.Location = New System.Drawing.Point(10, 19)
+        Me.btn_disableResistor.Name = "btn_disableResistor"
+        Me.btn_disableResistor.Size = New System.Drawing.Size(75, 40)
+        Me.btn_disableResistor.TabIndex = 39
+        Me.btn_disableResistor.Text = "Disable Resistor"
+        Me.btn_disableResistor.UseVisualStyleBackColor = True
+        '
+        'btn_pullUp
+        '
+        Me.btn_pullUp.Location = New System.Drawing.Point(10, 64)
+        Me.btn_pullUp.Name = "btn_pullUp"
+        Me.btn_pullUp.Size = New System.Drawing.Size(75, 40)
+        Me.btn_pullUp.TabIndex = 35
+        Me.btn_pullUp.Text = "Pull-Up Resistor"
+        Me.btn_pullUp.UseVisualStyleBackColor = True
+        '
+        'GPIO_Num
+        '
+        Me.GPIO_Num.Location = New System.Drawing.Point(88, 19)
+        Me.GPIO_Num.Name = "GPIO_Num"
+        Me.GPIO_Num.Size = New System.Drawing.Size(94, 20)
+        Me.GPIO_Num.TabIndex = 12
+        Me.GPIO_Num.Text = "0"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.Label1.Location = New System.Drawing.Point(6, 22)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(76, 13)
+        Me.Label1.TabIndex = 11
+        Me.Label1.Text = "GPIO Number:"
+        '
+        'GroupBox11
+        '
+        Me.GroupBox11.Controls.Add(Me.TextBoxPeriod)
+        Me.GroupBox11.Controls.Add(Me.LabelHighLow)
+        Me.GroupBox11.Controls.Add(Me.btn_PulseDrive)
+        Me.GroupBox11.Controls.Add(Me.LabelPeriod)
+        Me.GroupBox11.Controls.Add(Me.ComboBoxHighLow)
+        Me.GroupBox11.Location = New System.Drawing.Point(430, 6)
+        Me.GroupBox11.Name = "GroupBox11"
+        Me.GroupBox11.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.GroupBox11.Size = New System.Drawing.Size(169, 119)
+        Me.GroupBox11.TabIndex = 26
+        Me.GroupBox11.TabStop = False
+        Me.GroupBox11.Text = "Pulse Drive"
+        '
+        'TextBoxPeriod
+        '
+        Me.TextBoxPeriod.Location = New System.Drawing.Point(74, 46)
+        Me.TextBoxPeriod.Name = "TextBoxPeriod"
+        Me.TextBoxPeriod.Size = New System.Drawing.Size(86, 20)
+        Me.TextBoxPeriod.TabIndex = 12
+        '
+        'LabelHighLow
+        '
+        Me.LabelHighLow.AutoSize = True
+        Me.LabelHighLow.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.LabelHighLow.Location = New System.Drawing.Point(6, 24)
+        Me.LabelHighLow.Name = "LabelHighLow"
+        Me.LabelHighLow.Size = New System.Drawing.Size(57, 13)
+        Me.LabelHighLow.TabIndex = 11
+        Me.LabelHighLow.Text = "High/Low:"
+        '
+        'btn_PulseDrive
+        '
+        Me.btn_PulseDrive.Location = New System.Drawing.Point(45, 72)
+        Me.btn_PulseDrive.Name = "btn_PulseDrive"
+        Me.btn_PulseDrive.Size = New System.Drawing.Size(75, 40)
+        Me.btn_PulseDrive.TabIndex = 17
+        Me.btn_PulseDrive.Text = "Pulse Drive"
+        Me.btn_PulseDrive.UseVisualStyleBackColor = True
+        '
+        'LabelPeriod
+        '
+        Me.LabelPeriod.AutoSize = True
+        Me.LabelPeriod.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.LabelPeriod.Location = New System.Drawing.Point(6, 49)
+        Me.LabelPeriod.Name = "LabelPeriod"
+        Me.LabelPeriod.Size = New System.Drawing.Size(62, 13)
+        Me.LabelPeriod.TabIndex = 13
+        Me.LabelPeriod.Text = "Period (ms):"
+        '
+        'ComboBoxHighLow
+        '
+        Me.ComboBoxHighLow.FormattingEnabled = True
+        Me.ComboBoxHighLow.Location = New System.Drawing.Point(74, 19)
+        Me.ComboBoxHighLow.Name = "ComboBoxHighLow"
+        Me.ComboBoxHighLow.Size = New System.Drawing.Size(86, 21)
+        Me.ComboBoxHighLow.TabIndex = 15
+        '
+        'ButtonReadSelected
+        '
+        Me.ButtonReadSelected.Location = New System.Drawing.Point(188, 98)
+        Me.ButtonReadSelected.Name = "ButtonReadSelected"
+        Me.ButtonReadSelected.Size = New System.Drawing.Size(75, 40)
+        Me.ButtonReadSelected.TabIndex = 25
+        Me.ButtonReadSelected.Text = "Read Pin"
+        Me.ButtonReadSelected.UseVisualStyleBackColor = True
+        '
+        'dgvPinList
+        '
+        Me.dgvPinList.AllowUserToAddRows = False
+        Me.dgvPinList.AllowUserToDeleteRows = False
+        Me.dgvPinList.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvPinList.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dgvPinList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvPinList.Location = New System.Drawing.Point(5, 5)
+        Me.dgvPinList.Margin = New System.Windows.Forms.Padding(2)
+        Me.dgvPinList.MultiSelect = False
+        Me.dgvPinList.Name = "dgvPinList"
+        Me.dgvPinList.ReadOnly = True
+        Me.dgvPinList.RowHeadersVisible = False
+        Me.dgvPinList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
+        Me.dgvPinList.RowTemplate.Height = 24
+        Me.dgvPinList.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPinList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvPinList.Size = New System.Drawing.Size(178, 305)
+        Me.dgvPinList.TabIndex = 24
+        '
+        'ButtonReadAll
+        '
+        Me.ButtonReadAll.Location = New System.Drawing.Point(188, 144)
+        Me.ButtonReadAll.Name = "ButtonReadAll"
+        Me.ButtonReadAll.Size = New System.Drawing.Size(75, 40)
+        Me.ButtonReadAll.TabIndex = 23
+        Me.ButtonReadAll.Text = "Read All"
+        Me.ButtonReadAll.UseVisualStyleBackColor = True
+        '
+        'ButtonWriteHigh
+        '
+        Me.ButtonWriteHigh.Location = New System.Drawing.Point(188, 6)
+        Me.ButtonWriteHigh.Name = "ButtonWriteHigh"
+        Me.ButtonWriteHigh.Size = New System.Drawing.Size(75, 40)
+        Me.ButtonWriteHigh.TabIndex = 22
+        Me.ButtonWriteHigh.Text = "Set High"
+        Me.ButtonWriteHigh.UseVisualStyleBackColor = True
+        '
+        'ButtonWriteLow
+        '
+        Me.ButtonWriteLow.Location = New System.Drawing.Point(188, 52)
+        Me.ButtonWriteLow.Name = "ButtonWriteLow"
+        Me.ButtonWriteLow.Size = New System.Drawing.Size(75, 40)
+        Me.ButtonWriteLow.TabIndex = 21
+        Me.ButtonWriteLow.Text = "Set Low"
+        Me.ButtonWriteLow.UseVisualStyleBackColor = True
         '
         'tab_advanced
         '
@@ -723,32 +1047,17 @@ Partial Class TopGUI
         Me.tab_advanced.Text = "Advanced"
         Me.tab_advanced.UseVisualStyleBackColor = True
         '
-        'btn_BitBangSPI
+        'GroupBox9
         '
-        Me.btn_BitBangSPI.Location = New System.Drawing.Point(6, 19)
-        Me.btn_BitBangSPI.Name = "btn_BitBangSPI"
-        Me.btn_BitBangSPI.Size = New System.Drawing.Size(75, 64)
-        Me.btn_BitBangSPI.TabIndex = 13
-        Me.btn_BitBangSPI.Text = "Bit Bang SPI Interface"
-        Me.btn_BitBangSPI.UseVisualStyleBackColor = True
-        '
-        'btn_checkError
-        '
-        Me.btn_checkError.Location = New System.Drawing.Point(6, 20)
-        Me.btn_checkError.Name = "btn_checkError"
-        Me.btn_checkError.Size = New System.Drawing.Size(75, 64)
-        Me.btn_checkError.TabIndex = 12
-        Me.btn_checkError.Text = "Check FX3 Error Log"
-        Me.btn_checkError.UseVisualStyleBackColor = True
-        '
-        'btn_binFile
-        '
-        Me.btn_binFile.Location = New System.Drawing.Point(168, 19)
-        Me.btn_binFile.Name = "btn_binFile"
-        Me.btn_binFile.Size = New System.Drawing.Size(75, 64)
-        Me.btn_binFile.TabIndex = 11
-        Me.btn_binFile.Text = "Binary File Writer"
-        Me.btn_binFile.UseVisualStyleBackColor = True
+        Me.GroupBox9.Controls.Add(Me.btn_pulseMeasure)
+        Me.GroupBox9.Controls.Add(Me.btn_binFile)
+        Me.GroupBox9.Controls.Add(Me.btn_ADXL375)
+        Me.GroupBox9.Location = New System.Drawing.Point(6, 198)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox9.TabIndex = 37
+        Me.GroupBox9.TabStop = False
+        Me.GroupBox9.Text = "Misc"
         '
         'btn_pulseMeasure
         '
@@ -759,6 +1068,15 @@ Partial Class TopGUI
         Me.btn_pulseMeasure.Text = "Measure Signal Pulse Width"
         Me.btn_pulseMeasure.UseVisualStyleBackColor = True
         '
+        'btn_binFile
+        '
+        Me.btn_binFile.Location = New System.Drawing.Point(168, 19)
+        Me.btn_binFile.Name = "btn_binFile"
+        Me.btn_binFile.Size = New System.Drawing.Size(75, 64)
+        Me.btn_binFile.TabIndex = 11
+        Me.btn_binFile.Text = "Binary File Writer"
+        Me.btn_binFile.UseVisualStyleBackColor = True
+        '
         'btn_ADXL375
         '
         Me.btn_ADXL375.Location = New System.Drawing.Point(87, 19)
@@ -767,6 +1085,26 @@ Partial Class TopGUI
         Me.btn_ADXL375.TabIndex = 9
         Me.btn_ADXL375.Text = "ADXL375 Data Capture"
         Me.btn_ADXL375.UseVisualStyleBackColor = True
+        '
+        'GroupBox8
+        '
+        Me.GroupBox8.Controls.Add(Me.btn_BitBangSPI)
+        Me.GroupBox8.Controls.Add(Me.btn_BurstTest)
+        Me.GroupBox8.Location = New System.Drawing.Point(6, 102)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox8.TabIndex = 37
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "Custom SPI Traffic"
+        '
+        'btn_BitBangSPI
+        '
+        Me.btn_BitBangSPI.Location = New System.Drawing.Point(6, 19)
+        Me.btn_BitBangSPI.Name = "btn_BitBangSPI"
+        Me.btn_BitBangSPI.Size = New System.Drawing.Size(75, 64)
+        Me.btn_BitBangSPI.TabIndex = 13
+        Me.btn_BitBangSPI.Text = "Bit Bang SPI Interface"
+        Me.btn_BitBangSPI.UseVisualStyleBackColor = True
         '
         'btn_BurstTest
         '
@@ -787,28 +1125,39 @@ Partial Class TopGUI
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "FX3 Utilities"
         '
-        'GroupBox8
+        'btn_checkError
         '
-        Me.GroupBox8.Controls.Add(Me.btn_BitBangSPI)
-        Me.GroupBox8.Controls.Add(Me.btn_BurstTest)
-        Me.GroupBox8.Location = New System.Drawing.Point(6, 102)
-        Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(593, 90)
-        Me.GroupBox8.TabIndex = 37
-        Me.GroupBox8.TabStop = False
-        Me.GroupBox8.Text = "Custom SPI Traffic"
+        Me.btn_checkError.Location = New System.Drawing.Point(6, 20)
+        Me.btn_checkError.Name = "btn_checkError"
+        Me.btn_checkError.Size = New System.Drawing.Size(75, 64)
+        Me.btn_checkError.TabIndex = 12
+        Me.btn_checkError.Text = "Check FX3 Error Log"
+        Me.btn_checkError.UseVisualStyleBackColor = True
         '
-        'GroupBox9
+        'pinToggleFreq
         '
-        Me.GroupBox9.Controls.Add(Me.btn_pulseMeasure)
-        Me.GroupBox9.Controls.Add(Me.btn_binFile)
-        Me.GroupBox9.Controls.Add(Me.btn_ADXL375)
-        Me.GroupBox9.Location = New System.Drawing.Point(6, 198)
-        Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(593, 90)
-        Me.GroupBox9.TabIndex = 37
-        Me.GroupBox9.TabStop = False
-        Me.GroupBox9.Text = "Misc"
+        Me.pinToggleFreq.Location = New System.Drawing.Point(188, 293)
+        Me.pinToggleFreq.Name = "pinToggleFreq"
+        Me.pinToggleFreq.Size = New System.Drawing.Size(75, 20)
+        Me.pinToggleFreq.TabIndex = 41
+        '
+        'btn_MeasureFreq
+        '
+        Me.btn_MeasureFreq.Location = New System.Drawing.Point(188, 232)
+        Me.btn_MeasureFreq.Name = "btn_MeasureFreq"
+        Me.btn_MeasureFreq.Size = New System.Drawing.Size(75, 40)
+        Me.btn_MeasureFreq.TabIndex = 42
+        Me.btn_MeasureFreq.Text = "Measure Freq"
+        Me.btn_MeasureFreq.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(188, 277)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(31, 13)
+        Me.Label5.TabIndex = 43
+        Me.Label5.Text = "Freq:"
         '
         'TopGUI
         '
@@ -847,10 +1196,21 @@ Partial Class TopGUI
         Me.tab_dataPlot.ResumeLayout(False)
         Me.tab_dataLog.ResumeLayout(False)
         Me.tab_Pin.ResumeLayout(False)
+        Me.tab_Pin.PerformLayout()
+        Me.GroupBox12.ResumeLayout(False)
+        Me.GroupBox12.PerformLayout()
+        Me.manualGPIOGroupBox.ResumeLayout(False)
+        Me.manualGPIOGroupBox.PerformLayout()
+        Me.GroupBox14.ResumeLayout(False)
+        Me.GroupBox14.PerformLayout()
+        Me.GroupBox13.ResumeLayout(False)
+        Me.GroupBox11.ResumeLayout(False)
+        Me.GroupBox11.PerformLayout()
+        CType(Me.dgvPinList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tab_advanced.ResumeLayout(False)
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox9.ResumeLayout(False)
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -869,9 +1229,7 @@ Partial Class TopGUI
     Friend WithEvents btn_CheckDUTConnection As Button
     Friend WithEvents btn_FX3Config As Button
     Friend WithEvents btn_APIInfo As Button
-    Friend WithEvents btn_PWMSetup As Button
     Friend WithEvents btn_plotFFT As Button
-    Friend WithEvents btn_PinAccess As Button
     Friend WithEvents label_apiVersion As Label
     Friend WithEvents btn_plotData As Button
     Friend WithEvents regMapPath_Label As Label
@@ -887,7 +1245,6 @@ Partial Class TopGUI
     Friend WithEvents tab_dataLog As TabPage
     Friend WithEvents tab_Pin As TabPage
     Friend WithEvents tab_advanced As TabPage
-    Friend WithEvents btn_resistorConfig As Button
     Friend WithEvents btn_BitBangSPI As Button
     Friend WithEvents btn_checkError As Button
     Friend WithEvents btn_binFile As Button
@@ -923,4 +1280,37 @@ Partial Class TopGUI
     Friend WithEvents GroupBox9 As GroupBox
     Friend WithEvents GroupBox8 As GroupBox
     Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents manualGPIOGroupBox As GroupBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents GPIO_Value As TextBox
+    Friend WithEvents btn_ReadGPIO As Button
+    Friend WithEvents btn_SetGPIOHigh As Button
+    Friend WithEvents btn_SetGPIOLow As Button
+    Friend WithEvents GPIO_Num As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents GroupBox11 As GroupBox
+    Friend WithEvents TextBoxPeriod As TextBox
+    Friend WithEvents LabelHighLow As Label
+    Friend WithEvents btn_PulseDrive As Button
+    Friend WithEvents LabelPeriod As Label
+    Friend WithEvents ComboBoxHighLow As ComboBox
+    Friend WithEvents ButtonReadSelected As Button
+    Friend WithEvents dgvPinList As DataGridView
+    Friend WithEvents ButtonReadAll As Button
+    Friend WithEvents ButtonWriteHigh As Button
+    Friend WithEvents ButtonWriteLow As Button
+    Friend WithEvents Freq As TextBox
+    Friend WithEvents DutyCycle As TextBox
+    Friend WithEvents btn_StartPWM As Button
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label4 As Label
+    Friend WithEvents GroupBox12 As GroupBox
+    Friend WithEvents GroupBox14 As GroupBox
+    Friend WithEvents GroupBox13 As GroupBox
+    Friend WithEvents btn_pullDown As Button
+    Friend WithEvents btn_disableResistor As Button
+    Friend WithEvents btn_pullUp As Button
+    Friend WithEvents btn_MeasureFreq As Button
+    Friend WithEvents pinToggleFreq As TextBox
+    Friend WithEvents Label5 As Label
 End Class

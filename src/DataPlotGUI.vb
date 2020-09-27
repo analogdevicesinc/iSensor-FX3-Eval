@@ -231,7 +231,7 @@ Public Class DataPlotGUI
                     regView.Item("Contents", regIndex).Value = readStr
                     regView.Item("Plot", regIndex).Value = False
                     regView.Item("Offset", regIndex).Value = "0"
-                    regView.Item("Scale", regIndex).Value = reg.Scale.ToString()
+                    regView.Item("reg_scale", regIndex).Value = reg.Scale.ToString()
                 End If
                 'check if previously selected
                 If m_TopGUI.dataPlotRegs.Contains(reg.Label) Then regView.Item("Plot", regIndex).Value = True
@@ -323,7 +323,7 @@ Public Class DataPlotGUI
                 End If
                 Try
                     reg = m_TopGUI.RegMap(regView.Item("Label", index).Value)
-                    scale = Convert.ToDouble(regView.Item("Scale", index).Value)
+                    scale = Convert.ToDouble(regView.Item("reg_scale", index).Value)
                     reg.Scale = scale
                     offset = Convert.ToDouble(regView.Item("Offset", index).Value)
                     selectedRegList.Add(New RegOffsetPair With {.Reg = reg, .Offset = offset, .Index = index, .Color = m_TopGUI.PlotColorPalette(selectedRegList.Count())})
