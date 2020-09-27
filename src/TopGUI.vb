@@ -935,6 +935,9 @@ Public Class TopGUI
         btn_ResetDUT.Enabled = False
         btn_SelectDUT.Enabled = False
         dut_access.Enabled = False
+        'kill register form timers
+        pageReadTimer.Enabled = False
+        drReadTimer.Enabled = False
     End Sub
 
     ''' <summary>
@@ -1268,10 +1271,12 @@ Public Class TopGUI
     End Sub
 
     Private Sub PageReadCallback()
+        If IsNothing(FX3.ActiveFX3) Then Exit Sub
         Me.BeginInvoke(New MethodInvoker(AddressOf ReadPage))
     End Sub
 
     Private Sub DrReadCallBack()
+        If IsNothing(FX3.ActiveFX3) Then Exit Sub
         drReadTimer.Enabled = False
         Me.BeginInvoke(New MethodInvoker(AddressOf ReadDrFreq))
     End Sub
