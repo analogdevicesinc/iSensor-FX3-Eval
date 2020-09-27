@@ -1897,6 +1897,10 @@ Public Class TopGUI
         dgvPinList.AutoGenerateColumns = False
         dgvPinList.Columns.Clear()
 
+        're-init
+        pins.Clear()
+        dgvPinList.Rows.Clear()
+
         col = New DataGridViewTextBoxColumn
         col.HeaderText = "Pin"
         col.SortMode = DataGridViewColumnSortMode.NotSortable
@@ -1929,7 +1933,7 @@ Public Class TopGUI
         Next
 
         ' makes the width of the dgv the same as the width of the columns
-        dgvPinList.Height = dgvPinList.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + dgvPinList.ColumnHeadersHeight
+        dgvPinList.Height = dgvPinList.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + dgvPinList.ColumnHeadersHeight + 1
         ' prevent it from auto selecting a pin
         dgvPinList.ClearSelection()
         ' allows the chart to update
