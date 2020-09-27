@@ -1933,7 +1933,7 @@ Public Class TopGUI
         Next
 
         ' makes the width of the dgv the same as the width of the columns
-        dgvPinList.Height = dgvPinList.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + dgvPinList.ColumnHeadersHeight + 1
+        dgvPinList.Height = dgvPinList.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + dgvPinList.ColumnHeadersHeight + 2
         ' prevent it from auto selecting a pin
         dgvPinList.ClearSelection()
         ' allows the chart to update
