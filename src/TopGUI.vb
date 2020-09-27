@@ -100,6 +100,9 @@ Public Class TopGUI
 
         'apply back color
         Me.BackColor = BACK_COLOR
+        For Each formPage As TabPage In dut_access.TabPages
+            formPage.BackColor = BACK_COLOR
+        Next
 
         'load plotting color palette
         colorPath = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\plot_colors.txt"
@@ -1588,6 +1591,10 @@ Public Class TopGUI
 
     Private Sub validateSpiData_CheckedChanged(sender As Object, e As EventArgs) Handles validateSpiData.CheckedChanged
         m_AutoSpi.LogExceptions = validateSpiData.Checked
+    End Sub
+
+    Private Sub tab_advanced_Click(sender As Object, e As EventArgs) Handles tab_advanced.Click
+
     End Sub
 
 #End Region

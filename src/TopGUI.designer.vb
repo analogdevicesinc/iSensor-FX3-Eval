@@ -88,6 +88,9 @@ Partial Class TopGUI
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
         Me.btn_BurstTest = New System.Windows.Forms.Button()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox8 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -102,6 +105,9 @@ Partial Class TopGUI
         Me.tab_dataLog.SuspendLayout()
         Me.tab_Pin.SuspendLayout()
         Me.tab_advanced.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
+        Me.GroupBox9.SuspendLayout()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -400,11 +406,11 @@ Partial Class TopGUI
         '
         'btn_writeRegMap
         '
-        Me.btn_writeRegMap.Location = New System.Drawing.Point(506, 413)
+        Me.btn_writeRegMap.Location = New System.Drawing.Point(512, 414)
         Me.btn_writeRegMap.Name = "btn_writeRegMap"
         Me.btn_writeRegMap.Size = New System.Drawing.Size(83, 47)
         Me.btn_writeRegMap.TabIndex = 42
-        Me.btn_writeRegMap.Text = "Write RegMap"
+        Me.btn_writeRegMap.Text = "Write All Registers"
         Me.btn_writeRegMap.UseVisualStyleBackColor = True
         '
         'drActive
@@ -419,11 +425,11 @@ Partial Class TopGUI
         '
         'btn_DumpRegmap
         '
-        Me.btn_DumpRegmap.Location = New System.Drawing.Point(405, 413)
+        Me.btn_DumpRegmap.Location = New System.Drawing.Point(399, 413)
         Me.btn_DumpRegmap.Name = "btn_DumpRegmap"
         Me.btn_DumpRegmap.Size = New System.Drawing.Size(83, 47)
         Me.btn_DumpRegmap.TabIndex = 40
-        Me.btn_DumpRegmap.Text = "Dump RegMap"
+        Me.btn_DumpRegmap.Text = "Log All Registers"
         Me.btn_DumpRegmap.UseVisualStyleBackColor = True
         '
         'GroupBox5
@@ -583,7 +589,7 @@ Partial Class TopGUI
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(-1, 9)
+        Me.Label6.Location = New System.Drawing.Point(6, 9)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(87, 13)
         Me.Label6.TabIndex = 36
@@ -593,7 +599,7 @@ Partial Class TopGUI
         '
         Me.selectPage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.selectPage.FormattingEnabled = True
-        Me.selectPage.Location = New System.Drawing.Point(91, 6)
+        Me.selectPage.Location = New System.Drawing.Point(98, 6)
         Me.selectPage.Margin = New System.Windows.Forms.Padding(2)
         Me.selectPage.Name = "selectPage"
         Me.selectPage.Size = New System.Drawing.Size(159, 21)
@@ -606,7 +612,7 @@ Partial Class TopGUI
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents})
-        Me.regView.Location = New System.Drawing.Point(2, 34)
+        Me.regView.Location = New System.Drawing.Point(7, 34)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
         Me.regView.Name = "regView"
@@ -706,12 +712,9 @@ Partial Class TopGUI
         '
         'tab_advanced
         '
-        Me.tab_advanced.Controls.Add(Me.btn_BitBangSPI)
-        Me.tab_advanced.Controls.Add(Me.btn_checkError)
-        Me.tab_advanced.Controls.Add(Me.btn_binFile)
-        Me.tab_advanced.Controls.Add(Me.btn_pulseMeasure)
-        Me.tab_advanced.Controls.Add(Me.btn_ADXL375)
-        Me.tab_advanced.Controls.Add(Me.btn_BurstTest)
+        Me.tab_advanced.Controls.Add(Me.GroupBox9)
+        Me.tab_advanced.Controls.Add(Me.GroupBox8)
+        Me.tab_advanced.Controls.Add(Me.GroupBox2)
         Me.tab_advanced.Location = New System.Drawing.Point(4, 22)
         Me.tab_advanced.Name = "tab_advanced"
         Me.tab_advanced.Padding = New System.Windows.Forms.Padding(3)
@@ -722,7 +725,7 @@ Partial Class TopGUI
         '
         'btn_BitBangSPI
         '
-        Me.btn_BitBangSPI.Location = New System.Drawing.Point(6, 76)
+        Me.btn_BitBangSPI.Location = New System.Drawing.Point(6, 19)
         Me.btn_BitBangSPI.Name = "btn_BitBangSPI"
         Me.btn_BitBangSPI.Size = New System.Drawing.Size(75, 64)
         Me.btn_BitBangSPI.TabIndex = 13
@@ -731,7 +734,7 @@ Partial Class TopGUI
         '
         'btn_checkError
         '
-        Me.btn_checkError.Location = New System.Drawing.Point(6, 6)
+        Me.btn_checkError.Location = New System.Drawing.Point(6, 20)
         Me.btn_checkError.Name = "btn_checkError"
         Me.btn_checkError.Size = New System.Drawing.Size(75, 64)
         Me.btn_checkError.TabIndex = 12
@@ -740,7 +743,7 @@ Partial Class TopGUI
         '
         'btn_binFile
         '
-        Me.btn_binFile.Location = New System.Drawing.Point(6, 146)
+        Me.btn_binFile.Location = New System.Drawing.Point(168, 19)
         Me.btn_binFile.Name = "btn_binFile"
         Me.btn_binFile.Size = New System.Drawing.Size(75, 64)
         Me.btn_binFile.TabIndex = 11
@@ -749,7 +752,7 @@ Partial Class TopGUI
         '
         'btn_pulseMeasure
         '
-        Me.btn_pulseMeasure.Location = New System.Drawing.Point(168, 76)
+        Me.btn_pulseMeasure.Location = New System.Drawing.Point(6, 19)
         Me.btn_pulseMeasure.Name = "btn_pulseMeasure"
         Me.btn_pulseMeasure.Size = New System.Drawing.Size(75, 64)
         Me.btn_pulseMeasure.TabIndex = 7
@@ -758,7 +761,7 @@ Partial Class TopGUI
         '
         'btn_ADXL375
         '
-        Me.btn_ADXL375.Location = New System.Drawing.Point(249, 76)
+        Me.btn_ADXL375.Location = New System.Drawing.Point(87, 19)
         Me.btn_ADXL375.Name = "btn_ADXL375"
         Me.btn_ADXL375.Size = New System.Drawing.Size(75, 64)
         Me.btn_ADXL375.TabIndex = 9
@@ -767,12 +770,45 @@ Partial Class TopGUI
         '
         'btn_BurstTest
         '
-        Me.btn_BurstTest.Location = New System.Drawing.Point(87, 76)
+        Me.btn_BurstTest.Location = New System.Drawing.Point(87, 19)
         Me.btn_BurstTest.Name = "btn_BurstTest"
         Me.btn_BurstTest.Size = New System.Drawing.Size(75, 64)
         Me.btn_BurstTest.TabIndex = 8
         Me.btn_BurstTest.Text = "Burst Mode Test"
         Me.btn_BurstTest.UseVisualStyleBackColor = True
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.btn_checkError)
+        Me.GroupBox2.Location = New System.Drawing.Point(6, 6)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox2.TabIndex = 36
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "FX3 Utilities"
+        '
+        'GroupBox8
+        '
+        Me.GroupBox8.Controls.Add(Me.btn_BitBangSPI)
+        Me.GroupBox8.Controls.Add(Me.btn_BurstTest)
+        Me.GroupBox8.Location = New System.Drawing.Point(6, 102)
+        Me.GroupBox8.Name = "GroupBox8"
+        Me.GroupBox8.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox8.TabIndex = 37
+        Me.GroupBox8.TabStop = False
+        Me.GroupBox8.Text = "Custom SPI Traffic"
+        '
+        'GroupBox9
+        '
+        Me.GroupBox9.Controls.Add(Me.btn_pulseMeasure)
+        Me.GroupBox9.Controls.Add(Me.btn_binFile)
+        Me.GroupBox9.Controls.Add(Me.btn_ADXL375)
+        Me.GroupBox9.Location = New System.Drawing.Point(6, 198)
+        Me.GroupBox9.Name = "GroupBox9"
+        Me.GroupBox9.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox9.TabIndex = 37
+        Me.GroupBox9.TabStop = False
+        Me.GroupBox9.Text = "Misc"
         '
         'TopGUI
         '
@@ -812,6 +848,9 @@ Partial Class TopGUI
         Me.tab_dataLog.ResumeLayout(False)
         Me.tab_Pin.ResumeLayout(False)
         Me.tab_advanced.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox8.ResumeLayout(False)
+        Me.GroupBox9.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -881,4 +920,7 @@ Partial Class TopGUI
     Friend WithEvents Page As DataGridViewTextBoxColumn
     Friend WithEvents Address As DataGridViewTextBoxColumn
     Friend WithEvents Contents As DataGridViewTextBoxColumn
+    Friend WithEvents GroupBox9 As GroupBox
+    Friend WithEvents GroupBox8 As GroupBox
+    Friend WithEvents GroupBox2 As GroupBox
 End Class
