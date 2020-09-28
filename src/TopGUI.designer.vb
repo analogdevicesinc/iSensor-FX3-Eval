@@ -79,6 +79,9 @@ Partial Class TopGUI
         Me.tab_dataPlot = New System.Windows.Forms.TabPage()
         Me.tab_dataLog = New System.Windows.Forms.TabPage()
         Me.tab_Pin = New System.Windows.Forms.TabPage()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.btn_MeasureFreq = New System.Windows.Forms.Button()
+        Me.pinToggleFreq = New System.Windows.Forms.TextBox()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.DutyCycle = New System.Windows.Forms.TextBox()
@@ -119,9 +122,6 @@ Partial Class TopGUI
         Me.btn_BurstTest = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.btn_checkError = New System.Windows.Forms.Button()
-        Me.pinToggleFreq = New System.Windows.Forms.TextBox()
-        Me.btn_MeasureFreq = New System.Windows.Forms.Button()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -728,6 +728,31 @@ Partial Class TopGUI
         Me.tab_Pin.Text = "Pin Access"
         Me.tab_Pin.UseVisualStyleBackColor = True
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(188, 277)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(31, 13)
+        Me.Label5.TabIndex = 43
+        Me.Label5.Text = "Freq:"
+        '
+        'btn_MeasureFreq
+        '
+        Me.btn_MeasureFreq.Location = New System.Drawing.Point(188, 232)
+        Me.btn_MeasureFreq.Name = "btn_MeasureFreq"
+        Me.btn_MeasureFreq.Size = New System.Drawing.Size(75, 40)
+        Me.btn_MeasureFreq.TabIndex = 42
+        Me.btn_MeasureFreq.Text = "Measure Freq"
+        Me.btn_MeasureFreq.UseVisualStyleBackColor = True
+        '
+        'pinToggleFreq
+        '
+        Me.pinToggleFreq.Location = New System.Drawing.Point(188, 293)
+        Me.pinToggleFreq.Name = "pinToggleFreq"
+        Me.pinToggleFreq.Size = New System.Drawing.Size(75, 20)
+        Me.pinToggleFreq.TabIndex = 41
+        '
         'GroupBox12
         '
         Me.GroupBox12.Controls.Add(Me.Label4)
@@ -754,7 +779,7 @@ Partial Class TopGUI
         '
         'DutyCycle
         '
-        Me.DutyCycle.Location = New System.Drawing.Point(74, 19)
+        Me.DutyCycle.Location = New System.Drawing.Point(74, 45)
         Me.DutyCycle.Name = "DutyCycle"
         Me.DutyCycle.Size = New System.Drawing.Size(74, 20)
         Me.DutyCycle.TabIndex = 33
@@ -770,7 +795,7 @@ Partial Class TopGUI
         '
         'Freq
         '
-        Me.Freq.Location = New System.Drawing.Point(74, 45)
+        Me.Freq.Location = New System.Drawing.Point(74, 19)
         Me.Freq.Name = "Freq"
         Me.Freq.Size = New System.Drawing.Size(74, 20)
         Me.Freq.TabIndex = 34
@@ -1133,31 +1158,6 @@ Partial Class TopGUI
         Me.btn_checkError.TabIndex = 12
         Me.btn_checkError.Text = "Check FX3 Error Log"
         Me.btn_checkError.UseVisualStyleBackColor = True
-        '
-        'pinToggleFreq
-        '
-        Me.pinToggleFreq.Location = New System.Drawing.Point(188, 293)
-        Me.pinToggleFreq.Name = "pinToggleFreq"
-        Me.pinToggleFreq.Size = New System.Drawing.Size(75, 20)
-        Me.pinToggleFreq.TabIndex = 41
-        '
-        'btn_MeasureFreq
-        '
-        Me.btn_MeasureFreq.Location = New System.Drawing.Point(188, 232)
-        Me.btn_MeasureFreq.Name = "btn_MeasureFreq"
-        Me.btn_MeasureFreq.Size = New System.Drawing.Size(75, 40)
-        Me.btn_MeasureFreq.TabIndex = 42
-        Me.btn_MeasureFreq.Text = "Measure Freq"
-        Me.btn_MeasureFreq.UseVisualStyleBackColor = True
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(188, 277)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(31, 13)
-        Me.Label5.TabIndex = 43
-        Me.Label5.Text = "Freq:"
         '
         'TopGUI
         '
