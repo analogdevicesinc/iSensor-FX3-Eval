@@ -953,7 +953,7 @@ Public Class TopGUI
 
     Private Sub SetDUTTypeLabel()
         label_DUTType.BackColor = GOOD_COLOR
-        label_DUTType.Text = SelectedPersonality + " - " + FX3.SensorType.ToString() + ": " + FX3.PartType.ToString()
+        label_DUTType.Text = SelectedPersonality + " - " + FX3.SensorType.ToString() + ": " + FX3.PartType.ToString() + ", Supply " + FX3.DutSupplyMode.ToString()
     End Sub
 
     ''' <summary>
