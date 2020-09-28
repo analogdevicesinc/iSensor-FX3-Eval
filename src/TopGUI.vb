@@ -998,7 +998,11 @@ Public Class TopGUI
         FX3.DrActive = False
 
         'wait for DR to reach DR polarity level (500ms timeout)
-        FX3.PulseWait(FX3.DrPin, FX3.DrPolarity, 100, 400)
+        Try
+            FX3.PulseWait(FX3.DrPin, FX3.DrPolarity, 100, 400)
+        Catch ex As Exception
+            'squash - don't want to throw error for PWM or special function pin
+        End Try
 
         Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
 

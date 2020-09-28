@@ -88,6 +88,18 @@ Partial Class TopGUI
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Freq = New System.Windows.Forms.TextBox()
         Me.btn_StartPWM = New System.Windows.Forms.Button()
+        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
+        Me.TextBoxPeriod = New System.Windows.Forms.TextBox()
+        Me.LabelHighLow = New System.Windows.Forms.Label()
+        Me.btn_PulseDrive = New System.Windows.Forms.Button()
+        Me.LabelPeriod = New System.Windows.Forms.Label()
+        Me.ComboBoxHighLow = New System.Windows.Forms.ComboBox()
+        Me.ButtonReadSelected = New System.Windows.Forms.Button()
+        Me.dgvPinList = New System.Windows.Forms.DataGridView()
+        Me.ButtonReadAll = New System.Windows.Forms.Button()
+        Me.ButtonWriteHigh = New System.Windows.Forms.Button()
+        Me.ButtonWriteLow = New System.Windows.Forms.Button()
+        Me.tab_advanced = New System.Windows.Forms.TabPage()
         Me.manualGPIOGroupBox = New System.Windows.Forms.GroupBox()
         Me.GroupBox14 = New System.Windows.Forms.GroupBox()
         Me.btn_SetGPIOLow = New System.Windows.Forms.Button()
@@ -101,18 +113,6 @@ Partial Class TopGUI
         Me.btn_pullUp = New System.Windows.Forms.Button()
         Me.GPIO_Num = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.GroupBox11 = New System.Windows.Forms.GroupBox()
-        Me.TextBoxPeriod = New System.Windows.Forms.TextBox()
-        Me.LabelHighLow = New System.Windows.Forms.Label()
-        Me.btn_PulseDrive = New System.Windows.Forms.Button()
-        Me.LabelPeriod = New System.Windows.Forms.Label()
-        Me.ComboBoxHighLow = New System.Windows.Forms.ComboBox()
-        Me.ButtonReadSelected = New System.Windows.Forms.Button()
-        Me.dgvPinList = New System.Windows.Forms.DataGridView()
-        Me.ButtonReadAll = New System.Windows.Forms.Button()
-        Me.ButtonWriteHigh = New System.Windows.Forms.Button()
-        Me.ButtonWriteLow = New System.Windows.Forms.Button()
-        Me.tab_advanced = New System.Windows.Forms.TabPage()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
         Me.btn_binFile = New System.Windows.Forms.Button()
@@ -136,12 +136,12 @@ Partial Class TopGUI
         Me.tab_dataLog.SuspendLayout()
         Me.tab_Pin.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
-        Me.manualGPIOGroupBox.SuspendLayout()
-        Me.GroupBox14.SuspendLayout()
-        Me.GroupBox13.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
         CType(Me.dgvPinList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tab_advanced.SuspendLayout()
+        Me.manualGPIOGroupBox.SuspendLayout()
+        Me.GroupBox14.SuspendLayout()
+        Me.GroupBox13.SuspendLayout()
         Me.GroupBox9.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -713,7 +713,6 @@ Partial Class TopGUI
         Me.tab_Pin.Controls.Add(Me.btn_MeasureFreq)
         Me.tab_Pin.Controls.Add(Me.pinToggleFreq)
         Me.tab_Pin.Controls.Add(Me.GroupBox12)
-        Me.tab_Pin.Controls.Add(Me.manualGPIOGroupBox)
         Me.tab_Pin.Controls.Add(Me.GroupBox11)
         Me.tab_Pin.Controls.Add(Me.ButtonReadSelected)
         Me.tab_Pin.Controls.Add(Me.dgvPinList)
@@ -763,7 +762,7 @@ Partial Class TopGUI
         Me.GroupBox12.Location = New System.Drawing.Point(269, 6)
         Me.GroupBox12.Name = "GroupBox12"
         Me.GroupBox12.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.GroupBox12.Size = New System.Drawing.Size(154, 119)
+        Me.GroupBox12.Size = New System.Drawing.Size(169, 119)
         Me.GroupBox12.TabIndex = 40
         Me.GroupBox12.TabStop = False
         Me.GroupBox12.Text = "PWM Setup"
@@ -781,7 +780,7 @@ Partial Class TopGUI
         '
         Me.DutyCycle.Location = New System.Drawing.Point(74, 45)
         Me.DutyCycle.Name = "DutyCycle"
-        Me.DutyCycle.Size = New System.Drawing.Size(74, 20)
+        Me.DutyCycle.Size = New System.Drawing.Size(86, 20)
         Me.DutyCycle.TabIndex = 33
         '
         'Label3
@@ -797,7 +796,7 @@ Partial Class TopGUI
         '
         Me.Freq.Location = New System.Drawing.Point(74, 19)
         Me.Freq.Name = "Freq"
-        Me.Freq.Size = New System.Drawing.Size(74, 20)
+        Me.Freq.Size = New System.Drawing.Size(86, 20)
         Me.Freq.TabIndex = 34
         '
         'btn_StartPWM
@@ -809,134 +808,6 @@ Partial Class TopGUI
         Me.btn_StartPWM.Text = "Start PWM"
         Me.btn_StartPWM.UseVisualStyleBackColor = True
         '
-        'manualGPIOGroupBox
-        '
-        Me.manualGPIOGroupBox.Controls.Add(Me.GroupBox14)
-        Me.manualGPIOGroupBox.Controls.Add(Me.GroupBox13)
-        Me.manualGPIOGroupBox.Controls.Add(Me.GPIO_Num)
-        Me.manualGPIOGroupBox.Controls.Add(Me.Label1)
-        Me.manualGPIOGroupBox.Location = New System.Drawing.Point(269, 131)
-        Me.manualGPIOGroupBox.Name = "manualGPIOGroupBox"
-        Me.manualGPIOGroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.manualGPIOGroupBox.Size = New System.Drawing.Size(330, 182)
-        Me.manualGPIOGroupBox.TabIndex = 27
-        Me.manualGPIOGroupBox.TabStop = False
-        Me.manualGPIOGroupBox.Text = "Manual GPIO Access"
-        '
-        'GroupBox14
-        '
-        Me.GroupBox14.Controls.Add(Me.btn_SetGPIOLow)
-        Me.GroupBox14.Controls.Add(Me.btn_SetGPIOHigh)
-        Me.GroupBox14.Controls.Add(Me.Label2)
-        Me.GroupBox14.Controls.Add(Me.btn_ReadGPIO)
-        Me.GroupBox14.Controls.Add(Me.GPIO_Value)
-        Me.GroupBox14.Location = New System.Drawing.Point(9, 45)
-        Me.GroupBox14.Name = "GroupBox14"
-        Me.GroupBox14.Size = New System.Drawing.Size(173, 117)
-        Me.GroupBox14.TabIndex = 41
-        Me.GroupBox14.TabStop = False
-        Me.GroupBox14.Text = "Read/Write"
-        '
-        'btn_SetGPIOLow
-        '
-        Me.btn_SetGPIOLow.Location = New System.Drawing.Point(92, 71)
-        Me.btn_SetGPIOLow.Name = "btn_SetGPIOLow"
-        Me.btn_SetGPIOLow.Size = New System.Drawing.Size(75, 40)
-        Me.btn_SetGPIOLow.TabIndex = 18
-        Me.btn_SetGPIOLow.Text = "Set Low"
-        Me.btn_SetGPIOLow.UseVisualStyleBackColor = True
-        '
-        'btn_SetGPIOHigh
-        '
-        Me.btn_SetGPIOHigh.Location = New System.Drawing.Point(92, 17)
-        Me.btn_SetGPIOHigh.Name = "btn_SetGPIOHigh"
-        Me.btn_SetGPIOHigh.Size = New System.Drawing.Size(75, 40)
-        Me.btn_SetGPIOHigh.TabIndex = 19
-        Me.btn_SetGPIOHigh.Text = "Set High"
-        Me.btn_SetGPIOHigh.UseVisualStyleBackColor = True
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(5, 75)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(55, 13)
-        Me.Label2.TabIndex = 22
-        Me.Label2.Text = "Pin Value:"
-        '
-        'btn_ReadGPIO
-        '
-        Me.btn_ReadGPIO.Location = New System.Drawing.Point(8, 17)
-        Me.btn_ReadGPIO.Name = "btn_ReadGPIO"
-        Me.btn_ReadGPIO.Size = New System.Drawing.Size(75, 40)
-        Me.btn_ReadGPIO.TabIndex = 20
-        Me.btn_ReadGPIO.Text = "Read Pin"
-        Me.btn_ReadGPIO.UseVisualStyleBackColor = True
-        '
-        'GPIO_Value
-        '
-        Me.GPIO_Value.Location = New System.Drawing.Point(6, 91)
-        Me.GPIO_Value.Name = "GPIO_Value"
-        Me.GPIO_Value.Size = New System.Drawing.Size(75, 20)
-        Me.GPIO_Value.TabIndex = 21
-        '
-        'GroupBox13
-        '
-        Me.GroupBox13.Controls.Add(Me.btn_pullDown)
-        Me.GroupBox13.Controls.Add(Me.btn_disableResistor)
-        Me.GroupBox13.Controls.Add(Me.btn_pullUp)
-        Me.GroupBox13.Location = New System.Drawing.Point(226, 13)
-        Me.GroupBox13.Name = "GroupBox13"
-        Me.GroupBox13.Size = New System.Drawing.Size(95, 161)
-        Me.GroupBox13.TabIndex = 40
-        Me.GroupBox13.TabStop = False
-        Me.GroupBox13.Text = "Pin Resistor"
-        '
-        'btn_pullDown
-        '
-        Me.btn_pullDown.Location = New System.Drawing.Point(10, 110)
-        Me.btn_pullDown.Name = "btn_pullDown"
-        Me.btn_pullDown.Size = New System.Drawing.Size(75, 40)
-        Me.btn_pullDown.TabIndex = 36
-        Me.btn_pullDown.Text = "Pull-Down Resistor"
-        Me.btn_pullDown.UseVisualStyleBackColor = True
-        '
-        'btn_disableResistor
-        '
-        Me.btn_disableResistor.Location = New System.Drawing.Point(10, 19)
-        Me.btn_disableResistor.Name = "btn_disableResistor"
-        Me.btn_disableResistor.Size = New System.Drawing.Size(75, 40)
-        Me.btn_disableResistor.TabIndex = 39
-        Me.btn_disableResistor.Text = "Disable Resistor"
-        Me.btn_disableResistor.UseVisualStyleBackColor = True
-        '
-        'btn_pullUp
-        '
-        Me.btn_pullUp.Location = New System.Drawing.Point(10, 64)
-        Me.btn_pullUp.Name = "btn_pullUp"
-        Me.btn_pullUp.Size = New System.Drawing.Size(75, 40)
-        Me.btn_pullUp.TabIndex = 35
-        Me.btn_pullUp.Text = "Pull-Up Resistor"
-        Me.btn_pullUp.UseVisualStyleBackColor = True
-        '
-        'GPIO_Num
-        '
-        Me.GPIO_Num.Location = New System.Drawing.Point(88, 19)
-        Me.GPIO_Num.Name = "GPIO_Num"
-        Me.GPIO_Num.Size = New System.Drawing.Size(94, 20)
-        Me.GPIO_Num.TabIndex = 12
-        Me.GPIO_Num.Text = "0"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
-        Me.Label1.Location = New System.Drawing.Point(6, 22)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(76, 13)
-        Me.Label1.TabIndex = 11
-        Me.Label1.Text = "GPIO Number:"
-        '
         'GroupBox11
         '
         Me.GroupBox11.Controls.Add(Me.TextBoxPeriod)
@@ -944,7 +815,7 @@ Partial Class TopGUI
         Me.GroupBox11.Controls.Add(Me.btn_PulseDrive)
         Me.GroupBox11.Controls.Add(Me.LabelPeriod)
         Me.GroupBox11.Controls.Add(Me.ComboBoxHighLow)
-        Me.GroupBox11.Location = New System.Drawing.Point(430, 6)
+        Me.GroupBox11.Location = New System.Drawing.Point(269, 131)
         Me.GroupBox11.Name = "GroupBox11"
         Me.GroupBox11.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.GroupBox11.Size = New System.Drawing.Size(169, 119)
@@ -1061,6 +932,7 @@ Partial Class TopGUI
         '
         'tab_advanced
         '
+        Me.tab_advanced.Controls.Add(Me.manualGPIOGroupBox)
         Me.tab_advanced.Controls.Add(Me.GroupBox9)
         Me.tab_advanced.Controls.Add(Me.GroupBox8)
         Me.tab_advanced.Controls.Add(Me.GroupBox2)
@@ -1072,14 +944,142 @@ Partial Class TopGUI
         Me.tab_advanced.Text = "Advanced"
         Me.tab_advanced.UseVisualStyleBackColor = True
         '
+        'manualGPIOGroupBox
+        '
+        Me.manualGPIOGroupBox.Controls.Add(Me.GroupBox14)
+        Me.manualGPIOGroupBox.Controls.Add(Me.GroupBox13)
+        Me.manualGPIOGroupBox.Controls.Add(Me.GPIO_Num)
+        Me.manualGPIOGroupBox.Controls.Add(Me.Label1)
+        Me.manualGPIOGroupBox.Location = New System.Drawing.Point(6, 102)
+        Me.manualGPIOGroupBox.Name = "manualGPIOGroupBox"
+        Me.manualGPIOGroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.manualGPIOGroupBox.Size = New System.Drawing.Size(330, 182)
+        Me.manualGPIOGroupBox.TabIndex = 38
+        Me.manualGPIOGroupBox.TabStop = False
+        Me.manualGPIOGroupBox.Text = "Manual GPIO Access"
+        '
+        'GroupBox14
+        '
+        Me.GroupBox14.Controls.Add(Me.btn_SetGPIOLow)
+        Me.GroupBox14.Controls.Add(Me.btn_SetGPIOHigh)
+        Me.GroupBox14.Controls.Add(Me.Label2)
+        Me.GroupBox14.Controls.Add(Me.btn_ReadGPIO)
+        Me.GroupBox14.Controls.Add(Me.GPIO_Value)
+        Me.GroupBox14.Location = New System.Drawing.Point(9, 57)
+        Me.GroupBox14.Name = "GroupBox14"
+        Me.GroupBox14.Size = New System.Drawing.Size(173, 117)
+        Me.GroupBox14.TabIndex = 41
+        Me.GroupBox14.TabStop = False
+        Me.GroupBox14.Text = "Read/Write"
+        '
+        'btn_SetGPIOLow
+        '
+        Me.btn_SetGPIOLow.Location = New System.Drawing.Point(92, 71)
+        Me.btn_SetGPIOLow.Name = "btn_SetGPIOLow"
+        Me.btn_SetGPIOLow.Size = New System.Drawing.Size(75, 40)
+        Me.btn_SetGPIOLow.TabIndex = 18
+        Me.btn_SetGPIOLow.Text = "Set Low"
+        Me.btn_SetGPIOLow.UseVisualStyleBackColor = True
+        '
+        'btn_SetGPIOHigh
+        '
+        Me.btn_SetGPIOHigh.Location = New System.Drawing.Point(92, 17)
+        Me.btn_SetGPIOHigh.Name = "btn_SetGPIOHigh"
+        Me.btn_SetGPIOHigh.Size = New System.Drawing.Size(75, 40)
+        Me.btn_SetGPIOHigh.TabIndex = 19
+        Me.btn_SetGPIOHigh.Text = "Set High"
+        Me.btn_SetGPIOHigh.UseVisualStyleBackColor = True
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(5, 75)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(55, 13)
+        Me.Label2.TabIndex = 22
+        Me.Label2.Text = "Pin Value:"
+        '
+        'btn_ReadGPIO
+        '
+        Me.btn_ReadGPIO.Location = New System.Drawing.Point(8, 17)
+        Me.btn_ReadGPIO.Name = "btn_ReadGPIO"
+        Me.btn_ReadGPIO.Size = New System.Drawing.Size(75, 40)
+        Me.btn_ReadGPIO.TabIndex = 20
+        Me.btn_ReadGPIO.Text = "Read Pin"
+        Me.btn_ReadGPIO.UseVisualStyleBackColor = True
+        '
+        'GPIO_Value
+        '
+        Me.GPIO_Value.Location = New System.Drawing.Point(6, 91)
+        Me.GPIO_Value.Name = "GPIO_Value"
+        Me.GPIO_Value.Size = New System.Drawing.Size(75, 20)
+        Me.GPIO_Value.TabIndex = 21
+        '
+        'GroupBox13
+        '
+        Me.GroupBox13.Controls.Add(Me.btn_pullDown)
+        Me.GroupBox13.Controls.Add(Me.btn_disableResistor)
+        Me.GroupBox13.Controls.Add(Me.btn_pullUp)
+        Me.GroupBox13.Location = New System.Drawing.Point(226, 13)
+        Me.GroupBox13.Name = "GroupBox13"
+        Me.GroupBox13.Size = New System.Drawing.Size(95, 161)
+        Me.GroupBox13.TabIndex = 40
+        Me.GroupBox13.TabStop = False
+        Me.GroupBox13.Text = "Pin Resistor"
+        '
+        'btn_pullDown
+        '
+        Me.btn_pullDown.Location = New System.Drawing.Point(10, 110)
+        Me.btn_pullDown.Name = "btn_pullDown"
+        Me.btn_pullDown.Size = New System.Drawing.Size(75, 40)
+        Me.btn_pullDown.TabIndex = 36
+        Me.btn_pullDown.Text = "Pull-Down Resistor"
+        Me.btn_pullDown.UseVisualStyleBackColor = True
+        '
+        'btn_disableResistor
+        '
+        Me.btn_disableResistor.Location = New System.Drawing.Point(10, 19)
+        Me.btn_disableResistor.Name = "btn_disableResistor"
+        Me.btn_disableResistor.Size = New System.Drawing.Size(75, 40)
+        Me.btn_disableResistor.TabIndex = 39
+        Me.btn_disableResistor.Text = "Disable Resistor"
+        Me.btn_disableResistor.UseVisualStyleBackColor = True
+        '
+        'btn_pullUp
+        '
+        Me.btn_pullUp.Location = New System.Drawing.Point(10, 64)
+        Me.btn_pullUp.Name = "btn_pullUp"
+        Me.btn_pullUp.Size = New System.Drawing.Size(75, 40)
+        Me.btn_pullUp.TabIndex = 35
+        Me.btn_pullUp.Text = "Pull-Up Resistor"
+        Me.btn_pullUp.UseVisualStyleBackColor = True
+        '
+        'GPIO_Num
+        '
+        Me.GPIO_Num.Location = New System.Drawing.Point(88, 19)
+        Me.GPIO_Num.Name = "GPIO_Num"
+        Me.GPIO_Num.Size = New System.Drawing.Size(94, 20)
+        Me.GPIO_Num.TabIndex = 12
+        Me.GPIO_Num.Text = "0"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!)
+        Me.Label1.Location = New System.Drawing.Point(6, 22)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(76, 13)
+        Me.Label1.TabIndex = 11
+        Me.Label1.Text = "GPIO Number:"
+        '
         'GroupBox9
         '
         Me.GroupBox9.Controls.Add(Me.btn_pulseMeasure)
         Me.GroupBox9.Controls.Add(Me.btn_binFile)
         Me.GroupBox9.Controls.Add(Me.btn_ADXL375)
-        Me.GroupBox9.Location = New System.Drawing.Point(6, 198)
+        Me.GroupBox9.Location = New System.Drawing.Point(276, 6)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox9.Size = New System.Drawing.Size(251, 90)
         Me.GroupBox9.TabIndex = 37
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Misc"
@@ -1115,9 +1115,9 @@ Partial Class TopGUI
         '
         Me.GroupBox8.Controls.Add(Me.btn_BitBangSPI)
         Me.GroupBox8.Controls.Add(Me.btn_BurstTest)
-        Me.GroupBox8.Location = New System.Drawing.Point(6, 102)
+        Me.GroupBox8.Location = New System.Drawing.Point(100, 6)
         Me.GroupBox8.Name = "GroupBox8"
-        Me.GroupBox8.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox8.Size = New System.Drawing.Size(170, 90)
         Me.GroupBox8.TabIndex = 37
         Me.GroupBox8.TabStop = False
         Me.GroupBox8.Text = "Custom SPI Traffic"
@@ -1145,7 +1145,7 @@ Partial Class TopGUI
         Me.GroupBox2.Controls.Add(Me.btn_checkError)
         Me.GroupBox2.Location = New System.Drawing.Point(6, 6)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(593, 90)
+        Me.GroupBox2.Size = New System.Drawing.Size(88, 90)
         Me.GroupBox2.TabIndex = 36
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "FX3 Utilities"
@@ -1199,15 +1199,15 @@ Partial Class TopGUI
         Me.tab_Pin.PerformLayout()
         Me.GroupBox12.ResumeLayout(False)
         Me.GroupBox12.PerformLayout()
+        Me.GroupBox11.ResumeLayout(False)
+        Me.GroupBox11.PerformLayout()
+        CType(Me.dgvPinList, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tab_advanced.ResumeLayout(False)
         Me.manualGPIOGroupBox.ResumeLayout(False)
         Me.manualGPIOGroupBox.PerformLayout()
         Me.GroupBox14.ResumeLayout(False)
         Me.GroupBox14.PerformLayout()
         Me.GroupBox13.ResumeLayout(False)
-        Me.GroupBox11.ResumeLayout(False)
-        Me.GroupBox11.PerformLayout()
-        CType(Me.dgvPinList, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tab_advanced.ResumeLayout(False)
         Me.GroupBox9.ResumeLayout(False)
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
@@ -1280,14 +1280,6 @@ Partial Class TopGUI
     Friend WithEvents GroupBox9 As GroupBox
     Friend WithEvents GroupBox8 As GroupBox
     Friend WithEvents GroupBox2 As GroupBox
-    Friend WithEvents manualGPIOGroupBox As GroupBox
-    Friend WithEvents Label2 As Label
-    Friend WithEvents GPIO_Value As TextBox
-    Friend WithEvents btn_ReadGPIO As Button
-    Friend WithEvents btn_SetGPIOHigh As Button
-    Friend WithEvents btn_SetGPIOLow As Button
-    Friend WithEvents GPIO_Num As TextBox
-    Friend WithEvents Label1 As Label
     Friend WithEvents GroupBox11 As GroupBox
     Friend WithEvents TextBoxPeriod As TextBox
     Friend WithEvents LabelHighLow As Label
@@ -1305,12 +1297,20 @@ Partial Class TopGUI
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents GroupBox12 As GroupBox
+    Friend WithEvents btn_MeasureFreq As Button
+    Friend WithEvents pinToggleFreq As TextBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents manualGPIOGroupBox As GroupBox
     Friend WithEvents GroupBox14 As GroupBox
+    Friend WithEvents btn_SetGPIOLow As Button
+    Friend WithEvents btn_SetGPIOHigh As Button
+    Friend WithEvents Label2 As Label
+    Friend WithEvents btn_ReadGPIO As Button
+    Friend WithEvents GPIO_Value As TextBox
     Friend WithEvents GroupBox13 As GroupBox
     Friend WithEvents btn_pullDown As Button
     Friend WithEvents btn_disableResistor As Button
     Friend WithEvents btn_pullUp As Button
-    Friend WithEvents btn_MeasureFreq As Button
-    Friend WithEvents pinToggleFreq As TextBox
-    Friend WithEvents Label5 As Label
+    Friend WithEvents GPIO_Num As TextBox
+    Friend WithEvents Label1 As Label
 End Class
