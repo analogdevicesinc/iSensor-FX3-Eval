@@ -730,7 +730,7 @@ Partial Class TopGUI
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(188, 277)
+        Me.Label5.Location = New System.Drawing.Point(188, 253)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(31, 13)
         Me.Label5.TabIndex = 43
@@ -738,7 +738,7 @@ Partial Class TopGUI
         '
         'btn_MeasureFreq
         '
-        Me.btn_MeasureFreq.Location = New System.Drawing.Point(188, 232)
+        Me.btn_MeasureFreq.Location = New System.Drawing.Point(188, 210)
         Me.btn_MeasureFreq.Name = "btn_MeasureFreq"
         Me.btn_MeasureFreq.Size = New System.Drawing.Size(75, 40)
         Me.btn_MeasureFreq.TabIndex = 42
@@ -747,7 +747,7 @@ Partial Class TopGUI
         '
         'pinToggleFreq
         '
-        Me.pinToggleFreq.Location = New System.Drawing.Point(188, 293)
+        Me.pinToggleFreq.Location = New System.Drawing.Point(188, 269)
         Me.pinToggleFreq.Name = "pinToggleFreq"
         Me.pinToggleFreq.Size = New System.Drawing.Size(75, 20)
         Me.pinToggleFreq.TabIndex = 41
@@ -900,7 +900,7 @@ Partial Class TopGUI
         Me.dgvPinList.RowTemplate.Height = 24
         Me.dgvPinList.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.dgvPinList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvPinList.Size = New System.Drawing.Size(178, 305)
+        Me.dgvPinList.Size = New System.Drawing.Size(178, 285)
         Me.dgvPinList.TabIndex = 24
         '
         'ButtonReadAll
