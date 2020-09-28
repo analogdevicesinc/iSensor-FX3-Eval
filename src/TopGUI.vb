@@ -659,7 +659,7 @@ Public Class TopGUI
         tip0.SetToolTip(Me.label_apiVersion, "The current version of the iSensor FX3 Eval GUI. The three highest version numbers will match the FX3 API version in use")
         tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
         tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Eval GUI. Requires a Internet connection and a GitHub account")
-        tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 500ms, waits for data ready to be asserted, and checks the DUT connection")
+        tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 10ms, waits for data ready to be asserted, and checks the DUT connection")
         tip0.SetToolTip(Me.checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
         tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
         tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
