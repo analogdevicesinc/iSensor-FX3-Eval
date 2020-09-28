@@ -78,6 +78,10 @@ Partial Class TopGUI
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tab_dataPlot = New System.Windows.Forms.TabPage()
         Me.tab_dataLog = New System.Windows.Forms.TabPage()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.dataPlotRegsView = New System.Windows.Forms.DataGridView()
+        Me.reg_label = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.plot = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.tab_Pin = New System.Windows.Forms.TabPage()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.btn_MeasureFreq = New System.Windows.Forms.Button()
@@ -134,6 +138,7 @@ Partial Class TopGUI
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tab_dataPlot.SuspendLayout()
         Me.tab_dataLog.SuspendLayout()
+        CType(Me.dataPlotRegsView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tab_Pin.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
         Me.GroupBox11.SuspendLayout()
@@ -278,7 +283,7 @@ Partial Class TopGUI
         '
         'btn_plotFFT
         '
-        Me.btn_plotFFT.Location = New System.Drawing.Point(87, 6)
+        Me.btn_plotFFT.Location = New System.Drawing.Point(334, 21)
         Me.btn_plotFFT.Name = "btn_plotFFT"
         Me.btn_plotFFT.Size = New System.Drawing.Size(75, 62)
         Me.btn_plotFFT.TabIndex = 9
@@ -296,7 +301,7 @@ Partial Class TopGUI
         '
         'btn_plotData
         '
-        Me.btn_plotData.Location = New System.Drawing.Point(6, 6)
+        Me.btn_plotData.Location = New System.Drawing.Point(253, 21)
         Me.btn_plotData.Name = "btn_plotData"
         Me.btn_plotData.Size = New System.Drawing.Size(75, 62)
         Me.btn_plotData.TabIndex = 8
@@ -697,6 +702,8 @@ Partial Class TopGUI
         '
         'tab_dataLog
         '
+        Me.tab_dataLog.Controls.Add(Me.Label7)
+        Me.tab_dataLog.Controls.Add(Me.dataPlotRegsView)
         Me.tab_dataLog.Controls.Add(Me.btn_plotFFT)
         Me.tab_dataLog.Controls.Add(Me.btn_plotData)
         Me.tab_dataLog.Location = New System.Drawing.Point(4, 22)
@@ -706,6 +713,37 @@ Partial Class TopGUI
         Me.tab_dataLog.TabIndex = 2
         Me.tab_dataLog.Text = "Data Plotting"
         Me.tab_dataLog.UseVisualStyleBackColor = True
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(3, 5)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(72, 13)
+        Me.Label7.TabIndex = 11
+        Me.Label7.Text = "Plot Registers"
+        '
+        'dataPlotRegsView
+        '
+        Me.dataPlotRegsView.AllowUserToAddRows = False
+        Me.dataPlotRegsView.AllowUserToDeleteRows = False
+        Me.dataPlotRegsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dataPlotRegsView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reg_label, Me.plot})
+        Me.dataPlotRegsView.Location = New System.Drawing.Point(6, 21)
+        Me.dataPlotRegsView.Name = "dataPlotRegsView"
+        Me.dataPlotRegsView.RowHeadersVisible = False
+        Me.dataPlotRegsView.Size = New System.Drawing.Size(241, 372)
+        Me.dataPlotRegsView.TabIndex = 10
+        '
+        'reg_label
+        '
+        Me.reg_label.HeaderText = "Label"
+        Me.reg_label.Name = "reg_label"
+        '
+        'plot
+        '
+        Me.plot.HeaderText = "Plot"
+        Me.plot.Name = "plot"
         '
         'tab_Pin
         '
@@ -1195,6 +1233,8 @@ Partial Class TopGUI
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tab_dataPlot.ResumeLayout(False)
         Me.tab_dataLog.ResumeLayout(False)
+        Me.tab_dataLog.PerformLayout()
+        CType(Me.dataPlotRegsView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tab_Pin.ResumeLayout(False)
         Me.tab_Pin.PerformLayout()
         Me.GroupBox12.ResumeLayout(False)
@@ -1313,4 +1353,8 @@ Partial Class TopGUI
     Friend WithEvents btn_pullUp As Button
     Friend WithEvents GPIO_Num As TextBox
     Friend WithEvents Label1 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents dataPlotRegsView As DataGridView
+    Friend WithEvents reg_label As DataGridViewTextBoxColumn
+    Friend WithEvents plot As DataGridViewCheckBoxColumn
 End Class

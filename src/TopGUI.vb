@@ -43,7 +43,6 @@ Public Class TopGUI
 
     'plotting register lists
     Friend dataPlotRegs As New List(Of String)
-    Friend fftPlotRegs As New List(Of String)
 
     'Last browsed to file location
     Public lastFilePath As String
@@ -244,6 +243,7 @@ Public Class TopGUI
                 regMapPath_Label.Text = value.Substring(value.LastIndexOf("\") + 1)
                 SetupToolTips()
                 RegFormSetup()
+                DataPlotRegsInit()
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message() + " " + RegMap.ErrorText)
             End Try
@@ -385,6 +385,9 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_plotFFT_Click(sender As Object, e As EventArgs) Handles btn_plotFFT.Click
+
+        LoadDataPlotRegList()
+
         Dim subGUI As New FrequencyPlotGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
@@ -394,6 +397,8 @@ Public Class TopGUI
     End Sub
 
     Private Sub btn_plotData_Click(sender As Object, e As EventArgs) Handles btn_plotData.Click
+
+        LoadDataPlotRegList()
 
         Dim subGUI As New DataPlotGUI()
         subGUI.SetTopGUI(Me)
@@ -1955,6 +1960,49 @@ Public Class TopGUI
         ComboBoxHighLow.SelectedIndex = 0
         TextBoxPeriod.Text = "100"
 
+    End Sub
+
+#End Region
+
+#Region "Data Plotting"
+
+    Friend Sub DataPlotRegsInit()
+        Dim regIndex As Integer = 0
+        Dim regStr() As String
+        'clear when regmap is changed
+        dataPlotRegs.Clear()
+
+        dataPlotRegsView.Rows.Clear()
+        For Each reg In RegMap
+            If reg.IsReadable Then
+                regStr = {reg.Label, "False"}
+                dataPlotRegsView.Rows.Add(regStr)
+                regIndex += 1
+            End If
+        Next
+        dataPlotRegsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+        dataPlotRegsView.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+    End Sub
+
+    Friend Sub DataPlotRegsUpdate()
+
+        For Each row As DataGridViewRow In dataPlotRegsView.Rows
+            If dataPlotRegs.Contains(row.Cells(0).Value) Then
+                row.Cells(1).Value = True
+            Else
+                row.Cells(1).Value = False
+            End If
+        Next
+
+    End Sub
+
+    Private Sub LoadDataPlotRegList()
+        dataPlotRegs.Clear()
+        For Each row As DataGridViewRow In dataPlotRegsView.Rows
+            If row.Cells(1).Value Then
+                dataPlotRegs.Add(row.Cells(0).Value)
+            End If
+        Next
     End Sub
 
 #End Region

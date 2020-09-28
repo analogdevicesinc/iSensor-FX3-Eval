@@ -38,7 +38,7 @@ Public Class FrequencyPlotGUI
         regSelect.SelectedIndex = 0
 
         'check for previously plotted regs
-        For Each item In m_TopGUI.fftPlotRegs
+        For Each item In m_TopGUI.dataPlotRegs
             If regSelect.Items.Contains(item) Then RegisterList.Items.Add(item)
         Next
 
@@ -74,10 +74,11 @@ Public Class FrequencyPlotGUI
         End While
         m_FFTStream.Dispose()
         'save register list
-        m_TopGUI.fftPlotRegs.Clear()
+        m_TopGUI.dataPlotRegs.Clear()
         For Each reg In selectedRegList
-            m_TopGUI.fftPlotRegs.Add(reg.Label)
+            m_TopGUI.dataPlotRegs.Add(reg.Label)
         Next
+        m_TopGUI.DataPlotRegsUpdate()
         'show other forms
         InteractWithOtherForms(False, Me)
         're-enable main form button
