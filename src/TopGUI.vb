@@ -1926,7 +1926,7 @@ Public Class TopGUI
         ' create a list of pins to fill in the grid
         Dim FX3Api = GetType(FX3Connection)
         For Each prop In FX3Api.GetProperties()
-            If prop.PropertyType = GetType(IPinObject) And Not prop.Name = "ReadyPin" Then
+            If prop.PropertyType = GetType(IPinObject) And Not prop.Name = "ReadyPin" And Not prop.Name = "DrPin" Then
                 Dim currPin As IPinObject = FX3.GetType().GetProperty(prop.Name).GetValue(FX3)
                 pins.Add(prop.Name.ToUpper, currPin)
                 Dim state As String
