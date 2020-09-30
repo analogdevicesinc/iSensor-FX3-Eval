@@ -32,6 +32,9 @@ Public Class DataPlotGUI
     Public Sub FormSetup() Handles Me.Load
         PopulateRegView()
 
+        If m_TopGUI.TimePlotHeight <> 0 Then Me.Height = m_TopGUI.TimePlotHeight
+        If m_TopGUI.TimePlotWidth <> 0 Then Me.Width = m_TopGUI.TimePlotWidth
+
         'Set defaults
         plotting = False
         samplePeriodMs = 100
@@ -94,6 +97,8 @@ Public Class DataPlotGUI
         playBackMutex.WaitOne()
         plotMutex.WaitOne()
         m_TopGUI.FX3.UserLEDOn()
+        m_TopGUI.TimePlotWidth = Me.Width
+        m_TopGUI.TimePlotHeight = Me.Height
         'save regs which were plotted
         m_TopGUI.dataPlotRegs.Clear()
         For i As Integer = 0 To regView.RowCount - 1

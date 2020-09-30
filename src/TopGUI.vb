@@ -1065,6 +1065,12 @@ Public Class TopGUI
         Next
     End Sub
 
+    Protected Overrides ReadOnly Property ShowWithoutActivation() As Boolean
+        Get
+            Return True
+        End Get
+    End Property
+
 #End Region
 
 #Region "Register Access Form"
@@ -1965,6 +1971,8 @@ Public Class TopGUI
 #End Region
 
 #Region "Data Plotting"
+
+    Friend TimePlotWidth, TimePlotHeight, FFTPlotWidth, FFTPlotHeight As Integer
 
     Friend Sub DataPlotRegsInit()
         Dim regIndex As Integer = 0

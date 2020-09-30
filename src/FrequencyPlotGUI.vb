@@ -28,6 +28,9 @@ Public Class FrequencyPlotGUI
 
     Private Sub FrequencyPlotGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        If m_TopGUI.FFTPlotHeight <> 0 Then Me.Height = m_TopGUI.FFTPlotHeight
+        If m_TopGUI.FFTPlotWidth <> 0 Then Me.Width = m_TopGUI.FFTPlotWidth
+
         'instantiate fft streamer
         m_FFTStream = New FFT_Streamer(m_TopGUI.FX3, m_TopGUI.Dut)
 
@@ -73,6 +76,8 @@ Public Class FrequencyPlotGUI
             System.Threading.Thread.Sleep(10)
         End While
         m_FFTStream.Dispose()
+        m_TopGUI.FFTPlotWidth = Me.Width
+        m_TopGUI.FFTPlotHeight = Me.Height
         'save register list
         m_TopGUI.dataPlotRegs.Clear()
         For Each reg In selectedRegList
