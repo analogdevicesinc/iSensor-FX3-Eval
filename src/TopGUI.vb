@@ -1995,11 +1995,7 @@ Public Class TopGUI
     Friend Sub DataPlotRegsUpdate()
 
         For Each row As DataGridViewRow In dataPlotRegsView.Rows
-            If dataPlotRegs.Contains(row.Cells(0).Value) Then
-                row.Cells(1).Value = True
-            Else
-                row.Cells(1).Value = False
-            End If
+            row.Cells(1).Value = dataPlotRegs.Contains(row.Cells(0).Value).ToString()
         Next
 
     End Sub
