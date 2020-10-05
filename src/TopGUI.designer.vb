@@ -1213,7 +1213,7 @@ Partial Class TopGUI
         Me.Controls.Add(Me.label_apiVersion)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximumSize = New System.Drawing.Size(650, 2000)
-        Me.MinimumSize = New System.Drawing.Size(650, 730)
+        Me.MinimumSize = New System.Drawing.Size(650, 690)
         Me.Name = "TopGUI"
         Me.Text = "iSensor FX3 Eval"
         Me.group_util.ResumeLayout(False)
