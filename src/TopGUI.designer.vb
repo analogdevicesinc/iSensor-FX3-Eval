@@ -732,7 +732,7 @@ Partial Class TopGUI
         Me.dataPlotRegsView.Location = New System.Drawing.Point(6, 21)
         Me.dataPlotRegsView.Name = "dataPlotRegsView"
         Me.dataPlotRegsView.RowHeadersVisible = False
-        Me.dataPlotRegsView.Size = New System.Drawing.Size(241, 372)
+        Me.dataPlotRegsView.Size = New System.Drawing.Size(241, 350)
         Me.dataPlotRegsView.TabIndex = 10
         '
         'reg_label
