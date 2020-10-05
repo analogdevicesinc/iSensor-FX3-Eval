@@ -57,7 +57,7 @@ Partial Class TopGUI
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.numDecimals = New System.Windows.Forms.TextBox()
         Me.numDecimals_label = New System.Windows.Forms.Label()
-        Me.ButtonRead = New System.Windows.Forms.Button()
+        Me.btn_ReadPage = New System.Windows.Forms.Button()
         Me.contRead = New System.Windows.Forms.CheckBox()
         Me.scaledData = New System.Windows.Forms.CheckBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
@@ -65,7 +65,7 @@ Partial Class TopGUI
         Me.readLabel = New System.Windows.Forms.Label()
         Me.writeLabel = New System.Windows.Forms.Label()
         Me.newValue = New System.Windows.Forms.TextBox()
-        Me.ButtonWrite = New System.Windows.Forms.Button()
+        Me.btn_WriteReg = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.measureDr = New System.Windows.Forms.CheckBox()
         Me.DrFreq = New System.Windows.Forms.Label()
@@ -98,11 +98,11 @@ Partial Class TopGUI
         Me.btn_PulseDrive = New System.Windows.Forms.Button()
         Me.LabelPeriod = New System.Windows.Forms.Label()
         Me.ComboBoxHighLow = New System.Windows.Forms.ComboBox()
-        Me.ButtonReadSelected = New System.Windows.Forms.Button()
+        Me.btn_ReadPin = New System.Windows.Forms.Button()
         Me.dgvPinList = New System.Windows.Forms.DataGridView()
-        Me.ButtonReadAll = New System.Windows.Forms.Button()
-        Me.ButtonWriteHigh = New System.Windows.Forms.Button()
-        Me.ButtonWriteLow = New System.Windows.Forms.Button()
+        Me.btn_ReadAllPins = New System.Windows.Forms.Button()
+        Me.btn_WritePinHigh = New System.Windows.Forms.Button()
+        Me.btn_WritePinLow = New System.Windows.Forms.Button()
         Me.tab_advanced = New System.Windows.Forms.TabPage()
         Me.manualGPIOGroupBox = New System.Windows.Forms.GroupBox()
         Me.GroupBox14 = New System.Windows.Forms.GroupBox()
@@ -460,7 +460,7 @@ Partial Class TopGUI
         '
         Me.GroupBox5.Controls.Add(Me.numDecimals)
         Me.GroupBox5.Controls.Add(Me.numDecimals_label)
-        Me.GroupBox5.Controls.Add(Me.ButtonRead)
+        Me.GroupBox5.Controls.Add(Me.btn_ReadPage)
         Me.GroupBox5.Controls.Add(Me.contRead)
         Me.GroupBox5.Controls.Add(Me.scaledData)
         Me.GroupBox5.Location = New System.Drawing.Point(399, 6)
@@ -488,14 +488,14 @@ Partial Class TopGUI
         Me.numDecimals_label.TabIndex = 27
         Me.numDecimals_label.Text = "# Decimals:"
         '
-        'ButtonRead
+        'btn_ReadPage
         '
-        Me.ButtonRead.Location = New System.Drawing.Point(120, 19)
-        Me.ButtonRead.Name = "ButtonRead"
-        Me.ButtonRead.Size = New System.Drawing.Size(70, 63)
-        Me.ButtonRead.TabIndex = 17
-        Me.ButtonRead.Text = "Read Page"
-        Me.ButtonRead.UseVisualStyleBackColor = True
+        Me.btn_ReadPage.Location = New System.Drawing.Point(120, 19)
+        Me.btn_ReadPage.Name = "btn_ReadPage"
+        Me.btn_ReadPage.Size = New System.Drawing.Size(70, 63)
+        Me.btn_ReadPage.TabIndex = 17
+        Me.btn_ReadPage.Text = "Read Page"
+        Me.btn_ReadPage.UseVisualStyleBackColor = True
         '
         'contRead
         '
@@ -523,7 +523,7 @@ Partial Class TopGUI
         Me.GroupBox4.Controls.Add(Me.readLabel)
         Me.GroupBox4.Controls.Add(Me.writeLabel)
         Me.GroupBox4.Controls.Add(Me.newValue)
-        Me.GroupBox4.Controls.Add(Me.ButtonWrite)
+        Me.GroupBox4.Controls.Add(Me.btn_WriteReg)
         Me.GroupBox4.Location = New System.Drawing.Point(399, 104)
         Me.GroupBox4.Name = "GroupBox4"
         Me.GroupBox4.Size = New System.Drawing.Size(196, 122)
@@ -570,14 +570,14 @@ Partial Class TopGUI
         Me.newValue.TabIndex = 10
         Me.newValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'ButtonWrite
+        'btn_WriteReg
         '
-        Me.ButtonWrite.Location = New System.Drawing.Point(84, 87)
-        Me.ButtonWrite.Name = "ButtonWrite"
-        Me.ButtonWrite.Size = New System.Drawing.Size(61, 21)
-        Me.ButtonWrite.TabIndex = 7
-        Me.ButtonWrite.Text = "Write"
-        Me.ButtonWrite.UseVisualStyleBackColor = True
+        Me.btn_WriteReg.Location = New System.Drawing.Point(84, 87)
+        Me.btn_WriteReg.Name = "btn_WriteReg"
+        Me.btn_WriteReg.Size = New System.Drawing.Size(61, 21)
+        Me.btn_WriteReg.TabIndex = 7
+        Me.btn_WriteReg.Text = "Write"
+        Me.btn_WriteReg.UseVisualStyleBackColor = True
         '
         'GroupBox3
         '
@@ -752,11 +752,11 @@ Partial Class TopGUI
         Me.tab_Pin.Controls.Add(Me.pinToggleFreq)
         Me.tab_Pin.Controls.Add(Me.GroupBox12)
         Me.tab_Pin.Controls.Add(Me.GroupBox11)
-        Me.tab_Pin.Controls.Add(Me.ButtonReadSelected)
+        Me.tab_Pin.Controls.Add(Me.btn_ReadPin)
         Me.tab_Pin.Controls.Add(Me.dgvPinList)
-        Me.tab_Pin.Controls.Add(Me.ButtonReadAll)
-        Me.tab_Pin.Controls.Add(Me.ButtonWriteHigh)
-        Me.tab_Pin.Controls.Add(Me.ButtonWriteLow)
+        Me.tab_Pin.Controls.Add(Me.btn_ReadAllPins)
+        Me.tab_Pin.Controls.Add(Me.btn_WritePinHigh)
+        Me.tab_Pin.Controls.Add(Me.btn_WritePinLow)
         Me.tab_Pin.Location = New System.Drawing.Point(4, 22)
         Me.tab_Pin.Name = "tab_Pin"
         Me.tab_Pin.Padding = New System.Windows.Forms.Padding(3)
@@ -905,14 +905,14 @@ Partial Class TopGUI
         Me.ComboBoxHighLow.Size = New System.Drawing.Size(86, 21)
         Me.ComboBoxHighLow.TabIndex = 15
         '
-        'ButtonReadSelected
+        'btn_ReadPin
         '
-        Me.ButtonReadSelected.Location = New System.Drawing.Point(188, 98)
-        Me.ButtonReadSelected.Name = "ButtonReadSelected"
-        Me.ButtonReadSelected.Size = New System.Drawing.Size(75, 40)
-        Me.ButtonReadSelected.TabIndex = 25
-        Me.ButtonReadSelected.Text = "Read Pin"
-        Me.ButtonReadSelected.UseVisualStyleBackColor = True
+        Me.btn_ReadPin.Location = New System.Drawing.Point(188, 98)
+        Me.btn_ReadPin.Name = "btn_ReadPin"
+        Me.btn_ReadPin.Size = New System.Drawing.Size(75, 40)
+        Me.btn_ReadPin.TabIndex = 25
+        Me.btn_ReadPin.Text = "Read Pin"
+        Me.btn_ReadPin.UseVisualStyleBackColor = True
         '
         'dgvPinList
         '
@@ -941,32 +941,32 @@ Partial Class TopGUI
         Me.dgvPinList.Size = New System.Drawing.Size(178, 285)
         Me.dgvPinList.TabIndex = 24
         '
-        'ButtonReadAll
+        'btn_ReadAllPins
         '
-        Me.ButtonReadAll.Location = New System.Drawing.Point(188, 144)
-        Me.ButtonReadAll.Name = "ButtonReadAll"
-        Me.ButtonReadAll.Size = New System.Drawing.Size(75, 40)
-        Me.ButtonReadAll.TabIndex = 23
-        Me.ButtonReadAll.Text = "Read All"
-        Me.ButtonReadAll.UseVisualStyleBackColor = True
+        Me.btn_ReadAllPins.Location = New System.Drawing.Point(188, 144)
+        Me.btn_ReadAllPins.Name = "btn_ReadAllPins"
+        Me.btn_ReadAllPins.Size = New System.Drawing.Size(75, 40)
+        Me.btn_ReadAllPins.TabIndex = 23
+        Me.btn_ReadAllPins.Text = "Read All"
+        Me.btn_ReadAllPins.UseVisualStyleBackColor = True
         '
-        'ButtonWriteHigh
+        'btn_WritePinHigh
         '
-        Me.ButtonWriteHigh.Location = New System.Drawing.Point(188, 6)
-        Me.ButtonWriteHigh.Name = "ButtonWriteHigh"
-        Me.ButtonWriteHigh.Size = New System.Drawing.Size(75, 40)
-        Me.ButtonWriteHigh.TabIndex = 22
-        Me.ButtonWriteHigh.Text = "Set High"
-        Me.ButtonWriteHigh.UseVisualStyleBackColor = True
+        Me.btn_WritePinHigh.Location = New System.Drawing.Point(188, 6)
+        Me.btn_WritePinHigh.Name = "btn_WritePinHigh"
+        Me.btn_WritePinHigh.Size = New System.Drawing.Size(75, 40)
+        Me.btn_WritePinHigh.TabIndex = 22
+        Me.btn_WritePinHigh.Text = "Set High"
+        Me.btn_WritePinHigh.UseVisualStyleBackColor = True
         '
-        'ButtonWriteLow
+        'btn_WritePinLow
         '
-        Me.ButtonWriteLow.Location = New System.Drawing.Point(188, 52)
-        Me.ButtonWriteLow.Name = "ButtonWriteLow"
-        Me.ButtonWriteLow.Size = New System.Drawing.Size(75, 40)
-        Me.ButtonWriteLow.TabIndex = 21
-        Me.ButtonWriteLow.Text = "Set Low"
-        Me.ButtonWriteLow.UseVisualStyleBackColor = True
+        Me.btn_WritePinLow.Location = New System.Drawing.Point(188, 52)
+        Me.btn_WritePinLow.Name = "btn_WritePinLow"
+        Me.btn_WritePinLow.Size = New System.Drawing.Size(75, 40)
+        Me.btn_WritePinLow.TabIndex = 21
+        Me.btn_WritePinLow.Text = "Set Low"
+        Me.btn_WritePinLow.UseVisualStyleBackColor = True
         '
         'tab_advanced
         '
@@ -1298,7 +1298,7 @@ Partial Class TopGUI
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents numDecimals As TextBox
     Friend WithEvents numDecimals_label As Label
-    Friend WithEvents ButtonRead As Button
+    Friend WithEvents btn_ReadPage As Button
     Friend WithEvents contRead As CheckBox
     Friend WithEvents scaledData As CheckBox
     Friend WithEvents GroupBox4 As GroupBox
@@ -1306,7 +1306,7 @@ Partial Class TopGUI
     Friend WithEvents readLabel As Label
     Friend WithEvents writeLabel As Label
     Friend WithEvents newValue As TextBox
-    Friend WithEvents ButtonWrite As Button
+    Friend WithEvents btn_WriteReg As Button
     Friend WithEvents GroupBox3 As GroupBox
     Friend WithEvents measureDr As CheckBox
     Friend WithEvents DrFreq As Label
@@ -1326,11 +1326,11 @@ Partial Class TopGUI
     Friend WithEvents btn_PulseDrive As Button
     Friend WithEvents LabelPeriod As Label
     Friend WithEvents ComboBoxHighLow As ComboBox
-    Friend WithEvents ButtonReadSelected As Button
+    Friend WithEvents btn_ReadPin As Button
     Friend WithEvents dgvPinList As DataGridView
-    Friend WithEvents ButtonReadAll As Button
-    Friend WithEvents ButtonWriteHigh As Button
-    Friend WithEvents ButtonWriteLow As Button
+    Friend WithEvents btn_ReadAllPins As Button
+    Friend WithEvents btn_WritePinHigh As Button
+    Friend WithEvents btn_WritePinLow As Button
     Friend WithEvents Freq As TextBox
     Friend WithEvents DutyCycle As TextBox
     Friend WithEvents btn_StartPWM As Button

@@ -648,12 +648,12 @@ Public Class TopGUI
         Dim tip0 As ToolTip = New ToolTip()
         tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used, and the connected FX3 hardware")
         tip0.SetToolTip(Me.btn_BitBangSPI, "Bit-bang custom SPI traffic to a DUT")
-        tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register values to a .CSV file")
+        tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register data to a .CSV file")
         tip0.SetToolTip(Me.btn_CheckDUTConnection, "Check the SPI connection to the DUT by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
-        tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an iSensor FX3 Demonstration Platform")
+        tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an EVAL-ADIS-FX3 board")
         tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
         tip0.SetToolTip(Me.btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
-        tip0.SetToolTip(Me.btn_SelectDUT, "Select the DUT type. Loads the default values for that DUT type")
+        tip0.SetToolTip(Me.btn_SelectDUT, "Select the active DUT personality. Loads the default values for that DUT")
         tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
         tip0.SetToolTip(Me.btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
         tip0.SetToolTip(Me.label_apiVersion, "The current version of the iSensor FX3 Eval GUI. The three highest version numbers will match the FX3 API version in use")
@@ -665,6 +665,23 @@ Public Class TopGUI
         tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
         tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
         tip0.SetToolTip(Me.btn_binFile, "Generate a binary data file filled with an arbitrary pattern")
+        tip0.SetToolTip(Me.btn_ReadPage, "Read all registers on the selected page")
+        tip0.SetToolTip(Me.btn_WriteReg, "Write a new value to the selected register")
+        tip0.SetToolTip(Me.btn_writeRegMap, "Write all valid registers from a register dump file back to the connected DUT")
+        tip0.SetToolTip(Me.btn_DumpRegmap, "Read and log all registers in the register map to a CSV file")
+        tip0.SetToolTip(Me.btn_disableResistor, "Disable resistor on the input stage of the selected FX3 GPIO")
+        tip0.SetToolTip(Me.btn_pullDown, "Enable internal weak pull down resistor on the input stage of the selected FX3 GPIO")
+        tip0.SetToolTip(Me.btn_pullUp, "Enable internal weak pull up resistor on the input stage of the selected FX3 GPIO")
+        tip0.SetToolTip(Me.btn_StartPWM, "Start/Stop PWM signal generation on the selected DIO")
+        tip0.SetToolTip(Me.btn_PulseDrive, "Drive a single fixed duration pulse on the selected DIO")
+        tip0.SetToolTip(Me.btn_ReadAllPins, "Configure all DIO pins as inputs and read the input values")
+        tip0.SetToolTip(Me.btn_ReadPin, "Configure the selected DIO pin as an input and read the input value")
+        tip0.SetToolTip(Me.btn_WritePinLow, "Configure the selected DIO pin as an output and drive low")
+        tip0.SetToolTip(Me.btn_WritePinHigh, "Configure the selected DIO pin as an output and drive high")
+        tip0.SetToolTip(Me.btn_MeasureFreq, "Measure the toggle frequency on the selected DIO")
+        tip0.SetToolTip(Me.btn_ReadGPIO, "Configure the selected FX3 GPIO as an input and read the input value")
+        tip0.SetToolTip(Me.btn_SetGPIOHigh, "Configure the selected FX3 GPIO as an output and drive high")
+        tip0.SetToolTip(Me.btn_SetGPIOLow, "Configure the selected FX3 GPIO as an output and drive low")
 
     End Sub
 
@@ -1151,7 +1168,7 @@ Public Class TopGUI
         If e.KeyCode = Keys.Return Then
             e.Handled = True
             e.SuppressKeyPress = True
-            ButtonWrite.PerformClick()
+            btn_WriteReg.PerformClick()
         End If
 
     End Sub
@@ -1163,7 +1180,7 @@ Public Class TopGUI
         End If
     End Sub
 
-    Private Sub ButtonWrite_Click(sender As Object, e As EventArgs) Handles ButtonWrite.Click
+    Private Sub ButtonWrite_Click(sender As Object, e As EventArgs) Handles btn_WriteReg.Click
 
         Dim regLabel As String
 
@@ -1343,7 +1360,7 @@ Public Class TopGUI
 
     End Sub
 
-    Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles ButtonRead.Click
+    Private Sub ButtonRead_Click(sender As Object, e As EventArgs) Handles btn_ReadPage.Click
         ReadPage()
     End Sub
 
@@ -1749,15 +1766,15 @@ Public Class TopGUI
         End If
     End Sub
 
-    Private Sub ButtonWriteHigh_Click(sender As Object, e As EventArgs) Handles ButtonWriteHigh.Click
+    Private Sub ButtonWriteHigh_Click(sender As Object, e As EventArgs) Handles btn_WritePinHigh.Click
         writeLevel(1)
     End Sub
 
-    Private Sub ButtonWriteLow_Click(sender As Object, e As EventArgs) Handles ButtonWriteLow.Click
+    Private Sub ButtonWriteLow_Click(sender As Object, e As EventArgs) Handles btn_WritePinLow.Click
         writeLevel(0)
     End Sub
 
-    Private Sub ButtonReadAll_Click(sender As Object, e As EventArgs) Handles ButtonReadAll.Click
+    Private Sub ButtonReadAll_Click(sender As Object, e As EventArgs) Handles btn_ReadAllPins.Click
         updatePinGrid()
     End Sub
 
@@ -1806,7 +1823,7 @@ Public Class TopGUI
 
     End Sub
 
-    Private Sub ButtonReadSelected_Click(sender As Object, e As EventArgs) Handles ButtonReadSelected.Click
+    Private Sub ButtonReadSelected_Click(sender As Object, e As EventArgs) Handles btn_ReadPin.Click
         If Not PinSelected() Then Exit Sub
         Dim currPin As IPinObject = pins(dgvPinList.SelectedRows(0).Cells(0).Value.ToString.ToUpper)
         Dim state As String
