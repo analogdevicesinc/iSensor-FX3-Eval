@@ -14,7 +14,6 @@ Public Class IMUStreamingGUI
 
     Private WithEvents fileManager As Logger
     Private totalDRCaptures As Integer = 0
-    Private pin As IPinObject
     Private tempRegList As List(Of RegMapClasses.RegClass)
     Private regListCount As Integer = 0
 
@@ -67,7 +66,7 @@ Public Class IMUStreamingGUI
         'Check whether the measured DR is valid
         If check_drActive.Checked Then
             m_TopGUI.FX3.DrActive = True
-            If m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000) < 0 Then
+            If m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000) > 10000 Or m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000) < 0 Then
                 If MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
                     Exit Sub
                 End If
@@ -168,7 +167,7 @@ Public Class IMUStreamingGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
-        Label4.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(pin, 1, 2000), 3).ToString + "  Hz"
+        Label4.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000), 3).ToString + "  Hz"
     End Sub
 
     Private Sub UpdateDRPin()
@@ -176,15 +175,15 @@ Public Class IMUStreamingGUI
         dio = DRDIO.SelectedItem
         Select Case dio
             Case "DIO1"
-                pin = m_TopGUI.FX3.DIO1
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
             Case "DIO2"
-                pin = m_TopGUI.FX3.DIO2
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO2
             Case "DIO3"
-                pin = m_TopGUI.FX3.DIO3
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO3
             Case "DIO4"
-                pin = m_TopGUI.FX3.DIO4
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO4
             Case Else
-                pin = m_TopGUI.FX3.DIO1
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
         End Select
     End Sub
 
