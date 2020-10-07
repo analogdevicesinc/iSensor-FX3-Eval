@@ -12,7 +12,6 @@ Public Class RegisterBulkReadGUI
 
     Private WithEvents fileManager As Logger
     Private totalDRCaptures As Integer = 0
-    Private pin As IPinObject
 
     Public Sub FormSetup() Handles Me.Load
 
@@ -170,7 +169,7 @@ Public Class RegisterBulkReadGUI
         'Check whether the measured DR is valid
         If m_TopGUI.FX3.DrActive And ValidateDR.Checked Then
             'measure data ready frequency
-            MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(pin, 1, 10000, 2)
+            MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 10000, 2)
             DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
 
             If MeasuredFreq > 10000 Or MeasuredFreq = Double.PositiveInfinity Then
@@ -304,7 +303,7 @@ Public Class RegisterBulkReadGUI
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
         UpdateDRPin()
-        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(pin, 1, 5000, 2), 3).ToString + "  Hz"
+        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2), 3).ToString + "  Hz"
     End Sub
 
     Private Sub UpdateDRPin()
@@ -312,15 +311,15 @@ Public Class RegisterBulkReadGUI
         dio = DRDIO.SelectedItem
         Select Case dio
             Case "DIO1"
-                pin = m_TopGUI.FX3.DIO1
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
             Case "DIO2"
-                pin = m_TopGUI.FX3.DIO2
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO2
             Case "DIO3"
-                pin = m_TopGUI.FX3.DIO3
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO3
             Case "DIO4"
-                pin = m_TopGUI.FX3.DIO4
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO4
             Case Else
-                pin = m_TopGUI.FX3.DIO1
+                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
         End Select
     End Sub
 
