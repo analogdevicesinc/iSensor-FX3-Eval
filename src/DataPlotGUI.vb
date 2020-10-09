@@ -94,6 +94,7 @@ Public Class DataPlotGUI
     Private Sub ShutDown() Handles Me.Closing
         plotTimer.Enabled = False
         playBackRunning = False
+        plotting = False
         playBackMutex.WaitOne()
         plotMutex.WaitOne()
         m_TopGUI.FX3.UserLEDOn()
@@ -508,8 +509,8 @@ Public Class DataPlotGUI
         'Check each box in the reg list
         regCnt = 0
         For j As Integer = 0 To regView.RowCount() - 1
-            regFound = headers.Contains(regView.Item("Label", j).Value)
-            regView.Item("Plot", j).Value = regFound
+            regFound = headers.Contains(regView.Item("Label", j).Value.ToString())
+            regView.Item("Plot", j).Value = regFound.ToString()
             If regFound Then
                 regCnt += 1
             End If
@@ -518,19 +519,17 @@ Public Class DataPlotGUI
     End Function
 
     Private Sub PlayCSVWorker()
-        playBackMutex.WaitOne()
         Dim waitTime As Long
-        logTimer.Restart()
+        Dim timer As New Stopwatch()
 
+        playBackMutex.WaitOne()
+        timer.Start()
         While CSVRegData.Count() > 0 And playBackRunning
             waitTime = Convert.ToDouble(CSVRegData(0)(0))
-            While logTimer.ElapsedMilliseconds() < waitTime And playBackRunning
-                System.Threading.Thread.Sleep(1)
+            While (timer.ElapsedMilliseconds() < waitTime) And playBackRunning
+                Thread.Sleep(1)
             End While
-            If Not playBackRunning Then
-                Exit While
-            End If
-            Me.Invoke(New MethodInvoker(AddressOf PlotWork))
+            If playBackRunning Then Me.Invoke(New MethodInvoker(AddressOf PlotWork))
         End While
         Me.Invoke(New MethodInvoker(AddressOf EnablePlaybackButtons))
         playBackRunning = False
