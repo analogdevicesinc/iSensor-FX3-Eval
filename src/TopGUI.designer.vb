@@ -52,7 +52,6 @@ Partial Class TopGUI
         Me.tab_RegAccess = New System.Windows.Forms.TabPage()
         Me.validateSpiData = New System.Windows.Forms.CheckBox()
         Me.btn_writeRegMap = New System.Windows.Forms.Button()
-        Me.drActive = New System.Windows.Forms.CheckBox()
         Me.btn_DumpRegmap = New System.Windows.Forms.Button()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.numDecimals = New System.Windows.Forms.TextBox()
@@ -402,7 +401,6 @@ Partial Class TopGUI
         '
         Me.tab_RegAccess.Controls.Add(Me.validateSpiData)
         Me.tab_RegAccess.Controls.Add(Me.btn_writeRegMap)
-        Me.tab_RegAccess.Controls.Add(Me.drActive)
         Me.tab_RegAccess.Controls.Add(Me.btn_DumpRegmap)
         Me.tab_RegAccess.Controls.Add(Me.GroupBox5)
         Me.tab_RegAccess.Controls.Add(Me.GroupBox4)
@@ -421,7 +419,7 @@ Partial Class TopGUI
         'validateSpiData
         '
         Me.validateSpiData.AutoSize = True
-        Me.validateSpiData.Location = New System.Drawing.Point(405, 324)
+        Me.validateSpiData.Location = New System.Drawing.Point(405, 301)
         Me.validateSpiData.Name = "validateSpiData"
         Me.validateSpiData.Size = New System.Drawing.Size(110, 17)
         Me.validateSpiData.TabIndex = 43
@@ -436,16 +434,6 @@ Partial Class TopGUI
         Me.btn_writeRegMap.TabIndex = 42
         Me.btn_writeRegMap.Text = "Write All Registers"
         Me.btn_writeRegMap.UseVisualStyleBackColor = True
-        '
-        'drActive
-        '
-        Me.drActive.AutoSize = True
-        Me.drActive.Location = New System.Drawing.Point(405, 301)
-        Me.drActive.Name = "drActive"
-        Me.drActive.Size = New System.Drawing.Size(145, 17)
-        Me.drActive.TabIndex = 41
-        Me.drActive.Text = "DR Sync Register Reads"
-        Me.drActive.UseVisualStyleBackColor = True
         '
         'btn_DumpRegmap
         '
@@ -1293,7 +1281,6 @@ Partial Class TopGUI
     Friend WithEvents btn_BurstTest As Button
     Friend WithEvents validateSpiData As CheckBox
     Friend WithEvents btn_writeRegMap As Button
-    Friend WithEvents drActive As CheckBox
     Friend WithEvents btn_DumpRegmap As Button
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents numDecimals As TextBox

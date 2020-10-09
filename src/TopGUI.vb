@@ -925,6 +925,9 @@ Public Class TopGUI
         'init pin tab
         PinTabInit()
 
+        'set regform sensor type
+        RegFormUpdateSensorType()
+
     End Sub
 
     ''' <summary>
@@ -1100,12 +1103,10 @@ Public Class TopGUI
     Private drEnableTimer As System.Timers.Timer
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
-    Private originalDRSetting As Boolean
     Private m_pageMessageList As List(Of Integer)
 
     Private Sub RegFormSetup()
         regView.ClearSelection()
-        drActive.Checked = False
         scaleData = False
         numDecimals.Visible = False
         numDecimals_label.Visible = False
@@ -1136,20 +1137,17 @@ Public Class TopGUI
         'enable register value copying
         regView.ClipboardCopyMode = DataGridViewClipboardCopyMode.EnableWithoutHeaderText
 
-        If Not IsNothing(FX3.ActiveFX3) Then
-            'save setting and disable dr active reads
-            originalDRSetting = FX3.DrActive
-            FX3.DrActive = False
+    End Sub
 
+    Friend Sub RegFormUpdateSensorType()
+        If Not IsNothing(FX3) Then
             'check if SPI data can be validated
             If FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then
                 validateSpiData.Visible = True
             Else
                 validateSpiData.Visible = False
             End If
-
         End If
-
     End Sub
 
     Private Sub HiddenHandler() Handles Me.VisibleChanged
@@ -1344,9 +1342,6 @@ Public Class TopGUI
         'Kill any running timers
         pageReadTimer.Enabled = False
         drReadTimer.Enabled = False
-
-        'reset dr active setting
-        FX3.DrActive = originalDRSetting Or drActive.Checked
     End Sub
 
     Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged
@@ -1501,19 +1496,6 @@ Public Class TopGUI
 
     Private Sub measureDr_CheckedChanged(sender As Object, e As EventArgs) Handles measureDr.CheckedChanged
         drReadTimer.Enabled = measureDr.Checked
-    End Sub
-
-    Private Sub drActive_CheckedChanged(sender As Object, e As EventArgs) Handles drActive.CheckedChanged
-        Dim freq As Double
-        If drActive.Checked Then
-            'perform quick check of dr freq
-            freq = FX3.MeasurePinFreq(FX3.DrPin, 1, 100, 2)
-            If freq = Double.PositiveInfinity Then
-                Dim res As DialogResult = MessageBox.Show("Warning, Data Ready not Toggling! Continue?", "Confirm Data Ready Sync", MessageBoxButtons.OKCancel)
-                If res <> DialogResult.OK Then drActive.Checked = False
-            End If
-        End If
-        FX3.DrActive = drActive.Checked
     End Sub
 
     Private Sub btn_writeRegMap_Click(sender As Object, e As EventArgs) Handles btn_writeRegMap.Click

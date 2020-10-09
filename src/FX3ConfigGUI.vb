@@ -306,6 +306,15 @@ Public Class FX3ConfigGUI
         If m_TopGUI.FX3.PartType <> DutInput.SelectedItem Then
             m_TopGUI.FX3.PartType = DutInput.SelectedItem
         End If
+        m_TopGUI.RegFormUpdateSensorType()
+
+        If m_TopGUI.FX3.DrActive = True Then
+            'perform quick check of dr freq
+            If m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 100, 2) = Double.PositiveInfinity Then
+                Dim res As DialogResult = MessageBox.Show("Warning, Data Ready not Toggling! Continue?", "Confirm Data Ready Sync", MessageBoxButtons.OKCancel)
+                If res <> DialogResult.OK Then m_TopGUI.FX3.DrActive = False
+            End If
+        End If
 
         'save app settings
         m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
