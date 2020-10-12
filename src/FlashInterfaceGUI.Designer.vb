@@ -44,7 +44,7 @@ Partial Class FlashInterfaceGUI
         Me.btn_dumpLog.Name = "btn_dumpLog"
         Me.btn_dumpLog.Size = New System.Drawing.Size(75, 64)
         Me.btn_dumpLog.TabIndex = 0
-        Me.btn_dumpLog.Text = "Dump Error Log"
+        Me.btn_dumpLog.Text = "Export Error Log to File"
         Me.btn_dumpLog.UseVisualStyleBackColor = True
         '
         'btn_clearError

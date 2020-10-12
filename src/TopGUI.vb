@@ -682,6 +682,7 @@ Public Class TopGUI
         tip0.SetToolTip(Me.btn_ReadGPIO, "Configure the selected FX3 GPIO as an input and read the input value")
         tip0.SetToolTip(Me.btn_SetGPIOHigh, "Configure the selected FX3 GPIO as an output and drive high")
         tip0.SetToolTip(Me.btn_SetGPIOLow, "Configure the selected FX3 GPIO as an output and drive low")
+        tip0.SetToolTip(Me.btn_checkError, "Check the contents of the FX3 firmware error log")
 
     End Sub
 
