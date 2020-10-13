@@ -439,7 +439,7 @@ Public Class ADcmXLStreamingGUI
         If TimerTriggerRadioBtn.Checked Then
             PinTriggerRadioBtn.Checked = False
             pinCaptureStart = False
-            timeout_label.Text = "Sample Period (ms):"
+            timeout_label.Text = "Sample Delay (ms):"
             startPinBox.Enabled = False
             startPolarity.Enabled = False
         End If
