@@ -175,6 +175,9 @@ Public Class ADcmXLStreamingGUI
         startPinBox.Enabled = False
         startPolarity.Enabled = False
 
+        'hide other forms
+        InteractWithOtherForms(True, Me)
+
         'start capture thread
         Dim temp As Thread
         temp = New Thread(AddressOf CaptureWorker)
@@ -240,12 +243,14 @@ Public Class ADcmXLStreamingGUI
                 Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
 
                 'Perform sleep
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Sleep for capture period"))
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
-                timer.Restart()
-                While (timer.ElapsedMilliseconds < captureTime) And (Not CancelCapture)
-                    System.Threading.Thread.Sleep(100)
-                End While
+                If sampleCounter < numSampleCaptures Then
+                    Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Sleep for delay period"))
+                    Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
+                    timer.Restart()
+                    While (timer.ElapsedMilliseconds < captureTime) And (Not CancelCapture)
+                        System.Threading.Thread.Sleep(100)
+                    End While
+                End If
             End If
         End While
 
@@ -271,6 +276,10 @@ Public Class ADcmXLStreamingGUI
         startPinBox.Enabled = True
         startPolarity.Enabled = True
         StopBtn.Enabled = False
+
+        'show other forms
+        InteractWithOtherForms(False, Me)
+
     End Sub
 
     Private Sub CaptureSample()
