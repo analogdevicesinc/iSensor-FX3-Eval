@@ -46,6 +46,8 @@ Public Class IMUStreamingGUI
     Private Sub Shutdown() Handles Me.Closing
         're-enable button
         m_TopGUI.btn_RealTime.Enabled = True
+        If Not IsNothing(fileManager) Then fileManager.Dispose()
+        Me.Dispose()
     End Sub
 
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
