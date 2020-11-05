@@ -48,16 +48,20 @@ Public Class SelectDUTGUI
         If selectedDut < 0 Then
             MsgBox("Error: Invalid DUT selected!")
         Else
-            Try
-                If m_TopGUI.ApplyDutPersonality(deviceInput.Text) Then
-                    'only proceed if not canceled
-                    m_TopGUI.ApplyDutPersonalityRegmap(deviceInput.Text)
-                    m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
-                    m_TopGUI.SaveAppSettings()
-                End If
-            Catch ex As Exception
-                MsgBox("Error applying settings! " + ex.Message)
-            End Try
+            If isStartup Then
+                m_TopGUI.SelectedPersonality = deviceInput.Text
+            Else
+                Try
+                    If m_TopGUI.ApplyDutPersonality(deviceInput.Text) Then
+                        'only proceed if not canceled
+                        m_TopGUI.ApplyDutPersonalityRegmap(deviceInput.Text)
+                        m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
+                        m_TopGUI.SaveAppSettings()
+                    End If
+                Catch ex As Exception
+                    MsgBox("Error applying settings! " + ex.Message)
+                End Try
+            End If
         End If
         Me.Close()
     End Sub
