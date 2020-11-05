@@ -296,6 +296,7 @@ Public Class FrequencyPlotGUI
     Private Sub dataPlot_Click(sender As Object, e As MouseEventArgs) Handles dataPlot.Click
 
         Dim freq, mag As Double
+        Dim formatString As String
         Dim render As Boolean = True
         Try
             freq = dataPlot.ChartAreas(0).AxisX.PixelPositionToValue(e.X)
@@ -320,7 +321,23 @@ Public Class FrequencyPlotGUI
             loc.Y = e.Y
             Dim pointLabel As New Label()
             Me.Controls.Add(pointLabel)
-            pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString("0.#") + " mag" + Environment.NewLine + "●"
+            formatString = ""
+            If mag > 1000 Then
+                formatString = ""
+            ElseIf mag > 10 Then
+                formatString = "f1"
+            ElseIf mag > 1 Then
+                formatString = "f2"
+            ElseIf mag > 0.1 Then
+                formatString = "f3"
+            ElseIf mag > 0.01 Then
+                formatString = "f4"
+            ElseIf mag > 0.001 Then
+                formatString = "f5"
+            Else
+                formatString = "f6"
+            End If
+            pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString(formatString) + " mag" + Environment.NewLine + "●"
             pointLabel.Font = New Font(pointLabel.Font, FontStyle.Bold)
             pointLabel.AutoSize = True
             loc.X = loc.X - (pointLabel.Width / 2)
