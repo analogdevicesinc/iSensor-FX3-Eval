@@ -86,6 +86,51 @@ adisInterface
  <param name="rtsFrame"></param>
  <param name="list"></param>
 </member>
+<member name="M:adisInterface.ComponentInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of a Dut interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut comminication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
+<member name="M:adisInterface.ComponentSpi.#ctor(AdisApi.ISpi32Interface)">
+ <summary>
+ Overloaded constructor which takes an instance of the ISpi32Interface.
+ </summary>
+ <param name="SpiInterface">The SPI interface to be used.</param>
+</member>
+<member name="P:adisInterface.ComponentSpi.AddrPosition">
+ <summary>
+ Starting position of the 7-bit address field
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.ComponentSpi.DataPosition">
+ <summary>
+ Starting position of the 8-bit data field
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.ComponentSpi.WriteBitPosition">
+ <summary>
+ Position of the 1-bit write flag
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.ComponentSpi.WriteBitPolarity">
+ <summary>
+ Write bit polarity. 
+ True -> set bit to 1 to write
+ False -> set bit to 0 to write
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.ComponentSpi.BurstMode">
+ <summary>
+ Burst mode property. Currently not supported for component sensor interface
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:adisInterface.SpiException.ExpectedFieldValue">
  <summary>
  The expected value for that field.

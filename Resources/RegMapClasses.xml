@@ -22,6 +22,11 @@ RegMapClasses
   resource lookups using this strongly typed resource class.
 </summary>
 </member>
+<member name="T:RegMapClasses.CommandClass">
+ <summary>
+ This class provides information on one command in its properties.
+ </summary>
+</member>
 <member name="P:RegMapClasses.CommandClass.Label">
  <summary>
  Display label for command.
@@ -387,6 +392,11 @@ RegMapClasses
  <summary>Obsolete. Use IsReadProtected and/or IsWriteProtected instead.</summary>
  <remarks>Obsolete. Use IsReadProtected and/or IsWriteProtected instead.</remarks>
 </member>
+<member name="T:RegMapClasses.RegMapCollection">
+ <summary>
+ A collection that represents the register map of a device.
+ </summary>
+</member>
 <member name="P:RegMapClasses.RegMapCollection.BurstReadTrig">
  <summary>
  Returns a reference to the burst mode read trigger register.
@@ -560,6 +570,11 @@ RegMapClasses
  </summary>
  <param name="s"></param>
  <remarks></remarks>
+</member>
+<member name="T:RegMapClasses.RegMapExtensions">
+ <summary>
+ Extension methods for register operations.
+ </summary>
 </member>
 <member name="M:RegMapClasses.RegMapExtensions.SpiTransferCount(System.Collections.Generic.IEnumerable{RegMapClasses.RegClass})">
  <summary>
