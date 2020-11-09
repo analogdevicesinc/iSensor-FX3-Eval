@@ -58,6 +58,26 @@ Public Class DutPersonality
     ''' </summary>
     Public VDDIO As Double
 
+    ''' <summary>
+    ''' Addr SPI word position (used only for ComponentSpi)
+    ''' </summary>
+    Public AddrPosition As Integer
+
+    ''' <summary>
+    ''' Data SPI word position (used only for ComponentSpi)
+    ''' </summary>
+    Public DataPosition As Integer
+
+    ''' <summary>
+    ''' Write bit SPI word position (used only for ComponentSpi)
+    ''' </summary>
+    Public WriteBitPosition As Integer
+
+    ''' <summary>
+    ''' Write bit SPI word polarity (used only for ComponentSpi)
+    ''' </summary>
+    Public WriteBitPolarity As Boolean
+
     Public Sub New()
         DisplayName = "Custom"
         RegMapFileName = "NotSet"
@@ -70,6 +90,10 @@ Public Class DutPersonality
         DrDIONumber = 1
         VDDIO = 3.3
         Supply = DutVoltage.On3_3Volts
+        DataPosition = 0
+        AddrPosition = 8
+        WriteBitPosition = 15
+        WriteBitPolarity = True
     End Sub
 
     ''' <summary>
@@ -108,6 +132,17 @@ Public Class DutPersonality
         'cant set VDDIO currently
     End Sub
 
+    ''' <summary>
+    ''' Apply DUT personality to configurable component SPI IRegInterface
+    ''' </summary>
+    ''' <param name="CompSpi">Component SPI IRegInterface to configure</param>
+    Public Sub ApplyComponentSpiSettings(ByRef CompSpi As adisInterface.ComponentSpi)
+        CompSpi.AddrPosition = AddrPosition
+        CompSpi.DataPosition = DataPosition
+        CompSpi.WriteBitPosition = WriteBitPosition
+        CompSpi.WriteBitPolarity = WriteBitPolarity
+    End Sub
+
     Public Shared Sub WriteToFile(path As String, Personality As DutPersonality)
         Dim personalities As New List(Of DutPersonality)
         personalities.Add(Personality)
@@ -129,6 +164,10 @@ Public Class DutPersonality
         header.Add("DRPOLARITY")
         header.Add("SUPPLY")
         header.Add("VDDIO")
+        header.Add("ADDRPOS")
+        header.Add("DATAPOS")
+        header.Add("WRITEBITPOS")
+        header.Add("WRITEBITPOLARITY")
 
         For Each item In header
             writer.Write(item + ",")
@@ -148,6 +187,10 @@ Public Class DutPersonality
             vals.Add(personality.DrPolarity.ToString())
             vals.Add([Enum].GetName(GetType(DutVoltage), personality.Supply))
             vals.Add(personality.VDDIO.ToString())
+            vals.Add(personality.AddrPosition.ToString())
+            vals.Add(personality.DataPosition.ToString())
+            vals.Add(personality.WriteBitPosition.ToString())
+            vals.Add(personality.WriteBitPolarity.ToString())
             For Each item In vals
                 writer.Write(item + ",")
             Next
@@ -199,6 +242,10 @@ Public Class DutPersonality
             indexes.Add(Array.IndexOf(line, "DRPOLARITY"))
             indexes.Add(Array.IndexOf(line, "SUPPLY"))
             indexes.Add(Array.IndexOf(line, "VDDIO"))
+            indexes.Add(Array.IndexOf(line, "ADDRPOS"))
+            indexes.Add(Array.IndexOf(line, "DATAPOS"))
+            indexes.Add(Array.IndexOf(line, "WRITEBITPOS"))
+            indexes.Add(Array.IndexOf(line, "WRITEBITPOLARITY"))
             'parse file
             For i As Integer = 1 To lines.Count - 1
                 line = lines(i).Split(",")
@@ -215,6 +262,10 @@ Public Class DutPersonality
                     item.DrPolarity = Convert.ToBoolean(line(indexes(8)))
                     item.Supply = [Enum].Parse(GetType(DutVoltage), line(indexes(9)))
                     item.VDDIO = Convert.ToDouble(line(indexes(10)))
+                    item.AddrPosition = Convert.ToInt32(line(indexes(11)))
+                    item.DataPosition = Convert.ToInt32(line(indexes(12)))
+                    item.WriteBitPosition = Convert.ToInt32(line(indexes(13)))
+                    item.WriteBitPolarity = Convert.ToBoolean(line(indexes(14)))
                     ret.Add(item)
                 Catch ex As Exception
                     'abort

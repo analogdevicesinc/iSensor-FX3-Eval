@@ -52,6 +52,7 @@ Public Class TopGUI
     Private WithEvents m_disconnectTimer As Timers.Timer
     Private m_RegMapPath As String
     Friend m_AutoSpi As iSensorAutomotiveSpi
+    Friend m_CompSpi As ComponentSpi
 
 #End Region
 
@@ -185,6 +186,9 @@ Public Class TopGUI
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
         m_AutoSpi.LogExceptions = True
+
+        'set up comp spi
+        m_CompSpi = New ComponentSpi(FX3)
 
         'Set the API version and build date
         label_apiVersion.Text = "ADI iSensor FX3 Eval GUI v" + Application.ProductVersion
@@ -764,6 +768,8 @@ Public Class TopGUI
             Dut = New aducInterface(FX3, Nothing)
         ElseIf FX3.SensorType = DeviceType.AutomotiveSpi Then
             Dut = New ZeusInterface(m_AutoSpi, Nothing)
+        ElseIf FX3.SensorType = DeviceType.ComponentSensor Then
+            Dut = New ComponentInterface(m_CompSpi, Nothing)
         Else
             Dut = New adbfInterface(FX3, Nothing)
         End If
@@ -840,7 +846,9 @@ Public Class TopGUI
             End If
         End If
 
+        'apply settings
         If Not IsNothing(FX3.ActiveFX3) Then personality.ApplySettingsToFX3(FX3)
+        If FX3.SensorType = DeviceType.ComponentSensor Then personality.ApplyComponentSpiSettings(m_CompSpi)
 
         SelectedPersonality = displayName
 
@@ -1016,7 +1024,7 @@ Public Class TopGUI
 
         If IsNothing(scratchReg) Then
             label_DUTStatus.Text = "ERROR: No Scratch Register in RegMap"
-            label_DUTStatus.BackColor = ERROR_COLOR
+            label_DUTStatus.BackColor = IDLE_COLOR
             Exit Sub
         End If
 
