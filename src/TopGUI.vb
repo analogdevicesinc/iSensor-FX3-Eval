@@ -1263,7 +1263,7 @@ Public Class TopGUI
         End If
 
         'check the page register
-        If FX3.PartType = FX3Api.DUTType.LegacyIMU Then Exit Sub
+        If (FX3.PartType = FX3Api.DUTType.LegacyIMU) Or (FX3.SensorType = DeviceType.ComponentSensor) Then Exit Sub
         Dim expectedPage As Integer = currentRegList(0).Page
         If m_pageMessageList.Contains(expectedPage) Then
             Exit Sub
