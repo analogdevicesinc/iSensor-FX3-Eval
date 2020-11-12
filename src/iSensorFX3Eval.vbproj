@@ -486,6 +486,9 @@
     <None Include="RegMaps\ADIS1650x_RegMap.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="RegMaps\ADXL35X_RegMap.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="RegMaps\ADXRS295_Regmap.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
