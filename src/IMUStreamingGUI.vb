@@ -50,6 +50,14 @@ Public Class IMUStreamingGUI
         Me.Dispose()
     End Sub
 
+    ''' <summary>
+    ''' This function handles the case where a user updates the FX3 DR
+    ''' active setting outside this form
+    ''' </summary>
+    Private Sub UpdateDrActiveState() Handles Me.Activated
+        check_drActive.Checked = m_TopGUI.FX3.DrActive
+    End Sub
+
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
 
         Dim timeString As String = "_" + DateTime.Now().ToString("s")

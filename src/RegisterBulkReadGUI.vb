@@ -66,6 +66,14 @@ Public Class RegisterBulkReadGUI
 
     End Sub
 
+    ''' <summary>
+    ''' This function handles the case where a user updates the FX3 DR
+    ''' active setting outside this form
+    ''' </summary>
+    Private Sub UpdateDrActiveState() Handles Me.Activated
+        DrActiveBox.Checked = m_TopGUI.FX3.DrActive
+    End Sub
+
     Private Sub SetupToolTips()
 
         Dim tip0 As ToolTip = New ToolTip()
