@@ -1189,6 +1189,9 @@ Public Class TopGUI
 
     Private Sub ButtonWrite_Click(sender As Object, e As EventArgs) Handles btn_WriteReg.Click
 
+        'turn drActive to false (safer this way)
+        If FX3.DrActive Then FX3.DrActive = False
+
         Dim regLabel As String
 
         If scaleData Then
@@ -1219,6 +1222,9 @@ Public Class TopGUI
     Private Sub ReadPage()
         Dim readRegList As New List(Of RegClass)
         Dim numDecimalPlaces As UInteger
+
+        'turn drActive to false (safer this way)
+        If FX3.DrActive Then FX3.DrActive = False
 
         For Each reg In currentRegList
             If reg.IsReadable Then
@@ -1283,6 +1289,10 @@ Public Class TopGUI
         Dim regLabel As String
         Dim reg As RegClass
         Dim numDecimalPlaces As UInteger
+
+        'turn drActive to false (safer this way)
+        If FX3.DrActive Then FX3.DrActive = False
+
         Try
             regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
             reg = RegMap(regLabel)
