@@ -639,66 +639,6 @@
             This function is used to aynchronously stop a buffered stream.
             </summary>
         </member>
-        <member name="T:AdisApi.IBurstSpiInterface">
-            <summary>
-            This interface defines a protocol agnostic burst SPI
-            </summary>
-        </member>
-        <member name="M:AdisApi.IBurstSpiInterface.BurstTransfer(System.Byte[])">
-            <summary>
-            Perform a single SPI burst transfer. The burst length (in bytes) is the length of MOSI.
-            </summary>
-            <param name="MOSI">The data to clock out over the MOSI line</param>
-            <returns>The data received on the MISO line during the burst transfer</returns>
-        </member>
-        <member name="M:AdisApi.IBurstSpiInterface.BurstTransfer(System.Byte[],System.Int32)">
-            <summary>
-            Performs multiple SPI burst transfers. The burst length (in bytes) is the length of MOSI.
-            </summary>
-            <param name="MOSI">The data to clock out over the MOSI line during each burst transfer</param>
-            <param name="numTransfers">The number of sequential burst transfers to perform</param>
-            <returns>All the data received on the MISO line (should be size: MOSI.Count * numTransfers)</returns>
-        </member>
-        <member name="M:AdisApi.IBurstSpiInterface.StartBurstBufferedStream(System.Byte[],System.Int32)">
-            <summary>
-            Start a buffered burst transfer stream.
-            </summary>
-            <param name="MOSI">The data to clock out over the MOSI line during each burst</param>
-            <param name="numTransfers">The total number of burst transfers to perform</param>
-        </member>
-        <member name="M:AdisApi.IBurstSpiInterface.StopStream">
-            <summary>
-            This function is used to aynchronously stop a buffered stream.
-            </summary>
-        </member>
-        <member name="M:AdisApi.IBurstSpiInterface.GetBufferedBurstDataPacket">
-            <summary>
-            Get a buffered burst stream packet (one burst)
-            </summary>
-            <returns>The burst data packet. If none available, returns nothing.</returns>
-        </member>
-        <member name="P:AdisApi.IBurstSpiInterface.StreamTimeoutSeconds">
-            <summary>
-            This property is used to get/set the buffered stream timeout, in seconds.
-            </summary>
-        </member>
-        <member name="P:AdisApi.IBurstSpiInterface.DrActive">
-            <summary>
-            This property is used to get/set the data ready triggering for buffered streams. If set to true, each buffered stream "packet"
-            will start on a data ready posedge. This is needed to implement the IRegInterface.
-            </summary>
-        </member>
-        <member name="P:AdisApi.IBurstSpiInterface.DrPin">
-            <summary>
-            This property is used to get or set the pin used to trigger data ready captures.
-            </summary>
-        </member>
-        <member name="P:AdisApi.IBurstSpiInterface.DrPolarity">
-            <summary>
-            This property is used to get or set the data ready polarity. True means data ready is triggered on
-            a rising edge of the data ready pin. False means that data ready is triggered on a falling edge of the data ready pin.
-            </summary>
-        </member>
         <member name="T:AdisApi.ISpi32InterfaceException">
             <summary>
             This exception is thrown by the Spi32Wrapper class whenever an invalid result is produced by an ISpi32Interface implementation class.
@@ -720,11 +660,6 @@
             Constructor for a Spi32Wrapper
             </summary>
             <param name="SpiInterface">The ISpi32Interface implementation to wrap around</param>
-        </member>
-        <member name="M:AdisApi.Spi32Wrapper.#ctor">
-            <summary>
-            Default constructor which takes no arguments. Do not use.
-            </summary>
         </member>
         <member name="T:AdisApi.SpiCortexM4">
             <summary>
@@ -2100,15 +2035,6 @@
             <param name="numBuffers"></param>
             <returns></returns>
         </member>
-        <member name="M:AdisApi.iSensorSpi.ReadRegArrayStream32(System.UInt32[],System.UInt32,System.UInt32)">
-            <summary>
-            To provide a Stream function for full 32 bit uint return data.
-            </summary>
-            <param name="writeData"></param>
-            <param name="numCaptures"></param>
-            <param name="numBuffers"></param>
-            <returns></returns>
-        </member>
         <member name="M:AdisApi.iSensorSpi.StopStream">
             <summary>
             Stops an unbuffered stream. 
@@ -2130,15 +2056,6 @@
         <member name="M:AdisApi.iSensorSpi.initializeStream(System.UInt16[],System.UInt32,System.UInt32,AdisApi.iSensorSpi.TransferType)">
             <summary>
             Starts a streaming operation in the SDP formware. (internal)
-            </summary>
-            <param name="writeData"></param>
-            <param name="numBursts"></param>
-            <param name="numPackets"></param>
-            <param name="transferMode"></param>
-        </member>
-        <member name="M:AdisApi.iSensorSpi.initializeStream(System.UInt32[],System.UInt32,System.UInt32,AdisApi.iSensorSpi.TransferType)">
-            <summary>
-            To accomodate 32 bit write data.
             </summary>
             <param name="writeData"></param>
             <param name="numBursts"></param>
