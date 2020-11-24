@@ -125,6 +125,7 @@ Partial Class TopGUI
         Me.btn_BurstTest = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.btn_checkError = New System.Windows.Forms.Button()
+        Me.btn_CRC4WordGen = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -976,7 +977,7 @@ Partial Class TopGUI
         Me.manualGPIOGroupBox.Controls.Add(Me.GroupBox13)
         Me.manualGPIOGroupBox.Controls.Add(Me.GPIO_Num)
         Me.manualGPIOGroupBox.Controls.Add(Me.Label1)
-        Me.manualGPIOGroupBox.Location = New System.Drawing.Point(6, 102)
+        Me.manualGPIOGroupBox.Location = New System.Drawing.Point(6, 198)
         Me.manualGPIOGroupBox.Name = "manualGPIOGroupBox"
         Me.manualGPIOGroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No
         Me.manualGPIOGroupBox.Size = New System.Drawing.Size(330, 182)
@@ -1100,12 +1101,13 @@ Partial Class TopGUI
         '
         'GroupBox9
         '
+        Me.GroupBox9.Controls.Add(Me.btn_CRC4WordGen)
         Me.GroupBox9.Controls.Add(Me.btn_pulseMeasure)
         Me.GroupBox9.Controls.Add(Me.btn_binFile)
         Me.GroupBox9.Controls.Add(Me.btn_ADXL375)
-        Me.GroupBox9.Location = New System.Drawing.Point(276, 6)
+        Me.GroupBox9.Location = New System.Drawing.Point(6, 102)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(251, 90)
+        Me.GroupBox9.Size = New System.Drawing.Size(330, 90)
         Me.GroupBox9.TabIndex = 37
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Misc"
@@ -1184,6 +1186,15 @@ Partial Class TopGUI
         Me.btn_checkError.TabIndex = 12
         Me.btn_checkError.Text = "Check FX3 Error Log"
         Me.btn_checkError.UseVisualStyleBackColor = True
+        '
+        'btn_CRC4WordGen
+        '
+        Me.btn_CRC4WordGen.Location = New System.Drawing.Point(249, 19)
+        Me.btn_CRC4WordGen.Name = "btn_CRC4WordGen"
+        Me.btn_CRC4WordGen.Size = New System.Drawing.Size(75, 64)
+        Me.btn_CRC4WordGen.TabIndex = 39
+        Me.btn_CRC4WordGen.Text = "CRC4 Word Generator"
+        Me.btn_CRC4WordGen.UseVisualStyleBackColor = True
         '
         'TopGUI
         '
@@ -1344,4 +1355,5 @@ Partial Class TopGUI
     Friend WithEvents dataPlotRegsView As DataGridView
     Friend WithEvents reg_label As DataGridViewTextBoxColumn
     Friend WithEvents plot As DataGridViewCheckBoxColumn
+    Friend WithEvents btn_CRC4WordGen As Button
 End Class

@@ -15,6 +15,40 @@ End Class
 
 Module helperFunctions
 
+    ''' <summary>
+    ''' Calculates a 4 bit CRC on 28 bits of input data
+    ''' </summary>
+    ''' <param name="inData">The data to calculate the CRC of. Should be the 28 most significant bits of the SPI word</param>
+    ''' <returns>The CRC value (0 - 15)</returns>
+    Public Function CalcCRC28Bit(inData As UInteger) As Integer
+
+        Dim currentBit As Boolean
+        Dim doInvert As Boolean
+        Dim CRC(3) As Boolean
+        CRC(0) = False ' Init before calculation
+        CRC(1) = True ' Init before calculation
+        CRC(2) = False ' Init before calculation
+        CRC(3) = True ' Init before calculation
+
+        For index As Integer = 0 To 27
+            currentBit = ((inData >> (27 - index)) And &H1) = 1
+            doInvert = currentBit Xor CRC(3)
+            CRC(3) = CRC(2)
+            CRC(2) = CRC(1)
+            CRC(1) = CRC(0)
+            CRC(0) = doInvert
+        Next
+
+        Dim CRCVal As Integer = 0
+        CRCVal = CRCVal + (Convert.ToInt32(CRC(3)) << 3)
+        CRCVal = CRCVal + (Convert.ToInt32(CRC(2)) << 2)
+        CRCVal = CRCVal + (Convert.ToInt32(CRC(1)) << 1)
+        CRCVal = CRCVal + Convert.ToInt32(CRC(0))
+
+        Return CRCVal
+
+    End Function
+
     Public Function GetTime() As String
         Return Date.Now().ToString("s").Replace(":", "-")
     End Function

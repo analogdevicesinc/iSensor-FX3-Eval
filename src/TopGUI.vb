@@ -258,6 +258,25 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
+    Private Sub btn_CRC4WordGen_Click(sender As Object, e As EventArgs) Handles btn_CRC4WordGen.Click
+        Dim input As UInteger
+        Dim crc As UInteger
+        Try
+            input = Convert.ToUInt32(InputBox("Enter full input word (hex):"), 16)
+        Catch ex As Exception
+            MsgBox("Invalid Input! " + ex.Message)
+            Exit Sub
+        End Try
+
+        'calc CRC
+        crc = helperFunctions.CalcCRC28Bit(input >> 4)
+
+        'add to input
+        input = input And &HFFFFFFF0UI
+        input = input Or crc
+        MsgBox("0x" + input.ToString("X8"))
+    End Sub
+
     Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_BurstTest.Click
         Dim subGUI As New BurstTestGUI()
         subGUI.SetTopGUI(Me)
