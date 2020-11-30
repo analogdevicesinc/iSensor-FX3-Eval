@@ -53,8 +53,6 @@ The Explorer Kit requires **three** jumpers to be installed to operate correctly
 
 ## Additional Repositories
 
-Two additional repositories are required for this example to operate. The FX3 API, where all FX3-related functions are implemented, and the FX3 firmware are both essential for managing the USB -> SPI bridge the FX3 offers and should serve as a good starting point for your application.
+The FX3 API repository contains the .NET interface libraries and custom firmware which are run by the EVAL-ADIS-FX3 evaluation system. The resouces provided in that repository can be used to start building your own project with the EVAL-ADIS-FX3. A wrapper is provided allowing for code development in C#, VB.NET, Matlab, Python, and Labview.
 
-1. [FX3 Firmware](https://github.com/juchong/iSensor-FX3-Firmware)
-
-2. [FX3API](https://github.com/juchong/iSensor-FX3-API)
+1. [FX3API](https://github.com/juchong/iSensor-FX3-API)
