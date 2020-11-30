@@ -1,4 +1,11 @@
-﻿Imports FX3Api
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          DutPersonality.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Description:   Class to store an IMU personality. The personality contains all the FX3 settings associated with a given part
+
+Imports FX3Api
 Imports System.IO
 
 Public Class DutPersonality

@@ -1,6 +1,8 @@
-﻿'File:          SelectFX3GUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          SelectFX3GUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   Allows a user to choose which FX3 board they want to connect to.
 
 Public Class SelectFX3GUI

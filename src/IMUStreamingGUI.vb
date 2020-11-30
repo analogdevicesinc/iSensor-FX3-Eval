@@ -1,6 +1,8 @@
-﻿'File:          IMUStreamingGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          IMUStreamingGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   GUI to allow for burst mode streaming from IMU products.
 
 Imports AdisApi
@@ -91,7 +93,7 @@ Public Class IMUStreamingGUI
         End If
 
         'instantiate stream data logger
-        fileManager = New Logger(m_TopGUI.FX3, New adisInterface.adbfInterface(m_TopGUI.FX3, Nothing))
+        fileManager = New Logger(m_TopGUI.FX3, New adbfInterface(m_TopGUI.FX3, Nothing))
 
         'set up FX3 specific properties
         If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then

@@ -1,9 +1,9 @@
-﻿'File:          ApiInfoGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          ApiInfoGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   Show the information for the current version of the FX3Api dll.
-
-Imports System.ComponentModel
 
 Public Class ApiInfoGUI
     Inherits FormBase

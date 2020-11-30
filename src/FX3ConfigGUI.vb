@@ -1,6 +1,8 @@
-﻿'File:          FX3ConfigGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          FX3ConfigGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   Allows user to set FX3 configuration.
 
 Imports FX3Api

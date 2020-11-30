@@ -1,6 +1,8 @@
-﻿'File:          ADcmXLStreamingGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          ADcmXLStreamingGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   GUI for real time data streaming from the ADcmXLx021 series parts.
 
 Imports FX3Api

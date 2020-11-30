@@ -1,4 +1,10 @@
-﻿Imports System.IO
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          ADcmXLBufferedLog.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Description:   GUI to log buffered capture data (time series or FFT) from ADcmXLx021 series parts.
+
 Imports RegMapClasses
 
 Public Class ADcmXLBufferedLog

@@ -1,6 +1,8 @@
-﻿'File:          SelectRegmapGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          SelectRegmapGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   Allows a user to select what RegMap CSV they want to load. If there is only one it selects that file.
 
 Imports System.IO

@@ -1,6 +1,8 @@
-﻿'File:          BitBangSpiGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          BitBangSpiGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          9/23/2019
 'Description:   Bit bang SPI traffic to a DUT. Allows for robustness testing of the SPI interface.
 
 Imports FX3Api

@@ -1,6 +1,8 @@
-﻿'File:          AppBrowseGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          AppBrowseGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          4/22/2020
 'Description:   Allows for writing binary data patterns to a file. Might not fit great in here, but I use it, and I didn't want to make an entire tool for it.
 
 Public Class BinaryFileWriterGUI

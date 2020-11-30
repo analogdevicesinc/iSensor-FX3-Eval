@@ -1,7 +1,9 @@
-﻿'File:          BurstTestGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          BurstTestGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          9/23/2019
-'Description:   Testing burst mode for ADIS IMU's
+'Description:   Testing burst mode for ADIS IMU's. Includes single transfer and stream modes
 
 Imports FX3Api
 Imports RegMapClasses
@@ -139,8 +141,10 @@ Public Class BurstTestGUI
             If IsNothing(burstTrigger) Then Exit Sub
             m_TopGUI.FX3.BurstMOSIData = burstTrigger
 
-            'set up logger
+            'enable burst mode
+            m_TopGUI.FX3.SetupBurstMode()
 
+            'set up logger
             For i As Integer = 0 To (m_numBytes >> 1) - 1
                 regs.Add(New RegClass With {.Address = 0, .Page = 0, .NumBytes = 2, .ReadLen = 16, .Label = "BURST_" + i.ToString()})
             Next

@@ -1,7 +1,9 @@
-﻿'File:          helperFunctions.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          helperFunctions.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
-'Description:   Module of generic helper functions for use in the GUI
+'Description:   Module of generic helper functions for use in the EVAL-ADIS-FX3 GUI
 
 Imports System.IO
 Imports RegMapClasses

@@ -1,9 +1,9 @@
-﻿'File:          SelectDUTGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          SelectDUTGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   Allows a user to select their DUT (ADcmXL series or IMU).
-
-Imports FX3Api
 
 Public Class SelectDUTGUI
     Inherits FormBase

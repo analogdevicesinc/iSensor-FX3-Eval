@@ -1,4 +1,11 @@
-﻿Public Class FlashInterfaceGUI
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          FlashInterfaceGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Description:   GUI to allow users to dump the FX3 error log to a CSV file, or read the full contents of the EEPROM
+
+Public Class FlashInterfaceGUI
 
     Public Sub Shutdown() Handles Me.Closing
         m_TopGUI.btn_checkError.Enabled = True

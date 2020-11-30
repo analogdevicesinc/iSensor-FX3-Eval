@@ -1,7 +1,9 @@
-﻿'File:          FrequencyPlotGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          FrequencyPlotGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          10/30/2019
-'Description:   Plots FFT data for a DUT
+'Description:   Plots FFT data from an IMU in real time
 
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports RegMapClasses

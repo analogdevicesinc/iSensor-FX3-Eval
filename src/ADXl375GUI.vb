@@ -1,6 +1,8 @@
-﻿'File:          ADXL375GUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          ADXL375GUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          9/13/2019
 'Description:   Basic interfacing to the ADXL375 accelerometer. Provides read/write and data streaming capabilities.
 
 Imports FX3Api

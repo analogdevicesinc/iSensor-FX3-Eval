@@ -1,7 +1,10 @@
-﻿'File:          TopGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          TopGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Date:          7/25/2019
-'Description:   Top level GUI for the FX3 iSensor eval application
+'Description:   Top level GUI for the FX3 iSensor eval application.
 
 Imports FX3Api
 Imports adisInterface

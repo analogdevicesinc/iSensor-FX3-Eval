@@ -1,6 +1,8 @@
-﻿'File:          RegisterBulkReadGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          RegisterBulkReadGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/25/2019
 'Description:   Allows for bulk data logging from registers. Can be triggered on a data ready signal for IMUs
 
 Imports AdisApi

@@ -1,7 +1,9 @@
-﻿'File:          PulseMeasureGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          PulseMeasureGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          7/26/2019
-'Description:   Allows for precise pulse measurement with a trigger condition.
+'Description:   Allows for precise pulse measurement with a trigger condition using timer hardware
 
 Imports AdisApi
 Imports FX3Api

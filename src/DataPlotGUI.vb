@@ -1,6 +1,8 @@
-﻿'File:          DataPlotGUI.vb
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          DataPlotGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Date:          9/23/2019
 'Description:   Allows for data plotting and logging, along with playback of logged data.
 
 Imports RegMapClasses

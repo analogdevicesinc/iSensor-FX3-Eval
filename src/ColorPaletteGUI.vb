@@ -1,4 +1,11 @@
-﻿Public Class ColorPaletteGUI
+﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          ColorPaletteGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Description:   Allows configuration of the EVAL-ADIS-FX3 GUI color palette
+
+Public Class ColorPaletteGUI
 
     Private enableButton As Button
     Private goodColor As Boolean
