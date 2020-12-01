@@ -291,7 +291,7 @@ Partial Class FrequencyPlotGUI
         Me.btn_SetLabel.Name = "btn_SetLabel"
         Me.btn_SetLabel.Size = New System.Drawing.Size(70, 40)
         Me.btn_SetLabel.TabIndex = 27
-        Me.btn_SetLabel.Text = "Set Y-Axis Label"
+        Me.btn_SetLabel.Text = "Set Y-Axis Title"
         Me.btn_SetLabel.UseVisualStyleBackColor = True
         '
         'check_sciLabel
