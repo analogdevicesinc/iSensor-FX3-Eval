@@ -323,21 +323,25 @@ Public Class FrequencyPlotGUI
             loc.Y = e.Y
             Dim pointLabel As New Label()
             Me.Controls.Add(pointLabel)
-            formatString = ""
-            If mag > 1000 Then
-                formatString = ""
-            ElseIf mag > 10 Then
-                formatString = "f1"
-            ElseIf mag > 1 Then
-                formatString = "f2"
-            ElseIf mag > 0.1 Then
-                formatString = "f3"
-            ElseIf mag > 0.01 Then
-                formatString = "f4"
-            ElseIf mag > 0.001 Then
-                formatString = "f5"
-            Else
-                formatString = "f6"
+            'scientific format
+            formatString = "#0.0#e0"
+            If Not check_sciLabel.Checked Then
+                'set format string based on magnitude
+                If mag > 1000 Then
+                    formatString = "f0"
+                ElseIf mag > 10 Then
+                    formatString = "f1"
+                ElseIf mag > 1 Then
+                    formatString = "f2"
+                ElseIf mag > 0.1 Then
+                    formatString = "f3"
+                ElseIf mag > 0.01 Then
+                    formatString = "f4"
+                ElseIf mag > 0.001 Then
+                    formatString = "f5"
+                Else
+                    formatString = "f6"
+                End If
             End If
             pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString(formatString) + " mag" + Environment.NewLine + "●"
             pointLabel.Font = New Font(pointLabel.Font, FontStyle.Bold)

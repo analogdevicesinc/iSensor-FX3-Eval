@@ -50,6 +50,7 @@ Partial Class FrequencyPlotGUI
         Me.input_3db_min = New System.Windows.Forms.TextBox()
         Me.input_3db_max = New System.Windows.Forms.TextBox()
         Me.btn_SetLabel = New System.Windows.Forms.Button()
+        Me.check_sciLabel = New System.Windows.Forms.CheckBox()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -71,16 +72,16 @@ Partial Class FrequencyPlotGUI
         '
         'RegisterList
         '
-        Me.RegisterList.Location = New System.Drawing.Point(12, 185)
+        Me.RegisterList.Location = New System.Drawing.Point(10, 206)
         Me.RegisterList.Name = "RegisterList"
-        Me.RegisterList.Size = New System.Drawing.Size(219, 187)
+        Me.RegisterList.Size = New System.Drawing.Size(221, 170)
         Me.RegisterList.TabIndex = 1
         Me.RegisterList.UseCompatibleStateImageBehavior = False
         '
         'regSelect
         '
         Me.regSelect.FormattingEnabled = True
-        Me.regSelect.Location = New System.Drawing.Point(69, 111)
+        Me.regSelect.Location = New System.Drawing.Point(69, 133)
         Me.regSelect.Name = "regSelect"
         Me.regSelect.Size = New System.Drawing.Size(162, 21)
         Me.regSelect.TabIndex = 2
@@ -88,7 +89,7 @@ Partial Class FrequencyPlotGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(8, 12)
+        Me.Label1.Location = New System.Drawing.Point(7, 12)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(91, 13)
         Me.Label1.TabIndex = 3
@@ -97,7 +98,7 @@ Partial Class FrequencyPlotGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(9, 64)
+        Me.Label2.Location = New System.Drawing.Point(7, 64)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(98, 13)
         Me.Label2.TabIndex = 4
@@ -115,7 +116,7 @@ Partial Class FrequencyPlotGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(9, 114)
+        Me.Label3.Location = New System.Drawing.Point(7, 136)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(54, 13)
         Me.Label3.TabIndex = 7
@@ -123,36 +124,36 @@ Partial Class FrequencyPlotGUI
         '
         'btn_addreg
         '
-        Me.btn_addreg.Location = New System.Drawing.Point(11, 138)
+        Me.btn_addreg.Location = New System.Drawing.Point(10, 160)
         Me.btn_addreg.Name = "btn_addreg"
-        Me.btn_addreg.Size = New System.Drawing.Size(68, 41)
+        Me.btn_addreg.Size = New System.Drawing.Size(70, 40)
         Me.btn_addreg.TabIndex = 8
         Me.btn_addreg.Text = "Add Register"
         Me.btn_addreg.UseVisualStyleBackColor = True
         '
         'btn_removeReg
         '
-        Me.btn_removeReg.Location = New System.Drawing.Point(87, 138)
+        Me.btn_removeReg.Location = New System.Drawing.Point(86, 161)
         Me.btn_removeReg.Name = "btn_removeReg"
-        Me.btn_removeReg.Size = New System.Drawing.Size(68, 41)
+        Me.btn_removeReg.Size = New System.Drawing.Size(70, 40)
         Me.btn_removeReg.TabIndex = 9
         Me.btn_removeReg.Text = "Remove Register"
         Me.btn_removeReg.UseVisualStyleBackColor = True
         '
         'btn_run
         '
-        Me.btn_run.Location = New System.Drawing.Point(11, 378)
+        Me.btn_run.Location = New System.Drawing.Point(10, 382)
         Me.btn_run.Name = "btn_run"
-        Me.btn_run.Size = New System.Drawing.Size(67, 41)
+        Me.btn_run.Size = New System.Drawing.Size(70, 40)
         Me.btn_run.TabIndex = 10
         Me.btn_run.Text = "Start Plot"
         Me.btn_run.UseVisualStyleBackColor = True
         '
         'btn_stopPlot
         '
-        Me.btn_stopPlot.Location = New System.Drawing.Point(87, 378)
+        Me.btn_stopPlot.Location = New System.Drawing.Point(86, 382)
         Me.btn_stopPlot.Name = "btn_stopPlot"
-        Me.btn_stopPlot.Size = New System.Drawing.Size(67, 41)
+        Me.btn_stopPlot.Size = New System.Drawing.Size(70, 40)
         Me.btn_stopPlot.TabIndex = 11
         Me.btn_stopPlot.Text = "Stop Plot"
         Me.btn_stopPlot.UseVisualStyleBackColor = True
@@ -169,7 +170,7 @@ Partial Class FrequencyPlotGUI
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(8, 38)
+        Me.Label4.Location = New System.Drawing.Point(7, 38)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(77, 13)
         Me.Label4.TabIndex = 13
@@ -188,7 +189,7 @@ Partial Class FrequencyPlotGUI
         'logXaxis
         '
         Me.logXaxis.AutoSize = True
-        Me.logXaxis.Location = New System.Drawing.Point(11, 87)
+        Me.logXaxis.Location = New System.Drawing.Point(10, 87)
         Me.logXaxis.Name = "logXaxis"
         Me.logXaxis.Size = New System.Drawing.Size(76, 17)
         Me.logXaxis.TabIndex = 16
@@ -197,36 +198,36 @@ Partial Class FrequencyPlotGUI
         '
         'btn_ClearLabels
         '
-        Me.btn_ClearLabels.Location = New System.Drawing.Point(163, 378)
+        Me.btn_ClearLabels.Location = New System.Drawing.Point(161, 382)
         Me.btn_ClearLabels.Name = "btn_ClearLabels"
-        Me.btn_ClearLabels.Size = New System.Drawing.Size(68, 41)
+        Me.btn_ClearLabels.Size = New System.Drawing.Size(70, 40)
         Me.btn_ClearLabels.TabIndex = 17
         Me.btn_ClearLabels.Text = "Clear Labels"
         Me.btn_ClearLabels.UseVisualStyleBackColor = True
         '
         'btn_Export
         '
-        Me.btn_Export.Location = New System.Drawing.Point(87, 425)
+        Me.btn_Export.Location = New System.Drawing.Point(86, 428)
         Me.btn_Export.Name = "btn_Export"
-        Me.btn_Export.Size = New System.Drawing.Size(68, 41)
+        Me.btn_Export.Size = New System.Drawing.Size(70, 40)
         Me.btn_Export.TabIndex = 18
         Me.btn_Export.Text = "Export Plot Data"
         Me.btn_Export.UseVisualStyleBackColor = True
         '
         'btn_Clear
         '
-        Me.btn_Clear.Location = New System.Drawing.Point(163, 138)
+        Me.btn_Clear.Location = New System.Drawing.Point(161, 161)
         Me.btn_Clear.Name = "btn_Clear"
-        Me.btn_Clear.Size = New System.Drawing.Size(68, 41)
+        Me.btn_Clear.Size = New System.Drawing.Size(70, 40)
         Me.btn_Clear.TabIndex = 19
-        Me.btn_Clear.Text = "Clear All"
+        Me.btn_Clear.Text = "Clear All Registers"
         Me.btn_Clear.UseVisualStyleBackColor = True
         '
         'btn_saveplot
         '
-        Me.btn_saveplot.Location = New System.Drawing.Point(163, 425)
+        Me.btn_saveplot.Location = New System.Drawing.Point(161, 428)
         Me.btn_saveplot.Name = "btn_saveplot"
-        Me.btn_saveplot.Size = New System.Drawing.Size(68, 41)
+        Me.btn_saveplot.Size = New System.Drawing.Size(70, 40)
         Me.btn_saveplot.TabIndex = 20
         Me.btn_saveplot.Text = "Save Plot"
         Me.btn_saveplot.UseVisualStyleBackColor = True
@@ -241,9 +242,9 @@ Partial Class FrequencyPlotGUI
         '
         'btn_apply3db
         '
-        Me.btn_apply3db.Location = New System.Drawing.Point(10, 425)
+        Me.btn_apply3db.Location = New System.Drawing.Point(10, 428)
         Me.btn_apply3db.Name = "btn_apply3db"
-        Me.btn_apply3db.Size = New System.Drawing.Size(68, 41)
+        Me.btn_apply3db.Size = New System.Drawing.Size(70, 40)
         Me.btn_apply3db.TabIndex = 22
         Me.btn_apply3db.Text = "Apply -3dB Lines"
         Me.btn_apply3db.UseVisualStyleBackColor = True
@@ -251,7 +252,7 @@ Partial Class FrequencyPlotGUI
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(7, 477)
+        Me.Label5.Location = New System.Drawing.Point(7, 476)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(127, 13)
         Me.Label5.TabIndex = 23
@@ -260,7 +261,7 @@ Partial Class FrequencyPlotGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 503)
+        Me.Label6.Location = New System.Drawing.Point(7, 502)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(130, 13)
         Me.Label6.TabIndex = 24
@@ -286,18 +287,29 @@ Partial Class FrequencyPlotGUI
         '
         'btn_SetLabel
         '
-        Me.btn_SetLabel.Location = New System.Drawing.Point(163, 84)
+        Me.btn_SetLabel.Location = New System.Drawing.Point(161, 87)
         Me.btn_SetLabel.Name = "btn_SetLabel"
-        Me.btn_SetLabel.Size = New System.Drawing.Size(68, 21)
+        Me.btn_SetLabel.Size = New System.Drawing.Size(70, 40)
         Me.btn_SetLabel.TabIndex = 27
-        Me.btn_SetLabel.Text = "Set Label"
+        Me.btn_SetLabel.Text = "Set Y-Axis Label"
         Me.btn_SetLabel.UseVisualStyleBackColor = True
+        '
+        'check_sciLabel
+        '
+        Me.check_sciLabel.AutoSize = True
+        Me.check_sciLabel.Location = New System.Drawing.Point(10, 110)
+        Me.check_sciLabel.Name = "check_sciLabel"
+        Me.check_sciLabel.Size = New System.Drawing.Size(146, 17)
+        Me.check_sciLabel.TabIndex = 28
+        Me.check_sciLabel.Text = "Scientific Notation Labels"
+        Me.check_sciLabel.UseVisualStyleBackColor = True
         '
         'FrequencyPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(834, 531)
+        Me.Controls.Add(Me.check_sciLabel)
         Me.Controls.Add(Me.btn_SetLabel)
         Me.Controls.Add(Me.input_3db_max)
         Me.Controls.Add(Me.input_3db_min)
@@ -360,4 +372,5 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents input_3db_min As TextBox
     Friend WithEvents input_3db_max As TextBox
     Friend WithEvents btn_SetLabel As Button
+    Friend WithEvents check_sciLabel As CheckBox
 End Class
