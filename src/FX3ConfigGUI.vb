@@ -278,7 +278,7 @@ Public Class FX3ConfigGUI
         If DutVoltage.SelectedItem <> m_TopGUI.FX3.DutSupplyMode Then
             'ask for confirm if selecting 5V without automotive SPI IMU selected
             If DutVoltage.SelectedItem = FX3Api.DutVoltage.On5_0Volts And m_TopGUI.FX3.SensorType <> DeviceType.AutomotiveSpi Then
-                If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+                If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) <> DialogResult.OK Then
                     DutVoltage.SelectedItem = m_TopGUI.FX3.DutSupplyMode
                 End If
             End If

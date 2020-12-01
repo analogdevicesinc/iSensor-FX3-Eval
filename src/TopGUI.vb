@@ -855,14 +855,14 @@ Public Class TopGUI
             Return False
         End If
 
-        If personality.Supply = DutVoltage.On5_0Volts Then
-            If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+        If (personality.Supply = DutVoltage.On5_0Volts) And (FX3.ActiveFX3.BoardType <> FX3BoardType.CypressFX3Board) Then
+            If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) <> DialogResult.OK Then
                 Return False
             End If
         End If
 
         If personality.VDDIO <> 3.3 Then
-            If MessageBox.Show("FX3 directly supports VDDIO of 3.3V, other values may cause damage - Continue?", "Confirmation", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+            If MessageBox.Show("FX3 directly supports VDDIO of 3.3V, other values may cause damage - Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) <> DialogResult.OK Then
                 Return False
             End If
         End If
