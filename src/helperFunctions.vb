@@ -8,8 +8,10 @@
 Imports System.IO
 Imports RegMapClasses
 
-Class RegOffsetPair
-    Public Offset As Double
+''' <summary>
+''' Class to store register info + plot color
+''' </summary>
+Class RegColorPair
     Public Reg As RegClass
     Public Index As Integer
     Public Color As Color

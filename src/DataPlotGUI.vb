@@ -15,7 +15,7 @@ Public Class DataPlotGUI
 
     Private samplePeriodMs As Integer
     Private plotting As Boolean
-    Private selectedRegList As List(Of RegOffsetPair)
+    Private selectedRegList As List(Of RegColorPair)
     Private plotTimer As System.Timers.Timer
     Private plotXPosition As Integer
     Private plotYMin As Integer
@@ -40,7 +40,7 @@ Public Class DataPlotGUI
         'Set defaults
         plotting = False
         samplePeriodMs = 100
-        selectedRegList = New List(Of RegOffsetPair)
+        selectedRegList = New List(Of RegColorPair)
         sampleFreq.Text = "20"
         dataPlot.Series.Clear()
         runTime = Long.MaxValue
@@ -138,7 +138,7 @@ Public Class DataPlotGUI
         For Each item In selectedRegList
             regView.Item("Contents", item.Index).Value = regValues(index).ToString()
             regView.Item("Contents", item.Index).Style = New DataGridViewCellStyle With {.BackColor = item.Color}
-            plotValues.Add(regValues(index) - item.Offset)
+            plotValues.Add(regValues(index))
             'Log if needed
             If logToCSV.Checked Then
                 logStr = logStr + "," + regValues(index).ToString()
@@ -228,10 +228,13 @@ Public Class DataPlotGUI
         Dim regIndex As Integer = 0
         Dim regStr() As String
         Dim readStr As String = "Not Read"
+        Dim scaleStr As String
         For Each reg In m_TopGUI.RegMap
             If reg.IsReadable Then
+                'scale is 1/regmap scale factor to match datasheets better
+                scaleStr = (1.0 / reg.Scale).ToString()
                 If regIndex >= regView.RowCount Then
-                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr, "False", "0", reg.Scale.ToString()}
+                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr, "False", reg.Offset.ToString(), scaleStr}
                     regView.Rows.Add(regStr)
                 Else
                     regView.Item("Label", regIndex).Value = reg.Label
@@ -239,8 +242,8 @@ Public Class DataPlotGUI
                     regView.Item("Address", regIndex).Value = reg.Address
                     regView.Item("Contents", regIndex).Value = readStr
                     regView.Item("Plot", regIndex).Value = False
-                    regView.Item("Offset", regIndex).Value = "0"
-                    regView.Item("reg_scale", regIndex).Value = reg.Scale.ToString()
+                    regView.Item("Offset", regIndex).Value = reg.Offset.ToString()
+                    regView.Item("reg_scale", regIndex).Value = scaleStr
                 End If
                 'check if previously selected
                 If m_TopGUI.dataPlotRegs.Contains(reg.Label) Then regView.Item("Plot", regIndex).Value = True
@@ -333,9 +336,12 @@ Public Class DataPlotGUI
                 Try
                     reg = m_TopGUI.RegMap(regView.Item("Label", index).Value)
                     scale = Convert.ToDouble(regView.Item("reg_scale", index).Value)
-                    reg.Scale = scale
+                    If scale = 0 Then Throw New ArgumentException("ERROR: Invalid scale!")
+                    'reg scale is 1/scale factor
+                    reg.Scale = 1.0 / scale
                     offset = Convert.ToDouble(regView.Item("Offset", index).Value)
-                    selectedRegList.Add(New RegOffsetPair With {.Reg = reg, .Offset = offset, .Index = index, .Color = m_TopGUI.PlotColorPalette(selectedRegList.Count())})
+                    reg.Offset = offset
+                    selectedRegList.Add(New RegColorPair With {.Reg = reg, .Index = index, .Color = m_TopGUI.PlotColorPalette(selectedRegList.Count())})
                 Catch ex As Exception
                     MsgBox("Error loading register! " + ex.Message)
                     regView.Item("Plot", index).Value = False
@@ -437,8 +443,8 @@ Public Class DataPlotGUI
         regValues = GetPlotRegValues()
 
         For i As Integer = 0 To selectedRegList.Count() - 1
-            selectedRegList(i).Offset = regValues(i)
-            regView.Item("Offset", selectedRegList(i).Index).Value = regValues(i).ToString()
+            selectedRegList(i).Reg.Offset += regValues(i)
+            regView.Item("Offset", selectedRegList(i).Index).Value = selectedRegList(i).Reg.Offset.ToString()
         Next
 
     End Sub
