@@ -263,8 +263,9 @@ Public Class TopGUI
     Private Sub btn_CRC4WordGen_Click(sender As Object, e As EventArgs) Handles btn_CRC4WordGen.Click
         Dim input As UInteger
         Dim crc As UInteger
+        Dim res As String
         Try
-            input = Convert.ToUInt32(InputBox("Enter full input word (hex):"), 16)
+            input = Convert.ToUInt32(InputBox("Enter full input word (hex):", "Input", "0x00000000"), 16)
         Catch ex As Exception
             MsgBox("Invalid Input! " + ex.Message)
             Exit Sub
@@ -276,7 +277,11 @@ Public Class TopGUI
         'add to input
         input = input And &HFFFFFFF0UI
         input = input Or crc
-        MsgBox("0x" + input.ToString("X8"))
+        res = "0x" + input.ToString("X8")
+        'copy to clipboard
+        If MessageBox.Show(res + " Copy to clipboard?", "Result", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) = DialogResult.OK Then
+            Clipboard.SetText(res)
+        End If
     End Sub
 
     Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_BurstTest.Click
@@ -491,7 +496,7 @@ Public Class TopGUI
         Try
             ServicePointManager.Expect100Continue = True
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
-            request = WebRequest.Create("https://api.github.com/repos/juchong/iSensor-FX3-Eval/releases/latest")
+            request = WebRequest.Create("https://api.github.com/repos/analogdevicesinc/iSensor-FX3-Eval/releases/latest")
             request.ContentType = "application/json"
             request.UserAgent = "request"
             request.Method = "GET"
