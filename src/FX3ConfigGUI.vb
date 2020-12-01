@@ -278,7 +278,7 @@ Public Class FX3ConfigGUI
         If DutVoltage.SelectedItem <> m_TopGUI.FX3.DutSupplyMode Then
             'ask for confirm if selecting 5V without automotive SPI IMU selected
             If DutVoltage.SelectedItem = FX3Api.DutVoltage.On5_0Volts And m_TopGUI.FX3.SensorType <> DeviceType.AutomotiveSpi Then
-                If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Error) <> DialogResult.OK Then
+                If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
                     DutVoltage.SelectedItem = m_TopGUI.FX3.DutSupplyMode
                 End If
             End If
@@ -313,7 +313,7 @@ Public Class FX3ConfigGUI
         If m_TopGUI.FX3.DrActive = True Then
             'perform quick check of dr freq
             If m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 100, 2) = Double.PositiveInfinity Then
-                Dim res As DialogResult = MessageBox.Show("Warning, Data Ready not Toggling! Continue?", "Confirm Data Ready Sync", MessageBoxButtons.OKCancel)
+                Dim res As DialogResult = MessageBox.Show("Warning, Data Ready not Toggling! Continue?", "Confirm Data Ready Sync", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning)
                 If res <> DialogResult.OK Then m_TopGUI.FX3.DrActive = False
             End If
         End If

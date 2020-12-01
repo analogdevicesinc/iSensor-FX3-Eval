@@ -157,7 +157,6 @@ Public Class RegisterBulkReadGUI
 
         Dim savePath As String
         Dim MeasuredFreq As Double = Double.PositiveInfinity
-
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
 
@@ -183,8 +182,9 @@ Public Class RegisterBulkReadGUI
             DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
 
             If MeasuredFreq > 10000 Or MeasuredFreq = Double.PositiveInfinity Then
-                MessageBox.Show("Data ready frequency invalid. Is the correct DIO selected?", "Invalid Data Ready!", MessageBoxButtons.OK)
-                Exit Sub
+                If MessageBox.Show("Data ready frequency measured invalid. Continue?", "Invalid Data Ready!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
+                    Exit Sub
+                End If
             End If
         End If
 
@@ -210,8 +210,7 @@ Public Class RegisterBulkReadGUI
             calcPeriod = calcPeriod - (m_TopGUI.FX3.StallTime / 1000000)
 
             If calcPeriod > (drPeriod * 0.9) Then
-                Dim result1 As DialogResult = MessageBox.Show("Register capture time exceeds data ready period. Would you like to continue?", "Data will take too long to read!", MessageBoxButtons.YesNo)
-                If result1 = DialogResult.No Then
+                If MessageBox.Show("Register capture time exceeds data ready period. Continue?", "Data will take too long to read!", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
                     Exit Sub
                 End If
             End If
