@@ -361,6 +361,7 @@ Public Class RegisterBulkReadGUI
         m_TopGUI.FX3.DrActive = DrActiveBox.Checked
         MeasureDR.Enabled = m_TopGUI.FX3.DrActive
         ValidateDR.Enabled = m_TopGUI.FX3.DrActive
+        ValidateDR.Checked = DrActiveBox.Checked
     End Sub
 
     Private Sub btn_loadregs_Click(sender As Object, e As EventArgs) Handles btn_loadregs.Click
