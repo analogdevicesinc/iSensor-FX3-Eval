@@ -713,6 +713,9 @@ Public Class TopGUI
         tip0.SetToolTip(Me.btn_SetGPIOHigh, "Configure the selected FX3 GPIO as an output and drive high")
         tip0.SetToolTip(Me.btn_SetGPIOLow, "Configure the selected FX3 GPIO as an output and drive low")
         tip0.SetToolTip(Me.btn_checkError, "Check the contents of the FX3 firmware error log")
+        tip0.SetToolTip(Me.contRead, "Read all registers on the selected page continously (500ms interval)")
+        tip0.SetToolTip(Me.scaledData, "Display register data in hex or decimal")
+        tip0.SetToolTip(Me.btn_CRC4WordGen, "Generate a 32-bit SPI word with CRC4 (Seed 0xA) appended")
 
     End Sub
 
