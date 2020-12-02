@@ -29,6 +29,7 @@ Partial Class WelcomeGuideGUI
         Me.check_doNotShow = New System.Windows.Forms.CheckBox()
         Me.messageText = New System.Windows.Forms.Label()
         Me.wikiLink = New System.Windows.Forms.LinkLabel()
+        Me.slideNum = New System.Windows.Forms.Label()
         CType(Me.displayImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -42,18 +43,18 @@ Partial Class WelcomeGuideGUI
         '
         'btn_Next
         '
-        Me.btn_Next.Location = New System.Drawing.Point(660, 579)
+        Me.btn_Next.Location = New System.Drawing.Point(592, 579)
         Me.btn_Next.Name = "btn_Next"
-        Me.btn_Next.Size = New System.Drawing.Size(75, 23)
+        Me.btn_Next.Size = New System.Drawing.Size(75, 22)
         Me.btn_Next.TabIndex = 2
         Me.btn_Next.Text = "Next ->"
         Me.btn_Next.UseVisualStyleBackColor = True
         '
         'btn_prev
         '
-        Me.btn_prev.Location = New System.Drawing.Point(579, 579)
+        Me.btn_prev.Location = New System.Drawing.Point(511, 579)
         Me.btn_prev.Name = "btn_prev"
-        Me.btn_prev.Size = New System.Drawing.Size(75, 23)
+        Me.btn_prev.Size = New System.Drawing.Size(75, 22)
         Me.btn_prev.TabIndex = 3
         Me.btn_prev.Text = "<- Previous"
         Me.btn_prev.UseVisualStyleBackColor = True
@@ -61,7 +62,7 @@ Partial Class WelcomeGuideGUI
         'check_doNotShow
         '
         Me.check_doNotShow.AutoSize = True
-        Me.check_doNotShow.Location = New System.Drawing.Point(453, 583)
+        Me.check_doNotShow.Location = New System.Drawing.Point(385, 583)
         Me.check_doNotShow.Name = "check_doNotShow"
         Me.check_doNotShow.Size = New System.Drawing.Size(120, 17)
         Me.check_doNotShow.TabIndex = 4
@@ -86,11 +87,22 @@ Partial Class WelcomeGuideGUI
         Me.wikiLink.TabStop = True
         Me.wikiLink.Text = "EVAL-ADIS-FX3 Wiki"
         '
+        'slideNum
+        '
+        Me.slideNum.AutoSize = True
+        Me.slideNum.Location = New System.Drawing.Point(673, 584)
+        Me.slideNum.Name = "slideNum"
+        Me.slideNum.Size = New System.Drawing.Size(62, 13)
+        Me.slideNum.TabIndex = 7
+        Me.slideNum.Text = "Slide 10/10"
+        Me.slideNum.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'WelcomeGuideGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(744, 611)
+        Me.Controls.Add(Me.slideNum)
         Me.Controls.Add(Me.wikiLink)
         Me.Controls.Add(Me.messageText)
         Me.Controls.Add(Me.check_doNotShow)
@@ -113,4 +125,5 @@ Partial Class WelcomeGuideGUI
     Friend WithEvents check_doNotShow As CheckBox
     Friend WithEvents messageText As Label
     Friend WithEvents wikiLink As LinkLabel
+    Friend WithEvents slideNum As Label
 End Class

@@ -56,6 +56,8 @@ Public Class WelcomeGuideGUI
             currentSlide = 0
             btn_prev.Enabled = False
         End If
+        'update slide number
+        slideNum.Text = "Slide " + (currentSlide + 1).ToString() + "/" + slideImageText.Count.ToString()
 
         messageText.Text = slideImageText(currentSlide)
         'image (if exits) will be under guide/img_currentSlide.png
