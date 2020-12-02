@@ -1,2 +1,13 @@
-﻿Welcome to the iSensor-FX3-Eval IMU evaluation GUI for the EVAL-ADIS-FX3! To stop showing this guide, select the "do not show again" check box at the bottom of this form.
-To use the GUI, an EVAL-ADIS-FX3 board must be connected to your PC via USB
+﻿Welcome to the iSensor-FX3-Eval IMU evaluation GUI for the EVAL-ADIS-FX3! The EVAL-ADIS-FX3 is the latest addition to the iSensor evaluation portfolio and was designed from the ground up to provide users with an easy-to-use solution for capturing reliable inertial data in lab and characterization environments. To stop showing this guide, check the "Do Not Show Again" box at the bottom of this form.
+FX3 Board Setup: To use the iSensor FX3 Eval GUI, an EVAL-ADIS-FX3 board must be connected to your PC USB port via the USB C connector. USB 2.0 or USB 3.0 should be used for best device operation.
+DUT Hardware Setup:
+Selecting DUT Personality:
+Connecting to the FX3 Board:
+Checking Connection to DUT:
+Reading DUT Register Data:
+Logging DUT Register Data:
+Plotting DUT Data (Time Domain):
+Plotting DUT Data (Frequency Domain):
+GPIO Interfacing:
+Configuring GUI Appearance:
+Advanced DUT Configuration:

@@ -64,6 +64,8 @@ Public Class WelcomeGuideGUI
         imagePath = Path.Combine(basePath, "image_" + currentSlide.ToString() + ".png")
         If File.Exists(imagePath) Then
             displayImage.Image = Image.FromFile(imagePath)
+        Else
+            displayImage.Image = Nothing
         End If
 
     End Sub
