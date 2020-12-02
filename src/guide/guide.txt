@@ -1,0 +1,2 @@
+﻿Welcome to the iSensor-FX3-Eval IMU evaluation GUI for the EVAL-ADIS-FX3! To stop showing this guide, select the "do not show again" check box at the bottom of this form.
+To use the GUI, an EVAL-ADIS-FX3 board must be connected to your PC via USB

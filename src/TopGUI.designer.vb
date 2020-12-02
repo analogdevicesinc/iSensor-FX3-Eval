@@ -117,6 +117,7 @@ Partial Class TopGUI
         Me.GPIO_Num = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.btn_CRC4WordGen = New System.Windows.Forms.Button()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
         Me.btn_binFile = New System.Windows.Forms.Button()
         Me.btn_ADXL375 = New System.Windows.Forms.Button()
@@ -125,7 +126,7 @@ Partial Class TopGUI
         Me.btn_BurstTest = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.btn_checkError = New System.Windows.Forms.Button()
-        Me.btn_CRC4WordGen = New System.Windows.Forms.Button()
+        Me.btn_ShowGuide = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -1112,6 +1113,15 @@ Partial Class TopGUI
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Misc"
         '
+        'btn_CRC4WordGen
+        '
+        Me.btn_CRC4WordGen.Location = New System.Drawing.Point(249, 19)
+        Me.btn_CRC4WordGen.Name = "btn_CRC4WordGen"
+        Me.btn_CRC4WordGen.Size = New System.Drawing.Size(75, 64)
+        Me.btn_CRC4WordGen.TabIndex = 39
+        Me.btn_CRC4WordGen.Text = "CRC4 Word Generator"
+        Me.btn_CRC4WordGen.UseVisualStyleBackColor = True
+        '
         'btn_pulseMeasure
         '
         Me.btn_pulseMeasure.Location = New System.Drawing.Point(6, 19)
@@ -1143,7 +1153,7 @@ Partial Class TopGUI
         '
         Me.GroupBox8.Controls.Add(Me.btn_BitBangSPI)
         Me.GroupBox8.Controls.Add(Me.btn_BurstTest)
-        Me.GroupBox8.Location = New System.Drawing.Point(100, 6)
+        Me.GroupBox8.Location = New System.Drawing.Point(182, 6)
         Me.GroupBox8.Name = "GroupBox8"
         Me.GroupBox8.Size = New System.Drawing.Size(170, 90)
         Me.GroupBox8.TabIndex = 37
@@ -1170,10 +1180,11 @@ Partial Class TopGUI
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.btn_ShowGuide)
         Me.GroupBox2.Controls.Add(Me.btn_checkError)
         Me.GroupBox2.Location = New System.Drawing.Point(6, 6)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(88, 90)
+        Me.GroupBox2.Size = New System.Drawing.Size(170, 90)
         Me.GroupBox2.TabIndex = 36
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "FX3 Utilities"
@@ -1187,14 +1198,14 @@ Partial Class TopGUI
         Me.btn_checkError.Text = "Check FX3 Error Log"
         Me.btn_checkError.UseVisualStyleBackColor = True
         '
-        'btn_CRC4WordGen
+        'btn_ShowGuide
         '
-        Me.btn_CRC4WordGen.Location = New System.Drawing.Point(249, 19)
-        Me.btn_CRC4WordGen.Name = "btn_CRC4WordGen"
-        Me.btn_CRC4WordGen.Size = New System.Drawing.Size(75, 64)
-        Me.btn_CRC4WordGen.TabIndex = 39
-        Me.btn_CRC4WordGen.Text = "CRC4 Word Generator"
-        Me.btn_CRC4WordGen.UseVisualStyleBackColor = True
+        Me.btn_ShowGuide.Location = New System.Drawing.Point(87, 20)
+        Me.btn_ShowGuide.Name = "btn_ShowGuide"
+        Me.btn_ShowGuide.Size = New System.Drawing.Size(75, 64)
+        Me.btn_ShowGuide.TabIndex = 13
+        Me.btn_ShowGuide.Text = "Show Welcome Guide"
+        Me.btn_ShowGuide.UseVisualStyleBackColor = True
         '
         'TopGUI
         '
@@ -1356,4 +1367,5 @@ Partial Class TopGUI
     Friend WithEvents reg_label As DataGridViewTextBoxColumn
     Friend WithEvents plot As DataGridViewCheckBoxColumn
     Friend WithEvents btn_CRC4WordGen As Button
+    Friend WithEvents btn_ShowGuide As Button
 End Class

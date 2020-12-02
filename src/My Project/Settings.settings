@@ -35,5 +35,8 @@
     <Setting Name="LastHeight" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">775</Value>
     </Setting>
+    <Setting Name="ShowWelcome" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

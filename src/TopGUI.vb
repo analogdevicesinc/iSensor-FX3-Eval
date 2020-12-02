@@ -74,6 +74,12 @@ Public Class TopGUI
         Dim colors As String()
         Dim validPersonality As Boolean
 
+        'show welcome guide if selected
+        If My.Settings.ShowWelcome Then
+            Dim welcomeGuide As New WelcomeGuideGUI()
+            welcomeGuide.Show()
+        End If
+
         Me.Text = "iSensor FX3 Eval"
 
         'set up timers for regview
@@ -259,6 +265,11 @@ Public Class TopGUI
 #End Region
 
 #Region "Button Event Handlers"
+
+    Private Sub btn_ShowGuide_Click(sender As Object, e As EventArgs) Handles btn_ShowGuide.Click
+        Dim subGUI As New WelcomeGuideGUI()
+        subGUI.Show()
+    End Sub
 
     Private Sub btn_CRC4WordGen_Click(sender As Object, e As EventArgs) Handles btn_CRC4WordGen.Click
         Dim input As UInteger

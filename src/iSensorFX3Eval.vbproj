@@ -277,6 +277,12 @@
     <Compile Include="TopGUI_RegisterForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="WelcomeGuideGUI.Designer.vb">
+      <DependentUpon>WelcomeGuideGUI.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WelcomeGuideGUI.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ADcmXLBufferedLog.resx">
@@ -340,6 +346,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WelcomeGuideGUI.resx">
+      <DependentUpon>WelcomeGuideGUI.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -507,6 +516,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Analog.ICO" />
+    <Content Include="guide\guide.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="guide\image_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="guide\image_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="UserConfig\plot_colors.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
