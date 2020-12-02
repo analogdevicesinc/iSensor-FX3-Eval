@@ -33,8 +33,9 @@ Public Class WelcomeGuideGUI
         basePath = AppDomain.CurrentDomain.BaseDirectory + "guide\"
         Try
             slideImageText = File.ReadAllLines(Path.Combine(basePath, "guide.txt"))
+            If slideImageText.Count = 0 Then Throw New Exception("Empty guide file")
         Catch ex As Exception
-            MsgBox("Error loading guide!")
+            MsgBox("Error loading guide! " + ex.Message)
             check_doNotShow.Checked = True
             slideImageText = {"No guide file loaded"}
         End Try
