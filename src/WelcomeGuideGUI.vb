@@ -85,4 +85,9 @@ Public Class WelcomeGuideGUI
         wikiLink.LinkVisited = True
         System.Diagnostics.Process.Start("https://wiki.analog.com/resources/eval/user-guides/inertial-mems/evaluation-systems/eval-adis-fx3")
     End Sub
+
+    Private Sub link_github_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles link_github.LinkClicked
+        link_github.LinkVisited = True
+        System.Diagnostics.Process.Start("https://github.com/analogdevicesinc/iSensor-FX3-Eval")
+    End Sub
 End Class

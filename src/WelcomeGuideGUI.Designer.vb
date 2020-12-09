@@ -30,14 +30,15 @@ Partial Class WelcomeGuideGUI
         Me.messageText = New System.Windows.Forms.Label()
         Me.wikiLink = New System.Windows.Forms.LinkLabel()
         Me.slideNum = New System.Windows.Forms.Label()
+        Me.link_github = New System.Windows.Forms.LinkLabel()
         CType(Me.displayImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'displayImage
         '
-        Me.displayImage.Location = New System.Drawing.Point(10, 114)
+        Me.displayImage.Location = New System.Drawing.Point(10, 94)
         Me.displayImage.Name = "displayImage"
-        Me.displayImage.Size = New System.Drawing.Size(725, 459)
+        Me.displayImage.Size = New System.Drawing.Size(725, 479)
         Me.displayImage.TabIndex = 0
         Me.displayImage.TabStop = False
         '
@@ -73,7 +74,7 @@ Partial Class WelcomeGuideGUI
         '
         Me.messageText.Location = New System.Drawing.Point(7, 9)
         Me.messageText.Name = "messageText"
-        Me.messageText.Size = New System.Drawing.Size(728, 102)
+        Me.messageText.Size = New System.Drawing.Size(728, 82)
         Me.messageText.TabIndex = 5
         Me.messageText.Text = "Label1"
         '
@@ -97,11 +98,22 @@ Partial Class WelcomeGuideGUI
         Me.slideNum.Text = "Slide 10/10"
         Me.slideNum.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'link_github
+        '
+        Me.link_github.AutoSize = True
+        Me.link_github.Location = New System.Drawing.Point(121, 584)
+        Me.link_github.Name = "link_github"
+        Me.link_github.Size = New System.Drawing.Size(114, 13)
+        Me.link_github.TabIndex = 8
+        Me.link_github.TabStop = True
+        Me.link_github.Text = "Eval-ADIS-FX3 GitHub"
+        '
         'WelcomeGuideGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(744, 611)
+        Me.Controls.Add(Me.link_github)
         Me.Controls.Add(Me.slideNum)
         Me.Controls.Add(Me.wikiLink)
         Me.Controls.Add(Me.messageText)
@@ -126,4 +138,5 @@ Partial Class WelcomeGuideGUI
     Friend WithEvents messageText As Label
     Friend WithEvents wikiLink As LinkLabel
     Friend WithEvents slideNum As Label
+    Friend WithEvents link_github As LinkLabel
 End Class
