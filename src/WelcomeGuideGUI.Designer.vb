@@ -27,10 +27,10 @@ Partial Class WelcomeGuideGUI
         Me.btn_Next = New System.Windows.Forms.Button()
         Me.btn_prev = New System.Windows.Forms.Button()
         Me.check_doNotShow = New System.Windows.Forms.CheckBox()
-        Me.messageText = New System.Windows.Forms.Label()
         Me.wikiLink = New System.Windows.Forms.LinkLabel()
         Me.slideNum = New System.Windows.Forms.Label()
         Me.link_github = New System.Windows.Forms.LinkLabel()
+        Me.messageText = New System.Windows.Forms.TextBox()
         CType(Me.displayImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -70,14 +70,6 @@ Partial Class WelcomeGuideGUI
         Me.check_doNotShow.Text = "Do Not Show Again"
         Me.check_doNotShow.UseVisualStyleBackColor = True
         '
-        'messageText
-        '
-        Me.messageText.Location = New System.Drawing.Point(7, 9)
-        Me.messageText.Name = "messageText"
-        Me.messageText.Size = New System.Drawing.Size(728, 82)
-        Me.messageText.TabIndex = 5
-        Me.messageText.Text = "Label1"
-        '
         'wikiLink
         '
         Me.wikiLink.AutoSize = True
@@ -108,21 +100,29 @@ Partial Class WelcomeGuideGUI
         Me.link_github.TabStop = True
         Me.link_github.Text = "Eval-ADIS-FX3 GitHub"
         '
+        'messageText
+        '
+        Me.messageText.Location = New System.Drawing.Point(10, 12)
+        Me.messageText.Multiline = True
+        Me.messageText.Name = "messageText"
+        Me.messageText.Size = New System.Drawing.Size(725, 76)
+        Me.messageText.TabIndex = 9
+        '
         'WelcomeGuideGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(744, 611)
+        Me.Controls.Add(Me.messageText)
         Me.Controls.Add(Me.link_github)
         Me.Controls.Add(Me.slideNum)
         Me.Controls.Add(Me.wikiLink)
-        Me.Controls.Add(Me.messageText)
         Me.Controls.Add(Me.check_doNotShow)
         Me.Controls.Add(Me.btn_prev)
         Me.Controls.Add(Me.btn_Next)
         Me.Controls.Add(Me.displayImage)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MinimumSize = New System.Drawing.Size(650, 650)
         Me.Name = "WelcomeGuideGUI"
         Me.Text = "iSensor FX3 Eval Setup Guide"
         CType(Me.displayImage, System.ComponentModel.ISupportInitialize).EndInit()
@@ -135,8 +135,8 @@ Partial Class WelcomeGuideGUI
     Friend WithEvents btn_Next As Button
     Friend WithEvents btn_prev As Button
     Friend WithEvents check_doNotShow As CheckBox
-    Friend WithEvents messageText As Label
     Friend WithEvents wikiLink As LinkLabel
     Friend WithEvents slideNum As Label
     Friend WithEvents link_github As LinkLabel
+    Friend WithEvents messageText As TextBox
 End Class

@@ -17,6 +17,12 @@ Public Class WelcomeGuideGUI
         Me.Top = My.Settings.LastTop
         Me.Left = My.Settings.LastLeft
         Me.BackColor = My.Settings.BackColor
+        'configure text box
+        messageText.ReadOnly = True
+        messageText.BorderStyle = 0
+        messageText.BackColor = Me.BackColor
+        messageText.TabStop = False
+        messageText.Multiline = True
         InitializeGuideResources()
         LoadGuideSlide()
         btn_Next.Focus()
@@ -90,4 +96,29 @@ Public Class WelcomeGuideGUI
         link_github.LinkVisited = True
         System.Diagnostics.Process.Start("https://github.com/analogdevicesinc/iSensor-FX3-Eval")
     End Sub
+
+    Public Sub ResizeHandler() Handles Me.Resize
+        Dim topOffset As Integer = 62
+        'resize text + image
+        messageText.Width = Me.Width - 35
+        displayImage.Width = Me.Width - 35
+        displayImage.Height = Me.Height - 171
+        'move bottom nav bar
+
+        'Y
+        btn_Next.Top = Me.Height - topOffset - 5
+        btn_prev.Top = Me.Height - topOffset - 5
+        slideNum.Top = Me.Height - topOffset
+        check_doNotShow.Top = Me.Height - topOffset - 2
+        link_github.Top = Me.Height - topOffset
+        wikiLink.Top = Me.Height - topOffset
+
+        'X
+        slideNum.Left = Me.Width - 83
+        btn_Next.Left = Me.Width - 164
+        btn_prev.Left = Me.Width - 245
+        check_doNotShow.Left = Me.Width - 371
+
+    End Sub
+
 End Class
