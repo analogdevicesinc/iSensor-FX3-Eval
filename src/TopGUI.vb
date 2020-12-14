@@ -1073,7 +1073,13 @@ Public Class TopGUI
 
         'wait for DR to reach DR polarity level (500ms timeout)
         Try
-            FX3.PulseWait(FX3.DrPin, FX3.DrPolarity, 100, 400)
+            If FX3.SensorType <> DeviceType.ADcmXL Then
+                'wait for toggle (500ms)
+                FX3.MeasurePinFreq(FX3.DrPin, 0, 500, 3)
+            Else
+                'wait for busy to go high for ADcmXL
+                FX3.PulseWait(FX3.DrPin, True, 100, 400)
+            End If
         Catch ex As Exception
             'squash - don't want to throw error for PWM or special function pin
         End Try
