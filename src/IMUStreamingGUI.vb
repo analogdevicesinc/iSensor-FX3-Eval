@@ -107,7 +107,7 @@ Public Class IMUStreamingGUI
         Else
             m_TopGUI.FX3.WordCount() = regListCount
             m_TopGUI.FX3.TriggerReg = m_TopGUI.RegMap.BurstReadTrig
-            m_TopGUI.FX3.StripBurstTriggerWord = False
+            m_TopGUI.FX3.StripBurstTriggerWord = True
             fileManager.LowerWordFirst = True
         End If
 
