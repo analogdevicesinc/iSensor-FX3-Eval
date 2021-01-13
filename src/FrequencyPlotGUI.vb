@@ -435,16 +435,26 @@ Public Class FrequencyPlotGUI
 
     Private Sub btn_apply3db_Click(sender As Object, e As EventArgs) Handles btn_apply3db.Click
 
-        Dim seriesCnt As Integer = dataPlot.Series.Count
+        If dataPlot.Series.Count = 0 Then
+            MsgBox("ERROR: No data plotted")
+            Return
+        End If
+
+        If btn_apply3db.Text = "Remove -3dB Lines" Then
+            btn_apply3db.Text = "Apply -3dB Lines"
+            Remove3dBLines()
+        Else
+            btn_apply3db.Text = "Remove -3dB Lines"
+            Apply3dBLines()
+        End If
+
+    End Sub
+
+    Private Sub Apply3dBLines()
         Dim seriesIndex As Integer
         Dim i As Integer
         Dim val As Double
         Dim temp As Series
-
-        If seriesCnt = 0 Then
-            MsgBox("ERROR: No data plotted")
-            Return
-        End If
 
         seriesIndex = selectedRegList.Count
         i = 0
@@ -469,7 +479,18 @@ Public Class FrequencyPlotGUI
             i += 1
             seriesIndex += 1
         Next
+    End Sub
 
+    Private Sub Remove3dBLines()
+        Dim lineCount As Integer
+
+        'how many lines to remove
+        lineCount = (dataPlot.Series.Count - selectedRegList.Count)
+
+        'should not be zero to get here
+        For i As Integer = 0 To lineCount - 1
+            dataPlot.Series.RemoveAt(selectedRegList.Count)
+        Next
     End Sub
 
     Private Function Calculate3dBValue(index As Integer) As Double
@@ -518,6 +539,7 @@ Public Class FrequencyPlotGUI
             End While
             maxIndex = i
         Catch ex As Exception
+            'catch invalid freq here
             MsgBox("ERROR: Invalid pass band entered. " + ex.Message)
             Return Double.PositiveInfinity
         End Try
