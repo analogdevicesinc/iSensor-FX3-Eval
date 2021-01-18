@@ -1052,7 +1052,7 @@ Public Class TopGUI
         End If
 
         Dim scratchReg As RegClass = Nothing
-        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1"}
+        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1", "APPLICATION_SPACE_0"}
         Dim drActive As Boolean = FX3.DrActive
 
         For Each regName In scratchRegNames
