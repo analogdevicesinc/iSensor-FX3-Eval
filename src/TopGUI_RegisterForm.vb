@@ -175,10 +175,11 @@ Partial Class TopGUI
             Next
         End If
 
-        'check the page register
-        If (FX3.PartType = FX3Api.DUTType.LegacyIMU) Or (FX3.SensorType = DeviceType.ComponentSensor) Then Exit Sub
+        'check the page register readback only if paged part is in use
+        If pageList.Count < 2 Then Exit Sub
         Dim expectedPage As Integer = currentRegList(0).Page
         If m_pageMessageList.Contains(expectedPage) Then
+            'only warn about page once per page
             Exit Sub
         End If
         Dim dutPage As Integer = Dut.ReadUnsigned(New RegClass With {.Page = expectedPage, .Address = 0, .NumBytes = 2})
