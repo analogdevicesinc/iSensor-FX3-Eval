@@ -266,11 +266,6 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
-    Private Sub btn_ShowGuide_Click(sender As Object, e As EventArgs) Handles btn_ShowGuide.Click
-        Dim subGUI As New WelcomeGuideGUI()
-        subGUI.Show()
-    End Sub
-
     Private Sub btn_CRC4WordGen_Click(sender As Object, e As EventArgs) Handles btn_CRC4WordGen.Click
         Dim input As UInteger
         Dim crc As UInteger
@@ -454,6 +449,12 @@ Public Class TopGUI
 
 #Region "Other Event Handlers"
 
+    Private Sub link_help_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles link_help.LinkClicked
+        link_help.LinkVisited = True
+        Dim subGUI As New WelcomeGuideGUI()
+        subGUI.Show()
+    End Sub
+
     'handle app resize events
     Private Sub ResizeHandler() Handles Me.Resize
         'resize regview
@@ -469,6 +470,7 @@ Public Class TopGUI
         checkVersion.Top = Me.Height - 79
         report_issue.Top = Me.Height - 60
         regMapPath_Label.Top = Me.Height - 60
+        link_help.Top = Me.Height - 60
     End Sub
 
     ''' <summary>
@@ -1151,6 +1153,8 @@ Public Class TopGUI
 #Region "Data Plotting"
 
     Friend TimePlotWidth, TimePlotHeight, FFTPlotWidth, FFTPlotHeight As Integer
+
+
 
     Friend Sub DataPlotRegsInit()
         Dim regIndex As Integer = 0

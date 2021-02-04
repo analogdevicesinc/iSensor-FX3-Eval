@@ -95,10 +95,10 @@ Partial Class WelcomeGuideGUI
         Me.link_github.AutoSize = True
         Me.link_github.Location = New System.Drawing.Point(121, 584)
         Me.link_github.Name = "link_github"
-        Me.link_github.Size = New System.Drawing.Size(114, 13)
+        Me.link_github.Size = New System.Drawing.Size(120, 13)
         Me.link_github.TabIndex = 8
         Me.link_github.TabStop = True
-        Me.link_github.Text = "Eval-ADIS-FX3 GitHub"
+        Me.link_github.Text = "EVAL-ADIS-FX3 GitHub"
         '
         'messageText
         '

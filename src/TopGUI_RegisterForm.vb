@@ -185,7 +185,7 @@ Partial Class TopGUI
         Dim dutPage As Integer = Dut.ReadUnsigned(New RegClass With {.Page = expectedPage, .Address = 0, .NumBytes = 2})
         If dutPage <> expectedPage Then
             m_pageMessageList.Add(expectedPage)
-            MsgBox("ERROR: Unable to load page " + expectedPage.ToString())
+            MsgBox("ERROR: Unable to load page " + expectedPage.ToString(), MsgBoxStyle.Exclamation)
         End If
 
         'check if exceptions occurred
