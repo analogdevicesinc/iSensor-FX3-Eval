@@ -229,7 +229,7 @@ Public Class RegisterBulkReadGUI
         End If
         fileManager = New Logger(m_TopGUI.FX3, m_TopGUI.Dut)
         fileManager.RegList = regList
-        fileManager.FileBaseName = "RegStream" + timeString
+        fileManager.FileBaseName = fileBaseName.Text + timeString
         fileManager.FilePath = savePath + "\"
         fileManager.Buffers = totalDRCaptures 'Number of times to read all the registers in the reg map
         fileManager.Captures = 1 'Number of times to read each register in the reg map
