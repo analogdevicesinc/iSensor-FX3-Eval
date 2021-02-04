@@ -21,9 +21,9 @@ Partial Class FrequencyPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.RegisterList = New System.Windows.Forms.ListView()
         Me.regSelect = New System.Windows.Forms.ComboBox()
@@ -46,33 +46,33 @@ Partial Class FrequencyPlotGUI
         Me.NFFT = New System.Windows.Forms.ComboBox()
         Me.btn_apply3db = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.input_3db_min = New System.Windows.Forms.TextBox()
         Me.input_3db_max = New System.Windows.Forms.TextBox()
         Me.btn_SetLabel = New System.Windows.Forms.Button()
         Me.check_sciLabel = New System.Windows.Forms.CheckBox()
+        Me.check_DCNull = New System.Windows.Forms.CheckBox()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dataPlot
         '
-        ChartArea1.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend1)
+        ChartArea2.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea2)
+        Legend2.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend2)
         Me.dataPlot.Location = New System.Drawing.Point(237, 9)
         Me.dataPlot.Name = "dataPlot"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.dataPlot.Series.Add(Series1)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.dataPlot.Series.Add(Series2)
         Me.dataPlot.Size = New System.Drawing.Size(587, 511)
         Me.dataPlot.TabIndex = 0
         Me.dataPlot.Text = "dataPlot"
         '
         'RegisterList
         '
-        Me.RegisterList.Location = New System.Drawing.Point(10, 206)
+        Me.RegisterList.Location = New System.Drawing.Point(10, 229)
         Me.RegisterList.Name = "RegisterList"
         Me.RegisterList.Size = New System.Drawing.Size(221, 170)
         Me.RegisterList.TabIndex = 1
@@ -81,7 +81,7 @@ Partial Class FrequencyPlotGUI
         'regSelect
         '
         Me.regSelect.FormattingEnabled = True
-        Me.regSelect.Location = New System.Drawing.Point(69, 133)
+        Me.regSelect.Location = New System.Drawing.Point(69, 156)
         Me.regSelect.Name = "regSelect"
         Me.regSelect.Size = New System.Drawing.Size(162, 21)
         Me.regSelect.TabIndex = 2
@@ -116,7 +116,7 @@ Partial Class FrequencyPlotGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(7, 136)
+        Me.Label3.Location = New System.Drawing.Point(7, 159)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(54, 13)
         Me.Label3.TabIndex = 7
@@ -124,7 +124,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_addreg
         '
-        Me.btn_addreg.Location = New System.Drawing.Point(10, 160)
+        Me.btn_addreg.Location = New System.Drawing.Point(10, 183)
         Me.btn_addreg.Name = "btn_addreg"
         Me.btn_addreg.Size = New System.Drawing.Size(70, 40)
         Me.btn_addreg.TabIndex = 8
@@ -133,7 +133,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_removeReg
         '
-        Me.btn_removeReg.Location = New System.Drawing.Point(86, 161)
+        Me.btn_removeReg.Location = New System.Drawing.Point(86, 184)
         Me.btn_removeReg.Name = "btn_removeReg"
         Me.btn_removeReg.Size = New System.Drawing.Size(70, 40)
         Me.btn_removeReg.TabIndex = 9
@@ -142,7 +142,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_run
         '
-        Me.btn_run.Location = New System.Drawing.Point(10, 382)
+        Me.btn_run.Location = New System.Drawing.Point(10, 405)
         Me.btn_run.Name = "btn_run"
         Me.btn_run.Size = New System.Drawing.Size(70, 40)
         Me.btn_run.TabIndex = 10
@@ -151,7 +151,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_stopPlot
         '
-        Me.btn_stopPlot.Location = New System.Drawing.Point(86, 382)
+        Me.btn_stopPlot.Location = New System.Drawing.Point(86, 405)
         Me.btn_stopPlot.Name = "btn_stopPlot"
         Me.btn_stopPlot.Size = New System.Drawing.Size(70, 40)
         Me.btn_stopPlot.TabIndex = 11
@@ -179,7 +179,7 @@ Partial Class FrequencyPlotGUI
         'logYaxis
         '
         Me.logYaxis.AutoSize = True
-        Me.logYaxis.Location = New System.Drawing.Point(87, 87)
+        Me.logYaxis.Location = New System.Drawing.Point(87, 110)
         Me.logYaxis.Name = "logYaxis"
         Me.logYaxis.Size = New System.Drawing.Size(76, 17)
         Me.logYaxis.TabIndex = 15
@@ -189,7 +189,7 @@ Partial Class FrequencyPlotGUI
         'logXaxis
         '
         Me.logXaxis.AutoSize = True
-        Me.logXaxis.Location = New System.Drawing.Point(10, 87)
+        Me.logXaxis.Location = New System.Drawing.Point(10, 110)
         Me.logXaxis.Name = "logXaxis"
         Me.logXaxis.Size = New System.Drawing.Size(76, 17)
         Me.logXaxis.TabIndex = 16
@@ -198,7 +198,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_ClearLabels
         '
-        Me.btn_ClearLabels.Location = New System.Drawing.Point(161, 382)
+        Me.btn_ClearLabels.Location = New System.Drawing.Point(161, 405)
         Me.btn_ClearLabels.Name = "btn_ClearLabels"
         Me.btn_ClearLabels.Size = New System.Drawing.Size(70, 40)
         Me.btn_ClearLabels.TabIndex = 17
@@ -207,7 +207,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_Export
         '
-        Me.btn_Export.Location = New System.Drawing.Point(86, 428)
+        Me.btn_Export.Location = New System.Drawing.Point(86, 451)
         Me.btn_Export.Name = "btn_Export"
         Me.btn_Export.Size = New System.Drawing.Size(70, 40)
         Me.btn_Export.TabIndex = 18
@@ -216,7 +216,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_Clear
         '
-        Me.btn_Clear.Location = New System.Drawing.Point(161, 161)
+        Me.btn_Clear.Location = New System.Drawing.Point(161, 184)
         Me.btn_Clear.Name = "btn_Clear"
         Me.btn_Clear.Size = New System.Drawing.Size(70, 40)
         Me.btn_Clear.TabIndex = 19
@@ -225,7 +225,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_saveplot
         '
-        Me.btn_saveplot.Location = New System.Drawing.Point(161, 428)
+        Me.btn_saveplot.Location = New System.Drawing.Point(161, 451)
         Me.btn_saveplot.Name = "btn_saveplot"
         Me.btn_saveplot.Size = New System.Drawing.Size(70, 40)
         Me.btn_saveplot.TabIndex = 20
@@ -242,7 +242,7 @@ Partial Class FrequencyPlotGUI
         '
         'btn_apply3db
         '
-        Me.btn_apply3db.Location = New System.Drawing.Point(10, 428)
+        Me.btn_apply3db.Location = New System.Drawing.Point(10, 451)
         Me.btn_apply3db.Name = "btn_apply3db"
         Me.btn_apply3db.Size = New System.Drawing.Size(70, 40)
         Me.btn_apply3db.TabIndex = 22
@@ -252,42 +252,33 @@ Partial Class FrequencyPlotGUI
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(7, 476)
+        Me.Label5.Location = New System.Drawing.Point(7, 502)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(127, 13)
+        Me.Label5.Size = New System.Drawing.Size(121, 13)
         Me.Label5.TabIndex = 23
-        Me.Label5.Text = "Pass Band Min Freq (Hz):"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(7, 502)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(130, 13)
-        Me.Label6.TabIndex = 24
-        Me.Label6.Text = "Pass Band Max Freq (Hz):"
+        Me.Label5.Text = "-3dB Ref Freq Min/Max:"
         '
         'input_3db_min
         '
         Me.input_3db_min.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.input_3db_min.Location = New System.Drawing.Point(140, 474)
+        Me.input_3db_min.Location = New System.Drawing.Point(135, 497)
         Me.input_3db_min.Name = "input_3db_min"
-        Me.input_3db_min.Size = New System.Drawing.Size(91, 20)
+        Me.input_3db_min.Size = New System.Drawing.Size(45, 20)
         Me.input_3db_min.TabIndex = 25
         Me.input_3db_min.Text = "10"
         '
         'input_3db_max
         '
         Me.input_3db_max.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.input_3db_max.Location = New System.Drawing.Point(140, 500)
+        Me.input_3db_max.Location = New System.Drawing.Point(186, 497)
         Me.input_3db_max.Name = "input_3db_max"
-        Me.input_3db_max.Size = New System.Drawing.Size(91, 20)
+        Me.input_3db_max.Size = New System.Drawing.Size(45, 20)
         Me.input_3db_max.TabIndex = 26
         Me.input_3db_max.Text = "100"
         '
         'btn_SetLabel
         '
-        Me.btn_SetLabel.Location = New System.Drawing.Point(161, 87)
+        Me.btn_SetLabel.Location = New System.Drawing.Point(161, 88)
         Me.btn_SetLabel.Name = "btn_SetLabel"
         Me.btn_SetLabel.Size = New System.Drawing.Size(70, 40)
         Me.btn_SetLabel.TabIndex = 27
@@ -297,23 +288,33 @@ Partial Class FrequencyPlotGUI
         'check_sciLabel
         '
         Me.check_sciLabel.AutoSize = True
-        Me.check_sciLabel.Location = New System.Drawing.Point(10, 110)
+        Me.check_sciLabel.Location = New System.Drawing.Point(10, 133)
         Me.check_sciLabel.Name = "check_sciLabel"
         Me.check_sciLabel.Size = New System.Drawing.Size(146, 17)
         Me.check_sciLabel.TabIndex = 28
         Me.check_sciLabel.Text = "Scientific Notation Labels"
         Me.check_sciLabel.UseVisualStyleBackColor = True
         '
+        'check_DCNull
+        '
+        Me.check_DCNull.AutoSize = True
+        Me.check_DCNull.Location = New System.Drawing.Point(10, 88)
+        Me.check_DCNull.Name = "check_DCNull"
+        Me.check_DCNull.Size = New System.Drawing.Size(151, 17)
+        Me.check_DCNull.TabIndex = 29
+        Me.check_DCNull.Text = "Null Signal DC Component"
+        Me.check_DCNull.UseVisualStyleBackColor = True
+        '
         'FrequencyPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(834, 531)
+        Me.Controls.Add(Me.check_DCNull)
         Me.Controls.Add(Me.check_sciLabel)
         Me.Controls.Add(Me.btn_SetLabel)
         Me.Controls.Add(Me.input_3db_max)
         Me.Controls.Add(Me.input_3db_min)
-        Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.btn_apply3db)
         Me.Controls.Add(Me.NFFT)
@@ -368,9 +369,9 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents NFFT As ComboBox
     Friend WithEvents btn_apply3db As Button
     Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
     Friend WithEvents input_3db_min As TextBox
     Friend WithEvents input_3db_max As TextBox
     Friend WithEvents btn_SetLabel As Button
     Friend WithEvents check_sciLabel As CheckBox
+    Friend WithEvents check_DCNull As CheckBox
 End Class

@@ -153,6 +153,9 @@ Public Class FrequencyPlotGUI
         Next
         m_FFTStream.RegList = selectedRegList
 
+        'add DC null setting
+        m_FFTStream.DCNull = check_DCNull.Checked
+
         'try and cancel any running stream
         m_TopGUI.FX3.StopStream()
         System.Threading.Thread.Sleep(20)
@@ -182,9 +185,12 @@ Public Class FrequencyPlotGUI
             Exit Sub
         End If
         'add each new series
+        Dim startIndex As Integer = 0
+        'start at bin 1 rather than DC if DC is nulled ("zero" on log scale looks silly)
+        If m_FFTStream.DCNull Then startIndex = 1
         For reg As Integer = 0 To selectedRegList.Count() - 1
             dataPlot.Series(reg).Points.Clear()
-            For i As Integer = 0 To m_FFTStream.Result(reg).Count() - 1
+            For i As Integer = startIndex To m_FFTStream.Result(reg).Count() - 1
                 dataPlot.Series(reg).Points.AddXY(m_FFTStream.FrequencyRange(i), Math.Max(m_FFTStream.Result(reg)(i), 0.0000000001))
             Next
         Next

@@ -9,13 +9,14 @@
             Class which allows you to perform a real FFT
             </summary>
         </member>
-        <member name="M:SignalProcessing.FFT.RealFFT(System.Double[],System.UInt32,System.UInt32)">
+        <member name="M:SignalProcessing.FFT.RealFFT(System.Double[],System.UInt32,System.UInt32,System.Boolean)">
             <summary>
             Performs an FFT on a real value input signal.
             </summary>
             <param name="values">The input signal. Should ideally be contiguous in time</param>
             <param name="NFFT">The number of points in a single FFT. Must be a 2^n value, for n = 1 to 14</param>
             <param name="averages">The number of FFT averages to perform</param>
+            <param name="zeroDC">Zero DC component of signal prior to performing FFT</param>
             <returns>The FFT result</returns>
         </member>
         <member name="T:SignalProcessing.Command">
@@ -48,6 +49,13 @@
         <member name="P:SignalProcessing.FFT_Streamer.IsBusy">
             <summary>
             Flag to check if the streamer is still busy or not
+            </summary>
+        </member>
+        <member name="P:SignalProcessing.FFT_Streamer.DCNull">
+            <summary>
+            Enable or disable DC null for FFT data. If this is
+            enabled, signal average is brought to zero prior to
+            performing the FFT
             </summary>
         </member>
         <member name="P:SignalProcessing.FFT_Streamer.FrequencyRange">
