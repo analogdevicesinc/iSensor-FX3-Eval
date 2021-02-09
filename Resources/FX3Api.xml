@@ -848,7 +848,7 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <summary>
  This function configures the selected pin to drive a pulse width modulated output.
  </summary>
- <param name="Frequency">The desired PWM frequency, in Hz. Valid values are in the range of 0.05Hz (0.05) - 10MHz (10000000.0)</param>
+ <param name="Frequency">The desired PWM frequency, in Hz. Valid values are in the range of 0.05Hz (0.05) - 50MHz (20000000.0)</param>
  <param name="DutyCycle">The PWM duty cycle. Valid values are in the range 0.0 - 1.0. To achieve a "clock" signal set the duty cycle to 0.5</param>
  <param name="Pin">The pin to configure as a PWM signal.</param>
 </member>
