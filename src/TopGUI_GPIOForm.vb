@@ -10,11 +10,22 @@ Imports FX3Api
 
 Partial Class TopGUI
 
+    ''' <summary>
+    ''' Track if the selected pin already has a PWM
+    ''' signal being generated
+    ''' </summary>
     Private StartPWM As Boolean
 
-    ' uses capitalized pin names as keys
-    Private Property pins As New Dictionary(Of String, IPinObject)
+    ''' <summary>
+    ''' Pin dictionaty. Uses capitalized pin names as keys
+    ''' </summary>
+    Private pins As New Dictionary(Of String, IPinObject)
 
+    ''' <summary>
+    ''' Enable internal pull up resistor on the selected GPIO
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_pullUp_Click(sender As Object, e As EventArgs) Handles btn_pullUp.Click
         Dim pinNum As UInteger
         Try
@@ -28,9 +39,13 @@ Partial Class TopGUI
         End Try
 
         FX3.SetPinResistorSetting(New FX3Api.FX3PinObject(pinNum), FX3Api.FX3PinResistorSetting.PullUp)
-
     End Sub
 
+    ''' <summary>
+    ''' Enable internal pull down resistor on the selected GPIO
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_pullDown_Click(sender As Object, e As EventArgs) Handles btn_pullDown.Click
         Dim pinNum As UInteger
         Try
@@ -47,6 +62,11 @@ Partial Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Disable internal pull up/down resistor on the selected GPIO
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_disableResistor_Click(sender As Object, e As EventArgs) Handles btn_disableResistor.Click
         Dim pinNum As UInteger
         Try
@@ -63,6 +83,11 @@ Partial Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Update the start/stop PWM button state for
+    ''' the selected pin
+    ''' </summary>
+    ''' <param name="Pin"></param>
     Private Sub UpdateButton(Pin As IPinObject)
         If IsNothing(Pin) Then Exit Sub
         Dim PWMInfo As PinPWMInfo
@@ -86,12 +111,21 @@ Partial Class TopGUI
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Update all pin display states when the pin selection in the data grid
+    ''' view is changed
+    ''' </summary>
     Private Sub PinSelectionChanged() Handles dgvPinList.SelectionChanged
         If dgvPinList.SelectedRows.Count > 0 Then
             UpdateButton(pins(dgvPinList.SelectedRows(0).Cells(0).Value.ToString.ToUpper))
         End If
     End Sub
 
+    ''' <summary>
+    ''' Start/stop a pin PWM generation
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub startBtn_Click(sender As Object, e As EventArgs) Handles btn_StartPWM.Click
         If Not PinSelected() Then Exit Sub
         Dim pin As IPinObject = Nothing
@@ -115,7 +149,10 @@ Partial Class TopGUI
         UpdateButton(pin)
     End Sub
 
-    Private Sub updatePinGrid()
+    ''' <summary>
+    ''' Update the pin state grid
+    ''' </summary>
+    Private Sub UpdatePinGrid()
         For Each row As DataGridViewRow In dgvPinList.Rows
             Dim currPin As IPinObject = pins(row.Cells(0).Value.ToUpper)
             Dim state As String
@@ -131,7 +168,7 @@ Partial Class TopGUI
         Next
     End Sub
 
-    Private Sub writeLevel(level As Boolean)
+    Private Sub WriteLevel(level As Boolean)
         Dim currPin As IPinObject
         Dim pinName As String
         If Not PinSelected() Then
@@ -169,15 +206,15 @@ Partial Class TopGUI
     End Sub
 
     Private Sub ButtonWriteHigh_Click(sender As Object, e As EventArgs) Handles btn_WritePinHigh.Click
-        writeLevel(1)
+        WriteLevel(1)
     End Sub
 
     Private Sub ButtonWriteLow_Click(sender As Object, e As EventArgs) Handles btn_WritePinLow.Click
-        writeLevel(0)
+        WriteLevel(0)
     End Sub
 
     Private Sub ButtonReadAll_Click(sender As Object, e As EventArgs) Handles btn_ReadAllPins.Click
-        updatePinGrid()
+        UpdatePinGrid()
     End Sub
 
     Private Sub ButtonPulseDrive_Click(sender As Object, e As EventArgs) Handles btn_PulseDrive.Click

@@ -13,7 +13,6 @@ Imports System.Timers
 Imports System.Threading
 Imports System.Net
 Imports System.Web.Script.Serialization
-Imports AdisApi
 
 Public Class TopGUI
 
@@ -60,6 +59,9 @@ Public Class TopGUI
 
 #Region "Constructor/Load"
 
+    ''' <summary>
+    ''' Constructor
+    ''' </summary>
     Public Sub New()
 
         'This call is required by the designer
@@ -67,6 +69,10 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Initializer. Loads settings, shows welcome guide, prompts for
+    ''' DUT personality selection, and initializes regmap
+    ''' </summary>
     Public Sub Setup() Handles Me.Load
 
         Dim firmwarePath As String
@@ -240,6 +246,11 @@ Public Class TopGUI
 
 #Region "Properties"
 
+    ''' <summary>
+    ''' Set/get the loaded regmap path. Setting this property will trigger
+    ''' the RegMap dictionary to be re-loaded from the provided CSV
+    ''' </summary>
+    ''' <returns></returns>
     Public Property RegMapPath As String
         Get
             Return m_RegMapPath
@@ -267,6 +278,12 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
+    ''' <summary>
+    ''' Helper function to generate a correct ADXC1500 SPI CRC, based on 
+    ''' a 32-bit input word
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_CRC4WordGen_Click(sender As Object, e As EventArgs) Handles btn_CRC4WordGen.Click
         Dim input As UInteger
         Dim crc As UInteger
@@ -291,6 +308,12 @@ Public Class TopGUI
         End If
     End Sub
 
+    ''' <summary>
+    ''' Open a new burst test sub-form. This allows the user to generate custom burst reads
+    ''' with whatever SPI protocol and SCLK freq is desired
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_BurstTest_Click(sender As Object, e As EventArgs) Handles btn_BurstTest.Click
         Dim subGUI As New BurstTestGUI()
         subGUI.SetTopGUI(Me)
@@ -298,6 +321,11 @@ Public Class TopGUI
         btn_BurstTest.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Open a new ADXL37x interfacing sub-form. This should probably be removed at some point
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_ADXL375_Click(sender As Object, e As EventArgs) Handles btn_ADXL375.Click
         Dim subGUI As New ADXl375GUI()
         subGUI.SetTopGUI(Me)
@@ -305,6 +333,13 @@ Public Class TopGUI
         btn_ADXL375.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Open a new GPIO pulse measurement sub-form. This form can be used to transact SPI 
+    ''' data and accurately measure the following pulse on a DIO line (for example, measuring
+    ''' flash update time)
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_pulseMeasure_Click(sender As Object, e As EventArgs) Handles btn_pulseMeasure.Click
         Dim subGUI As New PulseMeasureGUI()
         subGUI.SetTopGUI(Me)
@@ -312,6 +347,12 @@ Public Class TopGUI
         btn_pulseMeasure.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Opens a new binary file writer GUI. This is a misc app, not really useful for
+    ''' IMUs. Should probably be removed at some point
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_binFile_Click(sender As Object, e As EventArgs) Handles btn_binFile.Click
         Dim subGUI As New BinaryFileWriterGUI()
         subGUI.SetTopGUI(Me)
@@ -319,13 +360,25 @@ Public Class TopGUI
         btn_binFile.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Open a new FX3 board error log sub-form. This GUI allows the user to 
+    ''' dump the RTOS error log from the FX3 EEPROM to a CSV file
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_checkError_Click(sender As Object, e As EventArgs) Handles btn_checkError.Click
-        Dim subGUI As New FlashInterfaceGUI()
+        Dim subGUI As New NVMInterfaceGUI()
         subGUI.SetTopGUI(Me)
         subGUI.Show()
         btn_checkError.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Connects to the FX3, or reboots the connected FX3 board if
+    ''' it is already connected
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_Connect_Click(sender As Object, e As EventArgs) Handles btn_Connect.Click
 
         Select Case btn_Connect.Text
@@ -333,8 +386,8 @@ Public Class TopGUI
                 btn_Connect.Text = "Connecting to FX3..."
                 ConnectWork()
             Case "Reboot FX3"
-                Dim result = MessageBox.Show("This will reboot the FX3 and close all running applications. Are you sure you wish to continue?", "Reboot FX3", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                If result = DialogResult.Yes Then
+                If MessageBox.Show("This will reboot the FX3 and close all running applications. Are you sure you wish to continue?",
+                                             "Reboot FX3", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                     CloseAllForms()
                     RebootFX3()
                     btn_Connect.Text = "Connect to FX3"
@@ -343,6 +396,11 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Open a new DUT personality selection sub-form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_SelectDUT_Click(sender As Object, e As EventArgs) Handles btn_SelectDUT.Click
         Dim subGUI As New SelectDUTGUI()
         subGUI.SetTopGUI(Me)
@@ -350,11 +408,24 @@ Public Class TopGUI
         btn_SelectDUT.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Resets the connected DUT via the resetn line, then checks SPI comms after the reset
+    ''' has completed
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_ResetDUT_Click(sender As Object, e As EventArgs) Handles btn_ResetDUT.Click
         FX3.Reset()
         TestDUT()
     End Sub
 
+    ''' <summary>
+    ''' Open a new burst data streaming sub-form. If the part selected is an IMU, 
+    ''' the IMUStreamingGUI is opened. If the part selected is an ADcmXL series,
+    ''' then the ADcmXL real time streaming GUI is opened
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_RealTime_Click(sender As Object, e As EventArgs) Handles btn_RealTime.Click
 
         If FX3.PartType = DUTType.IMU Or FX3.SensorType = DeviceType.IMU Then
@@ -374,6 +445,11 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Open a new bulk register logging sub-form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_BulkRegRead_Click(sender As Object, e As EventArgs) Handles btn_BulkRegRead.Click
 
         If FX3.PartType = DUTType.IMU Or FX3.SensorType = DeviceType.IMU Then
@@ -392,6 +468,11 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Open a new FX3 configuration sub-form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_FX3Config_Click(sender As Object, e As EventArgs) Handles btn_FX3Config.Click
         Dim subGUI As New FX3ConfigGUI()
         subGUI.SetTopGUI(Me)
@@ -401,10 +482,22 @@ Public Class TopGUI
         btn_FX3Config.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Performs on-demand DUT SPI comms check
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_CheckDUTConnection_Click(sender As Object, e As EventArgs) Handles btn_CheckDUTConnection.Click
         TestDUT()
     End Sub
 
+    ''' <summary>
+    ''' Open a new bit bang SPI sub-form. The bit bang SPI form is 
+    ''' responsible for restoring FX3 hardware SPI functionality when
+    ''' it loses focus
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_bitBangSPI_Click(sender As Object, e As EventArgs) Handles btn_BitBangSPI.Click
         Dim subGUI As New BitBangSpiGUI()
         subGUI.SetTopGUI(Me)
@@ -412,6 +505,11 @@ Public Class TopGUI
         btn_BitBangSPI.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Open a new API/firmware info sub-form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_APIInfo_Click(sender As Object, e As EventArgs) Handles btn_APIInfo.Click
         Dim subGUI As New ApiInfoGUI()
         subGUI.SetTopGUI(Me)
@@ -421,6 +519,12 @@ Public Class TopGUI
         btn_APIInfo.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Updated the selected plot data register list then 
+    ''' open a new frequency domain plotting sub-form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_plotFFT_Click(sender As Object, e As EventArgs) Handles btn_plotFFT.Click
 
         LoadDataPlotRegList()
@@ -433,6 +537,12 @@ Public Class TopGUI
         btn_plotFFT.Enabled = False
     End Sub
 
+    ''' <summary>
+    ''' Updated the selected plot data register list then 
+    ''' open a new time domain plotting sub-form
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_plotData_Click(sender As Object, e As EventArgs) Handles btn_plotData.Click
 
         LoadDataPlotRegList()
@@ -450,13 +560,21 @@ Public Class TopGUI
 
 #Region "Other Event Handlers"
 
+    ''' <summary>
+    ''' Open the welcome GUI when the help link is clicked
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub link_help_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles link_help.LinkClicked
         link_help.LinkVisited = True
         Dim subGUI As New WelcomeGuideGUI()
         subGUI.Show()
     End Sub
 
-    'handle app resize events
+    ''' <summary>
+    ''' Handle top GUI resize events. Only allows expansion on the
+    ''' Y-axis (height)
+    ''' </summary>
     Private Sub ResizeHandler() Handles Me.Resize
         'resize regview
         regView.Height = Me.Height - 351
@@ -480,9 +598,15 @@ Public Class TopGUI
     Private Sub timeoutHandler()
         m_disconnectTimer.Enabled = False
         'Timers run in a separate thread from GUI
-        Me.BeginInvoke(New MethodInvoker(AddressOf updateTimeoutLabels))
+        Me.BeginInvoke(New MethodInvoker(AddressOf UpdateTimeoutLabels))
     End Sub
 
+    ''' <summary>
+    ''' Handles application closing. Performs any misc cleanup which is required then
+    ''' disconnects the FX3 (reboot back to the USB bootloader)
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub Cleanup(sender As Object, e As EventArgs) Handles Me.Closing
 
         SaveAppSettings()
@@ -495,6 +619,12 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Gets the latest release version from the GitHub API. If the current version is older
+    ''' than the newest release, allows direct download of the new binary
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub checkVersion_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles checkVersion.LinkClicked
         checkVersion.LinkVisited = True
 
@@ -560,12 +690,23 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Open new issue page on github when the user clicks on the report issue label.
+    ''' Maybe someone will eventually use this. People seem much more fond of sending
+    ''' emails
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub report_issue_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles report_issue.LinkClicked
         report_issue.LinkVisited = True
-        System.Diagnostics.Process.Start("https://github.com/juchong/iSensor-FX3-Eval/issues/new")
+        System.Diagnostics.Process.Start("https://github.com/analogdevicesinc/iSensor-FX3-Eval/issues/new")
     End Sub
 
-    'General exception handler
+    ''' <summary>
+    ''' Handle any exceptions which are not caught
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Public Sub GeneralErrorHandler(sender As Object, e As UnhandledExceptionEventArgs)
         Dim ex As Exception = DirectCast(e.ExceptionObject, Exception)
         LogError(ex)
@@ -580,10 +721,15 @@ Public Class TopGUI
         LogError(e.Exception)
     End Sub
 
+    ''' <summary>
+    ''' Log an unhandled exception to a file on the PC
+    ''' </summary>
+    ''' <param name="e">Exception which was raised</param>
     Private Sub LogError(e As Exception)
 
         If TypeOf (e) Is SpiException Then
-            MessageBox.Show("ERROR: Automotive SPI protocol exception has occurred - is the DUT connected properly? " + e.Message, "Unexpected Error!", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("ERROR: Automotive SPI protocol exception has occurred - is the DUT connected properly? " + e.Message,
+                            "Unexpected Error!", MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
 
@@ -674,6 +820,10 @@ Public Class TopGUI
 
 #Region "Helper Functions"
 
+    ''' <summary>
+    ''' Save a custom personality to the custom personality
+    ''' CSV file in the app active directory
+    ''' </summary>
     Private Sub SaveCustomPersonality()
 
         Dim path As String = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv"
@@ -687,6 +837,9 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Populate all tool tip texts for the top GUI
+    ''' </summary>
     Private Sub SetupToolTips()
 
         Dim tip0 As ToolTip = New ToolTip()
@@ -734,7 +887,8 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Save app settings
+    ''' Save app settings to the config file. If a new setting is added, the
+    ''' setting object must be updated here, or wherever the setting is changed
     ''' </summary>
     Friend Sub SaveAppSettings()
         'Save settings
@@ -756,9 +910,11 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Friend getter for last connected FX3 board SN
+    ''' Friend getter for last connected FX3 board SN. This is used by the
+    ''' FX3 selection GUI to ensure that the last board in use is the default
+    ''' board selected
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>SN of the previously connected board</returns>
     Friend ReadOnly Property LastFX3SN As String
         Get
             Return My.Settings.LastFX3Board
@@ -766,7 +922,7 @@ Public Class TopGUI
     End Property
 
     ''' <summary>
-    ''' Loads default color scheme
+    ''' Loads default application color scheme
     ''' </summary>
     Friend Sub LoadDefaultColors()
 
@@ -779,6 +935,9 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Reboot connected FX3 board
+    ''' </summary>
     Private Sub RebootFX3()
 
         'Send disconnect command
@@ -794,9 +953,9 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Update the DUT (and labels) after changing the part 
+    ''' Update the IDUTInterface (and labels) after changing the part 
     ''' </summary>
-    ''' <param name="DutType"></param>
+    ''' <param name="DutType">Desired DUT type</param>
     Friend Sub UpdateDutLabel(DutType As DUTType)
         SetDUTTypeLabel()
 
@@ -821,6 +980,12 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Load regmap based on selected personality. This does not change
+    ''' any FX3 settings, just the regmap, so it can be safely called before
+    ''' the FX3 is connected
+    ''' </summary>
+    ''' <param name="displayName">Personality name</param>
     Friend Sub ApplyDutPersonalityRegmap(displayName As String)
 
         Dim savedRegmapPath As String = ""
@@ -861,6 +1026,11 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Apply a selected DUT personality to the FX3
+    ''' </summary>
+    ''' <param name="displayName">Name of the selected personality</param>
+    ''' <returns>If the personality selected was successful</returns>
     Friend Function ApplyDutPersonality(displayName As String) As Boolean
 
         Dim personality As DutPersonality = Nothing
@@ -878,13 +1048,16 @@ Public Class TopGUI
         End If
 
         If (personality.Supply = DutVoltage.On5_0Volts) And (FX3.ActiveFX3.BoardType <> FX3BoardType.CypressFX3Board) Then
-            If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
+            If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation",
+                               MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
                 Return False
             End If
         End If
 
+        'Note - VDDIO is not used currently
         If personality.VDDIO <> 3.3 Then
-            If MessageBox.Show("FX3 directly supports VDDIO of 3.3V, other values may cause damage - Continue?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
+            If MessageBox.Show("FX3 directly supports VDDIO of 3.3V, other values may cause damage - Continue?", "Confirmation",
+                               MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
                 Return False
             End If
         End If
@@ -955,7 +1128,8 @@ Public Class TopGUI
         btn_SelectDUT.Enabled = True
         dut_access.Enabled = True
 
-        label_FX3Status.Text = "Connected to " + [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType) + " (SN: " + FX3.ActiveFX3SerialNumber + ")"
+        label_FX3Status.Text = "Connected to " + [Enum].GetName(GetType(FX3BoardType), FX3.ActiveFX3.BoardType) +
+            " (SN: " + FX3.ActiveFX3SerialNumber + ")"
         label_FX3Status.BackColor = GOOD_COLOR
         btn_Connect.Text = "Reboot FX3"
 
@@ -983,11 +1157,13 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Reset all connected FX3 boards
+    ''' Ask user if they wish to reset all connected FX3 boards, and perform
+    ''' the reset if the user selects yes
     ''' </summary>
-    ''' <returns>The success of the reset operation</returns>
+    ''' <returns>The user selected (reset or not)</returns>
     Private Function ResetAllFX3s() As Boolean
-        Dim answer = MsgBox("This will reset all " + FX3.BusyFX3s.Count.ToString() + " connected FX3 board(s). Are you sure you want to continue?", MsgBoxStyle.OkCancel)
+        Dim answer = MsgBox("This will reset all " + FX3.BusyFX3s.Count.ToString() +
+                            " connected FX3 board(s). Are you sure you want to continue?", MsgBoxStyle.OkCancel)
         If answer <> MsgBoxResult.Ok Then
             Return False
         End If
@@ -1028,15 +1204,21 @@ Public Class TopGUI
         SetDUTTypeLabel()
     End Sub
 
+    ''' <summary>
+    ''' Populate the DUT type label based on the current FX3 settings and selected
+    ''' DUT personality
+    ''' </summary>
     Private Sub SetDUTTypeLabel()
         label_DUTType.BackColor = GOOD_COLOR
-        label_DUTType.Text = SelectedPersonality + " - " + FX3.SensorType.ToString() + ": " + FX3.PartType.ToString() + ", Supply " + FX3.DutSupplyMode.ToString()
+        label_DUTType.Text = SelectedPersonality + " - " + FX3.SensorType.ToString() +
+            ": " + FX3.PartType.ToString() +
+            ", Supply " + FX3.DutSupplyMode.ToString()
     End Sub
 
     ''' <summary>
-    ''' Sets the labels when a timeout event occurs
+    ''' Sets the GUI state when an FX3 disconnect timeout event occurs
     ''' </summary>
-    Private Sub updateTimeoutLabels()
+    Private Sub UpdateTimeoutLabels()
         ResetButtons()
         ResetLabels()
         label_FX3Status.Text = "Error: Disconnect timed out"
@@ -1044,7 +1226,8 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Performs a write and read back test on the user scratch register of the connected DUT
+    ''' Waits for data ready to begin toggling, then performs a write and read back 
+    ''' test on the user scratch register of the connected DUT
     ''' </summary>
     Private Sub TestDUT()
 
@@ -1107,6 +1290,10 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Halt any background operations on the top GUI and
+    ''' close all open sub-forms
+    ''' </summary>
     Private Sub CloseAllForms()
         Dim openForms As New List(Of Form)
         pageReadTimer.Enabled = False
@@ -1125,6 +1312,11 @@ Public Class TopGUI
         Next
     End Sub
 
+    ''' <summary>
+    ''' Goes through all open sub-forms and ensures that the corresponding 
+    ''' button for that form is disabled. This is done to ensure the user cannot
+    ''' open two instances of the same form.
+    ''' </summary>
     Private Sub DisableOpenFormButtons()
         For Each openForm As Form In Application.OpenForms
             If TypeOf (openForm) Is FX3ConfigGUI Then btn_FX3Config.Enabled = False
@@ -1139,10 +1331,14 @@ Public Class TopGUI
             If TypeOf (openForm) Is ADXl375GUI Then btn_ADXL375.Enabled = False
             If TypeOf (openForm) Is PulseMeasureGUI Then btn_pulseMeasure.Enabled = False
             If TypeOf (openForm) Is BinaryFileWriterGUI Then btn_binFile.Enabled = False
-            If TypeOf (openForm) Is FlashInterfaceGUI Then btn_checkError.Enabled = False
+            If TypeOf (openForm) Is NVMInterfaceGUI Then btn_checkError.Enabled = False
         Next
     End Sub
 
+    ''' <summary>
+    ''' Property override to allow the form to open without taking focus
+    ''' </summary>
+    ''' <returns>True</returns>
     Protected Overrides ReadOnly Property ShowWithoutActivation() As Boolean
         Get
             Return True
@@ -1153,10 +1349,13 @@ Public Class TopGUI
 
 #Region "Data Plotting"
 
+    'Variables to track sub-form size
     Friend TimePlotWidth, TimePlotHeight, FFTPlotWidth, FFTPlotHeight As Integer
 
-
-
+    ''' <summary>
+    ''' Init data plotting register list on top form. This register list is shared
+    ''' between the time domain and frequency domain plotters
+    ''' </summary>
     Friend Sub DataPlotRegsInit()
         Dim regIndex As Integer = 0
         Dim regStr() As String
@@ -1175,6 +1374,10 @@ Public Class TopGUI
         dataPlotRegsView.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
     End Sub
 
+    ''' <summary>
+    ''' Sync the data plot regs displayed list to the selected registers in either
+    ''' the time domain or frequency domain plotters
+    ''' </summary>
     Friend Sub DataPlotRegsUpdate()
 
         For Each row As DataGridViewRow In dataPlotRegsView.Rows
@@ -1183,6 +1386,9 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Set the plotter reg list based on the registers selected by the user
+    ''' </summary>
     Private Sub LoadDataPlotRegList()
         dataPlotRegs.Clear()
         For Each row As DataGridViewRow In dataPlotRegsView.Rows

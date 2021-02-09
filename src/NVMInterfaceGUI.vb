@@ -5,7 +5,7 @@
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Description:   GUI to allow users to dump the FX3 error log to a CSV file, or read the full contents of the EEPROM
 
-Public Class FlashInterfaceGUI
+Public Class NVMInterfaceGUI
 
     Public Sub Shutdown() Handles Me.Closing
         m_TopGUI.btn_checkError.Enabled = True
