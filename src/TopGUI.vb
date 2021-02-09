@@ -77,7 +77,8 @@ Public Class TopGUI
         'show welcome guide if selected
         If My.Settings.ShowWelcome Then
             Dim welcomeGuide As New WelcomeGuideGUI()
-            welcomeGuide.Show()
+            'show dialog blocks - can't proceed until closed
+            welcomeGuide.ShowDialog()
         End If
 
         Me.Text = "iSensor FX3 Eval"
