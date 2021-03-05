@@ -556,6 +556,25 @@ Public Class TopGUI
 
     End Sub
 
+    Private Sub btn_MeasureUSB_Click(sender As Object, e As EventArgs) Handles btn_MeasureUSB.Click
+
+        Const NUM_TRIALS As Integer = 1000
+        Dim timer As New Stopwatch()
+        Dim usbTimeUs As Double
+        'GPIO 14 is not used
+        Dim pin As New FX3PinObject(14)
+
+        'expect USB time to be in 150us range. 1000 transfers should take ~15ms
+        timer.Start()
+        For i As Integer = 1 To NUM_TRIALS
+            FX3.SetPin(FX3.FX3_LOOPBACK1, 1)
+        Next
+        timer.Stop()
+
+        usbTimeUs = (timer.ElapsedTicks * (1000000.0 / Stopwatch.Frequency)) / NUM_TRIALS
+        MsgBox("Average USB Transfer Time: " + usbTimeUs.ToString("f2") + "us")
+    End Sub
+
 #End Region
 
 #Region "Other Event Handlers"
@@ -883,6 +902,7 @@ Public Class TopGUI
         tip0.SetToolTip(Me.contRead, "Read all registers on the selected page continously (500ms interval)")
         tip0.SetToolTip(Me.scaledData, "Display register data in hex or decimal")
         tip0.SetToolTip(Me.btn_CRC4WordGen, "Generate a 32-bit SPI word with CRC4 (Seed 0xA) appended")
+        tip0.SetToolTip(Me.btn_MeasureUSB, "Measure the average USB command latency between the EVAL-ADIS-FX3 and the PC")
 
     End Sub
 

@@ -127,6 +127,7 @@ Partial Class TopGUI
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
+        Me.btn_MeasureUSB = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -1153,7 +1154,7 @@ Partial Class TopGUI
         '
         Me.GroupBox8.Controls.Add(Me.btn_BitBangSPI)
         Me.GroupBox8.Controls.Add(Me.btn_BurstTest)
-        Me.GroupBox8.Location = New System.Drawing.Point(102, 6)
+        Me.GroupBox8.Location = New System.Drawing.Point(182, 6)
         Me.GroupBox8.Name = "GroupBox8"
         Me.GroupBox8.Size = New System.Drawing.Size(170, 90)
         Me.GroupBox8.TabIndex = 37
@@ -1180,10 +1181,11 @@ Partial Class TopGUI
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.btn_MeasureUSB)
         Me.GroupBox2.Controls.Add(Me.btn_checkError)
         Me.GroupBox2.Location = New System.Drawing.Point(6, 6)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(90, 90)
+        Me.GroupBox2.Size = New System.Drawing.Size(170, 90)
         Me.GroupBox2.TabIndex = 36
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "FX3 Utilities"
@@ -1206,6 +1208,15 @@ Partial Class TopGUI
         Me.link_help.TabIndex = 44
         Me.link_help.TabStop = True
         Me.link_help.Text = "Welcome Guide"
+        '
+        'btn_MeasureUSB
+        '
+        Me.btn_MeasureUSB.Location = New System.Drawing.Point(88, 19)
+        Me.btn_MeasureUSB.Name = "btn_MeasureUSB"
+        Me.btn_MeasureUSB.Size = New System.Drawing.Size(75, 64)
+        Me.btn_MeasureUSB.TabIndex = 13
+        Me.btn_MeasureUSB.Text = "Measure USB Latency"
+        Me.btn_MeasureUSB.UseVisualStyleBackColor = True
         '
         'TopGUI
         '
@@ -1369,4 +1380,5 @@ Partial Class TopGUI
     Friend WithEvents plot As DataGridViewCheckBoxColumn
     Friend WithEvents btn_CRC4WordGen As Button
     Friend WithEvents link_help As LinkLabel
+    Friend WithEvents btn_MeasureUSB As Button
 End Class
