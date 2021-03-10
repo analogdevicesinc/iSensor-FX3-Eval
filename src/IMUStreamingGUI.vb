@@ -57,7 +57,7 @@ Public Class IMUStreamingGUI
     ''' active setting outside this form
     ''' </summary>
     Private Sub UpdateDrActiveState() Handles Me.Activated
-        check_drActive.Checked = m_TopGUI.FX3.DrActive
+        m_TopGUI.FX3.DrActive = check_drActive.Checked
     End Sub
 
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click

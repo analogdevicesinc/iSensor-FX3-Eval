@@ -73,7 +73,7 @@ Public Class RegisterBulkReadGUI
     ''' active setting outside this form
     ''' </summary>
     Private Sub UpdateDrActiveState() Handles Me.Activated
-        DrActiveBox.Checked = m_TopGUI.FX3.DrActive
+        m_TopGUI.FX3.DrActive = DrActiveBox.Checked
     End Sub
 
     Private Sub SetupToolTips()
