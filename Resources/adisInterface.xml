@@ -1045,6 +1045,13 @@ adisInterface
  </summary>
  <returns></returns>
 </member>
+<member name="P:adisInterface.DutBase.IsLowerFirst">
+ <summary>
+ For multi-word registers (32-bit), select if the lower half of the value
+ is at address n (true) or n + 1 (false)
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:adisInterface.DutBase.DeviceReadWordSize">
  <summary>
  SPI data word size used to write to a device. May be 8 or 16 bits data per SPi transaction, defaults to 8.
@@ -2019,6 +2026,13 @@ adisInterface
 <member name="P:adisInterface.IDutInterface.DeviceAddressIncrement">
  <summary>
  Number of bytes that are represented by the LSB of the register address
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:adisInterface.IDutInterface.IsLowerFirst">
+ <summary>
+ For multi-word registers (32-bit), select if the lower half of the value
+ is at address n (true) or n + 1 (false)
  </summary>
  <returns></returns>
 </member>

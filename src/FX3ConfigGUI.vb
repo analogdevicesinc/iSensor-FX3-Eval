@@ -10,9 +10,15 @@ Imports FX3Api
 Public Class FX3ConfigGUI
     Inherits FormBase
 
+    Private Const EndLowerFirst As String = "Lower reg word first (addr n)"
+    Private Const EndUpperFirst As String = "Upper reg word first (addr n)"
+
     Private m_regmappath As String
 
     Public Sub FormSetup() Handles Me.Load
+
+        SetupToolTips()
+
         polarityInput.Items.Add("False: Idle Low")
         polarityInput.Items.Add("True: Idle High")
 
@@ -58,6 +64,9 @@ Public Class FX3ConfigGUI
         DutInput.DataSource = ([Enum].GetValues(GetType(DUTType)))
         sensorInput.DataSource = ([Enum].GetValues(GetType(DeviceType)))
 
+        regEndiannessInput.Items.Add(EndLowerFirst)
+        regEndiannessInput.Items.Add(EndUpperFirst)
+
         UpdateFields()
 
         StatusLabel.Text = "Waiting..."
@@ -69,8 +78,45 @@ Public Class FX3ConfigGUI
         m_TopGUI.btn_FX3Config.Enabled = True
     End Sub
 
+    ''' <summary>
+    ''' Populate all tool tip texts for the config GUI
+    ''' </summary>
+    Private Sub SetupToolTips()
+
+        Dim tip As ToolTip = New ToolTip()
+        tip.SetToolTip(Me.frequencyInput, "Set the SPI clock frequency when using hardware SPI. Valid range ~1KHz - 33MHz")
+        tip.SetToolTip(Me.polarityInput, "Set the SPI clock polarity (CPOL)")
+        tip.SetToolTip(Me.phaseInput, "Set the SPI data sample phase (CPHA)")
+        tip.SetToolTip(Me.chipSelectPolarityInput, "Set the chip select polarity (idle high or idle low). Most devices are idle high")
+        tip.SetToolTip(Me.chipSelectControlInput, "Set the chip select control mode. This should usually be left in hardware control mode")
+        tip.SetToolTip(Me.leadTimeInput, "Set the delay (in SPI clocks) from the CS idle-active edge to the first SPI clock")
+        tip.SetToolTip(Me.lagTimeInput, "Set the delay (in SPI clocks) from the last SPI clock to the CS active-idle edge")
+        tip.SetToolTip(Me.wordLenInput, "Set the SPI word length (in bits)")
+        tip.SetToolTip(Me.lsbFirstInput, "Set the SPI port bit endianness (LSB transmitted first or MSB transmitted first)")
+        tip.SetToolTip(Me.stallTimeInput, "Set stall time between SPI words (in microseconds)")
+        tip.SetToolTip(Me.StallCyclesInput, "View the stall time (in terms of SPI clock cycles)")
+        tip.SetToolTip(Me.dataReadyPinInput, "Set the data ready digital I/O")
+        tip.SetToolTip(Me.dataReadyActiveInput, "Set data ready active (SPI transfers triggered by data ready) or inactive (asynchronous SPI transfers)")
+        tip.SetToolTip(Me.dataReadyPolarityInput, "Set the data ready polarity (trigger on data ready rising edge or data ready falling edge)")
+        tip.SetToolTip(Me.sensorInput, "Set the selected sensor type")
+        tip.SetToolTip(Me.DutInput, "Set the selected DUT type")
+        tip.SetToolTip(Me.regEndiannessInput, "Set the endianness for 32-bit registers which are split across multiple addresses")
+        tip.SetToolTip(Me.WatchdogEnable, "Enable the watchdog timer on the EVAL-ADIS-FX3 micro")
+        tip.SetToolTip(Me.WatchdogTimeout, "Set watchdog timeout period on the EVAL-ADIS-FX3 micro")
+        tip.SetToolTip(Me.DutVoltage, "Set the DUT supply mode (off, 3.3V (regulator output), 5V (USB supply)")
+        tip.SetToolTip(Me.SelectedRegMap, "Select a register map file to load")
+        tip.SetToolTip(Me.btn_edit_colors, "Configure the GUI color palette")
+
+    End Sub
+
     Private Sub UpdateFields()
         ' Populate the combo boxes and set initial values
+
+        If m_TopGUI.Dut.IsLowerFirst Then
+            regEndiannessInput.SelectedItem = EndLowerFirst
+        Else
+            regEndiannessInput.SelectedItem = EndUpperFirst
+        End If
 
         frequencyInput.Text = CStr(m_TopGUI.FX3.SclkFrequency)
 
@@ -318,13 +364,25 @@ Public Class FX3ConfigGUI
             End If
         End If
 
-        'save app settings
+        'update dut endianness setting
+        If regEndiannessInput.SelectedItem = EndLowerFirst Then
+            m_TopGUI.m_isLowerWordFirst = True
+        ElseIf regEndiannessInput.SelectedItem = EndUpperFirst Then
+            m_TopGUI.m_isLowerWordFirst = False
+        Else
+            MsgBox("ERROR: Invalid register endianness selection. Defaulting to true (lower first)")
+            m_TopGUI.m_isLowerWordFirst = True
+        End If
+
+        'update IDUTInterface object based on selection. Note, the endinanness setting is applied here
         m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
+
+        'save app settings (settings file and custom personality)
         m_TopGUI.SaveAppSettings()
 
+        'update GUI state
         StatusLabel.Text = "Done"
         StatusLabel.BackColor = m_TopGUI.GOOD_COLOR
-
         UpdateFields()
 
     End Sub

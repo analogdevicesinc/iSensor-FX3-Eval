@@ -4,6 +4,22 @@
         <name>FX3ApiWrapper</name>
     </assembly>
     <members>
+        <member name="T:FX3ApiWrapper.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:FX3ApiWrapper.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:FX3ApiWrapper.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
         <member name="T:FX3ApiWrapper.SensorType">
             <summary>
             Simplified enum for configuring sensor type
@@ -73,6 +89,12 @@
             Class destructor. Disconnects FX3
             </summary>
         </member>
+        <member name="M:FX3ApiWrapper.Wrapper.PrintRegMap">
+            <summary>
+            Print a list of all registers in provided regmap CSV
+            </summary>
+            <returns>List of register names. Each is seperated by a newline</returns>
+        </member>
         <member name="M:FX3ApiWrapper.Wrapper.Disconnect">
             <summary>
             Disconnect FX3 board
@@ -82,6 +104,13 @@
             <summary>
             Reset DUT via reset pin
             </summary>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.SetRegWordOrder(System.Boolean)">
+            <summary>
+            Set the word order for a 32-bit register which is comprised
+            of multiple 16-bit registers
+            </summary>
+            <param name="LowerFirst">If the lower 16-bits of the reg address is at n (true), or n+1 (false)</param>
         </member>
         <member name="M:FX3ApiWrapper.Wrapper.UserLEDBlink(System.Double)">
             <summary>
@@ -131,6 +160,11 @@
             Enable/disable data ready triggering for register reads
             </summary>
             <param name="DrActive">Data ready trigger enable</param>
+        </member>
+        <member name="M:FX3ApiWrapper.Wrapper.StopStream">
+            <summary>
+            Stop an active buffered stream
+            </summary>
         </member>
         <member name="M:FX3ApiWrapper.Wrapper.SetDrPin(System.Int32)">
             <summary>

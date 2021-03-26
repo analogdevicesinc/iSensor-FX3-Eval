@@ -125,9 +125,9 @@ Partial Class TopGUI
         Me.btn_BitBangSPI = New System.Windows.Forms.Button()
         Me.btn_BurstTest = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.btn_MeasureUSB = New System.Windows.Forms.Button()
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
-        Me.btn_MeasureUSB = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -1190,6 +1190,15 @@ Partial Class TopGUI
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "FX3 Utilities"
         '
+        'btn_MeasureUSB
+        '
+        Me.btn_MeasureUSB.Location = New System.Drawing.Point(88, 19)
+        Me.btn_MeasureUSB.Name = "btn_MeasureUSB"
+        Me.btn_MeasureUSB.Size = New System.Drawing.Size(75, 64)
+        Me.btn_MeasureUSB.TabIndex = 13
+        Me.btn_MeasureUSB.Text = "Measure USB Latency"
+        Me.btn_MeasureUSB.UseVisualStyleBackColor = True
+        '
         'btn_checkError
         '
         Me.btn_checkError.Location = New System.Drawing.Point(6, 20)
@@ -1208,15 +1217,6 @@ Partial Class TopGUI
         Me.link_help.TabIndex = 44
         Me.link_help.TabStop = True
         Me.link_help.Text = "Welcome Guide"
-        '
-        'btn_MeasureUSB
-        '
-        Me.btn_MeasureUSB.Location = New System.Drawing.Point(88, 19)
-        Me.btn_MeasureUSB.Name = "btn_MeasureUSB"
-        Me.btn_MeasureUSB.Size = New System.Drawing.Size(75, 64)
-        Me.btn_MeasureUSB.TabIndex = 13
-        Me.btn_MeasureUSB.Text = "Measure USB Latency"
-        Me.btn_MeasureUSB.UseVisualStyleBackColor = True
         '
         'TopGUI
         '

@@ -66,6 +66,8 @@ Partial Class FX3ConfigGUI
         Me.Label22 = New System.Windows.Forms.Label()
         Me.DutInput = New System.Windows.Forms.ComboBox()
         Me.sensorInput = New System.Windows.Forms.ComboBox()
+        Me.Label23 = New System.Windows.Forms.Label()
+        Me.regEndiannessInput = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -354,7 +356,7 @@ Partial Class FX3ConfigGUI
         'Label17
         '
         Me.Label17.AutoSize = True
-        Me.Label17.Location = New System.Drawing.Point(12, 523)
+        Me.Label17.Location = New System.Drawing.Point(11, 549)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(96, 13)
         Me.Label17.TabIndex = 33
@@ -362,14 +364,14 @@ Partial Class FX3ConfigGUI
         '
         'SelectedRegMap
         '
-        Me.SelectedRegMap.Location = New System.Drawing.Point(135, 520)
+        Me.SelectedRegMap.Location = New System.Drawing.Point(134, 546)
         Me.SelectedRegMap.Name = "SelectedRegMap"
         Me.SelectedRegMap.Size = New System.Drawing.Size(219, 20)
         Me.SelectedRegMap.TabIndex = 17
         '
         'WatchdogTimeout
         '
-        Me.WatchdogTimeout.Location = New System.Drawing.Point(135, 467)
+        Me.WatchdogTimeout.Location = New System.Drawing.Point(134, 493)
         Me.WatchdogTimeout.Name = "WatchdogTimeout"
         Me.WatchdogTimeout.Size = New System.Drawing.Size(219, 20)
         Me.WatchdogTimeout.TabIndex = 15
@@ -377,7 +379,7 @@ Partial Class FX3ConfigGUI
         'WatchdogEnable
         '
         Me.WatchdogEnable.AutoSize = True
-        Me.WatchdogEnable.Location = New System.Drawing.Point(135, 444)
+        Me.WatchdogEnable.Location = New System.Drawing.Point(134, 470)
         Me.WatchdogEnable.Name = "WatchdogEnable"
         Me.WatchdogEnable.Size = New System.Drawing.Size(174, 17)
         Me.WatchdogEnable.TabIndex = 14
@@ -387,7 +389,7 @@ Partial Class FX3ConfigGUI
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(12, 470)
+        Me.Label18.Location = New System.Drawing.Point(11, 496)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(107, 13)
         Me.Label18.TabIndex = 38
@@ -396,7 +398,7 @@ Partial Class FX3ConfigGUI
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(12, 445)
+        Me.Label13.Location = New System.Drawing.Point(11, 471)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(91, 13)
         Me.Label13.TabIndex = 39
@@ -405,7 +407,7 @@ Partial Class FX3ConfigGUI
         'Label19
         '
         Me.Label19.AutoSize = True
-        Me.Label19.Location = New System.Drawing.Point(12, 496)
+        Me.Label19.Location = New System.Drawing.Point(11, 522)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(72, 13)
         Me.Label19.TabIndex = 41
@@ -416,7 +418,7 @@ Partial Class FX3ConfigGUI
         Me.DutVoltage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.DutVoltage.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.DutVoltage.FormattingEnabled = True
-        Me.DutVoltage.Location = New System.Drawing.Point(135, 493)
+        Me.DutVoltage.Location = New System.Drawing.Point(134, 519)
         Me.DutVoltage.Name = "DutVoltage"
         Me.DutVoltage.Size = New System.Drawing.Size(219, 21)
         Me.DutVoltage.TabIndex = 16
@@ -424,7 +426,7 @@ Partial Class FX3ConfigGUI
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(12, 551)
+        Me.Label20.Location = New System.Drawing.Point(11, 577)
         Me.Label20.Name = "Label20"
         Me.Label20.Size = New System.Drawing.Size(89, 13)
         Me.Label20.TabIndex = 42
@@ -432,7 +434,7 @@ Partial Class FX3ConfigGUI
         '
         'btn_edit_colors
         '
-        Me.btn_edit_colors.Location = New System.Drawing.Point(135, 546)
+        Me.btn_edit_colors.Location = New System.Drawing.Point(134, 572)
         Me.btn_edit_colors.Name = "btn_edit_colors"
         Me.btn_edit_colors.Size = New System.Drawing.Size(219, 22)
         Me.btn_edit_colors.TabIndex = 18
@@ -477,11 +479,32 @@ Partial Class FX3ConfigGUI
         Me.sensorInput.Size = New System.Drawing.Size(219, 21)
         Me.sensorInput.TabIndex = 43
         '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(12, 445)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(88, 13)
+        Me.Label23.TabIndex = 48
+        Me.Label23.Text = "Reg Endianness:"
+        '
+        'regEndiannessInput
+        '
+        Me.regEndiannessInput.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.regEndiannessInput.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.regEndiannessInput.FormattingEnabled = True
+        Me.regEndiannessInput.Location = New System.Drawing.Point(135, 442)
+        Me.regEndiannessInput.Name = "regEndiannessInput"
+        Me.regEndiannessInput.Size = New System.Drawing.Size(219, 21)
+        Me.regEndiannessInput.TabIndex = 47
+        '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(444, 579)
+        Me.ClientSize = New System.Drawing.Size(444, 604)
+        Me.Controls.Add(Me.Label23)
+        Me.Controls.Add(Me.regEndiannessInput)
         Me.Controls.Add(Me.Label21)
         Me.Controls.Add(Me.Label22)
         Me.Controls.Add(Me.DutInput)
@@ -579,4 +602,6 @@ Partial Class FX3ConfigGUI
     Friend WithEvents Label22 As Label
     Friend WithEvents DutInput As ComboBox
     Friend WithEvents sensorInput As ComboBox
+    Friend WithEvents Label23 As Label
+    Friend WithEvents regEndiannessInput As ComboBox
 End Class

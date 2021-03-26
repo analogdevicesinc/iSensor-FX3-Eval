@@ -85,6 +85,12 @@ Public Class DutPersonality
     ''' </summary>
     Public WriteBitPolarity As Boolean
 
+    ''' <summary>
+    ''' For 32-bit registers, track if lower word comes first (addr n) or second
+    ''' (addr n+1)
+    ''' </summary>
+    Public IsLowerFirst As Boolean
+
     Public Sub New()
         DisplayName = "Custom"
         RegMapFileName = "NotSet"
@@ -101,6 +107,7 @@ Public Class DutPersonality
         AddrPosition = 8
         WriteBitPosition = 15
         WriteBitPolarity = True
+        IsLowerFirst = True
     End Sub
 
     ''' <summary>
@@ -175,6 +182,7 @@ Public Class DutPersonality
         header.Add("DATAPOS")
         header.Add("WRITEBITPOS")
         header.Add("WRITEBITPOLARITY")
+        header.Add("ISLOWERFIRST")
 
         For Each item In header
             writer.Write(item + ",")
@@ -198,6 +206,7 @@ Public Class DutPersonality
             vals.Add(personality.DataPosition.ToString())
             vals.Add(personality.WriteBitPosition.ToString())
             vals.Add(personality.WriteBitPolarity.ToString())
+            vals.Add(personality.IsLowerFirst.ToString())
             For Each item In vals
                 writer.Write(item + ",")
             Next
@@ -253,6 +262,7 @@ Public Class DutPersonality
             indexes.Add(Array.IndexOf(line, "DATAPOS"))
             indexes.Add(Array.IndexOf(line, "WRITEBITPOS"))
             indexes.Add(Array.IndexOf(line, "WRITEBITPOLARITY"))
+            indexes.Add(Array.IndexOf(line, "ISLOWERFIRST"))
             'parse file
             For i As Integer = 1 To lines.Count - 1
                 line = lines(i).Split(",")
@@ -273,6 +283,7 @@ Public Class DutPersonality
                     item.DataPosition = Convert.ToInt32(line(indexes(12)))
                     item.WriteBitPosition = Convert.ToInt32(line(indexes(13)))
                     item.WriteBitPolarity = Convert.ToBoolean(line(indexes(14)))
+                    item.IsLowerFirst = Convert.ToBoolean(line(indexes(15)))
                     ret.Add(item)
                 Catch ex As Exception
                     'abort

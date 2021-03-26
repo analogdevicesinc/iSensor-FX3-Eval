@@ -55,6 +55,9 @@ Public Class TopGUI
     Friend m_AutoSpi As iSensorAutomotiveSpi
     Friend m_CompSpi As ComponentSpi
 
+    'track IDutInterface settings which must be persistent
+    Friend m_isLowerWordFirst As Boolean
+
 #End Region
 
 #Region "Constructor/Load"
@@ -271,6 +274,7 @@ Public Class TopGUI
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message() + " " + RegMap.ErrorText)
             End Try
+
         End Set
     End Property
 
@@ -849,6 +853,7 @@ Public Class TopGUI
         Dim personality As New DutPersonality()
         personality.DisplayName = "Custom"
         personality.RegMapFileName = RegMapPath
+        personality.IsLowerFirst = m_isLowerWordFirst
         If Not IsNothing(FX3.ActiveFX3) Then personality.GetSettingsFromFX3(FX3)
 
         'save to CSV
@@ -996,6 +1001,9 @@ Public Class TopGUI
             Dut = New adbfInterface(FX3, Nothing)
         End If
 
+        'update lower word first setting
+        Dut.IsLowerFirst = m_isLowerWordFirst
+
         If Not IsNothing(FX3.ActiveFX3) Then TestDUT()
 
     End Sub
@@ -1013,6 +1021,8 @@ Public Class TopGUI
         'Set the regmap path using the SelectRegMap GUI
         For i As Integer = 0 To DutOptions.Count - 1
             If DutOptions(i).DisplayName = displayName Then
+                'load DUT endianness setting here
+                m_isLowerWordFirst = DutOptions(i).IsLowerFirst
                 If displayName = "Custom" Then
                     'custom uses absolute path
                     savedRegmapPath = DutOptions(i).RegMapFileName
@@ -1085,6 +1095,11 @@ Public Class TopGUI
         'apply settings
         If Not IsNothing(FX3.ActiveFX3) Then personality.ApplySettingsToFX3(FX3)
         If FX3.SensorType = DeviceType.ComponentSensor Then personality.ApplyComponentSpiSettings(m_CompSpi)
+
+        'apply the isLowerfirst option to the DUT object
+        If Not IsNothing(Dut) Then Dut.IsLowerFirst = personality.IsLowerFirst
+        'save setting
+        m_isLowerWordFirst = personality.IsLowerFirst
 
         SelectedPersonality = displayName
 
