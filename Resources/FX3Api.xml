@@ -1402,6 +1402,17 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  </summary>
  <param name="SerialNumber">Serial number of the selected board</param>
 </member>
+<member name="F:FX3Api.FX3Connection.m_SPI32InitialMOSI">
+ <summary>
+ SPI data to transmit at the start of a transfer stream. No read
+ back performed
+ </summary>
+</member>
+<member name="F:FX3Api.FX3Connection.m_SPI32InitialDrActive">
+ <summary>
+ Track if initial MOSI data is transfered with DrActive
+ </summary>
+</member>
 <member name="M:FX3Api.FX3Connection.Transfer(System.UInt32)">
  <summary>
  This function performs a single bi-directional 32 bit SPI transaction. If DrActive is set to false the transfer is performed asynchronously. If DrActive is set to true, 
@@ -1451,6 +1462,27 @@ Limit crc accumulation to 16 bits to prevent U32 overflow.
  <param name="numCaptures">The number of transfers of the WriteData array performed on each data ready (if enabled).</param>
  <param name="numBuffers">The total number of data ready's to capture.</param>
  <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArrayImplementation(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ Transfer array low level implementation
+ </summary>
+ <param name="WriteData"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteReadTransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.Boolean,System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ Array transfer which performs an initial SPI transmit (MOSI only, no read back) then
+ starts a read stream. This is useful if you need to issue a write to the DUT, then 
+ immediately start reading back data, without the USB transfer overhead of approx 150us
+ </summary>
+ <param name="InitialMOSIData">MOSI data to transmit before read (SPI words)</param>
+ <param name="InitialDrActive">If the initial transmission is DR active or not</param>
+ <param name="MOSIReadData">Data sent over the MOSI line during the transfer</param>
+ <param name="NumBuffers">Number of buffers (samples) to read</param>
+ <returns>MISO data from the DUT during the whole transfer</returns>
 </member>
 <member name="M:FX3Api.FX3Connection.ISpi32Interface_StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
  <summary>
