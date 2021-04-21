@@ -152,6 +152,10 @@ Public Class ADcmXLStreamingGUI
             statusLabel.BackColor = m_TopGUI.ERROR_COLOR
             Exit Sub
         End Try
+        If captureTime < 250 Then
+            captureTime = 250
+            timeSelect.Text = "250"
+        End If
 
         'Set the capture polarity
         If startPolarity.SelectedIndex = 0 Then
