@@ -91,6 +91,16 @@ Public Class DutPersonality
     ''' </summary>
     Public IsLowerFirst As Boolean
 
+    ''' <summary>
+    ''' Command register bit to issue a flash update
+    ''' </summary>
+    Public FlashUpdateCmdBit As Integer
+
+    ''' <summary>
+    ''' Command register bit to issue a software reset
+    ''' </summary>
+    Public SoftResetCmdBit As Integer
+
     Public Sub New()
         DisplayName = "Custom"
         RegMapFileName = "NotSet"
@@ -183,7 +193,8 @@ Public Class DutPersonality
         header.Add("WRITEBITPOS")
         header.Add("WRITEBITPOLARITY")
         header.Add("ISLOWERFIRST")
-
+        header.Add("SOFTRESETBIT")
+        header.Add("FLASHUPDATEBIT")
         For Each item In header
             writer.Write(item + ",")
         Next
@@ -207,6 +218,8 @@ Public Class DutPersonality
             vals.Add(personality.WriteBitPosition.ToString())
             vals.Add(personality.WriteBitPolarity.ToString())
             vals.Add(personality.IsLowerFirst.ToString())
+            vals.Add(personality.SoftResetCmdBit.ToString())
+            vals.Add(personality.FlashUpdateCmdBit.ToString())
             For Each item In vals
                 writer.Write(item + ",")
             Next
@@ -263,6 +276,8 @@ Public Class DutPersonality
             indexes.Add(Array.IndexOf(line, "WRITEBITPOS"))
             indexes.Add(Array.IndexOf(line, "WRITEBITPOLARITY"))
             indexes.Add(Array.IndexOf(line, "ISLOWERFIRST"))
+            indexes.Add(Array.IndexOf(line, "SOFTRESETBIT"))
+            indexes.Add(Array.IndexOf(line, "FLASHUPDATEBIT"))
             'parse file
             For i As Integer = 1 To lines.Count - 1
                 line = lines(i).Split(",")
@@ -284,6 +299,8 @@ Public Class DutPersonality
                     item.WriteBitPosition = Convert.ToInt32(line(indexes(13)))
                     item.WriteBitPolarity = Convert.ToBoolean(line(indexes(14)))
                     item.IsLowerFirst = Convert.ToBoolean(line(indexes(15)))
+                    item.SoftResetCmdBit = Convert.ToInt32(line(indexes(16)))
+                    item.FlashUpdateCmdBit = Convert.ToInt32(line(indexes(17)))
                     ret.Add(item)
                 Catch ex As Exception
                     'abort

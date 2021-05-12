@@ -128,6 +128,7 @@ Partial Class TopGUI
         Me.btn_MeasureUSB = New System.Windows.Forms.Button()
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
+        Me.btn_FactoryReset = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -1103,20 +1104,21 @@ Partial Class TopGUI
         '
         'GroupBox9
         '
+        Me.GroupBox9.Controls.Add(Me.btn_FactoryReset)
         Me.GroupBox9.Controls.Add(Me.btn_CRC4WordGen)
         Me.GroupBox9.Controls.Add(Me.btn_pulseMeasure)
         Me.GroupBox9.Controls.Add(Me.btn_binFile)
         Me.GroupBox9.Controls.Add(Me.btn_ADXL375)
         Me.GroupBox9.Location = New System.Drawing.Point(6, 102)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(330, 90)
+        Me.GroupBox9.Size = New System.Drawing.Size(415, 90)
         Me.GroupBox9.TabIndex = 37
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Misc"
         '
         'btn_CRC4WordGen
         '
-        Me.btn_CRC4WordGen.Location = New System.Drawing.Point(249, 19)
+        Me.btn_CRC4WordGen.Location = New System.Drawing.Point(331, 19)
         Me.btn_CRC4WordGen.Name = "btn_CRC4WordGen"
         Me.btn_CRC4WordGen.Size = New System.Drawing.Size(75, 64)
         Me.btn_CRC4WordGen.TabIndex = 39
@@ -1125,7 +1127,7 @@ Partial Class TopGUI
         '
         'btn_pulseMeasure
         '
-        Me.btn_pulseMeasure.Location = New System.Drawing.Point(6, 19)
+        Me.btn_pulseMeasure.Location = New System.Drawing.Point(88, 19)
         Me.btn_pulseMeasure.Name = "btn_pulseMeasure"
         Me.btn_pulseMeasure.Size = New System.Drawing.Size(75, 64)
         Me.btn_pulseMeasure.TabIndex = 7
@@ -1134,7 +1136,7 @@ Partial Class TopGUI
         '
         'btn_binFile
         '
-        Me.btn_binFile.Location = New System.Drawing.Point(168, 19)
+        Me.btn_binFile.Location = New System.Drawing.Point(250, 19)
         Me.btn_binFile.Name = "btn_binFile"
         Me.btn_binFile.Size = New System.Drawing.Size(75, 64)
         Me.btn_binFile.TabIndex = 11
@@ -1143,7 +1145,7 @@ Partial Class TopGUI
         '
         'btn_ADXL375
         '
-        Me.btn_ADXL375.Location = New System.Drawing.Point(87, 19)
+        Me.btn_ADXL375.Location = New System.Drawing.Point(169, 19)
         Me.btn_ADXL375.Name = "btn_ADXL375"
         Me.btn_ADXL375.Size = New System.Drawing.Size(75, 64)
         Me.btn_ADXL375.TabIndex = 9
@@ -1217,6 +1219,15 @@ Partial Class TopGUI
         Me.link_help.TabIndex = 44
         Me.link_help.TabStop = True
         Me.link_help.Text = "Welcome Guide"
+        '
+        'btn_FactoryReset
+        '
+        Me.btn_FactoryReset.Location = New System.Drawing.Point(6, 19)
+        Me.btn_FactoryReset.Name = "btn_FactoryReset"
+        Me.btn_FactoryReset.Size = New System.Drawing.Size(75, 64)
+        Me.btn_FactoryReset.TabIndex = 40
+        Me.btn_FactoryReset.Text = "Factory Reset DUT"
+        Me.btn_FactoryReset.UseVisualStyleBackColor = True
         '
         'TopGUI
         '
@@ -1381,4 +1392,5 @@ Partial Class TopGUI
     Friend WithEvents btn_CRC4WordGen As Button
     Friend WithEvents link_help As LinkLabel
     Friend WithEvents btn_MeasureUSB As Button
+    Friend WithEvents btn_FactoryReset As Button
 End Class
