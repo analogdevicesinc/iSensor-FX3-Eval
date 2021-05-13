@@ -283,68 +283,10 @@ Public Class TopGUI
 #Region "Button Event Handlers"
 
     Private Sub btn_FactoryReset_Click(sender As Object, e As EventArgs) Handles btn_FactoryReset.Click
-        Dim selectedPer As DutPersonality = Nothing
-        For Each per In DutOptions
-            If per.DisplayName = SelectedPersonality Then selectedPer = per
-        Next
-        If IsNothing(selectedPer) Then
-            MessageBox.Show("DUT Personality Not Loaded!")
-            Return
-        End If
-        If selectedPer.FlashUpdateCmdBit = -1 Then
-            MessageBox.Show("The selected device does not support flash update! Aborting...")
-            Return
-        End If
-
-        'ask if user wants to continue
-        If MessageBox.Show("Are you sure you wish to restore the device to factory settings?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
-            Return
-        End If
-
-        If Not TestDUT() Then
-            MessageBox.Show("DUT SPI communications check failed! Cannot start factory reset process")
-            Return
-        End If
-
-        FX3.DrActive = False
-
-        'set all regs with default value
-        For Each reg In RegMap
-            If Not IsNothing(reg.DefaultValue) Then
-                Dut.WriteUnsigned(reg, CUInt(reg.DefaultValue))
-                'should not need more than 1ms stall between control register writes
-                System.Threading.Thread.Sleep(1)
-            End If
-        Next
-
-        'read back
-        CheckDUTFactoryDefaults()
-
-        'ensure that data ready is set to default, based on personality
-        'could do this with reflection, but for 4 options its not really worth it
-        Select Case selectedPer.DrDIONumber
-            Case 1
-                FX3.DrPin = FX3.DIO1
-            Case 2
-                FX3.DrPin = FX3.DIO2
-            Case 3
-                FX3.DrPin = FX3.DIO3
-            Case 4
-                FX3.DrPin = FX3.DIO4
-            Case Else
-                'default, dont change
-        End Select
-
-        'run flash update command
-        RunDUTCommand(selectedPer.FlashUpdateCmdBit)
-        System.Threading.Thread.Sleep(10)
-
-        'wait for data ready pulsing (or 1500ms timeout)
-        FX3.MeasurePinFreq(FX3.DrPin, 1, 1500, 3)
-
-        'check regs again
-        CheckDUTFactoryDefaults()
-
+        Dim subGUI As New FacResetGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_FactoryReset.Enabled = False
     End Sub
 
     ''' <summary>
@@ -1330,7 +1272,7 @@ Public Class TopGUI
     ''' Waits for data ready to begin toggling, then performs a write and read back 
     ''' test on the user scratch register of the connected DUT
     ''' </summary>
-    Private Function TestDUT() As Boolean
+    Friend Function TestDUT() As Boolean
 
         Dim scratchReg As RegClass = Nothing
         Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1", "APPLICATION_SPACE_0", "SCRATCH_A"}
@@ -1397,7 +1339,7 @@ Public Class TopGUI
         Return testResult
     End Function
 
-    Private Sub CheckDUTFactoryDefaults()
+    Friend Function CheckDUTFactoryDefaults() As String
         Dim goodRead As Boolean
         Dim invalidRegs As String
 
@@ -1411,10 +1353,16 @@ Public Class TopGUI
                 End If
             End If
         Next
-        If Not goodRead Then MessageBox.Show("Write to " + invalidRegs + " failed!")
-    End Sub
+        If Not goodRead Then
+            'remove lagging comma
+            invalidRegs = invalidRegs.Remove(invalidRegs.Length - 2)
+            Return ("Write to " + invalidRegs + " failed!")
+        Else
+            Return "Factory default values verified!"
+        End If
+    End Function
 
-    Private Sub RunDUTCommand(CommandBit As Integer)
+    Friend Sub RunDUTCommand(CommandBit As Integer)
 
         'Need to find the COMMAND reg in the register map. Has a few possible names
         Dim cmdReg As RegClass = Nothing
@@ -1483,6 +1431,7 @@ Public Class TopGUI
             If TypeOf (openForm) Is PulseMeasureGUI Then btn_pulseMeasure.Enabled = False
             If TypeOf (openForm) Is BinaryFileWriterGUI Then btn_binFile.Enabled = False
             If TypeOf (openForm) Is NVMInterfaceGUI Then btn_checkError.Enabled = False
+            If TypeOf (openForm) Is FacResetGUI Then btn_FactoryReset.Enabled = False
         Next
     End Sub
 
