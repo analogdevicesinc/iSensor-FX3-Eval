@@ -1,4 +1,11 @@
-﻿Imports System.Threading
+﻿'Copyright (c) 2018-2021 Analog Devices, Inc. All Rights Reserved.
+'This software is proprietary to Analog Devices, Inc. and its licensors.
+'
+'File:          FacResetGUI.vb
+'Author:        Alex Nolan (alex.nolan@analog.com)
+'Description:   DUT factory reset form
+
+Imports System.Threading
 
 Public Class FacResetGUI
 
@@ -39,6 +46,7 @@ Public Class FacResetGUI
         'disable button
         btn_startReset.Enabled = False
 
+        'run reset operation in thread to allow for GUI updates
         m_testRunner = New Thread(AddressOf FactoryResetWork)
         m_testRunner.Start()
 
