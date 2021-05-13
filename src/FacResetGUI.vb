@@ -46,7 +46,7 @@ Public Class FacResetGUI
 
     Private Sub FactoryResetWork()
         Dim freq As Double
-
+        WriteStatus("Selected Device: " + m_Personality.DisplayName)
         m_TopGUI.FX3.DrActive = False
         WriteStatus("Starting SPI comms check...")
         UpdateProgress(1)
