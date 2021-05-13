@@ -54,6 +54,7 @@ Public Class FacResetGUI
 
     Private Sub FactoryResetWork()
         Dim freq As Double
+        Dim regCount As Integer
         WriteStatus("Selected Device: " + m_Personality.DisplayName)
         m_TopGUI.FX3.DrActive = False
         WriteStatus("Starting SPI comms check...")
@@ -64,17 +65,20 @@ Public Class FacResetGUI
 
             'set all regs with default value
             WriteStatus("Setting all registers to default values...")
+            regCount = 0
             For Each reg In m_TopGUI.RegMap
                 If Not IsNothing(reg.DefaultValue) Then
                     Try
                         m_TopGUI.Dut.WriteUnsigned(reg, CUInt(reg.DefaultValue))
+                        regCount += 1
                     Catch ex As Exception
                         WriteStatus("Error occurred writing " + reg.Label + ": " + ex.Message)
                     End Try
-                    'should not need more than 1ms stall between control register writes
-                    System.Threading.Thread.Sleep(1)
+                    'give 10ms stall between writes just in case - probably overkill
+                    System.Threading.Thread.Sleep(10)
                 End If
             Next
+            WriteStatus("Wrote default values to " + regCount.ToString() + " registers...")
             UpdateProgress(3)
 
             WriteStatus("Performing readback on all registers...")
@@ -132,6 +136,7 @@ Public Class FacResetGUI
             WriteStatus("Performing readback on all registers...")
             WriteStatus(m_TopGUI.CheckDUTFactoryDefaults())
             UpdateProgress(11)
+            WriteStatus("Factory reset operation complete!")
         Else
             WriteStatus("DUT SPI communications check failed! Cannot start factory reset process")
         End If
