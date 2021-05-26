@@ -432,6 +432,9 @@
     <None Include="RegMaps\ADIS16210_RegMap.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="RegMaps\ADIS16228_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="RegMaps\ADIS16265_RegMap.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
