@@ -282,6 +282,13 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
+    Private Sub btn_FactoryReset_Click(sender As Object, e As EventArgs) Handles btn_FactoryReset.Click
+        Dim subGUI As New FacResetGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+        btn_FactoryReset.Enabled = False
+    End Sub
+
     ''' <summary>
     ''' Helper function to generate a correct ADXC1500 SPI CRC, based on 
     ''' a 32-bit input word
@@ -908,6 +915,7 @@ Public Class TopGUI
         tip0.SetToolTip(Me.scaledData, "Display register data in hex or decimal")
         tip0.SetToolTip(Me.btn_CRC4WordGen, "Generate a 32-bit SPI word with CRC4 (Seed 0xA) appended")
         tip0.SetToolTip(Me.btn_MeasureUSB, "Measure the average USB command latency between the EVAL-ADIS-FX3 and the PC")
+        tip0.SetToolTip(Me.btn_FactoryReset, "Restore all DUT registers to factory defaults, and save the register settings to NVM")
 
     End Sub
 
@@ -1264,29 +1272,32 @@ Public Class TopGUI
     ''' Waits for data ready to begin toggling, then performs a write and read back 
     ''' test on the user scratch register of the connected DUT
     ''' </summary>
-    Private Sub TestDUT()
+    Friend Function TestDUT() As Boolean
+
+        Dim scratchReg As RegClass = Nothing
+        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1", "APPLICATION_SPACE_0", "SCRATCH_A", "USER_ID"}
+        Dim drActive As Boolean = FX3.DrActive
+        Dim randomValue As UInteger
+        Dim orignalScratch As UInteger
+        Dim testResult As Boolean
 
         'Exit if FX3 not connected
         If Not m_FX3Connected Then
             label_DUTStatus.Text = "Waiting for FX3 to Connect"
             label_DUTStatus.BackColor = IDLE_COLOR
+            Return False
         End If
-
-        Dim scratchReg As RegClass = Nothing
-        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1", "APPLICATION_SPACE_0", "SCRATCH_A"}
-        Dim drActive As Boolean = FX3.DrActive
 
         For Each regName In scratchRegNames
             If RegMap.Contains(regName) Then
                 scratchReg = RegMap(regName)
-                Exit For
             End If
         Next
 
         If IsNothing(scratchReg) Then
             label_DUTStatus.Text = "ERROR: No Scratch Register in RegMap"
             label_DUTStatus.BackColor = IDLE_COLOR
-            Exit Sub
+            Return False
         End If
 
         'make DR active false for this test
@@ -1305,23 +1316,76 @@ Public Class TopGUI
             'squash - don't want to throw error for PWM or special function pin
         End Try
 
-        Dim randomValue As UInteger = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
-
-        Dim orignalScratch As UInteger = Dut.ReadUnsigned(scratchReg)
+        'generate new test value and save starting value
+        randomValue = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
+        orignalScratch = Dut.ReadUnsigned(scratchReg)
 
         Dut.WriteUnsigned(scratchReg, randomValue)
         If Not Dut.ReadUnsigned(scratchReg) = randomValue Then
             label_DUTStatus.Text = "ERROR: DUT Read/Write Failed"
             label_DUTStatus.BackColor = ERROR_COLOR
+            testResult = False
         Else
             label_DUTStatus.Text = "DUT Connected"
             label_DUTStatus.BackColor = GOOD_COLOR
+            testResult = True
         End If
-
+        'restore value
         Dut.WriteUnsigned(scratchReg, orignalScratch)
 
         'restore dr active setting
         FX3.DrActive = drActive
+
+        Return testResult
+    End Function
+
+    Friend Function CheckDUTFactoryDefaults() As String
+        Dim goodRead As Boolean
+        Dim invalidRegs As String
+
+        invalidRegs = ""
+        goodRead = True
+        For Each reg In RegMap
+            If Not IsNothing(reg.DefaultValue) Then
+                If Dut.ReadUnsigned(reg) <> reg.DefaultValue Then
+                    goodRead = False
+                    invalidRegs += (reg.Label + ", ")
+                End If
+            End If
+        Next
+        If Not goodRead Then
+            'remove lagging comma
+            invalidRegs = invalidRegs.Remove(invalidRegs.Length - 2)
+            Return ("Write to " + invalidRegs + " failed!")
+        Else
+            Return "Factory default values verified!"
+        End If
+    End Function
+
+    Friend Sub RunDUTCommand(CommandBit As Integer)
+
+        'Need to find the COMMAND reg in the register map. Has a few possible names
+        Dim cmdReg As RegClass = Nothing
+        Dim cmdRegNames() As String = {"COMMAND", "GLOB_CMD", "USER_COMMAND"}
+
+        'Exit if FX3 not connected
+        If Not m_FX3Connected Then
+            Return
+        End If
+
+        For Each regName In cmdRegNames
+            If RegMap.Contains(regName) Then
+                cmdReg = RegMap(regName)
+                Exit For
+            End If
+        Next
+
+        'issue write
+        If (Not IsNothing(cmdReg)) And (CommandBit < 32) Then
+            Dut.WriteUnsigned(cmdReg, 1UI << CommandBit)
+        Else
+            MessageBox.Show("No Command Register Found!")
+        End If
 
     End Sub
 
@@ -1367,6 +1431,7 @@ Public Class TopGUI
             If TypeOf (openForm) Is PulseMeasureGUI Then btn_pulseMeasure.Enabled = False
             If TypeOf (openForm) Is BinaryFileWriterGUI Then btn_binFile.Enabled = False
             If TypeOf (openForm) Is NVMInterfaceGUI Then btn_checkError.Enabled = False
+            If TypeOf (openForm) Is FacResetGUI Then btn_FactoryReset.Enabled = False
         Next
     End Sub
 
