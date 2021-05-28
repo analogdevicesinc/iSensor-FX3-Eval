@@ -117,10 +117,10 @@ Partial Class TopGUI
         Me.GPIO_Num = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
+        Me.btn_FactoryReset = New System.Windows.Forms.Button()
         Me.btn_CRC4WordGen = New System.Windows.Forms.Button()
         Me.btn_pulseMeasure = New System.Windows.Forms.Button()
         Me.btn_binFile = New System.Windows.Forms.Button()
-        Me.btn_ADXL375 = New System.Windows.Forms.Button()
         Me.GroupBox8 = New System.Windows.Forms.GroupBox()
         Me.btn_BitBangSPI = New System.Windows.Forms.Button()
         Me.btn_BurstTest = New System.Windows.Forms.Button()
@@ -128,7 +128,6 @@ Partial Class TopGUI
         Me.btn_MeasureUSB = New System.Windows.Forms.Button()
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
-        Me.btn_FactoryReset = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -983,7 +982,7 @@ Partial Class TopGUI
         Me.manualGPIOGroupBox.Location = New System.Drawing.Point(6, 198)
         Me.manualGPIOGroupBox.Name = "manualGPIOGroupBox"
         Me.manualGPIOGroupBox.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.manualGPIOGroupBox.Size = New System.Drawing.Size(330, 182)
+        Me.manualGPIOGroupBox.Size = New System.Drawing.Size(332, 182)
         Me.manualGPIOGroupBox.TabIndex = 38
         Me.manualGPIOGroupBox.TabStop = False
         Me.manualGPIOGroupBox.Text = "Manual GPIO Access"
@@ -1050,7 +1049,7 @@ Partial Class TopGUI
         Me.GroupBox13.Controls.Add(Me.btn_pullDown)
         Me.GroupBox13.Controls.Add(Me.btn_disableResistor)
         Me.GroupBox13.Controls.Add(Me.btn_pullUp)
-        Me.GroupBox13.Location = New System.Drawing.Point(226, 13)
+        Me.GroupBox13.Location = New System.Drawing.Point(230, 13)
         Me.GroupBox13.Name = "GroupBox13"
         Me.GroupBox13.Size = New System.Drawing.Size(95, 161)
         Me.GroupBox13.TabIndex = 40
@@ -1108,17 +1107,25 @@ Partial Class TopGUI
         Me.GroupBox9.Controls.Add(Me.btn_CRC4WordGen)
         Me.GroupBox9.Controls.Add(Me.btn_pulseMeasure)
         Me.GroupBox9.Controls.Add(Me.btn_binFile)
-        Me.GroupBox9.Controls.Add(Me.btn_ADXL375)
         Me.GroupBox9.Location = New System.Drawing.Point(6, 102)
         Me.GroupBox9.Name = "GroupBox9"
-        Me.GroupBox9.Size = New System.Drawing.Size(415, 90)
+        Me.GroupBox9.Size = New System.Drawing.Size(332, 90)
         Me.GroupBox9.TabIndex = 37
         Me.GroupBox9.TabStop = False
         Me.GroupBox9.Text = "Misc"
         '
+        'btn_FactoryReset
+        '
+        Me.btn_FactoryReset.Location = New System.Drawing.Point(6, 19)
+        Me.btn_FactoryReset.Name = "btn_FactoryReset"
+        Me.btn_FactoryReset.Size = New System.Drawing.Size(75, 64)
+        Me.btn_FactoryReset.TabIndex = 40
+        Me.btn_FactoryReset.Text = "Factory Reset DUT"
+        Me.btn_FactoryReset.UseVisualStyleBackColor = True
+        '
         'btn_CRC4WordGen
         '
-        Me.btn_CRC4WordGen.Location = New System.Drawing.Point(331, 19)
+        Me.btn_CRC4WordGen.Location = New System.Drawing.Point(250, 19)
         Me.btn_CRC4WordGen.Name = "btn_CRC4WordGen"
         Me.btn_CRC4WordGen.Size = New System.Drawing.Size(75, 64)
         Me.btn_CRC4WordGen.TabIndex = 39
@@ -1136,21 +1143,12 @@ Partial Class TopGUI
         '
         'btn_binFile
         '
-        Me.btn_binFile.Location = New System.Drawing.Point(250, 19)
+        Me.btn_binFile.Location = New System.Drawing.Point(169, 19)
         Me.btn_binFile.Name = "btn_binFile"
         Me.btn_binFile.Size = New System.Drawing.Size(75, 64)
         Me.btn_binFile.TabIndex = 11
         Me.btn_binFile.Text = "Binary File Writer"
         Me.btn_binFile.UseVisualStyleBackColor = True
-        '
-        'btn_ADXL375
-        '
-        Me.btn_ADXL375.Location = New System.Drawing.Point(169, 19)
-        Me.btn_ADXL375.Name = "btn_ADXL375"
-        Me.btn_ADXL375.Size = New System.Drawing.Size(75, 64)
-        Me.btn_ADXL375.TabIndex = 9
-        Me.btn_ADXL375.Text = "ADXL375 Data Capture"
-        Me.btn_ADXL375.UseVisualStyleBackColor = True
         '
         'GroupBox8
         '
@@ -1219,15 +1217,6 @@ Partial Class TopGUI
         Me.link_help.TabIndex = 44
         Me.link_help.TabStop = True
         Me.link_help.Text = "Welcome Guide"
-        '
-        'btn_FactoryReset
-        '
-        Me.btn_FactoryReset.Location = New System.Drawing.Point(6, 19)
-        Me.btn_FactoryReset.Name = "btn_FactoryReset"
-        Me.btn_FactoryReset.Size = New System.Drawing.Size(75, 64)
-        Me.btn_FactoryReset.TabIndex = 40
-        Me.btn_FactoryReset.Text = "Factory Reset DUT"
-        Me.btn_FactoryReset.UseVisualStyleBackColor = True
         '
         'TopGUI
         '
@@ -1322,7 +1311,6 @@ Partial Class TopGUI
     Friend WithEvents btn_checkError As Button
     Friend WithEvents btn_binFile As Button
     Friend WithEvents btn_pulseMeasure As Button
-    Friend WithEvents btn_ADXL375 As Button
     Friend WithEvents btn_BurstTest As Button
     Friend WithEvents validateSpiData As CheckBox
     Friend WithEvents btn_writeRegMap As Button

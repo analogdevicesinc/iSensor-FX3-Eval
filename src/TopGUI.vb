@@ -333,18 +333,6 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Open a new ADXL37x interfacing sub-form. This should probably be removed at some point
-    ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    Private Sub btn_ADXL375_Click(sender As Object, e As EventArgs) Handles btn_ADXL375.Click
-        Dim subGUI As New ADXl375GUI()
-        subGUI.SetTopGUI(Me)
-        subGUI.Show()
-        btn_ADXL375.Enabled = False
-    End Sub
-
-    ''' <summary>
     ''' Open a new GPIO pulse measurement sub-form. This form can be used to transact SPI 
     ''' data and accurately measure the following pulse on a DIO line (for example, measuring
     ''' flash update time)
@@ -889,7 +877,6 @@ Public Class TopGUI
         tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 Eval GUI. Requires a Internet connection and a GitHub account")
         tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 10ms, waits for data ready to be asserted, and checks the DUT connection")
         tip0.SetToolTip(Me.checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
-        tip0.SetToolTip(Me.btn_ADXL375, "Stream data or access registers on an ADXL375")
         tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
         tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
         tip0.SetToolTip(Me.btn_binFile, "Generate a binary data file filled with an arbitrary pattern")
@@ -1427,7 +1414,6 @@ Public Class TopGUI
             If TypeOf (openForm) Is ADcmXLStreamingGUI Then btn_RealTime.Enabled = False
             If TypeOf (openForm) Is SelectDUTGUI Then btn_SelectDUT.Enabled = False
             If TypeOf (openForm) Is BurstTestGUI Then btn_BurstTest.Enabled = False
-            If TypeOf (openForm) Is ADXl375GUI Then btn_ADXL375.Enabled = False
             If TypeOf (openForm) Is PulseMeasureGUI Then btn_pulseMeasure.Enabled = False
             If TypeOf (openForm) Is BinaryFileWriterGUI Then btn_binFile.Enabled = False
             If TypeOf (openForm) Is NVMInterfaceGUI Then btn_checkError.Enabled = False
