@@ -30,8 +30,8 @@ License: https://visualstudio.microsoft.com/license-terms/mlt031819/
 
 ## Building
 
-1. Clone the iSensor FX3 Eval repository using the git client of your choice
-   - git clone https://github.com/analogdevicesinc/iSensor-FX3-Eval.git
+1. Clone the iSensor FX3 Eval repository using the git client of your choice. Note, this repo has the iSensor FX3 API as a submodule dependency, which must be initialized as well. This can be done from Git bash using the following single command:
+   - git clone --recurse-submodules https://github.com/analogdevicesinc/iSensor-FX3-Eval.git
 2. Open the project file within Visual Studio. File -> Open -> Project/Solution -> Browse for iSensorFX3Eval.vbproj within the src/ folder of the repository
 3. Build the project by right clicking on the iSensorFX3Eval project within the visual studio solution explorer and clicking "Build"
 
