@@ -1,0 +1,1 @@
+FX3 firmware binaries (.img) are copied to this folder by a pre-build script in iSensorFX3Eval.vbproj
