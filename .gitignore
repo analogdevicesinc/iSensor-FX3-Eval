@@ -5,6 +5,10 @@
 
 src/UserConfig/aux_dut_personalities.csv
 
+src/FX3Binaries/FX3_Firmware.img
+src/FX3Binaries/boot_fw.img
+src/FX3Binaries/USBFlashProg.img
+
 *.sln
 
 # User-specific files
@@ -27,9 +31,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-[Rr]esources/FX3_Firmware.img
-[Rr]esources/FX3Interface.dll
-[Rr]esources/FX3Interface.xml
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
