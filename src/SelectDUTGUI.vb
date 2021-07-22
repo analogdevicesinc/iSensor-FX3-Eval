@@ -17,15 +17,45 @@ Public Class SelectDUTGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Initialize device selection list
+    ''' </summary>
     Public Sub FormSetup() Handles Me.Load
 
+        Dim defaultPer As DutPersonality = Nothing
+
         For Each item In m_TopGUI.DutOptions
-            deviceInput.Items.Add(item.DisplayName)
+            'Only add items with no parent. Ignore custom
+            If item.Parent = "" And item.DisplayName <> "Custom" Then
+                familyInput.Items.Add(item.DisplayName)
+            End If
+            'check if this personality is selected
+            If item.DisplayName = m_TopGUI.SelectedPersonality Then
+                defaultPer = item
+            End If
         Next
-        If deviceInput.Items.Contains(m_TopGUI.SelectedPersonality) Then
-            deviceInput.SelectedItem = m_TopGUI.SelectedPersonality
+
+        'update family input default selection
+        If IsNothing(defaultPer) Then
+            'Is there no default? go to index 0 for family
+            familyInput.SelectedIndex = 0
+        ElseIf familyInput.Items.Contains(defaultPer.DisplayName) Then
+            'Is selected default a parent?
+            familyInput.SelectedItem = defaultPer.DisplayName
+        ElseIf familyInput.Items.Contains(defaultPer.Parent) Then
+            'Is parent of selected default in the family list?
+            familyInput.SelectedItem = defaultPer.Parent
         Else
-            deviceInput.SelectedIndex = 0
+            'Invalid selection, go to 0
+            familyInput.SelectedIndex = 0
+        End If
+
+        'update model input default selection
+        UpdateModelInput()
+        If modelInput.Items.Contains(defaultPer.DisplayName) Then
+            modelInput.SelectedItem = defaultPer.DisplayName
+        Else
+            modelInput.SelectedIndex = 0
         End If
 
     End Sub
@@ -39,7 +69,7 @@ Public Class SelectDUTGUI
         'check for selected item
         Dim selectedDut As Integer = -1
         For i As Integer = 0 To m_TopGUI.DutOptions.Count - 1
-            If deviceInput.Text = m_TopGUI.DutOptions(i).DisplayName Then
+            If modelInput.Text = m_TopGUI.DutOptions(i).DisplayName Then
                 selectedDut = i
                 Exit For
             End If
@@ -49,12 +79,12 @@ Public Class SelectDUTGUI
             MsgBox("Error: Invalid DUT selected!")
         Else
             If isStartup Then
-                m_TopGUI.SelectedPersonality = deviceInput.Text
+                m_TopGUI.SelectedPersonality = modelInput.Text
             Else
                 Try
-                    If m_TopGUI.ApplyDutPersonality(deviceInput.Text) Then
+                    If m_TopGUI.ApplyDutPersonality(modelInput.Text) Then
                         'only proceed if not canceled
-                        m_TopGUI.ApplyDutPersonalityRegmap(deviceInput.Text)
+                        m_TopGUI.ApplyDutPersonalityRegmap(modelInput.Text)
                         m_TopGUI.UpdateDutLabel(m_TopGUI.FX3.PartType)
                         m_TopGUI.SaveAppSettings()
                     End If
@@ -64,6 +94,23 @@ Public Class SelectDUTGUI
             End If
         End If
         Me.Close()
+    End Sub
+
+    Private Sub familyInput_Changed(sender As Object, e As EventArgs) Handles familyInput.TextChanged
+        UpdateModelInput()
+    End Sub
+
+    Private Sub UpdateModelInput()
+        modelInput.Items.Clear()
+        'add top level
+        modelInput.Items.Add(familyInput.Text)
+        'add all children
+        For Each item In m_TopGUI.DutOptions
+            If item.Parent = familyInput.Text Then
+                modelInput.Items.Add(item.DisplayName)
+            End If
+        Next
+        modelInput.SelectedIndex = 0
     End Sub
 
 End Class
