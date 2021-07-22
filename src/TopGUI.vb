@@ -173,6 +173,9 @@ Public Class TopGUI
             If Not validPersonality Then SelectedPersonality = "Custom"
         End If
 
+        'Check that all the regmaps required for the application are properly bundled
+        CheckRegmapResources()
+
         'load regmap
         ApplyDutPersonalityRegmap(SelectedPersonality)
 
@@ -1000,6 +1003,25 @@ Public Class TopGUI
         Dut.IsLowerFirst = m_isLowerWordFirst
 
         If Not IsNothing(FX3.ActiveFX3) Then TestDUT()
+
+    End Sub
+
+    ''' <summary>
+    ''' Check that all register maps listed in the DUT personalities
+    ''' manifest file exist
+    ''' </summary>
+    Private Sub CheckRegmapResources()
+        Dim savedRegmapPath As String = ""
+
+        For Each item In DutOptions
+            If item.DisplayName <> "Custom" Then
+                savedRegmapPath = AppDomain.CurrentDomain.BaseDirectory + "RegMaps\" + item.RegMapFileName
+                If Not File.Exists(savedRegmapPath) Then
+                    MsgBox("Register map " + savedRegmapPath + " Not found!")
+                    Exit Sub
+                End If
+            End If
+        Next
 
     End Sub
 
