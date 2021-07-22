@@ -45,6 +45,11 @@ Partial Class TopGUI
             End If
         Next
 
+        'clear all register data
+        While regView.RowCount > 0
+            regView.Rows.RemoveAt(0)
+        End While
+
         'Set the selected index
         selectPage.SelectedIndex = 0
         lastPageIndex = 0
