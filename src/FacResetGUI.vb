@@ -81,7 +81,7 @@ Public Class FacResetGUI
             WriteStatus("Wrote default values to " + regCount.ToString() + " registers...")
             UpdateProgress(3)
 
-            WriteStatus("Performing readback on all registers...")
+            WriteStatus("Performing read back on all registers...")
             WriteStatus(m_TopGUI.CheckDUTFactoryDefaults())
             UpdateProgress(4)
 

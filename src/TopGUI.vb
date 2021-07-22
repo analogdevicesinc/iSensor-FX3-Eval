@@ -3,7 +3,7 @@
 '
 'File:          TopGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Description:   Top level GUI for the FX3 iSensor eval application.
+'Description:   Top level GUI for the EVAL-ADIS-FX3 iSensor IMU eval application.
 
 Imports FX3Api
 Imports adisInterface
@@ -253,7 +253,7 @@ Public Class TopGUI
 #Region "Properties"
 
     ''' <summary>
-    ''' Set/get the loaded regmap path. Setting this property will trigger
+    ''' Set/get the loaded register map path. Setting this property will trigger
     ''' the RegMap dictionary to be re-loaded from the provided CSV
     ''' </summary>
     ''' <returns></returns>
@@ -264,11 +264,11 @@ Public Class TopGUI
         Set(value As String)
             Try
                 m_RegMapPath = value
-                'Set the regmap
+                'Set the register map
                 RegMap = New RegMapCollection
                 RegMap.ReadFromCSV(m_RegMapPath)
                 If RegMap.Count() = 0 Then
-                    Throw New Exception("Regmap produced from selected file contains 0 registers")
+                    Throw New Exception("Register map produced from selected file contains 0 registers")
                 End If
                 regMapPath_Label.Text = value.Substring(value.LastIndexOf("\") + 1)
                 SetupToolTips()
@@ -285,6 +285,11 @@ Public Class TopGUI
 
 #Region "Button Event Handlers"
 
+    ''' <summary>
+    ''' Open a new factory reset GUI
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_FactoryReset_Click(sender As Object, e As EventArgs) Handles btn_FactoryReset.Click
         Dim subGUI As New FacResetGUI()
         subGUI.SetTopGUI(Me)
@@ -712,7 +717,7 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Open new issue page on github when the user clicks on the report issue label.
+    ''' Open new issue page on GitHub when the user clicks on the report issue label.
     ''' Maybe someone will eventually use this. People seem much more fond of sending
     ''' emails
     ''' </summary>
@@ -1026,8 +1031,8 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Load regmap based on selected personality. This does not change
-    ''' any FX3 settings, just the regmap, so it can be safely called before
+    ''' Load register map based on selected personality. This does not change
+    ''' any FX3 settings, just the register map, so it can be safely called before
     ''' the FX3 is connected
     ''' </summary>
     ''' <param name="displayName">Personality name</param>
@@ -1035,7 +1040,7 @@ Public Class TopGUI
 
         Dim savedRegmapPath As String = ""
 
-        'Set the regmap path using the SelectRegMap GUI
+        'Set the register map path using the SelectRegMap GUI
         For i As Integer = 0 To DutOptions.Count - 1
             If DutOptions(i).DisplayName = displayName Then
                 'load DUT endianness setting here
@@ -1050,7 +1055,7 @@ Public Class TopGUI
             End If
         Next
         If Not File.Exists(savedRegmapPath) Then
-            'go to custom personality and manually select regmap
+            'go to custom personality and manually select register map
             SelectedPersonality = "Custom"
             Dim regMapSelector As New SelectRegmapGUI()
             If Not IsNothing(regMapSelector.SelectedPath) Then
@@ -1342,7 +1347,7 @@ Public Class TopGUI
         'restore value
         Dut.WriteUnsigned(scratchReg, orignalScratch)
 
-        'restore dr active setting
+        'restore DR active setting
         FX3.DrActive = drActive
 
         Return testResult
@@ -1467,7 +1472,7 @@ Public Class TopGUI
     Friend Sub DataPlotRegsInit()
         Dim regIndex As Integer = 0
         Dim regStr() As String
-        'clear when regmap is changed
+        'clear when register map is changed
         dataPlotRegs.Clear()
 
         dataPlotRegsView.Rows.Clear()

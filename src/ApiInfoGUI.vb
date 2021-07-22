@@ -3,7 +3,7 @@
 '
 'File:          ApiInfoGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Description:   Show the information for the current version of the FX3Api dll.
+'Description:   Show the information for the current version of the FX3Api DLL.
 
 Public Class ApiInfoGUI
     Inherits FormBase

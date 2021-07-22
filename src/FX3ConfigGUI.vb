@@ -364,7 +364,7 @@ Public Class FX3ConfigGUI
             End If
         End If
 
-        'update dut endianness setting
+        'update DUT endianness setting
         If regEndiannessInput.SelectedItem = EndLowerFirst Then
             m_TopGUI.m_isLowerWordFirst = True
         ElseIf regEndiannessInput.SelectedItem = EndUpperFirst Then
@@ -374,7 +374,7 @@ Public Class FX3ConfigGUI
             m_TopGUI.m_isLowerWordFirst = True
         End If
 
-        'update IDUTInterface object based on selection. Note, the endinanness setting is applied here
+        'update IDUTInterface object based on selection. Note, the endianness setting is applied here
         m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
 
         'save app settings (settings file and custom personality)

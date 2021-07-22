@@ -408,7 +408,7 @@ Partial Class TopGUI
             End If
         Next
 
-        ' makes the width of the dgv the same as the width of the columns
+        ' makes the width of the DataGridView the same as the width of the columns
         dgvPinList.Height = dgvPinList.Rows.GetRowsHeight(DataGridViewElementStates.Visible) + dgvPinList.ColumnHeadersHeight + 2
         ' prevent it from auto selecting a pin
         dgvPinList.ClearSelection()

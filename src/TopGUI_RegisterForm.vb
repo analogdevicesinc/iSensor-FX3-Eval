@@ -6,7 +6,6 @@
 'Description:   Top level GUI register access form implementation.
 
 Imports System.Timers
-Imports FX3Api
 Imports RegMapClasses
 
 Partial Class TopGUI
@@ -14,9 +13,9 @@ Partial Class TopGUI
     Private pageList As List(Of Integer)
     Private pagePosition As List(Of Integer)
     Private lastPageIndex As Integer
-    Private pageReadTimer As System.Timers.Timer
-    Private drReadTimer As System.Timers.Timer
-    Private drEnableTimer As System.Timers.Timer
+    Private pageReadTimer As Timer
+    Private drReadTimer As Timer
+    Private drEnableTimer As Timer
     Private currentRegList As List(Of RegClass)
     Private scaleData As Boolean
     Private m_pageMessageList As List(Of Integer)
@@ -72,7 +71,7 @@ Partial Class TopGUI
     End Sub
 
     Private Sub HiddenHandler() Handles Me.VisibleChanged
-        If Not Me.Visible Then
+        If Not Visible Then
             'disable dr / cont reads
             pageReadTimer.Enabled = False
             drReadTimer.Enabled = False

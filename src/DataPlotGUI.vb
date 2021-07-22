@@ -231,7 +231,7 @@ Public Class DataPlotGUI
         Dim scaleStr As String
         For Each reg In m_TopGUI.RegMap
             If reg.IsReadable Then
-                'scale is 1/regmap scale factor to match datasheets better
+                'scale is 1/register map scale factor to match datasheet better
                 scaleStr = (1.0 / reg.Scale).ToString()
                 If regIndex >= regView.RowCount Then
                     regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr, "False", reg.Offset.ToString(), scaleStr}

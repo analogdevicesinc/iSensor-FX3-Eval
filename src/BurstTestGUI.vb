@@ -113,7 +113,7 @@ Public Class BurstTestGUI
 
         'check if stream start/stop needed
         If btn_StartStream.Text = "Start Burst Stream" Then
-            'check dr (if selected)
+            'check data ready toggling (if selected)
             If m_TopGUI.FX3.DrActive Then
                 If m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 100, 2) = Double.PositiveInfinity Then
                     Dim res As DialogResult = MessageBox.Show("Warning, Data Ready not Toggling! Continue?", "Confirm Data Ready Sync", MessageBoxButtons.OKCancel)
@@ -128,7 +128,7 @@ Public Class BurstTestGUI
                 Exit Sub
             End If
 
-            'get numbursts
+            'get number of burst reads
             Try
                 numBursts = Convert.ToUInt32(numBurstWords.Text)
             Catch ex As Exception

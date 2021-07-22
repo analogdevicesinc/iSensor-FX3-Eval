@@ -22,7 +22,7 @@ Public Class DutPersonality
     Public DisplayName As String
 
     ''' <summary>
-    ''' Regmap file name (within FX3 Eval GUI)
+    ''' Register Map file name (within FX3 Eval GUI)
     ''' </summary>
     Public RegMapFileName As String
 
