@@ -62,7 +62,7 @@ Public Class BinaryFileWriterGUI
     End Sub
 
     Private Sub ResizeHandler() Handles Me.SizeChanged
-        fillPattern.Width = Me.Width - 40
+        fillPattern.Width = Width - 40
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing

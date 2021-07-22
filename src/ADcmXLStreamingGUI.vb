@@ -51,15 +51,15 @@ Public Class ADcmXLStreamingGUI
     Private Sub SetupToolTips()
 
         Dim tip0 As ToolTip = New ToolTip()
-        tip0.SetToolTip(Me.TotalFramesInput, "The number of ADcmXL real time frames read per sample")
-        tip0.SetToolTip(Me.LinesPerCSVInput, "The maximum number of lines to write to a single CSV log file")
-        tip0.SetToolTip(Me.CaptureStartMethod, "The trigger method to put the ADcmXL in real time streaming mode")
-        tip0.SetToolTip(Me.CaptureExitMethod, "The method used to take the ADcmXL out of real time streaming mode")
-        tip0.SetToolTip(Me.numSamples, "The number of samples to capture in a stream operation. Total number of real time frames is (Frames Per Sample) x (Number of Samples)")
-        tip0.SetToolTip(Me.PinTriggerRadioBtn, "Begin each sample capture based on an FX3 digital IO pin edge")
-        tip0.SetToolTip(Me.TimerTriggerRadioBtn, "Begin each sample capture based on a fixed time period")
-        tip0.SetToolTip(Me.startButton, "Start the data capture process")
-        tip0.SetToolTip(Me.StopBtn, "Stop the running data capture. Will finish the current sample")
+        tip0.SetToolTip(TotalFramesInput, "The number of ADcmXL real time frames read per sample")
+        tip0.SetToolTip(LinesPerCSVInput, "The maximum number of lines to write to a single CSV log file")
+        tip0.SetToolTip(CaptureStartMethod, "The trigger method to put the ADcmXL in real time streaming mode")
+        tip0.SetToolTip(CaptureExitMethod, "The method used to take the ADcmXL out of real time streaming mode")
+        tip0.SetToolTip(numSamples, "The number of samples to capture in a stream operation. Total number of real time frames is (Frames Per Sample) x (Number of Samples)")
+        tip0.SetToolTip(PinTriggerRadioBtn, "Begin each sample capture based on an FX3 digital IO pin edge")
+        tip0.SetToolTip(TimerTriggerRadioBtn, "Begin each sample capture based on a fixed time period")
+        tip0.SetToolTip(startButton, "Start the data capture process")
+        tip0.SetToolTip(StopBtn, "Stop the running data capture. Will finish the current sample")
 
     End Sub
 
@@ -201,30 +201,30 @@ Public Class ADcmXLStreamingGUI
 
             If pinCaptureStart Then
                 'Pin mode (poll pin until ready)
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Pin Wait"))
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
+                Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Pin Wait"))
+                Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
                 timer.Restart()
                 While (timer.ElapsedMilliseconds < captureTime) And (m_TopGUI.FX3.ReadPin(startPin) <> pinCapturePolarity) And (Not CancelCapture)
                     System.Threading.Thread.Sleep(25)
                 End While
                 If timer.ElapsedMilliseconds >= captureTime Then
-                    Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Pin wait timed out, exiting capture loop"))
+                    Invoke(New MethodInvoker(Sub() statusLabel.Text = "Pin wait timed out, exiting capture loop"))
                     Exit While
                 End If
                 If CancelCapture Then
-                    Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Capture canceled, exiting capture loop"))
+                    Invoke(New MethodInvoker(Sub() statusLabel.Text = "Capture canceled, exiting capture loop"))
                     Exit While
                 End If
 
                 'Perform sample
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = m_TopGUI.IDLE_COLOR))
+                Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
+                Invoke(New MethodInvoker(Sub() statusLabel.BackColor = m_TopGUI.IDLE_COLOR))
                 CaptureSample()
 
                 'Wait for sample completion
                 sampleWait.WaitOne()
                 sampleCounter += 1
-                Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+                Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
 
             ElseIf numSampleCaptures = 1 Then
 
@@ -234,24 +234,24 @@ Public Class ADcmXLStreamingGUI
                 'wait for sample completion
                 sampleWait.WaitOne()
                 sampleCounter += 1
-                Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+                Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
 
             Else
 
                 'timer delay mode
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
-                Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = m_TopGUI.IDLE_COLOR))
+                Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting sample"))
+                Invoke(New MethodInvoker(Sub() statusLabel.BackColor = m_TopGUI.IDLE_COLOR))
                 CaptureSample()
 
                 'wait for sample completion
                 sampleWait.WaitOne()
                 sampleCounter += 1
-                Me.Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
+                Invoke(New MethodInvoker(Sub() captureCounter.Text = sampleCounter.ToString()))
 
                 'Perform sleep
                 If sampleCounter < numSampleCaptures Then
-                    Me.Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Sleep for delay period"))
-                    Me.Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
+                    Invoke(New MethodInvoker(Sub() statusLabel.Text = "Starting Sleep for delay period"))
+                    Invoke(New MethodInvoker(Sub() statusLabel.BackColor = Color.White))
                     timer.Restart()
                     While (timer.ElapsedMilliseconds < captureTime) And (Not CancelCapture)
                         System.Threading.Thread.Sleep(100)
@@ -260,7 +260,7 @@ Public Class ADcmXLStreamingGUI
             End If
         End While
 
-        Me.Invoke(New MethodInvoker(AddressOf UpdateLabelsStop))
+        Invoke(New MethodInvoker(AddressOf UpdateLabelsStop))
 
     End Sub
 
@@ -341,7 +341,7 @@ Public Class ADcmXLStreamingGUI
     End Sub
 
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        Me.Invoke(New MethodInvoker(Sub() SampleProgress.Value = e.ProgressPercentage))
+        Invoke(New MethodInvoker(Sub() SampleProgress.Value = e.ProgressPercentage))
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted

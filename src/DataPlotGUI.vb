@@ -34,8 +34,8 @@ Public Class DataPlotGUI
     Public Sub FormSetup() Handles Me.Load
         PopulateRegView()
 
-        If m_TopGUI.TimePlotHeight <> 0 Then Me.Height = m_TopGUI.TimePlotHeight
-        If m_TopGUI.TimePlotWidth <> 0 Then Me.Width = m_TopGUI.TimePlotWidth
+        If m_TopGUI.TimePlotHeight <> 0 Then Height = m_TopGUI.TimePlotHeight
+        If m_TopGUI.TimePlotWidth <> 0 Then Width = m_TopGUI.TimePlotWidth
 
         'Set defaults
         plotting = False
@@ -71,25 +71,25 @@ Public Class DataPlotGUI
 
     Private Sub RegisterToolTips()
         Dim tip0 As ToolTip = New ToolTip()
-        tip0.SetToolTip(Me.label_sampleFreq, "The data sampling frequency for plotting. This is driven by a Windows software timer, and is not very accurate")
-        tip0.SetToolTip(Me.label_samplesRendered, "The maximum number of samples to render in a single plot")
-        tip0.SetToolTip(Me.btn_startStop, "Start or Stop data plotting")
-        tip0.SetToolTip(Me.btn_autonull, "Set the offset values for each register being plotted to the last read value")
-        tip0.SetToolTip(Me.btn_saveChart, "Save image of the current plot area")
-        tip0.SetToolTip(Me.playFromCSV, "Play back data plot from a CSV plot log")
-        tip0.SetToolTip(Me.logToCSV, "Save plot data to a CSV log")
-        tip0.SetToolTip(Me.regView, "Select registers to plot, and supply register offset values. The data plotted for each register is scaled by the scale factor defined in the register map CSV file")
-        tip0.SetToolTip(Me.check_fixedTime, "Stop plotting automatically after a fixed time interval. This is useful when the data plotting application is being used for logging")
-        tip0.SetToolTip(Me.x_timestamp, "Plot sample timestamps on X-axis (default is sample counter)")
-        tip0.SetToolTip(Me.btn_SetLabel, "Set the Y-Axis label")
+        tip0.SetToolTip(label_sampleFreq, "The data sampling frequency for plotting. This is driven by a Windows software timer, and is not very accurate")
+        tip0.SetToolTip(label_samplesRendered, "The maximum number of samples to render in a single plot")
+        tip0.SetToolTip(btn_startStop, "Start or Stop data plotting")
+        tip0.SetToolTip(btn_autonull, "Set the offset values for each register being plotted to the last read value")
+        tip0.SetToolTip(btn_saveChart, "Save image of the current plot area")
+        tip0.SetToolTip(playFromCSV, "Play back data plot from a CSV plot log")
+        tip0.SetToolTip(logToCSV, "Save plot data to a CSV log")
+        tip0.SetToolTip(regView, "Select registers to plot, and supply register offset values. The data plotted for each register is scaled by the scale factor defined in the register map CSV file")
+        tip0.SetToolTip(check_fixedTime, "Stop plotting automatically after a fixed time interval. This is useful when the data plotting application is being used for logging")
+        tip0.SetToolTip(x_timestamp, "Plot sample timestamps on X-axis (default is sample counter)")
+        tip0.SetToolTip(btn_SetLabel, "Set the Y-Axis label")
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
-        regView.Height = Me.Height - 172
+        regView.Height = Height - 172
         dataPlot.Top = 6
         dataPlot.Left = 532
-        dataPlot.Width = Me.Width - 555
-        dataPlot.Height = Me.Height - 53
+        dataPlot.Width = Width - 555
+        dataPlot.Height = Height - 53
         dataPlot.ResetAutoValues()
     End Sub
 
@@ -100,8 +100,8 @@ Public Class DataPlotGUI
         playBackMutex.WaitOne()
         plotMutex.WaitOne()
         m_TopGUI.FX3.UserLEDOn()
-        m_TopGUI.TimePlotWidth = Me.Width
-        m_TopGUI.TimePlotHeight = Me.Height
+        m_TopGUI.TimePlotWidth = Width
+        m_TopGUI.TimePlotHeight = Height
         'save regs which were plotted
         m_TopGUI.dataPlotRegs.Clear()
         For i As Integer = 0 To regView.RowCount - 1
@@ -112,8 +112,8 @@ Public Class DataPlotGUI
     End Sub
 
     Private Sub PlotTimerCallback()
-        If Me.InvokeRequired Then
-            Me.BeginInvoke(New MethodInvoker(AddressOf PlotWork))
+        If InvokeRequired Then
+            BeginInvoke(New MethodInvoker(AddressOf PlotWork))
         End If
     End Sub
 
@@ -537,9 +537,9 @@ Public Class DataPlotGUI
             While (timer.ElapsedMilliseconds() < waitTime) And playBackRunning
                 Thread.Sleep(1)
             End While
-            If playBackRunning Then Me.Invoke(New MethodInvoker(AddressOf PlotWork))
+            If playBackRunning Then Invoke(New MethodInvoker(AddressOf PlotWork))
         End While
-        Me.Invoke(New MethodInvoker(AddressOf EnablePlaybackButtons))
+        Invoke(New MethodInvoker(AddressOf EnablePlaybackButtons))
         playBackRunning = False
         playBackMutex.ReleaseMutex()
     End Sub
@@ -605,7 +605,7 @@ Public Class DataPlotGUI
     End Sub
 
     Private Sub HiddenHandler() Handles Me.VisibleChanged
-        If Not Me.Visible Then
+        If Not Visible Then
             'disable plotting
             If plotting Then btn_startStop_Click(Me, Nothing)
         End If

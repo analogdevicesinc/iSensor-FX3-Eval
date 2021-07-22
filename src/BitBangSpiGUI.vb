@@ -112,7 +112,7 @@ Public Class BitBangSpiGUI
     End Sub
 
     Private Sub ResizeHandler() Handles Me.SizeChanged
-        result.Height = Me.Height - 320
+        result.Height = Height - 320
     End Sub
 
     Private Sub useHardwareSpi_CheckedChanged(sender As Object, e As EventArgs) Handles useHardwareSpi.CheckedChanged

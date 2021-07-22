@@ -17,7 +17,7 @@ Partial Class TopGUI
     Private StartPWM As Boolean
 
     ''' <summary>
-    ''' Pin dictionaty. Uses capitalized pin names as keys
+    ''' Pin dictionary. Uses capitalized pin names as keys
     ''' </summary>
     Private pins As New Dictionary(Of String, IPinObject)
 

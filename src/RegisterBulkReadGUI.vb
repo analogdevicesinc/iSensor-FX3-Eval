@@ -79,24 +79,24 @@ Public Class RegisterBulkReadGUI
     Private Sub SetupToolTips()
 
         Dim tip0 As ToolTip = New ToolTip()
-        tip0.SetToolTip(Me.RegisterList, "Select register from the loaded register map")
-        tip0.SetToolTip(Me.selectedRegview, "Currently selected registers to stream")
-        tip0.SetToolTip(Me.regStreamingList, "Number of registers set to log from")
-        tip0.SetToolTip(Me.AddRegisterButton, "Add the currently selected register")
-        tip0.SetToolTip(Me.RemoveRegisterButton, "Remove the selected register")
-        tip0.SetToolTip(Me.ClearAllButton, "Clear all selected registers")
-        tip0.SetToolTip(Me.btn_loadregs, "Load a list of registers to log from a .csv file")
-        tip0.SetToolTip(Me.btn_saveregs, "Save the currently selected list of registers to log to a .csv file")
-        tip0.SetToolTip(Me.DRDIO, "Select Data Ready Pin")
-        tip0.SetToolTip(Me.DrActiveBox, "Select if register reads are synchronized to the data ready signal")
-        tip0.SetToolTip(Me.MeasureDR, "Measure the data ready frequency")
-        tip0.SetToolTip(Me.RegisterList, "Select register from the loaded register map to log")
-        tip0.SetToolTip(Me.DrFreq, "The current data ready frequency")
-        tip0.SetToolTip(Me.NumberDRToCapture, "The total number of reads of the selected register list to log")
-        tip0.SetToolTip(Me.SamplesPerWrite, "The total number of reads of the selected register list to write to the log file in a single operation")
-        tip0.SetToolTip(Me.linesPerFile, "Maximum lines in a single log file")
-        tip0.SetToolTip(Me.MainButton, "Start the register stream operation")
-        tip0.SetToolTip(Me.StreamingAVARCancelButton, "Cancel a running register stream operation")
+        tip0.SetToolTip(RegisterList, "Select register from the loaded register map")
+        tip0.SetToolTip(selectedRegview, "Currently selected registers to stream")
+        tip0.SetToolTip(regStreamingList, "Number of registers set to log from")
+        tip0.SetToolTip(AddRegisterButton, "Add the currently selected register")
+        tip0.SetToolTip(RemoveRegisterButton, "Remove the selected register")
+        tip0.SetToolTip(ClearAllButton, "Clear all selected registers")
+        tip0.SetToolTip(btn_loadregs, "Load a list of registers to log from a .csv file")
+        tip0.SetToolTip(btn_saveregs, "Save the currently selected list of registers to log to a .csv file")
+        tip0.SetToolTip(DRDIO, "Select Data Ready Pin")
+        tip0.SetToolTip(DrActiveBox, "Select if register reads are synchronized to the data ready signal")
+        tip0.SetToolTip(MeasureDR, "Measure the data ready frequency")
+        tip0.SetToolTip(RegisterList, "Select register from the loaded register map to log")
+        tip0.SetToolTip(DrFreq, "The current data ready frequency")
+        tip0.SetToolTip(NumberDRToCapture, "The total number of reads of the selected register list to log")
+        tip0.SetToolTip(SamplesPerWrite, "The total number of reads of the selected register list to write to the log file in a single operation")
+        tip0.SetToolTip(linesPerFile, "Maximum lines in a single log file")
+        tip0.SetToolTip(MainButton, "Start the register stream operation")
+        tip0.SetToolTip(StreamingAVARCancelButton, "Cancel a running register stream operation")
 
     End Sub
 
@@ -120,7 +120,7 @@ Public Class RegisterBulkReadGUI
         If Not IsNothing(fileManager) Then
             fileManager.Dispose()
         End If
-        Me.Dispose()
+        Dispose()
 
     End Sub
 
@@ -132,10 +132,10 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub RemoveRegisterButton_Click(sender As Object, e As EventArgs) Handles RemoveRegisterButton.Click
-        If IsNothing(Me.selectedRegview.FocusedItem) Then
+        If IsNothing(selectedRegview.FocusedItem) Then
             MessageBox.Show("Please select an Item to Delete", "Remove register warning", MessageBoxButtons.OK)
         Else
-            Me.selectedRegview.Items.RemoveAt(Me.selectedRegview.FocusedItem.Index)
+            selectedRegview.Items.RemoveAt(selectedRegview.FocusedItem.Index)
         End If
         UpdateRegCountLabel()
     End Sub
@@ -190,7 +190,7 @@ Public Class RegisterBulkReadGUI
 
         'Build list of registers to stream
         Dim regList As New List(Of RegMapClasses.RegClass)
-        For Each item As ListViewItem In Me.selectedRegview.Items
+        For Each item As ListViewItem In selectedRegview.Items
             regList.Add(m_TopGUI.RegMap(item.Text))
         Next
 
@@ -274,8 +274,8 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        If Me.InvokeRequired Then
-            Me.Invoke((New MethodInvoker(AddressOf DoneWork)))
+        If InvokeRequired Then
+            Invoke((New MethodInvoker(AddressOf DoneWork)))
         Else
             DoneWork()
         End If
@@ -333,8 +333,8 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        If Me.InvokeRequired Then
-            Me.Invoke(New MethodInvoker(Sub() CaptureProgressStreaming.Value = e.ProgressPercentage))
+        If InvokeRequired Then
+            Invoke(New MethodInvoker(Sub() CaptureProgressStreaming.Value = e.ProgressPercentage))
         Else
             CaptureProgressStreaming.Value = e.ProgressPercentage
         End If

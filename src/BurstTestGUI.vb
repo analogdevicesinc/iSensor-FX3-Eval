@@ -35,7 +35,7 @@ Public Class BurstTestGUI
     End Sub
 
     Public Sub ResizeHandler() Handles Me.Resize
-        result.Height = Me.Height - 252
+        result.Height = Height - 252
     End Sub
 
     Private Sub captureData_Click(sender As Object, e As EventArgs) Handles captureData.Click
@@ -93,7 +93,7 @@ Public Class BurstTestGUI
         If Not IsNothing(fileManager) Then
             fileManager.Dispose()
         End If
-        Me.Dispose()
+        Dispose()
     End Sub
 
     Private Sub num32words_TextChanged(sender As Object, e As EventArgs) Handles numBytes.LostFocus
@@ -185,8 +185,8 @@ Public Class BurstTestGUI
     End Sub
 
     Private Sub BurstDoneHandler() Handles fileManager.RunAsyncCompleted
-        If Me.InvokeRequired Then
-            Me.BeginInvoke(Sub() CleanupBurstStream())
+        If InvokeRequired Then
+            BeginInvoke(Sub() CleanupBurstStream())
         Else
             CleanupBurstStream()
         End If

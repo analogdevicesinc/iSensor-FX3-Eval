@@ -53,8 +53,8 @@ Public Class SelectRegmapGUI
     End Sub
 
     Public Sub Setup() Handles Me.Load
-        Me.Top = My.Settings.LastTop
-        Me.Left = My.Settings.LastLeft
+        Top = My.Settings.LastTop
+        Left = My.Settings.LastLeft
     End Sub
 
     Public ReadOnly Property SelectedPath() As String
@@ -69,9 +69,9 @@ Public Class SelectRegmapGUI
 
     Private Sub ValidatePath()
         If Not File.Exists(m_selectedpath) Then
-            Me.DialogResult = DialogResult.Cancel
+            DialogResult = DialogResult.Cancel
         Else
-            Me.DialogResult = DialogResult.OK
+            DialogResult = DialogResult.OK
         End If
     End Sub
 

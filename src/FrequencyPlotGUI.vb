@@ -30,8 +30,8 @@ Public Class FrequencyPlotGUI
 
     Private Sub FrequencyPlotGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        If m_TopGUI.FFTPlotHeight <> 0 Then Me.Height = m_TopGUI.FFTPlotHeight
-        If m_TopGUI.FFTPlotWidth <> 0 Then Me.Width = m_TopGUI.FFTPlotWidth
+        If m_TopGUI.FFTPlotHeight <> 0 Then Height = m_TopGUI.FFTPlotHeight
+        If m_TopGUI.FFTPlotWidth <> 0 Then Width = m_TopGUI.FFTPlotWidth
 
         'instantiate fft streamer
         m_FFTStream = New FFT_Streamer(m_TopGUI.FX3, m_TopGUI.Dut)
@@ -78,8 +78,8 @@ Public Class FrequencyPlotGUI
             System.Threading.Thread.Sleep(10)
         End While
         m_FFTStream.Dispose()
-        m_TopGUI.FFTPlotWidth = Me.Width
-        m_TopGUI.FFTPlotHeight = Me.Height
+        m_TopGUI.FFTPlotWidth = Width
+        m_TopGUI.FFTPlotHeight = Height
         'save register list
         m_TopGUI.dataPlotRegs.Clear()
         For Each reg In selectedRegList
@@ -181,7 +181,7 @@ Public Class FrequencyPlotGUI
 
     Private Sub UpdatePlot()
         'handle invokes after the form is closed
-        If Me.IsDisposed Or Me.Disposing Then
+        If IsDisposed Or Disposing Then
             Exit Sub
         End If
         'add each new series
@@ -209,8 +209,8 @@ Public Class FrequencyPlotGUI
 
     Private Sub FFTDone() Handles m_FFTStream.FFTDone
         'Whenever there is new FFT data update the plot
-        If Me.InvokeRequired Then
-            Me.Invoke(New MethodInvoker(AddressOf UpdatePlot))
+        If InvokeRequired Then
+            Invoke(New MethodInvoker(AddressOf UpdatePlot))
         Else
             UpdatePlot()
         End If
@@ -219,8 +219,8 @@ Public Class FrequencyPlotGUI
     Private Sub ResizeHandler() Handles Me.Resize
         dataPlot.Top = 9
         dataPlot.Left = 237
-        dataPlot.Width = Me.Width - 259
-        dataPlot.Height = Me.Height - 57
+        dataPlot.Width = Width - 259
+        dataPlot.Height = Height - 57
         dataPlot.ResetAutoValues()
     End Sub
 
@@ -238,10 +238,10 @@ Public Class FrequencyPlotGUI
     End Sub
 
     Private Sub btn_removeReg_Click(sender As Object, e As EventArgs) Handles btn_removeReg.Click
-        If IsNothing(Me.RegisterList.FocusedItem) Then
+        If IsNothing(RegisterList.FocusedItem) Then
             MessageBox.Show("Please select an Item to Delete", "Remove register warning", MessageBoxButtons.OK)
         Else
-            Me.RegisterList.Items.RemoveAt(Me.RegisterList.FocusedItem.Index)
+            RegisterList.Items.RemoveAt(RegisterList.FocusedItem.Index)
         End If
     End Sub
 
@@ -328,7 +328,7 @@ Public Class FrequencyPlotGUI
             loc.X = e.X
             loc.Y = e.Y
             Dim pointLabel As New Label()
-            Me.Controls.Add(pointLabel)
+            Controls.Add(pointLabel)
             'scientific format
             formatString = "#0.0#e0"
             If Not check_sciLabel.Checked Then

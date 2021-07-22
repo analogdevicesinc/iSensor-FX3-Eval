@@ -29,11 +29,11 @@ Public Class TopGUI
     Public RegMap As RegMapCollection
     Public Dut As IDutInterface
 
-    'dut settings management
+    'DUT settings management
     Friend SelectedPersonality As String
     Friend DutOptions As List(Of DutPersonality)
 
-    'List of listviewitems for bulk register read
+    'List of list view items for bulk register read
     Friend BulkRegList As List(Of ListViewItem)
     Friend numRegSamples As Integer
     Friend samplesPerWrite As Integer
@@ -74,7 +74,7 @@ Public Class TopGUI
 
     ''' <summary>
     ''' Initializer. Loads settings, shows welcome guide, prompts for
-    ''' DUT personality selection, and initializes regmap
+    ''' DUT personality selection, and initializes register map
     ''' </summary>
     Public Sub Setup() Handles Me.Load
 
@@ -90,9 +90,9 @@ Public Class TopGUI
             welcomeGuide.ShowDialog()
         End If
 
-        Me.Text = "iSensor FX3 Eval"
+        Text = "iSensor FX3 Eval"
 
-        'set up timers for regview
+        'set up timers for register view
         pageReadTimer = New System.Timers.Timer(500)
         pageReadTimer.Enabled = False
         AddHandler pageReadTimer.Elapsed, New ElapsedEventHandler(AddressOf PageReadCallback)
@@ -118,7 +118,7 @@ Public Class TopGUI
         BACK_COLOR = My.Settings.BackColor
 
         'apply back color
-        Me.BackColor = BACK_COLOR
+        BackColor = BACK_COLOR
         For Each formPage As TabPage In dut_access.TabPages
             formPage.BackColor = BACK_COLOR
         Next
@@ -135,7 +135,7 @@ Public Class TopGUI
             'squash
         End Try
 
-        'load dut personality settings
+        'load DUT personality settings
         SelectedPersonality = My.Settings.DutPersonality
 
         'load DUT personality file(s)
@@ -173,10 +173,10 @@ Public Class TopGUI
             If Not validPersonality Then SelectedPersonality = "Custom"
         End If
 
-        'Check that all the regmaps required for the application are properly bundled
+        'Check that all the register maps required for the application are properly bundled
         CheckRegmapResources()
 
-        'load regmap
+        'load register map
         ApplyDutPersonalityRegmap(SelectedPersonality)
 
         'Set bulk reg list
@@ -203,12 +203,12 @@ Public Class TopGUI
         'Add exception handler
         AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf GeneralErrorHandler
 
-        'Set up autospi
+        'Set up automotive SPI interface
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
         m_AutoSpi.LogExceptions = True
 
-        'set up comp spi
+        'set up component sensor SPI interface
         m_CompSpi = New ComponentSpi(FX3)
 
         'Set the API version and build date
@@ -235,13 +235,13 @@ Public Class TopGUI
             End If
         Next
         If goodLoc Then
-            Me.Top = My.Settings.LastTop
-            Me.Left = My.Settings.LastLeft
-            Me.Width = My.Settings.LastWidth
-            Me.Height = My.Settings.LastHeight
+            Top = My.Settings.LastTop
+            Left = My.Settings.LastLeft
+            Width = My.Settings.LastWidth
+            Height = My.Settings.LastHeight
         ElseIf screens.Count > 0 Then
-            Me.Top = (screens(0).WorkingArea.Height / 2) - (Me.Height / 2)
-            Me.Left = (screens(0).WorkingArea.Width / 2) - (Me.Width / 2)
+            Top = (screens(0).WorkingArea.Height / 2) - (Height / 2)
+            Left = (screens(0).WorkingArea.Width / 2) - (Width / 2)
         Else
             MsgBox("ERROR: This application requires a screen to function properly...")
         End If
@@ -256,7 +256,7 @@ Public Class TopGUI
     ''' Set/get the loaded register map path. Setting this property will trigger
     ''' the RegMap dictionary to be re-loaded from the provided CSV
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>Path to currently loaded register map</returns>
     Public Property RegMapPath As String
         Get
             Return m_RegMapPath
@@ -277,7 +277,6 @@ Public Class TopGUI
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message() + " " + RegMap.ErrorText)
             End Try
-
         End Set
     End Property
 
@@ -355,7 +354,7 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Opens a new binary file writer GUI. This is a misc app, not really useful for
+    ''' Opens a new binary file writer GUI. This is a misc application, not really useful for
     ''' IMUs. Should probably be removed at some point
     ''' </summary>
     ''' <param name="sender"></param>
@@ -416,7 +415,7 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Resets the connected DUT via the resetn line, then checks SPI comms after the reset
+    ''' Resets the connected DUT via the hardware reset line, then checks SPI comms after the reset
     ''' has completed
     ''' </summary>
     ''' <param name="sender"></param>
@@ -563,6 +562,11 @@ Public Class TopGUI
 
     End Sub
 
+    ''' <summary>
+    ''' Measure average round trip USB command latency
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
     Private Sub btn_MeasureUSB_Click(sender As Object, e As EventArgs) Handles btn_MeasureUSB.Click
 
         Const NUM_TRIALS As Integer = 1000
@@ -602,20 +606,20 @@ Public Class TopGUI
     ''' Y-axis (height)
     ''' </summary>
     Private Sub ResizeHandler() Handles Me.Resize
-        'resize regview
-        regView.Height = Me.Height - 351
-        btn_DumpRegmap.Top = Me.Height - 362
-        btn_writeRegMap.Top = Me.Height - 362
+        'resize register view
+        regView.Height = Height - 351
+        btn_DumpRegmap.Top = Height - 362
+        btn_writeRegMap.Top = Height - 362
 
         'resize tab control
-        dut_access.Height = Me.Height - 286
+        dut_access.Height = Height - 286
 
         'bottom labels need to move too
-        label_apiVersion.Top = Me.Height - 79
-        checkVersion.Top = Me.Height - 79
-        report_issue.Top = Me.Height - 60
-        regMapPath_Label.Top = Me.Height - 60
-        link_help.Top = Me.Height - 60
+        label_apiVersion.Top = Height - 79
+        checkVersion.Top = Height - 79
+        report_issue.Top = Height - 60
+        regMapPath_Label.Top = Height - 60
+        link_help.Top = Height - 60
     End Sub
 
     ''' <summary>
@@ -624,7 +628,7 @@ Public Class TopGUI
     Private Sub timeoutHandler()
         m_disconnectTimer.Enabled = False
         'Timers run in a separate thread from GUI
-        Me.BeginInvoke(New MethodInvoker(AddressOf UpdateTimeoutLabels))
+        BeginInvoke(New MethodInvoker(AddressOf UpdateTimeoutLabels))
     End Sub
 
     ''' <summary>
@@ -695,7 +699,7 @@ Public Class TopGUI
         End Try
 
         'get version of application and latest
-        currentVersion = Version.Parse(Me.ProductVersion)
+        currentVersion = Version.Parse(ProductVersion)
         If currentVersion.CompareTo(newestVersion) < 0 Then
             promptResult = MsgBox("Version " + content("tag_name").ToString() + " available. Download now?", MsgBoxStyle.YesNo)
         Else
@@ -707,7 +711,7 @@ Public Class TopGUI
             Exit Sub
         End If
 
-        'get the url to the zip resource to download and open in browser
+        'get the URL to the zip resource to download and open in browser
         Dim proc = New Process()
         Dim assets As ArrayList = DirectCast(content("assets"), ArrayList)
         proc.StartInfo.UseShellExecute = True
@@ -719,7 +723,9 @@ Public Class TopGUI
     ''' <summary>
     ''' Open new issue page on GitHub when the user clicks on the report issue label.
     ''' Maybe someone will eventually use this. People seem much more fond of sending
-    ''' emails
+    ''' emails.
+    ''' 
+    ''' Update - some people actually used the GitHub issue tracker!
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
@@ -729,7 +735,7 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Handle any exceptions which are not caught
+    ''' Handle any exceptions which are not caught by the code
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
@@ -748,7 +754,7 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Log an unhandled exception to a file on the PC
+    ''' Log an un-handled exception to a file on the PC
     ''' </summary>
     ''' <param name="e">Exception which was raised</param>
     Private Sub LogError(e As Exception)
@@ -844,11 +850,144 @@ Public Class TopGUI
 
 #End Region
 
+#Region "DUT Interface Functions"
+
+    ''' <summary>
+    ''' Waits for data ready to begin toggling, then performs a write and read back 
+    ''' test on the user scratch register of the connected DUT
+    ''' </summary>
+    Friend Function TestDUT() As Boolean
+
+        Dim scratchReg As RegClass = Nothing
+        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1", "APPLICATION_SPACE_0", "SCRATCH_A", "USER_ID"}
+        Dim drActive As Boolean = FX3.DrActive
+        Dim randomValue As UInteger
+        Dim orignalScratch As UInteger
+        Dim testResult As Boolean
+
+        'Exit if FX3 not connected
+        If Not m_FX3Connected Then
+            label_DUTStatus.Text = "Waiting for FX3 to Connect"
+            label_DUTStatus.BackColor = IDLE_COLOR
+            Return False
+        End If
+
+        For Each regName In scratchRegNames
+            If RegMap.Contains(regName) Then
+                scratchReg = RegMap(regName)
+            End If
+        Next
+
+        If IsNothing(scratchReg) Then
+            label_DUTStatus.Text = "ERROR: No Scratch Register in RegMap"
+            label_DUTStatus.BackColor = IDLE_COLOR
+            Return False
+        End If
+
+        'make DR active false for this test
+        FX3.DrActive = False
+
+        'wait for DR to reach DR polarity level (500ms timeout)
+        Try
+            If FX3.SensorType <> DeviceType.ADcmXL Then
+                'wait for toggle (500ms)
+                FX3.MeasurePinFreq(FX3.DrPin, 0, 500, 3)
+            Else
+                'wait for busy to go high for ADcmXL
+                FX3.PulseWait(FX3.DrPin, True, 100, 400)
+            End If
+        Catch ex As Exception
+            'squash - don't want to throw error for PWM or special function pin
+        End Try
+
+        'generate new test value and save starting value
+        randomValue = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
+        orignalScratch = Dut.ReadUnsigned(scratchReg)
+
+        Dut.WriteUnsigned(scratchReg, randomValue)
+        If Not Dut.ReadUnsigned(scratchReg) = randomValue Then
+            label_DUTStatus.Text = "ERROR: DUT Read/Write Failed"
+            label_DUTStatus.BackColor = ERROR_COLOR
+            testResult = False
+        Else
+            label_DUTStatus.Text = "DUT Connected"
+            label_DUTStatus.BackColor = GOOD_COLOR
+            testResult = True
+        End If
+        'restore value
+        Dut.WriteUnsigned(scratchReg, orignalScratch)
+
+        'restore DR active setting
+        FX3.DrActive = drActive
+
+        Return testResult
+    End Function
+
+    ''' <summary>
+    ''' Check if the connected DUT has all registers at factory default values
+    ''' </summary>
+    ''' <returns>String containing list of all regs not at default values</returns>
+    Friend Function CheckDUTFactoryDefaults() As String
+        Dim goodRead As Boolean
+        Dim invalidRegs As String
+
+        invalidRegs = ""
+        goodRead = True
+        For Each reg In RegMap
+            If Not IsNothing(reg.DefaultValue) Then
+                If Dut.ReadUnsigned(reg) <> reg.DefaultValue Then
+                    goodRead = False
+                    invalidRegs += (reg.Label + ", ")
+                End If
+            End If
+        Next
+        If Not goodRead Then
+            'remove lagging comma
+            invalidRegs = invalidRegs.Remove(invalidRegs.Length - 2)
+            Return ("Write to " + invalidRegs + " failed!")
+        Else
+            Return "Factory default values verified!"
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Execute a command on a connected DUT
+    ''' </summary>
+    ''' <param name="CommandBit">Bit of the DUT command register to set</param>
+    Friend Sub RunDUTCommand(CommandBit As Integer)
+
+        'Need to find the COMMAND reg in the register map. Has a few possible names
+        Dim cmdReg As RegClass = Nothing
+        Dim cmdRegNames() As String = {"COMMAND", "GLOB_CMD", "USER_COMMAND"}
+
+        'Exit if FX3 not connected
+        If Not m_FX3Connected Then
+            Return
+        End If
+
+        For Each regName In cmdRegNames
+            If RegMap.Contains(regName) Then
+                cmdReg = RegMap(regName)
+                Exit For
+            End If
+        Next
+
+        'issue write
+        If (Not IsNothing(cmdReg)) And (CommandBit < 32) Then
+            Dut.WriteUnsigned(cmdReg, 1UI << CommandBit)
+        Else
+            MessageBox.Show("No Command Register Found!")
+        End If
+
+    End Sub
+
+#End Region
+
 #Region "Helper Functions"
 
     ''' <summary>
     ''' Save a custom personality to the custom personality
-    ''' CSV file in the app active directory
+    ''' CSV file in the application active directory
     ''' </summary>
     Private Sub SaveCustomPersonality()
 
@@ -870,60 +1009,60 @@ Public Class TopGUI
     Private Sub SetupToolTips()
 
         Dim tip0 As ToolTip = New ToolTip()
-        tip0.SetToolTip(Me.btn_APIInfo, "Get information about the version of the FX3 API being used, and the connected FX3 hardware")
-        tip0.SetToolTip(Me.btn_BitBangSPI, "Bit-bang custom SPI traffic to a DUT")
-        tip0.SetToolTip(Me.btn_BulkRegRead, "Stream register data to a .CSV file")
-        tip0.SetToolTip(Me.btn_CheckDUTConnection, "Check the SPI connection to the DUT by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
-        tip0.SetToolTip(Me.btn_Connect, "Connect or disconnect from an EVAL-ADIS-FX3 board")
-        tip0.SetToolTip(Me.btn_FX3Config, "View or set all FX3 configuration options (sclk, stall time, etc)")
-        tip0.SetToolTip(Me.btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
-        tip0.SetToolTip(Me.btn_SelectDUT, "Select the active DUT personality. Loads the default values for that DUT")
-        tip0.SetToolTip(Me.btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
-        tip0.SetToolTip(Me.btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
-        tip0.SetToolTip(Me.label_apiVersion, "The current version of the iSensor FX3 IMU Evaluation GUI. The three highest version numbers will match the FX3 API version in use")
-        tip0.SetToolTip(Me.regMapPath_Label, "The loaded register map file: " + RegMapPath)
-        tip0.SetToolTip(Me.report_issue, "Report an issue with the iSensor FX3 IMU Evaluation GUI. Requires a Internet connection and a GitHub account")
-        tip0.SetToolTip(Me.btn_ResetDUT, "Drives the reset pin low for 10ms, waits for data ready to be asserted, and checks the DUT connection")
-        tip0.SetToolTip(Me.checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
-        tip0.SetToolTip(Me.btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
-        tip0.SetToolTip(Me.btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
-        tip0.SetToolTip(Me.btn_binFile, "Generate a binary data file filled with an arbitrary pattern")
-        tip0.SetToolTip(Me.btn_ReadPage, "Read all registers on the selected page")
-        tip0.SetToolTip(Me.btn_WriteReg, "Write a new value to the selected register")
-        tip0.SetToolTip(Me.btn_writeRegMap, "Write all valid registers from a register dump file back to the connected DUT")
-        tip0.SetToolTip(Me.btn_DumpRegmap, "Read and log all registers in the register map to a CSV file")
-        tip0.SetToolTip(Me.btn_disableResistor, "Disable resistor on the input stage of the selected FX3 GPIO")
-        tip0.SetToolTip(Me.btn_pullDown, "Enable internal weak pull down resistor on the input stage of the selected FX3 GPIO")
-        tip0.SetToolTip(Me.btn_pullUp, "Enable internal weak pull up resistor on the input stage of the selected FX3 GPIO")
-        tip0.SetToolTip(Me.btn_StartPWM, "Start/Stop PWM signal generation on the selected DIO")
-        tip0.SetToolTip(Me.btn_PulseDrive, "Drive a single fixed duration pulse on the selected DIO")
-        tip0.SetToolTip(Me.btn_ReadAllPins, "Configure all DIO pins as inputs and read the input values")
-        tip0.SetToolTip(Me.btn_ReadPin, "Configure the selected DIO pin as an input and read the input value")
-        tip0.SetToolTip(Me.btn_WritePinLow, "Configure the selected DIO pin as an output and drive low")
-        tip0.SetToolTip(Me.btn_WritePinHigh, "Configure the selected DIO pin as an output and drive high")
-        tip0.SetToolTip(Me.btn_MeasureFreq, "Measure the toggle frequency on the selected DIO")
-        tip0.SetToolTip(Me.btn_ReadGPIO, "Configure the selected FX3 GPIO as an input and read the input value")
-        tip0.SetToolTip(Me.btn_SetGPIOHigh, "Configure the selected FX3 GPIO as an output and drive high")
-        tip0.SetToolTip(Me.btn_SetGPIOLow, "Configure the selected FX3 GPIO as an output and drive low")
-        tip0.SetToolTip(Me.btn_checkError, "Check the contents of the FX3 firmware error log")
-        tip0.SetToolTip(Me.contRead, "Read all registers on the selected page continuously (500ms interval)")
-        tip0.SetToolTip(Me.scaledData, "Display register data in hex or decimal")
-        tip0.SetToolTip(Me.btn_CRC4WordGen, "Generate a 32-bit SPI word with CRC4 (Seed 0xA) appended")
-        tip0.SetToolTip(Me.btn_MeasureUSB, "Measure the average USB command latency between the EVAL-ADIS-FX3 and the PC")
-        tip0.SetToolTip(Me.btn_FactoryReset, "Restore all DUT registers to factory defaults, and save the register settings to NVM")
+        tip0.SetToolTip(btn_APIInfo, "Get information about the version of the FX3 API being used, and the connected FX3 hardware")
+        tip0.SetToolTip(btn_BitBangSPI, "Bit-bang custom SPI traffic to a DUT")
+        tip0.SetToolTip(btn_BulkRegRead, "Stream register data to a .CSV file")
+        tip0.SetToolTip(btn_CheckDUTConnection, "Check the SPI connection to the DUT by writing a random value to user scratch and reading it back. Restores the original user scratch register value afterwards")
+        tip0.SetToolTip(btn_Connect, "Connect or disconnect from an EVAL-ADIS-FX3 board")
+        tip0.SetToolTip(btn_FX3Config, "View or set all FX3 configuration options (SPI clock, stall time, etc)")
+        tip0.SetToolTip(btn_plotFFT, "Stream and plot frequency domain DUT data in real time")
+        tip0.SetToolTip(btn_SelectDUT, "Select the active DUT personality. Loads the default values for that DUT")
+        tip0.SetToolTip(btn_RealTime, "Real time stream GUI (for ADcmXL type DUTs) or burst stream GUI (for all other DUTs)")
+        tip0.SetToolTip(btn_plotData, "Plot DUT data in real time, or play back a DUT stream from a saved CSV file")
+        tip0.SetToolTip(label_apiVersion, "The current version of the iSensor FX3 IMU Evaluation GUI. The three highest version numbers will match the FX3 API version in use")
+        tip0.SetToolTip(regMapPath_Label, "The loaded register map file: " + RegMapPath)
+        tip0.SetToolTip(report_issue, "Report an issue with the iSensor FX3 IMU Evaluation GUI. Requires a Internet connection and a GitHub account")
+        tip0.SetToolTip(btn_ResetDUT, "Drives the reset pin low for 10ms, waits for data ready to be asserted, and checks the DUT connection")
+        tip0.SetToolTip(checkVersion, "Checks for the latest release of the iSensor-FX3-GUI. Requires Internet connection")
+        tip0.SetToolTip(btn_pulseMeasure, "Measure a DIO pulse width. Can send a pin or register trigger condition")
+        tip0.SetToolTip(btn_BurstTest, "Test burst mode implementations with longer SPI transactions")
+        tip0.SetToolTip(btn_binFile, "Generate a binary data file filled with an arbitrary pattern")
+        tip0.SetToolTip(btn_ReadPage, "Read all registers on the selected page")
+        tip0.SetToolTip(btn_WriteReg, "Write a new value to the selected register")
+        tip0.SetToolTip(btn_writeRegMap, "Write all valid registers from a register dump file back to the connected DUT")
+        tip0.SetToolTip(btn_DumpRegmap, "Read and log all registers in the register map to a CSV file")
+        tip0.SetToolTip(btn_disableResistor, "Disable resistor on the input stage of the selected FX3 GPIO")
+        tip0.SetToolTip(btn_pullDown, "Enable internal weak pull down resistor on the input stage of the selected FX3 GPIO")
+        tip0.SetToolTip(btn_pullUp, "Enable internal weak pull up resistor on the input stage of the selected FX3 GPIO")
+        tip0.SetToolTip(btn_StartPWM, "Start/Stop PWM signal generation on the selected DIO")
+        tip0.SetToolTip(btn_PulseDrive, "Drive a single fixed duration pulse on the selected DIO")
+        tip0.SetToolTip(btn_ReadAllPins, "Configure all DIO pins as inputs and read the input values")
+        tip0.SetToolTip(btn_ReadPin, "Configure the selected DIO pin as an input and read the input value")
+        tip0.SetToolTip(btn_WritePinLow, "Configure the selected DIO pin as an output and drive low")
+        tip0.SetToolTip(btn_WritePinHigh, "Configure the selected DIO pin as an output and drive high")
+        tip0.SetToolTip(btn_MeasureFreq, "Measure the toggle frequency on the selected DIO")
+        tip0.SetToolTip(btn_ReadGPIO, "Configure the selected FX3 GPIO as an input and read the input value")
+        tip0.SetToolTip(btn_SetGPIOHigh, "Configure the selected FX3 GPIO as an output and drive high")
+        tip0.SetToolTip(btn_SetGPIOLow, "Configure the selected FX3 GPIO as an output and drive low")
+        tip0.SetToolTip(btn_checkError, "Check the contents of the FX3 firmware error log")
+        tip0.SetToolTip(contRead, "Read all registers on the selected page continuously (500ms interval)")
+        tip0.SetToolTip(scaledData, "Display register data in hex or decimal")
+        tip0.SetToolTip(btn_CRC4WordGen, "Generate a 32-bit SPI word with CRC4 (Seed 0xA) appended")
+        tip0.SetToolTip(btn_MeasureUSB, "Measure the average USB command latency between the EVAL-ADIS-FX3 and the PC")
+        tip0.SetToolTip(btn_FactoryReset, "Restore all DUT registers to factory defaults, and save the register settings to NVM")
 
     End Sub
 
     ''' <summary>
-    ''' Save app settings to the config file. If a new setting is added, the
+    ''' Save application settings to the config file. If a new setting is added, the
     ''' setting object must be updated here, or wherever the setting is changed
     ''' </summary>
     Friend Sub SaveAppSettings()
         'Save settings
-        My.Settings.LastLeft = Me.Left
-        My.Settings.LastTop = Me.Top
-        My.Settings.LastWidth = Me.Width
-        My.Settings.LastHeight = Me.Height
+        My.Settings.LastLeft = Left
+        My.Settings.LastTop = Top
+        My.Settings.LastWidth = Width
+        My.Settings.LastHeight = Height
         My.Settings.LastFilePath = lastFilePath
         My.Settings.GoodColor = GOOD_COLOR
         My.Settings.ErrorColor = ERROR_COLOR
@@ -959,7 +1098,7 @@ Public Class TopGUI
         IDLE_COLOR = Color.Yellow
         BACK_COLOR = SystemColors.Control
 
-        Me.BackColor = BACK_COLOR
+        BackColor = BACK_COLOR
 
     End Sub
 
@@ -1205,10 +1344,10 @@ Public Class TopGUI
         'disable buttons for any existing open forms
         DisableOpenFormButtons()
 
-        'init pin tab
+        'Initialize pin tab
         PinTabInit()
 
-        'set regform sensor type
+        'set register form sensor type (for auto SPI)
         RegFormUpdateSensorType()
 
     End Sub
@@ -1283,127 +1422,6 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Waits for data ready to begin toggling, then performs a write and read back 
-    ''' test on the user scratch register of the connected DUT
-    ''' </summary>
-    Friend Function TestDUT() As Boolean
-
-        Dim scratchReg As RegClass = Nothing
-        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1", "APPLICATION_SPACE_0", "SCRATCH_A", "USER_ID"}
-        Dim drActive As Boolean = FX3.DrActive
-        Dim randomValue As UInteger
-        Dim orignalScratch As UInteger
-        Dim testResult As Boolean
-
-        'Exit if FX3 not connected
-        If Not m_FX3Connected Then
-            label_DUTStatus.Text = "Waiting for FX3 to Connect"
-            label_DUTStatus.BackColor = IDLE_COLOR
-            Return False
-        End If
-
-        For Each regName In scratchRegNames
-            If RegMap.Contains(regName) Then
-                scratchReg = RegMap(regName)
-            End If
-        Next
-
-        If IsNothing(scratchReg) Then
-            label_DUTStatus.Text = "ERROR: No Scratch Register in RegMap"
-            label_DUTStatus.BackColor = IDLE_COLOR
-            Return False
-        End If
-
-        'make DR active false for this test
-        FX3.DrActive = False
-
-        'wait for DR to reach DR polarity level (500ms timeout)
-        Try
-            If FX3.SensorType <> DeviceType.ADcmXL Then
-                'wait for toggle (500ms)
-                FX3.MeasurePinFreq(FX3.DrPin, 0, 500, 3)
-            Else
-                'wait for busy to go high for ADcmXL
-                FX3.PulseWait(FX3.DrPin, True, 100, 400)
-            End If
-        Catch ex As Exception
-            'squash - don't want to throw error for PWM or special function pin
-        End Try
-
-        'generate new test value and save starting value
-        randomValue = CInt(Math.Ceiling(Rnd() * &HFFF)) + 1
-        orignalScratch = Dut.ReadUnsigned(scratchReg)
-
-        Dut.WriteUnsigned(scratchReg, randomValue)
-        If Not Dut.ReadUnsigned(scratchReg) = randomValue Then
-            label_DUTStatus.Text = "ERROR: DUT Read/Write Failed"
-            label_DUTStatus.BackColor = ERROR_COLOR
-            testResult = False
-        Else
-            label_DUTStatus.Text = "DUT Connected"
-            label_DUTStatus.BackColor = GOOD_COLOR
-            testResult = True
-        End If
-        'restore value
-        Dut.WriteUnsigned(scratchReg, orignalScratch)
-
-        'restore DR active setting
-        FX3.DrActive = drActive
-
-        Return testResult
-    End Function
-
-    Friend Function CheckDUTFactoryDefaults() As String
-        Dim goodRead As Boolean
-        Dim invalidRegs As String
-
-        invalidRegs = ""
-        goodRead = True
-        For Each reg In RegMap
-            If Not IsNothing(reg.DefaultValue) Then
-                If Dut.ReadUnsigned(reg) <> reg.DefaultValue Then
-                    goodRead = False
-                    invalidRegs += (reg.Label + ", ")
-                End If
-            End If
-        Next
-        If Not goodRead Then
-            'remove lagging comma
-            invalidRegs = invalidRegs.Remove(invalidRegs.Length - 2)
-            Return ("Write to " + invalidRegs + " failed!")
-        Else
-            Return "Factory default values verified!"
-        End If
-    End Function
-
-    Friend Sub RunDUTCommand(CommandBit As Integer)
-
-        'Need to find the COMMAND reg in the register map. Has a few possible names
-        Dim cmdReg As RegClass = Nothing
-        Dim cmdRegNames() As String = {"COMMAND", "GLOB_CMD", "USER_COMMAND"}
-
-        'Exit if FX3 not connected
-        If Not m_FX3Connected Then
-            Return
-        End If
-
-        For Each regName In cmdRegNames
-            If RegMap.Contains(regName) Then
-                cmdReg = RegMap(regName)
-                Exit For
-            End If
-        Next
-
-        'issue write
-        If (Not IsNothing(cmdReg)) And (CommandBit < 32) Then
-            Dut.WriteUnsigned(cmdReg, 1UI << CommandBit)
-        Else
-            MessageBox.Show("No Command Register Found!")
-        End If
-
-    End Sub
-
-    ''' <summary>
     ''' Halt any background operations on the top GUI and
     ''' close all open sub-forms
     ''' </summary>
@@ -1417,8 +1435,8 @@ Public Class TopGUI
             End If
         Next
         For Each runningForm As Form In openForms
-            If Me.InvokeRequired Then
-                Me.BeginInvoke(Sub() runningForm.Close())
+            If InvokeRequired Then
+                BeginInvoke(Sub() runningForm.Close())
             Else
                 runningForm.Close()
             End If
@@ -1466,7 +1484,7 @@ Public Class TopGUI
     Friend TimePlotWidth, TimePlotHeight, FFTPlotWidth, FFTPlotHeight As Integer
 
     ''' <summary>
-    ''' Init data plotting register list on top form. This register list is shared
+    ''' Initialize data plotting register list on top form. This register list is shared
     ''' between the time domain and frequency domain plotters
     ''' </summary>
     Friend Sub DataPlotRegsInit()

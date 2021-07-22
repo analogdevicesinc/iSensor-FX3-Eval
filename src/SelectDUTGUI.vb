@@ -93,7 +93,7 @@ Public Class SelectDUTGUI
                 End Try
             End If
         End If
-        Me.Close()
+        Close()
     End Sub
 
     Private Sub familyInput_Changed(sender As Object, e As EventArgs) Handles familyInput.TextChanged

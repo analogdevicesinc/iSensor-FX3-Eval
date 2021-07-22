@@ -3,7 +3,7 @@
 '
 'File:          WelcomeGuideGUI.vb
 'Author:        Alex Nolan (alex.nolan@analog.com)
-'Description:   Displays a GUI welcome guide and walkthrough on first run.
+'Description:   Displays a GUI welcome guide and walk-through on first run.
 
 Imports System.IO
 
@@ -14,13 +14,13 @@ Public Class WelcomeGuideGUI
     Private basePath As String
 
     Public Sub Setup() Handles Me.Load
-        Me.Top = My.Settings.LastTop
-        Me.Left = My.Settings.LastLeft
-        Me.BackColor = My.Settings.BackColor
+        Top = My.Settings.LastTop
+        Left = My.Settings.LastLeft
+        BackColor = My.Settings.BackColor
         'configure text box
         messageText.ReadOnly = True
         messageText.BorderStyle = 0
-        messageText.BackColor = Me.BackColor
+        messageText.BackColor = BackColor
         messageText.TabStop = False
         messageText.Multiline = True
         InitializeGuideResources()
@@ -59,7 +59,7 @@ Public Class WelcomeGuideGUI
             btn_Next.Enabled = False
         End If
         If currentSlide <= 0 Then
-            'limit to entry 0 and disable prev button
+            'limit to entry 0 and disable previous button
             currentSlide = 0
             btn_prev.Enabled = False
         End If
@@ -100,24 +100,24 @@ Public Class WelcomeGuideGUI
     Public Sub ResizeHandler() Handles Me.Resize
         Dim topOffset As Integer = 62
         'resize text + image
-        messageText.Width = Me.Width - 35
-        displayImage.Width = Me.Width - 35
-        displayImage.Height = Me.Height - 171
-        'move bottom nav bar
+        messageText.Width = Width - 35
+        displayImage.Width = Width - 35
+        displayImage.Height = Height - 171
+        'move bottom navigation bar
 
         'Y
-        btn_Next.Top = Me.Height - topOffset - 5
-        btn_prev.Top = Me.Height - topOffset - 5
-        slideNum.Top = Me.Height - topOffset
-        check_doNotShow.Top = Me.Height - topOffset - 2
-        link_github.Top = Me.Height - topOffset
-        wikiLink.Top = Me.Height - topOffset
+        btn_Next.Top = Height - topOffset - 5
+        btn_prev.Top = Height - topOffset - 5
+        slideNum.Top = Height - topOffset
+        check_doNotShow.Top = Height - topOffset - 2
+        link_github.Top = Height - topOffset
+        wikiLink.Top = Height - topOffset
 
         'X
-        slideNum.Left = Me.Width - 83
-        btn_Next.Left = Me.Width - 164
-        btn_prev.Left = Me.Width - 245
-        check_doNotShow.Left = Me.Width - 371
+        slideNum.Left = Width - 83
+        btn_Next.Left = Width - 164
+        btn_prev.Left = Width - 245
+        check_doNotShow.Left = Width - 371
 
     End Sub
 

@@ -72,7 +72,7 @@ Partial Class TopGUI
 
     Private Sub HiddenHandler() Handles Me.VisibleChanged
         If Not Visible Then
-            'disable dr / cont reads
+            'disable DR / cont reads
             pageReadTimer.Enabled = False
             drReadTimer.Enabled = False
         Else
@@ -179,7 +179,7 @@ Partial Class TopGUI
             Next
         End If
 
-        'check the page register readback only if paged part is in use
+        'check the page register read back only if paged part is in use
         If pageList.Count < 2 Then Exit Sub
         Dim expectedPage As Integer = currentRegList(0).Page
         If m_pageMessageList.Contains(expectedPage) Then
@@ -233,13 +233,13 @@ Partial Class TopGUI
 
     Private Sub PageReadCallback()
         If IsNothing(FX3.ActiveFX3) Then Exit Sub
-        Me.BeginInvoke(New MethodInvoker(AddressOf ReadPage))
+        BeginInvoke(New MethodInvoker(AddressOf ReadPage))
     End Sub
 
     Private Sub DrReadCallBack()
         If IsNothing(FX3.ActiveFX3) Then Exit Sub
         drReadTimer.Enabled = False
-        Me.BeginInvoke(New MethodInvoker(AddressOf ReadDrFreq))
+        BeginInvoke(New MethodInvoker(AddressOf ReadDrFreq))
     End Sub
 
     Private Sub EnableDrTimer()
@@ -322,7 +322,7 @@ Partial Class TopGUI
         Dim reg As RegClass
         Dim numDecimalPlaces As UInteger
 
-        'regview
+        'register view
         For i As Integer = 0 To regView.RowCount - 1
             newText = regView.Item("Contents", i).Value
             If newText <> "Not Read" Then
@@ -353,7 +353,7 @@ Partial Class TopGUI
             End If
         Next
 
-        'copy from regview to current value
+        'copy from register view to current value
         newText = CurrentValue.Text
         Try
             CurrentValue.Text = regView.Item("Contents", regView.CurrentCell.RowIndex).Value

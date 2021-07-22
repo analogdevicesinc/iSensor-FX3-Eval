@@ -49,7 +49,7 @@ Public Class IMUStreamingGUI
         're-enable button
         m_TopGUI.btn_RealTime.Enabled = True
         If Not IsNothing(fileManager) Then fileManager.Dispose()
-        Me.Dispose()
+        Dispose()
     End Sub
 
     ''' <summary>
@@ -144,8 +144,8 @@ Public Class IMUStreamingGUI
     End Sub
 
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
-        If Me.InvokeRequired Then
-            Me.Invoke(New MethodInvoker(AddressOf CaptureDoneWork))
+        If InvokeRequired Then
+            Invoke(New MethodInvoker(AddressOf CaptureDoneWork))
         Else
             CaptureDoneWork()
         End If
@@ -278,7 +278,7 @@ Public Class IMUStreamingGUI
     End Sub
 
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
-        Me.Invoke(New MethodInvoker(Sub() CaptureProgressBurst.Value = e.ProgressPercentage))
+        Invoke(New MethodInvoker(Sub() CaptureProgressBurst.Value = e.ProgressPercentage))
     End Sub
 
     Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs) Handles Use32BitRegs.CheckedChanged
