@@ -11,6 +11,12 @@ Imports System.IO
 Public Class DutPersonality
 
     ''' <summary>
+    ''' Parent personality (e.g. for ADIS16505, parent is ADIS1650x.
+    ''' For a top level personality, parent should be ""
+    ''' </summary>
+    Public Parent As String
+
+    ''' <summary>
     ''' DUT display name (e.g. ADIS16xxx)
     ''' </summary>
     Public DisplayName As String
@@ -104,6 +110,7 @@ Public Class DutPersonality
     Public Sub New()
         DisplayName = "Custom"
         RegMapFileName = "NotSet"
+        Parent = ""
         SensorType = DeviceType.IMU
         PartType = DUTType.IMU
         SPIFreq = 2000000
@@ -178,6 +185,7 @@ Public Class DutPersonality
         Dim vals As New List(Of String)
         Dim writer As New StreamWriter(path, False)
         header.Add("DISPLAYNAME")
+        header.Add("PARENT")
         header.Add("REGMAP")
         header.Add("SENSORTYPE")
         header.Add("PARTTYPE")
@@ -203,6 +211,7 @@ Public Class DutPersonality
         For Each personality In Personalities
             vals.Clear()
             vals.Add(personality.DisplayName)
+            vals.Add(personality.Parent)
             vals.Add(personality.RegMapFileName)
             vals.Add([Enum].GetName(GetType(DeviceType), personality.SensorType))
             vals.Add([Enum].GetName(GetType(DUTType), personality.PartType))
@@ -278,6 +287,7 @@ Public Class DutPersonality
             indexes.Add(Array.IndexOf(line, "ISLOWERFIRST"))
             indexes.Add(Array.IndexOf(line, "SOFTRESETBIT"))
             indexes.Add(Array.IndexOf(line, "FLASHUPDATEBIT"))
+            indexes.Add(Array.IndexOf(line, "PARENT"))
             'parse file
             For i As Integer = 1 To lines.Count - 1
                 line = lines(i).Split(",")
@@ -301,6 +311,7 @@ Public Class DutPersonality
                     item.IsLowerFirst = Convert.ToBoolean(line(indexes(15)))
                     item.SoftResetCmdBit = Convert.ToInt32(line(indexes(16)))
                     item.FlashUpdateCmdBit = Convert.ToInt32(line(indexes(17)))
+                    item.Parent = lines(indexes(18))
                     ret.Add(item)
                 Catch ex As Exception
                     'abort
