@@ -77,11 +77,10 @@
     </Reference>
     <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\adisInterface.dll</HintPath>
+      <HintPath>..\resouces\adisInterface.dll</HintPath>
     </Reference>
-    <Reference Include="AForge.Math, Version=2.2.5.0, Culture=neutral, PublicKeyToken=abba2e25397ee8c9, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Resources\AForge.Math.dll</HintPath>
+    <Reference Include="AForge.Math">
+      <HintPath>..\resouces\AForge.Math.dll</HintPath>
     </Reference>
     <Reference Include="CyUSB, Version=1.2.3.0, Culture=neutral, PublicKeyToken=01f1d2b6c851ae92, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -100,7 +99,7 @@
       <HintPath>..\iSensor-FX3-API\resources\RegMapClasses.dll</HintPath>
     </Reference>
     <Reference Include="SignalProcessing">
-      <HintPath>..\Resources\SignalProcessing.dll</HintPath>
+      <HintPath>..\resouces\SignalProcessing.dll</HintPath>
     </Reference>
     <Reference Include="StreamDataLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
