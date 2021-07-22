@@ -311,7 +311,7 @@ Public Class DutPersonality
                     item.IsLowerFirst = Convert.ToBoolean(line(indexes(15)))
                     item.SoftResetCmdBit = Convert.ToInt32(line(indexes(16)))
                     item.FlashUpdateCmdBit = Convert.ToInt32(line(indexes(17)))
-                    item.Parent = lines(indexes(18))
+                    item.Parent = line(indexes(18))
                     ret.Add(item)
                 Catch ex As Exception
                     'abort
