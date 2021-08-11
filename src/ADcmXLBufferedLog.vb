@@ -10,10 +10,8 @@ Imports RegMapClasses
 Public Class ADcmXLBufferedLog
 
     Private Sub ADcmXLBufferedLog_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         'default to time domain
         time_cap.Checked = True
-
         ADcmXLType.Text = m_TopGUI.FX3.PartType.ToString()
     End Sub
 
@@ -34,6 +32,17 @@ Public Class ADcmXLBufferedLog
 
         'build reg list based on DUT type
         Dim reglist As New List(Of RegClass)
+        Dim regListTemp As New List(Of RegClass)
+        Dim data As New List(Of Long)
+        Dim result As New List(Of String)
+        Dim rc As New RegClass With {.Address = 26, .Page = 0, .NumBytes = 2}
+        Dim buf_pntr As New RegClass With {.Address = 10, .Page = 0, .NumBytes = 2}
+        Dim waitTime As Double
+        Dim sampleLength As Integer
+        Dim REC_CTRL1 As UInteger
+        Dim index As Integer
+        Dim header As String
+
         Try
             If m_TopGUI.FX3.PartType = FX3Api.DUTType.ADcmXL1021 Then
                 reglist.Add(m_TopGUI.RegMap("Z_BUF"))
@@ -55,14 +64,11 @@ Public Class ADcmXLBufferedLog
             Exit Sub
         End Try
 
-
-        'establish REC_CTRL1 value
-        Dim rc As New RegClass With {.Address = 26, .Page = 0, .NumBytes = 2}
-        Dim REC_CTRL1 As UInteger = m_TopGUI.Dut.ReadUnsigned(rc)
+        'establish REC_CTRL1 value, preserving user settings
+        REC_CTRL1 = m_TopGUI.Dut.ReadUnsigned(rc)
         'clear lower 2 bits
-        REC_CTRL1 = REC_CTRL1 And &HFFFFFFFC
+        REC_CTRL1 = REC_CTRL1 And &HFFFFFFFCUI
 
-        Dim sampleLength As Integer
         If time_cap.Checked Then
             '2 for time domain
             REC_CTRL1 += 2
@@ -77,39 +83,47 @@ Public Class ADcmXLBufferedLog
             MsgBox("ERROR: REC_CTRL not set properly - is the DUT connected?")
         End If
 
-        'command 0x800
+        'command 0x800 to start capture
         m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("COMMAND"), &H800)
 
-        'wait for busy to come back (DIO1)
-        Dim waitTime As Double
+        'wait for busy to come back high
         waitTime = m_TopGUI.FX3.PulseWait(m_TopGUI.FX3.DIO2, 1, 0, 10000)
 
         'update label
         calc_time.Text = waitTime.ToString("#.##") + "ms"
 
-        'save data
-        Dim data() As Long = m_TopGUI.Dut.ReadSigned(reglist, 1, sampleLength)
+        'read data from ADcmXL
+        For Each reg In reglist
+            'first ensure buffer pointer is set to 0
+            m_TopGUI.Dut.WriteUnsigned(buf_pntr, 0)
+            'read each channel individually (all x, then all y, then all z)
+            regListTemp.Clear()
+            regListTemp.Add(reg)
+            data.AddRange(m_TopGUI.Dut.ReadSigned(regListTemp, 1, sampleLength))
+        Next
 
-        Dim result As New List(Of String)
+        'data is now formatted x[0], x[1], ... x[n], y[0], y[1], ... y[n]
 
         'build header
-        Dim header As String = reglist(0).Label
+        header = reglist(0).Label
         For i As Integer = 1 To reglist.Count - 1
             header = header + "," + reglist(i).Label
         Next
         result.Add(header)
 
-        'add data
-        Dim index As Integer = 0
-        Dim resultStr As String
+        'start each row in result CSV
+        index = 0
         For i As Integer = 1 To sampleLength
-            resultStr = data(index).ToString()
+            result.Add(data(index).ToString())
             index += 1
-            For j As Integer = 1 To reglist.Count - 1
-                resultStr = resultStr + "," + data(index).ToString()
+        Next
+
+        'now go through remainder of channels
+        For j As Integer = 1 To reglist.Count - 1
+            For i As Integer = 1 To sampleLength
+                result(i) = result(i) + "," + data(index).ToString()
                 index += 1
             Next
-            result.Add(resultStr)
         Next
 
         'log to CSV
