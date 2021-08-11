@@ -25,6 +25,7 @@ Public Class FormBase
     ''' </summary>
     Public Sub Cleanup() Handles Me.Closing
         m_TopGUI.Show()
+        Application.DoEvents()
     End Sub
 
     ''' <summary>

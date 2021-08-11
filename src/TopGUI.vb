@@ -639,9 +639,13 @@ Public Class TopGUI
     ''' <param name="e"></param>
     Private Sub Cleanup(sender As Object, e As EventArgs) Handles Me.Closing
 
+        'Process anything in app event queue
+        Application.DoEvents()
+
+        'save user settings
         SaveAppSettings()
 
-        'close all other forms
+        'close all other child forms
         CloseAllForms()
 
         'Disconnect the FX3 (does nothing if not already connected)
