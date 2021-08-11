@@ -39,6 +39,13 @@ Public Class SelectDUTGUI
         If IsNothing(defaultPer) Then
             'Is there no default? go to index 0 for family
             familyInput.SelectedIndex = 0
+            'update default personality 
+            For Each per In m_TopGUI.DutOptions
+                If familyInput.Items(0).ToString() = per.DisplayName Then
+                    defaultPer = per
+                    Exit For
+                End If
+            Next
         ElseIf familyInput.Items.Contains(defaultPer.DisplayName) Then
             'Is selected default a parent?
             familyInput.SelectedItem = defaultPer.DisplayName
