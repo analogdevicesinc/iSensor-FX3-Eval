@@ -322,6 +322,9 @@ Partial Class TopGUI
         Dim reg As RegClass
         Dim numDecimalPlaces As UInteger
 
+        'get number of decimal places
+        numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
+
         'register view
         For i As Integer = 0 To regView.RowCount - 1
             newText = regView.Item("Contents", i).Value
@@ -334,8 +337,6 @@ Partial Class TopGUI
                         valU = Convert.ToUInt32(newText, 16)
                         'scale using DUT function
                         val = Dut.ScaleRegData(reg, valU)
-                        'get number of decimal places
-                        numDecimalPlaces = Convert.ToUInt32(numDecimals.Text)
                         'scale value
                         newText = val.ToString("f" + numDecimalPlaces.ToString())
                     Else
@@ -360,6 +361,37 @@ Partial Class TopGUI
         Catch ex As Exception
             CurrentValue.Text = newText
         End Try
+
+        'convert the write data
+        newText = newValue.Text
+        'grab the last clicked on register
+        Try
+            reg = RegMap(regView.Item("Label", regView.CurrentCell.RowIndex).Value)
+        Catch ex As Exception
+            'default to first register
+            reg = RegMap.First
+        End Try
+        Try
+            If scaleData Then
+                'data is in hex, need to scale to decimal
+                valU = Convert.ToUInt32(newText, 16)
+                'scale using DUT function
+                val = Dut.ScaleRegData(reg, valU)
+                'scale value
+                newText = val.ToString("f" + numDecimalPlaces.ToString())
+            Else
+                'data is in decimal, need to scale to hex
+                val = Convert.ToDouble(newText)
+                'un-scale using DUT function
+                valU = Dut.UnscaleRegData(reg, val)
+                'set string
+                newText = valU.ToString("X" + (reg.NumBytes * 2).ToString())
+            End If
+        Catch ex As Exception
+            'dont change
+            newText = newValue.Text
+        End Try
+        newValue.Text = newText
 
     End Sub
 
