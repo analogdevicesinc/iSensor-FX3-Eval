@@ -106,11 +106,11 @@ Partial Class TopGUI
         Dim regLabel As String
 
         If scaleData Then
-            Dim writeValue As Integer
+            Dim writeValue As Double
             Try
-                writeValue = Convert.ToInt32(newValue.Text, 10)
+                writeValue = Convert.ToDouble(newValue.Text)
                 regLabel = regView.Item("Label", regView.CurrentCell.RowIndex).Value
-                Dut.WriteSigned(RegMap(regLabel), writeValue)
+                Dut.WriteScaledValue(RegMap(regLabel), writeValue)
             Catch ex As Exception
                 MsgBox("ERROR: Invalid write - " + ex.Message())
             End Try
