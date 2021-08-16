@@ -7,7 +7,7 @@
 
 Imports RegMapClasses
 
-Public Class ADcmXLBufferedLog
+Public Class ADcmXLBufferedLogGUI
 
     Private Sub ADcmXLBufferedLog_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         'default to time domain
@@ -17,7 +17,7 @@ Public Class ADcmXLBufferedLog
 
     Private Sub Shutdown() Handles Me.Closing
         're-enable button
-        m_TopGUI.btn_BulkRegRead.Enabled = True
+        m_TopGUI.btn_ADcmXlBufCapture.Enabled = True
     End Sub
 
     Private Sub time_cap_CheckedChanged(sender As Object, e As EventArgs) Handles time_cap.CheckedChanged

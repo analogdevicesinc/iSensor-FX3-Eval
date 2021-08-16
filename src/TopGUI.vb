@@ -285,6 +285,21 @@ Public Class TopGUI
 #Region "Button Event Handlers"
 
     ''' <summary>
+    ''' Open ADcmXL buffered data capture GUI
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btn_ADcmXlBufCapture_Click(sender As Object, e As EventArgs) Handles btn_ADcmXlBufCapture.Click
+        'For machine health create a ADcmXLStreamingGUI
+        Dim subGUI As New ADcmXLBufferedLogGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
+
+        'disable button
+        btn_ADcmXlBufCapture.Enabled = False
+    End Sub
+
+    ''' <summary>
     ''' Open a new factory reset GUI
     ''' </summary>
     ''' <param name="sender"></param>
@@ -458,16 +473,9 @@ Public Class TopGUI
     ''' <param name="e"></param>
     Private Sub btn_BulkRegRead_Click(sender As Object, e As EventArgs) Handles btn_BulkRegRead.Click
 
-        If FX3.PartType = DUTType.IMU Or FX3.SensorType = DeviceType.IMU Then
-            Dim subGUI As New RegisterBulkReadGUI()
-            subGUI.SetTopGUI(Me)
-            subGUI.Show()
-        Else
-            'For machine health create a ADcmXLStreamingGUI
-            Dim subGUI As New ADcmXLBufferedLog()
-            subGUI.SetTopGUI(Me)
-            subGUI.Show()
-        End If
+        Dim subGUI As New RegisterBulkReadGUI()
+        subGUI.SetTopGUI(Me)
+        subGUI.Show()
 
         'disable button
         btn_BulkRegRead.Enabled = False
@@ -1351,9 +1359,6 @@ Public Class TopGUI
         'Initialize pin tab
         PinTabInit()
 
-        'set register form sensor type (for auto SPI)
-        RegFormUpdateSensorType()
-
     End Sub
 
     ''' <summary>
@@ -1406,13 +1411,23 @@ Public Class TopGUI
 
     ''' <summary>
     ''' Populate the DUT type label based on the current FX3 settings and selected
-    ''' DUT personality
+    ''' DUT personality. Also updates the visibility on any DUT type specific controls
     ''' </summary>
     Private Sub SetDUTTypeLabel()
         label_DUTType.BackColor = GOOD_COLOR
         label_DUTType.Text = SelectedPersonality + " - " + FX3.SensorType.ToString() +
             ": " + FX3.PartType.ToString() +
             ", Supply " + FX3.DutSupplyMode.ToString()
+
+        'set register form sensor type (for auto SPI)
+        RegFormUpdateSensorType()
+
+        'check if we are using an ADcmXL
+        If FX3.SensorType = DeviceType.ADcmXL Then
+            btn_ADcmXlBufCapture.Visible = True
+        Else
+            btn_ADcmXlBufCapture.Visible = False
+        End If
     End Sub
 
     ''' <summary>
@@ -1461,6 +1476,7 @@ Public Class TopGUI
             If TypeOf (openForm) Is DataPlotGUI Then btn_plotData.Enabled = False
             If TypeOf (openForm) Is IMUStreamingGUI Then btn_RealTime.Enabled = False
             If TypeOf (openForm) Is ADcmXLStreamingGUI Then btn_RealTime.Enabled = False
+            If TypeOf (openForm) Is ADcmXLBufferedLogGUI Then btn_ADcmXlBufCapture.Enabled = False
             If TypeOf (openForm) Is SelectDUTGUI Then btn_SelectDUT.Enabled = False
             If TypeOf (openForm) Is BurstTestGUI Then btn_BurstTest.Enabled = False
             If TypeOf (openForm) Is PulseMeasureGUI Then btn_pulseMeasure.Enabled = False

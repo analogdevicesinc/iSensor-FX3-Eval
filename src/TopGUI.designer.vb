@@ -128,6 +128,7 @@ Partial Class TopGUI
         Me.btn_MeasureUSB = New System.Windows.Forms.Button()
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
+        Me.btn_ADcmXlBufCapture = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -681,6 +682,7 @@ Partial Class TopGUI
         '
         'tab_dataPlot
         '
+        Me.tab_dataPlot.Controls.Add(Me.btn_ADcmXlBufCapture)
         Me.tab_dataPlot.Controls.Add(Me.btn_RealTime)
         Me.tab_dataPlot.Controls.Add(Me.btn_BulkRegRead)
         Me.tab_dataPlot.Location = New System.Drawing.Point(4, 22)
@@ -1218,6 +1220,15 @@ Partial Class TopGUI
         Me.link_help.TabStop = True
         Me.link_help.Text = "Welcome Guide"
         '
+        'btn_ADcmXlBufCapture
+        '
+        Me.btn_ADcmXlBufCapture.Location = New System.Drawing.Point(168, 6)
+        Me.btn_ADcmXlBufCapture.Name = "btn_ADcmXlBufCapture"
+        Me.btn_ADcmXlBufCapture.Size = New System.Drawing.Size(75, 62)
+        Me.btn_ADcmXlBufCapture.TabIndex = 8
+        Me.btn_ADcmXlBufCapture.Text = "ADcmXL Buffer Capture"
+        Me.btn_ADcmXlBufCapture.UseVisualStyleBackColor = True
+        '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1381,4 +1392,5 @@ Partial Class TopGUI
     Friend WithEvents link_help As LinkLabel
     Friend WithEvents btn_MeasureUSB As Button
     Friend WithEvents btn_FactoryReset As Button
+    Friend WithEvents btn_ADcmXlBufCapture As Button
 End Class

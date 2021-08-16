@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class ADcmXLBufferedLog
+Partial Class ADcmXLBufferedLogGUI
     Inherits FormBase
 
     'Form overrides dispose to clean up the component list.
