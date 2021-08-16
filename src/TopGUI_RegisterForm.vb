@@ -75,6 +75,9 @@ Partial Class TopGUI
             'disable DR / cont reads
             pageReadTimer.Enabled = False
             drReadTimer.Enabled = False
+            'stop timer which enables the DR read timer for slow data ready freq
+            drEnableTimer.Stop()
+            drEnableTimer.Dispose()
         Else
             pageReadTimer.Enabled = contRead.Checked
             drReadTimer.Enabled = measureDr.Checked
@@ -273,6 +276,10 @@ Partial Class TopGUI
         'Kill any running timers
         pageReadTimer.Enabled = False
         drReadTimer.Enabled = False
+        drEnableTimer.Enabled = False
+        drEnableTimer.Dispose()
+        pageReadTimer.Dispose()
+        drReadTimer.Dispose()
     End Sub
 
     Private Sub selectPage_SelectedIndexChanged(sender As Object, e As EventArgs) Handles selectPage.SelectedIndexChanged
