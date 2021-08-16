@@ -137,16 +137,7 @@ Public Class TopGUI
 
         'load DUT personality settings
         SelectedPersonality = My.Settings.DutPersonality
-
-        'load DUT personality file(s)
-        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv")
-        If DutOptions.Count = 0 Then
-            'generate custom personality
-            SaveCustomPersonality()
-            DutOptions.Add(New DutPersonality())
-        End If
-        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\dut_personalities.csv"))
-        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\aux_dut_personalities.csv"))
+        LoadDUTOptions()
 
         'load personality based on last selection
         validPersonality = False
@@ -831,6 +822,11 @@ Public Class TopGUI
     ''' <param name="FX3SerialNumber">Serial Number of the board which generated the event</param>
     Public Sub DisconnectHandler(FX3SerialNumber As String) Handles FX3.UnexpectedDisconnect
 
+        'prior to disconnecting the FX3, ensure settings are saved
+        SaveAppSettings()
+        'reload custom personalities from file
+        LoadDUTOptions()
+
         'Reset GUI state
         FX3.Disconnect()
         m_FX3Connected = False
@@ -843,6 +839,7 @@ Public Class TopGUI
         label_DUTStatus.Text = "ERROR: FX3 Connection Lost"
         label_DUTStatus.BackColor = ERROR_COLOR
 
+        'ensure that the top GUI is at front
         Show()
         BringToFront()
 
@@ -998,6 +995,22 @@ Public Class TopGUI
 #Region "Helper Functions"
 
     ''' <summary>
+    ''' Load DUT options from the CSV files packaged with the application to the 
+    ''' DUTOptions list (of DUTPersonality)
+    ''' </summary>
+    Private Sub LoadDUTOptions()
+        'load DUT personality file(s)
+        DutOptions = DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv")
+        If DutOptions.Count = 0 Then
+            'generate custom personality
+            SaveCustomPersonality()
+            DutOptions.Add(New DutPersonality())
+        End If
+        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\dut_personalities.csv"))
+        DutOptions.AddRange(DutPersonality.ParseFile(AppDomain.CurrentDomain.BaseDirectory + "UserConfig\aux_dut_personalities.csv"))
+    End Sub
+
+    ''' <summary>
     ''' Save a custom personality to the custom personality
     ''' CSV file in the application active directory
     ''' </summary>
@@ -1008,7 +1021,7 @@ Public Class TopGUI
         personality.DisplayName = "Custom"
         personality.RegMapFileName = RegMapPath
         personality.IsLowerFirst = m_isLowerWordFirst
-        If Not IsNothing(FX3.ActiveFX3) Then personality.GetSettingsFromFX3(FX3)
+        If Not IsNothing(FX3) Then personality.GetSettingsFromFX3(FX3)
 
         'save to CSV
         DutPersonality.WriteToFile(path, personality)
