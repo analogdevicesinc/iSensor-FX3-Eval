@@ -184,6 +184,9 @@ Partial Class TopGUI
             Next
         End If
 
+        'check if exceptions occurred
+        ValidateAutomotiveSpiData()
+
         'check the page register read back only if paged part is in use
         If pageList.Count < 2 Then Exit Sub
         Dim expectedPage As Integer = currentRegList(0).Page
@@ -196,9 +199,6 @@ Partial Class TopGUI
             m_pageMessageList.Add(expectedPage)
             MsgBox("ERROR: Unable to load page " + expectedPage.ToString(), MsgBoxStyle.Exclamation)
         End If
-
-        'check if exceptions occurred
-        ValidateAutomotiveSpiData()
 
     End Sub
 
@@ -539,14 +539,18 @@ Partial Class TopGUI
             msg = m_AutoSpi.LoggedExceptionCount.ToString() + " SPI exception(s) have occurred: "
             ex = m_AutoSpi.DequeueLoggedException()
             While Not IsNothing(ex)
-                msg += Environment.NewLine + ex.Message
-                logLength += 1
-                If logLength > 9 Then
-                    msg += Environment.NewLine + "and " + m_AutoSpi.LoggedExceptionCount.ToString() + " more..."
-                    'clear queue
-                    m_AutoSpi.LogExceptions = False
-                    m_AutoSpi.LogExceptions = validateSpiData.Checked
-                    Exit While
+                If Not (TypeOf ex Is adisInterface.StateVectorException) Then
+                    'skip logging SV
+                    msg += Environment.NewLine + ex.Message
+                    logLength += 1
+                    If logLength > 9 Then
+                        msg += Environment.NewLine + "and " + m_AutoSpi.LoggedExceptionCount.ToString() + " more..."
+                        'clear queue
+                        m_AutoSpi.LogExceptions = False
+                        m_AutoSpi.LogExceptions = validateSpiData.Checked
+                        Exit While
+                    End If
+
                 End If
                 ex = m_AutoSpi.DequeueLoggedException()
             End While
