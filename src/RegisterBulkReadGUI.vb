@@ -328,7 +328,7 @@ Public Class RegisterBulkReadGUI
             Case "DIO4"
                 m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO4
             Case Else
-                m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
+                'do not change data ready pin
         End Select
     End Sub
 
