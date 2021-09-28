@@ -180,8 +180,8 @@ Public Class RegisterBulkReadGUI
             'measure data ready frequency
             MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 10000, 2)
             DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
-
-            If MeasuredFreq > 10000 Or MeasuredFreq = Double.PositiveInfinity Then
+            'allow a freq up to 16KHz
+            If MeasuredFreq > 16000 Or MeasuredFreq = Double.PositiveInfinity Then
                 If MessageBox.Show("Data ready frequency measured invalid. Continue?", "Invalid Data Ready!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
                     Exit Sub
                 End If
