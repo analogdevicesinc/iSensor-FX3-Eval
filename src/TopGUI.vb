@@ -868,7 +868,7 @@ Public Class TopGUI
     Friend Function TestDUT() As Boolean
 
         Dim scratchReg As RegClass = Nothing
-        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_2", "USER_SCR_1", "USER_SCRATCH_1", "ALM_MAG1", "APPLICATION_SPACE_3", "SCRATCH_A", "USER_ID", "XACCL_NULL"}
+        Dim scratchRegNames() As String = {"USER_SCRATCH", "USER_SCR1", "USER_SCR_1", "USER_SCRATCH_1", "SCRATCH_A", "USER_SCR_2", "APPLICATION_SPACE_7", "USER_ID", "XACCL_NULL", "ALM_MAG1"}
         Dim drActive As Boolean = FX3.DrActive
         Dim randomValue As UInteger
         Dim orignalScratch As UInteger
@@ -884,6 +884,9 @@ Public Class TopGUI
         For Each regName In scratchRegNames
             If RegMap.Contains(regName) Then
                 scratchReg = RegMap(regName)
+                'stop at the first register we find. This lets us program essentially a priority order
+                'for which register is treated as the scratch register (in the event a device has multiple)
+                Exit For
             End If
         Next
 
