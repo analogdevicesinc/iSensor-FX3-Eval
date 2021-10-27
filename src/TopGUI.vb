@@ -117,11 +117,8 @@ Public Class TopGUI
         IDLE_COLOR = My.Settings.IdleColor
         BACK_COLOR = My.Settings.BackColor
 
-        'apply back color
-        BackColor = BACK_COLOR
-        For Each formPage As TabPage In dut_access.TabPages
-            formPage.BackColor = BACK_COLOR
-        Next
+        'apply colors
+        ApplyBackgroundColors()
 
         'load plotting color palette
         colorPath = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\plot_colors.txt"
@@ -996,6 +993,17 @@ Public Class TopGUI
 #End Region
 
 #Region "Helper Functions"
+
+    Friend Sub ApplyBackgroundColors()
+        'apply to all open forms
+        For Each openForm As Form In Application.OpenForms
+            openForm.BackColor = BACK_COLOR
+        Next
+        'apply to tabs
+        For Each formPage As TabPage In dut_access.TabPages
+            formPage.BackColor = BACK_COLOR
+        Next
+    End Sub
 
     ''' <summary>
     ''' Load DUT options from the CSV files packaged with the application to the 

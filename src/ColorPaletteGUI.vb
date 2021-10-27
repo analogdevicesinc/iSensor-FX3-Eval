@@ -65,7 +65,7 @@ Public Class ColorPaletteGUI
         m_TopGUI.GOOD_COLOR = good_color.BackColor
         m_TopGUI.IDLE_COLOR = idle_color.BackColor
         m_TopGUI.BACK_COLOR = back_color.BackColor
-        m_TopGUI.BackColor = m_TopGUI.BACK_COLOR
+        m_TopGUI.ApplyBackgroundColors()
     End Sub
 
     Private Sub Shutdown() Handles Me.Closing
