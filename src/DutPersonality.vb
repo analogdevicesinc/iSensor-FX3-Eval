@@ -314,8 +314,11 @@ Public Class DutPersonality
                     item.Parent = line(indexes(18))
                     ret.Add(item)
                 Catch ex As Exception
-                    'abort
-                    Return ret
+                    'Add the personality to the list. This is a lazy way to make this parser
+                    'support backwards compatibility with older personality files. It will populate
+                    'the existing fields, then throw an exception when it tries to load one
+                    'which does not exist
+                    ret.Add(item)
                 End Try
             Next
         End If
