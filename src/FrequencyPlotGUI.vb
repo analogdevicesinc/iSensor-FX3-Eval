@@ -51,7 +51,7 @@ Public Class FrequencyPlotGUI
         For n As Integer = 3 To 14
             NFFT.Items.Add((2 ^ n).ToString)
         Next
-        NFFT.SelectedIndex = 8
+
 
         'set up list view
         RegisterList.View = View.Details
@@ -62,11 +62,17 @@ Public Class FrequencyPlotGUI
         'initialize variables
         selectedRegList = New List(Of RegClass)
         btn_stopPlot.Enabled = False
-
-        'set DR triggered register reads
-        m_TopGUI.FX3.DrActive = True
-
         plotYLabel = "FFT Magnitude"
+
+        'Load settings
+        NFFT.SelectedText = m_TopGUI.plotSettings.SamplesPerFFT
+        FFT_Averages.Text = m_TopGUI.plotSettings.FFTAverages
+        input_3db_min.Text = m_TopGUI.plotSettings.MinPassband
+        input_3db_max.Text = m_TopGUI.plotSettings.MaxPassband
+        check_DCNull.Checked = m_TopGUI.plotSettings.NullDC
+        logXaxis.Checked = m_TopGUI.plotSettings.LogX
+        logYaxis.Checked = m_TopGUI.plotSettings.LogY
+        check_sciLabel.Checked = m_TopGUI.plotSettings.ScientificLabels
 
     End Sub
 
@@ -80,6 +86,17 @@ Public Class FrequencyPlotGUI
         m_FFTStream.Dispose()
         m_TopGUI.FFTPlotWidth = Width
         m_TopGUI.FFTPlotHeight = Height
+
+        'save settings
+        m_TopGUI.plotSettings.SamplesPerFFT = NFFT.SelectedText
+        m_TopGUI.plotSettings.FFTAverages = FFT_Averages.Text
+        m_TopGUI.plotSettings.MinPassband = input_3db_min.Text
+        m_TopGUI.plotSettings.MaxPassband = input_3db_max.Text
+        m_TopGUI.plotSettings.NullDC = check_DCNull.Checked
+        m_TopGUI.plotSettings.LogX = logXaxis.Checked
+        m_TopGUI.plotSettings.LogY = logYaxis.Checked
+        m_TopGUI.plotSettings.ScientificLabels = check_sciLabel.Checked
+
         'save register list
         m_TopGUI.dataPlotRegs.Clear()
         For Each reg In selectedRegList

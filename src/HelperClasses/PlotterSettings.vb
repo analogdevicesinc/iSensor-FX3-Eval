@@ -12,6 +12,8 @@ Public Class PlotterSettings
 
     End Sub
 
+    'Time domain plotter settings
+
     Public UpdateRate As String = "20"
 
     Public SamplesRendered As String = "200"
@@ -27,5 +29,23 @@ Public Class PlotterSettings
     Public ScrollBar As Boolean = False
 
     Public Timestamp As Boolean = False
+
+    'FFT plotter settings
+
+    Public SamplesPerFFT As String = "4096"
+
+    Public FFTAverages As String = "1"
+
+    Public MinPassband As String = "10"
+
+    Public MaxPassband As String = "100"
+
+    Public NullDC As Boolean = False
+
+    Public LogX As Boolean = True
+
+    Public LogY As Boolean = True
+
+    Public ScientificLabels As Boolean = False
 
 End Class
