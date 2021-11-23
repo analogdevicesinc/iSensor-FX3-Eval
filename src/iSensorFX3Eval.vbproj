@@ -180,13 +180,16 @@
     <Compile Include="DataPlotGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DutPersonality.vb" />
     <Compile Include="FacResetGUI.Designer.vb">
       <DependentUpon>FacResetGUI.vb</DependentUpon>
     </Compile>
     <Compile Include="FacResetGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HelperClasses\DutPersonality.vb" />
+    <Compile Include="HelperClasses\HelperFunctions.vb" />
+    <Compile Include="HelperClasses\PlotterSettings.vb" />
+    <Compile Include="HelperClasses\RegColorPair.vb" />
     <Compile Include="NVMInterfaceGUI.Designer.vb">
       <DependentUpon>NVMInterfaceGUI.vb</DependentUpon>
     </Compile>
@@ -211,7 +214,6 @@
     <Compile Include="FX3ConfigGUI.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="helperFunctions.vb" />
     <Compile Include="IMUStreamingGUI.designer.vb">
       <DependentUpon>IMUStreamingGUI.vb</DependentUpon>
     </Compile>

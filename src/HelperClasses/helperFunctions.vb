@@ -6,18 +6,8 @@
 'Description:   Module of generic helper functions for use in the EVAL-ADIS-FX3 GUI
 
 Imports System.IO
-Imports RegMapClasses
 
-''' <summary>
-''' Class to store register info + plot color
-''' </summary>
-Class RegColorPair
-    Public Reg As RegClass
-    Public Index As Integer
-    Public Color As Color
-End Class
-
-Module helperFunctions
+Module HelperFunctions
 
     ''' <summary>
     ''' Calculates a 4 bit CRC on 28 bits of input data

@@ -317,7 +317,7 @@ Public Class TopGUI
         End Try
 
         'calc CRC
-        crc = helperFunctions.CalcCRC28Bit(input >> 4)
+        crc = HelperFunctions.CalcCRC28Bit(input >> 4)
 
         'add to input
         input = input And &HFFFFFFF0UI
