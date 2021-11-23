@@ -22,10 +22,8 @@ Public Class FrequencyPlotGUI
     Private plotYLabel As String
 
     Public Sub New()
-
         ' This call is required by the designer.
         InitializeComponent()
-
     End Sub
 
     Private Sub FrequencyPlotGUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -52,7 +50,6 @@ Public Class FrequencyPlotGUI
             NFFT.Items.Add((2 ^ n).ToString)
         Next
 
-
         'set up list view
         RegisterList.View = View.Details
         RegisterList.Columns.Add("Register", RegisterList.Width - 1, HorizontalAlignment.Left)
@@ -70,8 +67,8 @@ Public Class FrequencyPlotGUI
         input_3db_min.Text = m_TopGUI.plotSettings.MinPassband
         input_3db_max.Text = m_TopGUI.plotSettings.MaxPassband
         check_DCNull.Checked = m_TopGUI.plotSettings.NullDC
-        logXaxis.Checked = m_TopGUI.plotSettings.LogX
-        logYaxis.Checked = m_TopGUI.plotSettings.LogY
+        check_logXaxis.Checked = m_TopGUI.plotSettings.LogX
+        check_logYaxis.Checked = m_TopGUI.plotSettings.LogY
         check_sciLabel.Checked = m_TopGUI.plotSettings.ScientificLabels
 
     End Sub
@@ -93,8 +90,8 @@ Public Class FrequencyPlotGUI
         m_TopGUI.plotSettings.MinPassband = input_3db_min.Text
         m_TopGUI.plotSettings.MaxPassband = input_3db_max.Text
         m_TopGUI.plotSettings.NullDC = check_DCNull.Checked
-        m_TopGUI.plotSettings.LogX = logXaxis.Checked
-        m_TopGUI.plotSettings.LogY = logYaxis.Checked
+        m_TopGUI.plotSettings.LogX = check_logXaxis.Checked
+        m_TopGUI.plotSettings.LogY = check_logYaxis.Checked
         m_TopGUI.plotSettings.ScientificLabels = check_sciLabel.Checked
 
         'save register list
@@ -193,7 +190,7 @@ Public Class FrequencyPlotGUI
             btn_stopPlot.PerformClick()
             Return False
         End If
-        Return True 
+        Return True
     End Function
 
     Private Sub UpdatePlot()
@@ -212,8 +209,8 @@ Public Class FrequencyPlotGUI
             Next
         Next
         'check if log axis needed
-        dataPlot.ChartAreas(0).AxisX.IsLogarithmic = logXaxis.Checked
-        dataPlot.ChartAreas(0).AxisY.IsLogarithmic = logYaxis.Checked
+        dataPlot.ChartAreas(0).AxisX.IsLogarithmic = check_logXaxis.Checked
+        dataPlot.ChartAreas(0).AxisY.IsLogarithmic = check_logYaxis.Checked
         'recalculate scale based on newest values
         dataPlot.ChartAreas(0).RecalculateAxesScale()
         'Add title
@@ -589,11 +586,11 @@ Public Class FrequencyPlotGUI
 
     End Function
 
-    Private Sub logYaxis_CheckedChanged(sender As Object, e As EventArgs) Handles logYaxis.CheckedChanged
+    Private Sub logYaxis_CheckedChanged(sender As Object, e As EventArgs) Handles check_logYaxis.CheckedChanged
         UpdateLogScale()
     End Sub
 
-    Private Sub logXaxis_CheckedChanged(sender As Object, e As EventArgs) Handles logXaxis.CheckedChanged
+    Private Sub logXaxis_CheckedChanged(sender As Object, e As EventArgs) Handles check_logXaxis.CheckedChanged
         UpdateLogScale()
     End Sub
 
@@ -603,8 +600,8 @@ Public Class FrequencyPlotGUI
         If m_FFTStream.FrequencyRange.Count = 0 Then Exit Sub
 
         'check if log axis needed
-        dataPlot.ChartAreas(0).AxisX.IsLogarithmic = logXaxis.Checked
-        dataPlot.ChartAreas(0).AxisY.IsLogarithmic = logYaxis.Checked
+        dataPlot.ChartAreas(0).AxisX.IsLogarithmic = check_logXaxis.Checked
+        dataPlot.ChartAreas(0).AxisY.IsLogarithmic = check_logYaxis.Checked
         'recalculate scale based on newest values
         dataPlot.ChartAreas(0).RecalculateAxesScale()
     End Sub

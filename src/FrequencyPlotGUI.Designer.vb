@@ -21,9 +21,9 @@ Partial Class FrequencyPlotGUI
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.dataPlot = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.RegisterList = New System.Windows.Forms.ListView()
         Me.regSelect = New System.Windows.Forms.ComboBox()
@@ -37,8 +37,8 @@ Partial Class FrequencyPlotGUI
         Me.btn_stopPlot = New System.Windows.Forms.Button()
         Me.FFT_Averages = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.logYaxis = New System.Windows.Forms.CheckBox()
-        Me.logXaxis = New System.Windows.Forms.CheckBox()
+        Me.check_logYaxis = New System.Windows.Forms.CheckBox()
+        Me.check_logXaxis = New System.Windows.Forms.CheckBox()
         Me.btn_ClearLabels = New System.Windows.Forms.Button()
         Me.btn_Export = New System.Windows.Forms.Button()
         Me.btn_Clear = New System.Windows.Forms.Button()
@@ -56,16 +56,16 @@ Partial Class FrequencyPlotGUI
         '
         'dataPlot
         '
-        ChartArea2.Name = "ChartArea1"
-        Me.dataPlot.ChartAreas.Add(ChartArea2)
-        Legend2.Name = "Legend1"
-        Me.dataPlot.Legends.Add(Legend2)
+        ChartArea1.Name = "ChartArea1"
+        Me.dataPlot.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.dataPlot.Legends.Add(Legend1)
         Me.dataPlot.Location = New System.Drawing.Point(237, 9)
         Me.dataPlot.Name = "dataPlot"
-        Series2.ChartArea = "ChartArea1"
-        Series2.Legend = "Legend1"
-        Series2.Name = "Series1"
-        Me.dataPlot.Series.Add(Series2)
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.dataPlot.Series.Add(Series1)
         Me.dataPlot.Size = New System.Drawing.Size(587, 511)
         Me.dataPlot.TabIndex = 0
         Me.dataPlot.Text = "dataPlot"
@@ -176,25 +176,25 @@ Partial Class FrequencyPlotGUI
         Me.Label4.TabIndex = 13
         Me.Label4.Text = "FFT Averages:"
         '
-        'logYaxis
+        'check_logYaxis
         '
-        Me.logYaxis.AutoSize = True
-        Me.logYaxis.Location = New System.Drawing.Point(87, 110)
-        Me.logYaxis.Name = "logYaxis"
-        Me.logYaxis.Size = New System.Drawing.Size(76, 17)
-        Me.logYaxis.TabIndex = 15
-        Me.logYaxis.Text = "Log Y-Axis"
-        Me.logYaxis.UseVisualStyleBackColor = True
+        Me.check_logYaxis.AutoSize = True
+        Me.check_logYaxis.Location = New System.Drawing.Point(87, 110)
+        Me.check_logYaxis.Name = "check_logYaxis"
+        Me.check_logYaxis.Size = New System.Drawing.Size(76, 17)
+        Me.check_logYaxis.TabIndex = 15
+        Me.check_logYaxis.Text = "Log Y-Axis"
+        Me.check_logYaxis.UseVisualStyleBackColor = True
         '
-        'logXaxis
+        'check_logXaxis
         '
-        Me.logXaxis.AutoSize = True
-        Me.logXaxis.Location = New System.Drawing.Point(10, 110)
-        Me.logXaxis.Name = "logXaxis"
-        Me.logXaxis.Size = New System.Drawing.Size(76, 17)
-        Me.logXaxis.TabIndex = 16
-        Me.logXaxis.Text = "Log X-Axis"
-        Me.logXaxis.UseVisualStyleBackColor = True
+        Me.check_logXaxis.AutoSize = True
+        Me.check_logXaxis.Location = New System.Drawing.Point(10, 110)
+        Me.check_logXaxis.Name = "check_logXaxis"
+        Me.check_logXaxis.Size = New System.Drawing.Size(76, 17)
+        Me.check_logXaxis.TabIndex = 16
+        Me.check_logXaxis.Text = "Log X-Axis"
+        Me.check_logXaxis.UseVisualStyleBackColor = True
         '
         'btn_ClearLabels
         '
@@ -322,8 +322,8 @@ Partial Class FrequencyPlotGUI
         Me.Controls.Add(Me.btn_Clear)
         Me.Controls.Add(Me.btn_Export)
         Me.Controls.Add(Me.btn_ClearLabels)
-        Me.Controls.Add(Me.logXaxis)
-        Me.Controls.Add(Me.logYaxis)
+        Me.Controls.Add(Me.check_logXaxis)
+        Me.Controls.Add(Me.check_logYaxis)
         Me.Controls.Add(Me.FFT_Averages)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.btn_stopPlot)
@@ -360,8 +360,8 @@ Partial Class FrequencyPlotGUI
     Friend WithEvents btn_stopPlot As Button
     Friend WithEvents FFT_Averages As TextBox
     Friend WithEvents Label4 As Label
-    Friend WithEvents logYaxis As CheckBox
-    Friend WithEvents logXaxis As CheckBox
+    Friend WithEvents check_logYaxis As CheckBox
+    Friend WithEvents check_logXaxis As CheckBox
     Friend WithEvents btn_ClearLabels As Button
     Friend WithEvents btn_Export As Button
     Friend WithEvents btn_Clear As Button
