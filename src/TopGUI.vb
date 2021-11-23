@@ -13,6 +13,8 @@ Imports System.Timers
 Imports System.Threading
 Imports System.Net
 Imports System.Web.Script.Serialization
+Imports System.Xml.Serialization
+Imports System.Text
 
 Public Class TopGUI
 
@@ -44,6 +46,9 @@ Public Class TopGUI
 
     'plotting register lists
     Friend dataPlotRegs As New List(Of String)
+
+    'general plotter settings
+    Friend plotSettings As PlotterSettings
 
     'Last browsed to file location
     Public lastFilePath As String
@@ -172,6 +177,18 @@ Public Class TopGUI
         numRegSamples = 10000
         linesPerFile = 1000000
         samplesPerWrite = 10000
+
+        'load plotter settings
+        If My.Settings.PlotSettings <> "" Then
+            Dim serializer As New XmlSerializer(GetType(PlotterSettings))
+            Try
+                plotSettings = CType(serializer.Deserialize(New MemoryStream(Encoding.Unicode.GetBytes(My.Settings.PlotSettings))), PlotterSettings)
+            Catch ex As Exception
+                plotSettings = New PlotterSettings()
+            End Try
+        Else
+            plotSettings = New PlotterSettings()
+        End If
 
         'Seed random number generator
         Randomize()
@@ -1106,6 +1123,12 @@ Public Class TopGUI
         My.Settings.BackColor = BACK_COLOR
         My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
         My.Settings.DutPersonality = SelectedPersonality
+        'serialize plot settings and save
+        Dim serializer As New XmlSerializer(GetType(PlotterSettings))
+        Using writer As New StringWriter
+            serializer.Serialize(writer, plotSettings)
+            My.Settings.PlotSettings = writer.ToString()
+        End Using
         My.Settings.Save()
         If SelectedPersonality = "Custom" Then
             SaveCustomPersonality()

@@ -9,6 +9,7 @@ Imports RegMapClasses
 Imports System.Timers
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports System.Threading
+Imports System.IO
 
 Public Class DataPlotGUI
     Inherits FormBase
@@ -51,13 +52,19 @@ Public Class DataPlotGUI
         AddHandler plotTimer.Elapsed, New ElapsedEventHandler(AddressOf PlotTimerCallback)
 
         'set up display
-        samplesRendered.Text = "200"
-        minScale.Text = "-1000"
-        maxscale.Text = "1000"
         btn_stopPlayback.Enabled = False
         btn_stopPlayback.Visible = False
-        axis_autoscale.Checked = True
         plotYLabel = "Scaled Value"
+
+        'Load settings
+        sampleFreq.Text = m_TopGUI.plotSettings.UpdateRate
+        samplesRendered.Text = m_TopGUI.plotSettings.SamplesRendered
+        minScale.Text = m_TopGUI.plotSettings.MinScale
+        maxscale.Text = m_TopGUI.plotSettings.MaxScale
+        axis_autoscale.Checked = m_TopGUI.plotSettings.Autoscale
+        logToCSV.Checked = m_TopGUI.plotSettings.LogData
+        x_axis_scroll.Checked = m_TopGUI.plotSettings.ScrollBar
+        x_timestamp.Checked = m_TopGUI.plotSettings.Timestamp
 
         'create synchronization structures
         logTimer = New Stopwatch()
@@ -65,7 +72,6 @@ Public Class DataPlotGUI
         plotMutex = New Mutex()
 
         regView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-
         RegisterToolTips()
     End Sub
 
@@ -102,6 +108,17 @@ Public Class DataPlotGUI
         m_TopGUI.FX3.UserLEDOn()
         m_TopGUI.TimePlotWidth = Width
         m_TopGUI.TimePlotHeight = Height
+
+        'save settings
+        m_TopGUI.plotSettings.UpdateRate = sampleFreq.Text
+        m_TopGUI.plotSettings.SamplesRendered = samplesRendered.Text
+        m_TopGUI.plotSettings.MinScale = minScale.Text
+        m_TopGUI.plotSettings.MaxScale = maxscale.Text
+        m_TopGUI.plotSettings.Autoscale = axis_autoscale.Checked
+        m_TopGUI.plotSettings.LogData = logToCSV.Checked
+        m_TopGUI.plotSettings.ScrollBar = x_axis_scroll.Checked
+        m_TopGUI.plotSettings.Timestamp = x_timestamp.Checked
+
         'save regs which were plotted
         m_TopGUI.dataPlotRegs.Clear()
         For i As Integer = 0 To regView.RowCount - 1
@@ -677,6 +694,34 @@ Public Class DataPlotGUI
             e.Handled = True
             e.SuppressKeyPress = True
         End If
+    End Sub
+
+    Private Sub btn_copyPlot_Click(sender As Object, e As EventArgs) Handles btn_copyPlot.Click
+        'copy current plotter image to clipboard
+        Using stream As New MemoryStream
+            dataPlot.SaveImage(stream, ChartImageFormat.Bmp)
+            Clipboard.SetImage(New Bitmap(stream))
+        End Using
+    End Sub
+
+    Private Sub btn_setTitle_Click(sender As Object, e As EventArgs) Handles btn_setTitle.Click
+        'starting title
+        Dim startTitle As String = ""
+        If dataPlot.Titles.Count > 0 Then
+            startTitle = dataPlot.Titles(0).Text
+        Else
+            startTitle = m_TopGUI.SelectedPersonality + " Time Domain Plot"
+        End If
+
+        'If title is empty then remove
+        dataPlot.Titles.Clear()
+
+        Dim val As String = InputBox("Enter Plot Title: ", "Input", startTitle)
+        'check for cancel
+        If val = "" Then Exit Sub
+        dataPlot.Titles.Add(val)
+        dataPlot.Titles(0).Font = New Font(maxscale.Font.Name, 16.0F)
+
     End Sub
 
 End Class

@@ -197,6 +197,18 @@ Namespace My
                 Me("ShowWelcome") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property PlotSettings() As String
+            Get
+                Return CType(Me("PlotSettings"),String)
+            End Get
+            Set
+                Me("PlotSettings") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
