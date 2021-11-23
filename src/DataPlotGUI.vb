@@ -88,6 +88,8 @@ Public Class DataPlotGUI
         tip0.SetToolTip(check_fixedTime, "Stop plotting automatically after a fixed time interval. This is useful when the data plotting application is being used for logging")
         tip0.SetToolTip(x_timestamp, "Plot sample timestamps on X-axis (default is sample counter)")
         tip0.SetToolTip(btn_SetLabel, "Set the Y-Axis label")
+        tip0.SetToolTip(btn_setTitle, "Set the plot title")
+        tip0.SetToolTip(btn_copyPlot, "Copy the current plot image to the clipboard (for pasting in office, word, etc)")
     End Sub
 
     Private Sub ResizeHandler() Handles Me.Resize
