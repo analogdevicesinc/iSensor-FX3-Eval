@@ -62,7 +62,7 @@ Public Class FrequencyPlotGUI
         plotYLabel = "FFT Magnitude"
 
         'Load settings
-        NFFT.SelectedText = m_TopGUI.plotSettings.SamplesPerFFT
+        NFFT.Text = m_TopGUI.plotSettings.SamplesPerFFT
         FFT_Averages.Text = m_TopGUI.plotSettings.FFTAverages
         input_3db_min.Text = m_TopGUI.plotSettings.MinPassband
         input_3db_max.Text = m_TopGUI.plotSettings.MaxPassband
@@ -85,7 +85,7 @@ Public Class FrequencyPlotGUI
         m_TopGUI.FFTPlotHeight = Height
 
         'save settings
-        m_TopGUI.plotSettings.SamplesPerFFT = NFFT.SelectedText
+        m_TopGUI.plotSettings.SamplesPerFFT = NFFT.Text
         m_TopGUI.plotSettings.FFTAverages = FFT_Averages.Text
         m_TopGUI.plotSettings.MinPassband = input_3db_min.Text
         m_TopGUI.plotSettings.MaxPassband = input_3db_max.Text
