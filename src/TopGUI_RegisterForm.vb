@@ -452,8 +452,8 @@ Partial Class TopGUI
             End If
         Next
 
-        Dim values() As UInteger
-        values = Dut.ReadUnsigned(readableRegMap)
+        Dim values() As Long
+        values = Dut.ReadSigned(readableRegMap)
         Dim strValues As New List(Of String)
 
         strValues.Add("Register, Page, Address, Value")
