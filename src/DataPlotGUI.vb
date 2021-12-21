@@ -622,10 +622,10 @@ Public Class DataPlotGUI
         Else
             'populate min/max with current plot min/max
             Try
-                If dataPlot.ChartAreas(0).AxisY.Minimum <> Double.NaN Then
+                If Not Double.IsNaN(dataPlot.ChartAreas(0).AxisY.Minimum) Then
                     minScale.Text = dataPlot.ChartAreas(0).AxisY.Minimum.ToString()
                 End If
-                If dataPlot.ChartAreas(0).AxisY.Maximum <> Double.NaN Then
+                If Not Double.IsNaN(dataPlot.ChartAreas(0).AxisY.Maximum) Then
                     maxscale.Text = dataPlot.ChartAreas(0).AxisY.Maximum.ToString()
                 End If
             Catch ex As Exception
@@ -664,6 +664,10 @@ Public Class DataPlotGUI
             'min
             Try
                 yMin = Convert.ToDouble(minScale.Text())
+                If Double.IsNaN(yMin) Then
+                    minScale.Text = "-1000"
+                    yMin = -1000
+                End If
                 minScale.BackColor = Color.White
             Catch ex As Exception
                 goodscale = False
@@ -673,6 +677,10 @@ Public Class DataPlotGUI
             'max
             Try
                 yMax = Convert.ToDouble(maxscale.Text())
+                If Double.IsNaN(yMax) Then
+                    maxscale.Text = "1000"
+                    yMax = 1000
+                End If
                 maxscale.BackColor = Color.White
             Catch ex As Exception
                 goodscale = False
