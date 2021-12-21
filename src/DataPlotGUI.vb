@@ -611,12 +611,28 @@ Public Class DataPlotGUI
     End Sub
 
     Private Sub axis_autoscale_CheckedChanged(sender As Object, e As EventArgs) Handles axis_autoscale.CheckedChanged
+        Dim startMin, startMax As String
+        startMin = minScale.Text
+        startMax = maxscale.Text
         If axis_autoscale.Checked Then
             minScale.Enabled = False
             maxscale.Enabled = False
             dataPlot.ChartAreas(0).AxisY.Minimum = Double.NaN
             dataPlot.ChartAreas(0).AxisY.Maximum = Double.NaN
         Else
+            'populate min/max with current plot min/max
+            Try
+                If dataPlot.ChartAreas(0).AxisY.Minimum <> Double.NaN Then
+                    minScale.Text = dataPlot.ChartAreas(0).AxisY.Minimum.ToString()
+                End If
+                If dataPlot.ChartAreas(0).AxisY.Maximum <> Double.NaN Then
+                    maxscale.Text = dataPlot.ChartAreas(0).AxisY.Maximum.ToString()
+                End If
+            Catch ex As Exception
+                'go back to whatever it was before
+                minScale.Text = startMin
+                maxscale.Text = startMax
+            End Try
             minScale.Enabled = True
             maxscale.Enabled = True
             ScaleValuesChanges()
