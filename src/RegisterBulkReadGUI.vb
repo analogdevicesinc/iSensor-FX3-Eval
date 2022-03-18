@@ -233,6 +233,8 @@ Public Class RegisterBulkReadGUI
         fileManager.FilePath = savePath + "\"
         fileManager.Buffers = totalDRCaptures 'Number of times to read all the registers in the reg map
         fileManager.Captures = 1 'Number of times to read each register in the reg map
+        'set the register word order
+        fileManager.LowerWordFirst = m_TopGUI.Dut.IsLowerFirst
         Try
             fileManager.FileMaxDataRows = Convert.ToInt32(linesPerFile.Text()) 'Keep this under 1M samples to open in Excel
             fileManager.BuffersPerWrite = Convert.ToInt32(SamplesPerWrite.Text) 'Dynamic buffers per write to avoid storing too much data in RAM

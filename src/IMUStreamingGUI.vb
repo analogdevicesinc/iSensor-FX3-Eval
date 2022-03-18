@@ -123,6 +123,8 @@ Public Class IMUStreamingGUI
         fileManager.FileMaxDataRows = 1000000 'Keep this under 1M samples to open in Excel
         fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
         fileManager.BuffersPerWrite = 10000
+        'set the register word order
+        fileManager.LowerWordFirst = m_TopGUI.Dut.IsLowerFirst
 
         'hide other forms
         InteractWithOtherForms(True, Me)
