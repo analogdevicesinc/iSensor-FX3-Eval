@@ -42,7 +42,7 @@ Public Class FrequencyPlotGUI
 
         'check for previously plotted regs
         For Each item In m_TopGUI.dataPlotRegs
-            If regSelect.Items.Contains(item) Then RegisterList.Items.Add(item.Reg.Label)
+            If regSelect.Items.Contains(item.Reg.Label) Then RegisterList.Items.Add(item.Reg.Label)
         Next
 
         'populate NFFT setting dropdown
@@ -53,7 +53,6 @@ Public Class FrequencyPlotGUI
         'set up list view
         RegisterList.View = View.Details
         RegisterList.Columns.Add("Register", RegisterList.Width - 1, HorizontalAlignment.Left)
-
         dataPlot.Series.Clear()
 
         'initialize variables
@@ -99,6 +98,7 @@ Public Class FrequencyPlotGUI
         For Each reg In selectedRegList
             m_TopGUI.dataPlotRegs.Add(New RegPlotterInfo With {.Reg = reg})
         Next
+        m_TopGUI.SaveDataPlotRegList()
         'show other forms
         InteractWithOtherForms(False, Me)
         're-enable main form button

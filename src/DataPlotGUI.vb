@@ -67,6 +67,7 @@ Public Class DataPlotGUI
         axis_autoscale.Checked = m_TopGUI.plotSettings.Autoscale
         logToCSV.Checked = m_TopGUI.plotSettings.LogData
         x_timestamp.Checked = m_TopGUI.plotSettings.Timestamp
+        x_axis_scroll.Checked = m_TopGUI.plotSettings.ScrollBar
 
         'create synchronization structures
         logTimer = New Stopwatch()
