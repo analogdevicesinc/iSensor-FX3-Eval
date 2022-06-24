@@ -22,30 +22,30 @@ Partial Class IMUStreamingGUI
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.DRDIO = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.MeasureDR = New System.Windows.Forms.Button()
+        Me.combo_DrSelect = New System.Windows.Forms.ComboBox()
+        Me.label_measuredFreq = New System.Windows.Forms.Label()
+        Me.btn_measureDR = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.NumberDRToCapture = New System.Windows.Forms.TextBox()
-        Me.BurstStreamCancelButton = New System.Windows.Forms.Button()
-        Me.MainButton = New System.Windows.Forms.Button()
+        Me.text_numSamples = New System.Windows.Forms.TextBox()
+        Me.btn_cancel = New System.Windows.Forms.Button()
+        Me.btn_start = New System.Windows.Forms.Button()
         Me.burstRegList = New System.Windows.Forms.ListView()
         Me.statusLabel = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.CaptureProgressBurst = New System.Windows.Forms.ProgressBar()
         Me.check_drActive = New System.Windows.Forms.CheckBox()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.group_config = New System.Windows.Forms.GroupBox()
+        Me.panel_dataformat = New System.Windows.Forms.Panel()
         Me.radio_inertial = New System.Windows.Forms.RadioButton()
         Me.radio_delta = New System.Windows.Forms.RadioButton()
-        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.panel_wordsize = New System.Windows.Forms.Panel()
         Me.radio_32bit = New System.Windows.Forms.RadioButton()
         Me.radio_16bit = New System.Windows.Forms.RadioButton()
         Me.check_checksum = New System.Windows.Forms.CheckBox()
-        Me.GroupBox1.SuspendLayout()
-        Me.Panel2.SuspendLayout()
-        Me.Panel1.SuspendLayout()
+        Me.group_config.SuspendLayout()
+        Me.panel_dataformat.SuspendLayout()
+        Me.panel_wordsize.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label5
@@ -57,31 +57,31 @@ Partial Class IMUStreamingGUI
         Me.Label5.TabIndex = 28
         Me.Label5.Text = "DR DIO:"
         '
-        'DRDIO
+        'combo_DrSelect
         '
-        Me.DRDIO.FormattingEnabled = True
-        Me.DRDIO.Location = New System.Drawing.Point(81, 44)
-        Me.DRDIO.Name = "DRDIO"
-        Me.DRDIO.Size = New System.Drawing.Size(111, 21)
-        Me.DRDIO.TabIndex = 27
+        Me.combo_DrSelect.FormattingEnabled = True
+        Me.combo_DrSelect.Location = New System.Drawing.Point(81, 44)
+        Me.combo_DrSelect.Name = "combo_DrSelect"
+        Me.combo_DrSelect.Size = New System.Drawing.Size(111, 21)
+        Me.combo_DrSelect.TabIndex = 27
         '
-        'Label4
+        'label_measuredFreq
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(78, 12)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(39, 13)
-        Me.Label4.TabIndex = 26
-        Me.Label4.Text = "Label4"
+        Me.label_measuredFreq.AutoSize = True
+        Me.label_measuredFreq.Location = New System.Drawing.Point(78, 12)
+        Me.label_measuredFreq.Name = "label_measuredFreq"
+        Me.label_measuredFreq.Size = New System.Drawing.Size(47, 13)
+        Me.label_measuredFreq.TabIndex = 26
+        Me.label_measuredFreq.Text = "DR Freq"
         '
-        'MeasureDR
+        'btn_measureDR
         '
-        Me.MeasureDR.Location = New System.Drawing.Point(12, 12)
-        Me.MeasureDR.Name = "MeasureDR"
-        Me.MeasureDR.Size = New System.Drawing.Size(60, 76)
-        Me.MeasureDR.TabIndex = 25
-        Me.MeasureDR.Text = "Measure Data Ready Freq"
-        Me.MeasureDR.UseVisualStyleBackColor = True
+        Me.btn_measureDR.Location = New System.Drawing.Point(12, 12)
+        Me.btn_measureDR.Name = "btn_measureDR"
+        Me.btn_measureDR.Size = New System.Drawing.Size(60, 76)
+        Me.btn_measureDR.TabIndex = 25
+        Me.btn_measureDR.Text = "Measure Data Ready Freq"
+        Me.btn_measureDR.UseVisualStyleBackColor = True
         '
         'Label3
         '
@@ -92,30 +92,30 @@ Partial Class IMUStreamingGUI
         Me.Label3.TabIndex = 24
         Me.Label3.Text = "# Burst Reads:"
         '
-        'NumberDRToCapture
+        'text_numSamples
         '
-        Me.NumberDRToCapture.Location = New System.Drawing.Point(93, 194)
-        Me.NumberDRToCapture.Name = "NumberDRToCapture"
-        Me.NumberDRToCapture.Size = New System.Drawing.Size(99, 20)
-        Me.NumberDRToCapture.TabIndex = 23
+        Me.text_numSamples.Location = New System.Drawing.Point(93, 194)
+        Me.text_numSamples.Name = "text_numSamples"
+        Me.text_numSamples.Size = New System.Drawing.Size(99, 20)
+        Me.text_numSamples.TabIndex = 23
         '
-        'BurstStreamCancelButton
+        'btn_cancel
         '
-        Me.BurstStreamCancelButton.Location = New System.Drawing.Point(106, 220)
-        Me.BurstStreamCancelButton.Name = "BurstStreamCancelButton"
-        Me.BurstStreamCancelButton.Size = New System.Drawing.Size(86, 30)
-        Me.BurstStreamCancelButton.TabIndex = 22
-        Me.BurstStreamCancelButton.Text = "Cancel"
-        Me.BurstStreamCancelButton.UseVisualStyleBackColor = True
+        Me.btn_cancel.Location = New System.Drawing.Point(106, 220)
+        Me.btn_cancel.Name = "btn_cancel"
+        Me.btn_cancel.Size = New System.Drawing.Size(86, 30)
+        Me.btn_cancel.TabIndex = 22
+        Me.btn_cancel.Text = "Cancel"
+        Me.btn_cancel.UseVisualStyleBackColor = True
         '
-        'MainButton
+        'btn_start
         '
-        Me.MainButton.Location = New System.Drawing.Point(12, 220)
-        Me.MainButton.Name = "MainButton"
-        Me.MainButton.Size = New System.Drawing.Size(86, 30)
-        Me.MainButton.TabIndex = 21
-        Me.MainButton.Text = "Start"
-        Me.MainButton.UseVisualStyleBackColor = True
+        Me.btn_start.Location = New System.Drawing.Point(12, 220)
+        Me.btn_start.Name = "btn_start"
+        Me.btn_start.Size = New System.Drawing.Size(86, 30)
+        Me.btn_start.TabIndex = 21
+        Me.btn_start.Text = "Start"
+        Me.btn_start.UseVisualStyleBackColor = True
         '
         'burstRegList
         '
@@ -172,26 +172,26 @@ Partial Class IMUStreamingGUI
         Me.check_drActive.Text = "DR Active"
         Me.check_drActive.UseVisualStyleBackColor = True
         '
-        'GroupBox1
+        'group_config
         '
-        Me.GroupBox1.Controls.Add(Me.Panel2)
-        Me.GroupBox1.Controls.Add(Me.Panel1)
-        Me.GroupBox1.Controls.Add(Me.check_checksum)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 94)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(180, 91)
-        Me.GroupBox1.TabIndex = 35
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Burst Configuration"
+        Me.group_config.Controls.Add(Me.panel_dataformat)
+        Me.group_config.Controls.Add(Me.panel_wordsize)
+        Me.group_config.Controls.Add(Me.check_checksum)
+        Me.group_config.Location = New System.Drawing.Point(12, 94)
+        Me.group_config.Name = "group_config"
+        Me.group_config.Size = New System.Drawing.Size(180, 91)
+        Me.group_config.TabIndex = 35
+        Me.group_config.TabStop = False
+        Me.group_config.Text = "Burst Configuration"
         '
-        'Panel2
+        'panel_dataformat
         '
-        Me.Panel2.Controls.Add(Me.radio_inertial)
-        Me.Panel2.Controls.Add(Me.radio_delta)
-        Me.Panel2.Location = New System.Drawing.Point(2, 40)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(176, 24)
-        Me.Panel2.TabIndex = 6
+        Me.panel_dataformat.Controls.Add(Me.radio_inertial)
+        Me.panel_dataformat.Controls.Add(Me.radio_delta)
+        Me.panel_dataformat.Location = New System.Drawing.Point(2, 40)
+        Me.panel_dataformat.Name = "panel_dataformat"
+        Me.panel_dataformat.Size = New System.Drawing.Size(176, 24)
+        Me.panel_dataformat.TabIndex = 6
         '
         'radio_inertial
         '
@@ -215,14 +215,14 @@ Partial Class IMUStreamingGUI
         Me.radio_delta.Text = "Delta Data"
         Me.radio_delta.UseVisualStyleBackColor = True
         '
-        'Panel1
+        'panel_wordsize
         '
-        Me.Panel1.Controls.Add(Me.radio_32bit)
-        Me.Panel1.Controls.Add(Me.radio_16bit)
-        Me.Panel1.Location = New System.Drawing.Point(2, 16)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(176, 24)
-        Me.Panel1.TabIndex = 5
+        Me.panel_wordsize.Controls.Add(Me.radio_32bit)
+        Me.panel_wordsize.Controls.Add(Me.radio_16bit)
+        Me.panel_wordsize.Location = New System.Drawing.Point(2, 16)
+        Me.panel_wordsize.Name = "panel_wordsize"
+        Me.panel_wordsize.Size = New System.Drawing.Size(176, 24)
+        Me.panel_wordsize.TabIndex = 5
         '
         'radio_32bit
         '
@@ -261,54 +261,54 @@ Partial Class IMUStreamingGUI
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(420, 338)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.group_config)
         Me.Controls.Add(Me.check_drActive)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.CaptureProgressBurst)
         Me.Controls.Add(Me.statusLabel)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.Label5)
-        Me.Controls.Add(Me.DRDIO)
-        Me.Controls.Add(Me.Label4)
-        Me.Controls.Add(Me.MeasureDR)
+        Me.Controls.Add(Me.combo_DrSelect)
+        Me.Controls.Add(Me.label_measuredFreq)
+        Me.Controls.Add(Me.btn_measureDR)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.NumberDRToCapture)
-        Me.Controls.Add(Me.BurstStreamCancelButton)
-        Me.Controls.Add(Me.MainButton)
+        Me.Controls.Add(Me.text_numSamples)
+        Me.Controls.Add(Me.btn_cancel)
+        Me.Controls.Add(Me.btn_start)
         Me.Controls.Add(Me.burstRegList)
         Me.Name = "IMUStreamingGUI"
         Me.Text = "IMU Burst Data Capture"
-        Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout()
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
+        Me.group_config.ResumeLayout(False)
+        Me.group_config.PerformLayout()
+        Me.panel_dataformat.ResumeLayout(False)
+        Me.panel_dataformat.PerformLayout()
+        Me.panel_wordsize.ResumeLayout(False)
+        Me.panel_wordsize.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents Label5 As Label
-    Friend WithEvents DRDIO As ComboBox
-    Friend WithEvents Label4 As Label
-    Friend WithEvents MeasureDR As Button
+    Friend WithEvents combo_DrSelect As ComboBox
+    Friend WithEvents label_measuredFreq As Label
+    Friend WithEvents btn_measureDR As Button
     Friend WithEvents Label3 As Label
-    Friend WithEvents NumberDRToCapture As TextBox
-    Friend WithEvents BurstStreamCancelButton As Button
-    Friend WithEvents MainButton As Button
+    Friend WithEvents text_numSamples As TextBox
+    Friend WithEvents btn_cancel As Button
+    Friend WithEvents btn_start As Button
     Friend WithEvents burstRegList As ListView
     Friend WithEvents statusLabel As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents CaptureProgressBurst As ProgressBar
     Friend WithEvents check_drActive As CheckBox
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents group_config As GroupBox
     Friend WithEvents check_checksum As CheckBox
     Friend WithEvents radio_delta As RadioButton
     Friend WithEvents radio_inertial As RadioButton
     Friend WithEvents radio_16bit As RadioButton
     Friend WithEvents radio_32bit As RadioButton
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents panel_dataformat As Panel
+    Friend WithEvents panel_wordsize As Panel
 End Class

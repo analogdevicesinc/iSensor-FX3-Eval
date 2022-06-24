@@ -5,46 +5,70 @@
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Description:   GUI to allow for burst mode streaming from IMU products.
 
-Imports AdisApi
-Imports adisInterface
 Imports System.ComponentModel
 Imports StreamDataLogger
-Imports RegMapClasses
 
 Public Class IMUStreamingGUI
     Inherits FormBase
 
     Private WithEvents fileManager As Logger
-    Private totalDRCaptures As Integer = 0
-    Private tempRegList As List(Of RegMapClasses.RegClass)
-    Private regListCount As Integer = 0
+    Private manager As BurstManager
 
+    ''' <summary>
+    ''' Load the application
+    ''' </summary>
     Public Sub FormSetup() Handles Me.Load
-        UpdateRegmap()
-
-        DRDIO.Items.Add("DIO1")
-        DRDIO.Items.Add("DIO2")
-        DRDIO.Items.Add("DIO3")
-        DRDIO.Items.Add("DIO4")
-
+        'Set up data ready drop down
+        combo_DrSelect.Items.Add("DIO1")
+        combo_DrSelect.Items.Add("DIO2")
+        combo_DrSelect.Items.Add("DIO3")
+        combo_DrSelect.Items.Add("DIO4")
+        combo_DrSelect.Items.Add("Other")
         If m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO1.ToString Then
-            DRDIO.SelectedItem = "DIO1"
+            combo_DrSelect.SelectedItem = "DIO1"
         ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO2.ToString Then
-            DRDIO.SelectedItem = "DIO2"
+            combo_DrSelect.SelectedItem = "DIO2"
         ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO3.ToString Then
-            DRDIO.SelectedItem = "DIO3"
+            combo_DrSelect.SelectedItem = "DIO3"
         ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO4.ToString Then
-            DRDIO.SelectedItem = "DIO4"
+            combo_DrSelect.SelectedItem = "DIO4"
+        Else
+            combo_DrSelect.SelectedItem = "Other"
         End If
 
-        Label4.Text = ""
-        BurstStreamCancelButton.Enabled = False
-        NumberDRToCapture.Text = "10000"
+        'set up burst manager
+        manager = New BurstManager(m_TopGUI.Dut, m_TopGUI.FX3, m_TopGUI.RegMap, m_TopGUI.SelectedPersonality)
+
+        'set up config options based on burst manager
+        If manager.Burst16Bit Then
+            radio_16bit.Checked = True
+        Else
+            radio_32bit.Checked = True
+        End If
+        If manager.BurstInertialData Then
+            radio_inertial.Checked = True
+        Else
+            radio_delta.Checked = True
+        End If
+        check_checksum.Checked = manager.BurstChecksum
+
+        'disable options which are not available for current IMU
+        panel_dataformat.Enabled = manager.ConfigurableData
+        panel_wordsize.Enabled = manager.ConfigurableWordSize
+        check_checksum.Enabled = manager.ConfigurableChecksum
+
+        'Set up labels
+        label_measuredFreq.Text = ""
+        btn_cancel.Enabled = False
+        text_numSamples.Text = "10000"
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
         check_drActive.Checked = m_TopGUI.FX3.DrActive
     End Sub
 
+    ''' <summary>
+    ''' Handle app shutdown. Ensure all resources are properly disposed
+    ''' </summary>
     Private Sub Shutdown() Handles Me.Closing
         're-enable button
         m_TopGUI.btn_RealTime.Enabled = True
@@ -60,20 +84,17 @@ Public Class IMUStreamingGUI
         m_TopGUI.FX3.DrActive = check_drActive.Checked
     End Sub
 
-    Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
+    ''' <summary>
+    ''' Handle capture start button being clicked
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btn_start_Click(sender As Object, e As EventArgs) Handles btn_start.Click
 
+        'generate time string for file name
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         Dim savePath As String
         timeString = timeString.Replace(":", "-")
-
-        'Update the data ready pin and measurement
-        UpdateDRPin()
-
-        'Check whether the number of samples to capture is valid
-        If NumberDRToCapture.Text <= 0 Then
-            MessageBox.Show("Please enter a number of samples to capture before starting", "No number of samples entered!", MessageBoxButtons.OK)
-            Exit Sub
-        End If
 
         'Check whether the measured DR is valid
         If check_drActive.Checked Then
@@ -93,32 +114,13 @@ Public Class IMUStreamingGUI
         End If
 
         'instantiate stream data logger
-        fileManager = New Logger(m_TopGUI.FX3, New adbfInterface(m_TopGUI.FX3, Nothing))
-
-        'set up FX3 specific properties
-        If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then
-            m_TopGUI.FX3.TriggerReg = New RegClass With {.Address = 0, .Page = 0}
-            'assign burst read address
-            Dim burstHeader As Byte() = {0, 0, &HA, 0}
-            m_TopGUI.FX3.BurstMOSIData = burstHeader
-            m_TopGUI.FX3.BurstByteCount = tempRegList.Count * 4
-            m_TopGUI.FX3.StripBurstTriggerWord = False
-            fileManager.LowerWordFirst = False
-        Else
-            m_TopGUI.FX3.WordCount() = regListCount
-            m_TopGUI.FX3.TriggerReg = m_TopGUI.RegMap.BurstReadTrig
-            m_TopGUI.FX3.StripBurstTriggerWord = True
-            fileManager.LowerWordFirst = True
-        End If
-
-        'enable burst mode
-        m_TopGUI.FX3.SetupBurstMode()
+        fileManager = New Logger(manager, manager)
 
         'Set up stream data logger properties
-        fileManager.RegList = tempRegList
-        fileManager.FileBaseName = "BURST" + timeString
+        fileManager.RegList = manager.BurstRegisters
+        fileManager.FileBaseName = m_TopGUI.SelectedPersonality + "_Burst" + timeString
         fileManager.FilePath = savePath
-        fileManager.Buffers = totalDRCaptures 'Number of times to read all the registers in the reg map
+        fileManager.Buffers = Convert.ToUInt32(text_numSamples.Text)
         fileManager.Captures = 1 'Number of times to read each register in the reg map
         fileManager.FileMaxDataRows = 1000000 'Keep this under 1M samples to open in Excel
         fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
@@ -129,22 +131,27 @@ Public Class IMUStreamingGUI
         'hide other forms
         InteractWithOtherForms(True, Me)
 
-        'run async
+        'run async. Note, this calls the BurstManager, which configures the FX3 as required for the connected IMU
         fileManager.RunAsync()
 
+        'set up status label
         statusLabel.Text = "Writing Data"
         statusLabel.BackColor = Color.White
 
         'Disable user inputs during capture
-        BurstStreamCancelButton.Enabled = True
-        DRDIO.Enabled = False
-        NumberDRToCapture.Enabled = False
-        MeasureDR.Enabled = False
-        burstRegList.Enabled = False
-        MainButton.Enabled = False
+        btn_cancel.Enabled = True
+        combo_DrSelect.Enabled = False
+        text_numSamples.Enabled = False
+        btn_measureDR.Enabled = False
+        check_drActive.Enabled = False
+        btn_start.Enabled = False
+        group_config.Enabled = False
 
     End Sub
 
+    ''' <summary>
+    ''' Handle capture finishing after all data has been received
+    ''' </summary>
     Private Sub CaptureComplete() Handles fileManager.RunAsyncCompleted
         If InvokeRequired Then
             Invoke(New MethodInvoker(AddressOf CaptureDoneWork))
@@ -153,25 +160,13 @@ Public Class IMUStreamingGUI
         End If
     End Sub
 
-    Private Sub CaptureDoneWork()
-        statusLabel.Text = "Done"
-        statusLabel.BackColor = m_TopGUI.GOOD_COLOR
-        BurstStreamCancelButton.Enabled = False
-        DRDIO.Enabled = True
-        NumberDRToCapture.Enabled = True
-        MeasureDR.Enabled = True
-        burstRegList.Enabled = True
-        MainButton.Enabled = True
-
-        'Clear burst mode
-        m_TopGUI.FX3.ClearBurstMode()
-
-        'show forms
-        InteractWithOtherForms(False, Me)
-    End Sub
-
-    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles BurstStreamCancelButton.Click
-        MainButton.Enabled = True
+    ''' <summary>
+    ''' Handle user clicking cancel button during capture
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub CancelButton_Click(sender As Object, e As EventArgs) Handles btn_cancel.Click
+        btn_start.Enabled = True
         If fileManager.Busy Then
             fileManager.CancelAsync()
             statusLabel.Text = "Canceling"
@@ -179,14 +174,32 @@ Public Class IMUStreamingGUI
         End If
     End Sub
 
-    Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
-        UpdateDRPin()
-        Label4.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000), 3).ToString + "  Hz"
+    ''' <summary>
+    ''' Measure data ready frequency when the button is clicked
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles btn_measureDR.Click
+        label_measuredFreq.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000), 3).ToString + "  Hz"
     End Sub
 
-    Private Sub UpdateDRPin()
+    ''' <summary>
+    ''' Update register list whenever an option is changed
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub config_Changed(sender As Object, e As EventArgs) Handles radio_16bit.CheckedChanged, radio_inertial.CheckedChanged, check_checksum.CheckedChanged
+        UpdateConfiguration()
+    End Sub
+
+    ''' <summary>
+    ''' Handle changes to the selected data ready pin
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub combo_DrSelect_SelectedIndexChanged(sender As Object, e As EventArgs) Handles combo_DrSelect.SelectedIndexChanged
         Dim dio As String
-        dio = DRDIO.SelectedItem
+        dio = combo_DrSelect.SelectedItem
         Select Case dio
             Case "DIO1"
                 m_TopGUI.FX3.DrPin = m_TopGUI.FX3.DIO1
@@ -201,94 +214,81 @@ Public Class IMUStreamingGUI
         End Select
     End Sub
 
-    Private Sub UpdateGUI()
+    ''' <summary>
+    ''' Apply DR active setting to the EVAL-ADIS-FX3
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub check_drActive_CheckedChanged(sender As Object, e As EventArgs) Handles check_drActive.CheckedChanged
+        m_TopGUI.FX3.DrActive = check_drActive.Checked
+    End Sub
+
+    ''' <summary>
+    ''' Validate the number of samples entered
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub text_numSamples_TextChanged(sender As Object, e As EventArgs) Handles text_numSamples.TextChanged
         'Check DR capture input
-        If NumberDRToCapture.Text = "" Then
-            NumberDRToCapture.Text = 0
-        End If
         Try
-            totalDRCaptures = Convert.ToInt32(NumberDRToCapture.Text)
+            Convert.ToInt32(text_numSamples.Text)
         Catch ex As Exception
             MsgBox("ERROR: Invalid Input")
-            Exit Sub
+            text_numSamples.Text = "10000"
         End Try
     End Sub
 
-    Private Sub UpdateRegmap()
-        If radio_32bit.Checked Then
-            'Handle 32-bit registers
-            tempRegList = m_TopGUI.RegMap.BurstReadList
-            'Loop through each register and check for 32-bit locations
-            For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
-                'If a register is listed as a 32-bit register
-                If item.ReadLen > 16 Then
-                    'Remove its lower counterpart from the list (it'll get added to the transfer later anyway)
-                    tempRegList.Remove(tempRegList.Find(Function(p) p.Address = (item.Address + 2 / m_TopGUI.Dut.DeviceAddressIncrement)))
-                End If
-            Next
-            'Refresh the register list in the GUI
-            burstRegList.Clear()
-            burstRegList.View = View.Details
-            burstRegList.Columns.Add("Register", burstRegList.Width - 3, HorizontalAlignment.Left)
-            For Each reg In tempRegList
-                Dim newItem As New ListViewItem()
-                newItem.SubItems(0).Text = reg.Label
-                burstRegList.Items.Add(newItem)
-            Next
-        Else
-            'Handle 16-bit registers
-            tempRegList = m_TopGUI.RegMap.BurstReadList
-            'Loop through each register and check for 32-bit locations
-            For Each item As RegMapClasses.RegClass In m_TopGUI.RegMap.BurstReadList
-                'If a register is listed as a 32-bit register
-                If item.NumBytes > 2 Then
-                    'Remove its upper counterpart from the list (we're only capturing 16-bit registers)
-                    tempRegList.Remove(item)
-                End If
-            Next
-            'Refresh the register list in the GUI
-            burstRegList.Clear()
-            burstRegList.View = View.Details
-            burstRegList.Columns.Add("Register", burstRegList.Width - 3, HorizontalAlignment.Left)
-            For Each reg In tempRegList
-                Dim newItem As New ListViewItem()
-                newItem.SubItems(0).Text = reg.Label
-                burstRegList.Items.Add(newItem)
-            Next
-        End If
-
-        'Add in extra registers for iSensorAutoSpi
-        If m_TopGUI.FX3.SensorType = FX3Api.DeviceType.AutomotiveSpi Then
-            tempRegList.Add(New RegClass With {.Address = 0, .Page = 0, .Label = "CRC", .NumBytes = 4, .ReadLen = 32})
-            tempRegList.Insert(0, New RegClass With {.Address = 0, .Page = 0, .Label = "BURST_HEADER", .NumBytes = 4, .ReadLen = 32})
-        End If
-
-        'calculate word count
-        regListCount = 0
-        For Each reg In tempRegList
-            If reg.NumBytes <> 4 Then
-                regListCount += 1
-            Else
-                regListCount += 2
-            End If
-        Next
-
-    End Sub
-
-    Private Sub NumberDRToCapture_TextChanged(sender As Object, e As EventArgs) Handles NumberDRToCapture.TextChanged
-        UpdateGUI()
-    End Sub
-
+    ''' <summary>
+    ''' Update progress bar during capture
+    ''' </summary>
+    ''' <param name="e"></param>
     Private Sub progressUpdate(e As ProgressChangedEventArgs) Handles fileManager.ProgressChanged
         Invoke(New MethodInvoker(Sub() CaptureProgressBurst.Value = e.ProgressPercentage))
     End Sub
 
-    Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs)
-        UpdateRegmap()
+#Region "Helper Functions"
+
+    ''' <summary>
+    ''' Clean up after a burst read capture has completed
+    ''' </summary>
+    Private Sub CaptureDoneWork()
+        statusLabel.Text = "Done"
+        statusLabel.BackColor = m_TopGUI.GOOD_COLOR
+        btn_cancel.Enabled = False
+        combo_DrSelect.Enabled = True
+        text_numSamples.Enabled = True
+        btn_measureDR.Enabled = True
+        btn_start.Enabled = True
+        group_config.Enabled = True
+        check_drActive.Enabled = True
+
+        'Clear burst mode
+        m_TopGUI.FX3.ClearBurstMode()
+
+        'show forms
+        InteractWithOtherForms(False, Me)
     End Sub
 
-    Private Sub check_drActive_CheckedChanged(sender As Object, e As EventArgs) Handles check_drActive.CheckedChanged
-        m_TopGUI.FX3.DrActive = check_drActive.Checked
+    ''' <summary>
+    ''' Synchronize configuration between GUI and burst manager
+    ''' </summary>
+    Private Sub UpdateConfiguration()
+        'apply settings
+        manager.Burst16Bit = radio_16bit.Checked
+        manager.BurstChecksum = check_checksum.Checked
+        manager.BurstInertialData = radio_inertial.Checked
+
+        'Refresh the register list in the GUI
+        burstRegList.Clear()
+        burstRegList.View = View.Details
+        burstRegList.Columns.Add("Register", burstRegList.Width - 3, HorizontalAlignment.Left)
+        For Each reg In manager.BurstRegisters
+            Dim newItem As New ListViewItem()
+            newItem.SubItems(0).Text = reg.Label
+            burstRegList.Items.Add(newItem)
+        Next
     End Sub
+
+#End Region
 
 End Class
