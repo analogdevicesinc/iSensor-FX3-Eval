@@ -278,6 +278,11 @@ Public Class DataPlotGUI
             Exit Sub
         End If
 
+        'reset to only a single plot view for playback
+        While numberPlotAreas > 1
+            btn_RemovePlot_Click(Nothing, Nothing)
+        End While
+
         If Not SetupCSVRegs() Then
             MsgBox("ERROR: Invalid Log CSV")
             Exit Sub
@@ -516,7 +521,7 @@ Public Class DataPlotGUI
         regCnt = 0
         For j As Integer = 0 To regView.RowCount() - 1
             regFound = headers.Contains(regView.Item("Label", j).Value.ToString())
-            regView.Item("Plot", j).Value = regFound.ToString()
+            regView.Item("Plot1", j).Value = regFound.ToString()
             If regFound Then
                 regCnt += 1
             End If
