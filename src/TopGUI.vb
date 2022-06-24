@@ -1576,12 +1576,49 @@ Public Class TopGUI
     ''' Set the plotter reg list based on the registers selected by the user
     ''' </summary>
     Private Sub LoadDataPlotRegList()
-        dataPlotRegs.Clear()
+        Dim regFound As Boolean
+        Dim newRegList As New List(Of RegPlotterInfo)
         For Each row As DataGridViewRow In dataPlotRegsView.Rows
             If row.Cells(1).Value Then
-                dataPlotRegs.Add(New RegPlotterInfo With {.Reg = RegMap(row.Cells(0).Value)})
+                'check if regplotterinfo has already been saved
+                regFound = False
+                For Each reg In dataPlotRegs
+                    If reg.Reg.Label = row.Cells(0).Value Then
+                        regFound = True
+                        newRegList.Add(reg)
+                        Exit For
+                    End If
+                Next
+                If Not regFound Then
+                    newRegList.Add(New RegPlotterInfo With {.Reg = RegMap(row.Cells(0).Value)})
+                End If
             End If
         Next
+        'update the data plot regs list with the new reglist contents
+        dataPlotRegs.Clear()
+        For Each reg In newRegList
+            dataPlotRegs.Add(reg)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Update the selected registers based on the current plotter reg list
+    ''' </summary>
+    Friend Sub SaveDataPlotRegList()
+        dataPlotRegsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+        Dim regFound As Boolean
+        For Each row As DataGridViewRow In dataPlotRegsView.Rows
+            'check if register is selected
+            regFound = False
+            For Each reg In dataPlotRegs
+                If reg.Reg.Label = row.Cells(0).Value.ToString() Then
+                    regFound = True
+                    Exit For
+                End If
+            Next
+            row.Cells(1).Value = regFound
+        Next
+        dataPlotRegsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
     End Sub
 
 #End Region

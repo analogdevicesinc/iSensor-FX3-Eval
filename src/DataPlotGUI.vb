@@ -36,6 +36,8 @@ Public Class DataPlotGUI
 #Region "Event Handlers"
 
     Public Sub FormSetup() Handles Me.Load
+        'set up plot areas
+        numberPlotAreas = 0
         PopulateRegView()
 
         If m_TopGUI.TimePlotHeight <> 0 Then Height = m_TopGUI.TimePlotHeight
@@ -58,9 +60,6 @@ Public Class DataPlotGUI
         btn_stopPlayback.Enabled = False
         btn_stopPlayback.Visible = False
         plotYLabel = "Scaled Value"
-
-        'set up plot areas
-        numberPlotAreas = 1
 
         'Load settings
         sampleFreq.Text = m_TopGUI.plotSettings.UpdateRate
@@ -102,6 +101,7 @@ Public Class DataPlotGUI
         For Each reg In selectedRegList
             m_TopGUI.dataPlotRegs.Add(reg)
         Next
+        m_TopGUI.SaveDataPlotRegList()
         m_TopGUI.btn_plotData.Enabled = True
     End Sub
 
@@ -411,7 +411,7 @@ Public Class DataPlotGUI
                     Exit For
                 End If
             Next
-            If regIndex > 1 And reg.PlotIndex < numberPlotAreas Then
+            If regIndex >= 0 And reg.PlotIndex < numberPlotAreas Then
                 regView.Item("Plot" + (reg.PlotIndex + 1).ToString(), regIndex).Value = True
             End If
         Next
@@ -767,7 +767,6 @@ Public Class DataPlotGUI
         For Each item In selectedRegList
             regView.Item("Contents", item.Index).Style = New DataGridViewCellStyle With {.BackColor = Color.White}
         Next
-        selectedRegList.Clear()
     End Sub
 
 #End Region
