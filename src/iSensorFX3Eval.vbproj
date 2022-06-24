@@ -186,6 +186,7 @@
     <Compile Include="FacResetGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HelperClasses\BurstManager.vb" />
     <Compile Include="HelperClasses\DutPersonality.vb" />
     <Compile Include="HelperClasses\HelperFunctions.vb" />
     <Compile Include="HelperClasses\PlotterSettings.vb" />
