@@ -18,10 +18,6 @@ Public Class PlotterSettings
 
     Public SamplesRendered As String = "200"
 
-    Public MinScale As String = "-1000"
-
-    Public MaxScale As String = "1000"
-
     Public Autoscale As Boolean = True
 
     Public LogData As Boolean = False
@@ -29,6 +25,8 @@ Public Class PlotterSettings
     Public ScrollBar As Boolean = False
 
     Public Timestamp As Boolean = False
+
+    Public NumberPlots As Integer = 1
 
     'FFT plotter settings
 

@@ -189,7 +189,7 @@
     <Compile Include="HelperClasses\DutPersonality.vb" />
     <Compile Include="HelperClasses\HelperFunctions.vb" />
     <Compile Include="HelperClasses\PlotterSettings.vb" />
-    <Compile Include="HelperClasses\RegColorPair.vb" />
+    <Compile Include="HelperClasses\RegPlotterInfo.vb" />
     <Compile Include="NVMInterfaceGUI.Designer.vb">
       <DependentUpon>NVMInterfaceGUI.vb</DependentUpon>
     </Compile>

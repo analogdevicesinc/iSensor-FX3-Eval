@@ -45,7 +45,7 @@ Public Class TopGUI
     Friend PlotColorPalette As List(Of Color)
 
     'plotting register lists
-    Friend dataPlotRegs As New List(Of String)
+    Friend dataPlotRegs As New List(Of RegPlotterInfo)
 
     'general plotter settings
     Friend plotSettings As PlotterSettings
@@ -1573,25 +1573,13 @@ Public Class TopGUI
     End Sub
 
     ''' <summary>
-    ''' Sync the data plot regs displayed list to the selected registers in either
-    ''' the time domain or frequency domain plotters
-    ''' </summary>
-    Friend Sub DataPlotRegsUpdate()
-
-        For Each row As DataGridViewRow In dataPlotRegsView.Rows
-            row.Cells(1).Value = dataPlotRegs.Contains(row.Cells(0).Value).ToString()
-        Next
-
-    End Sub
-
-    ''' <summary>
     ''' Set the plotter reg list based on the registers selected by the user
     ''' </summary>
     Private Sub LoadDataPlotRegList()
         dataPlotRegs.Clear()
         For Each row As DataGridViewRow In dataPlotRegsView.Rows
             If row.Cells(1).Value Then
-                dataPlotRegs.Add(row.Cells(0).Value)
+                dataPlotRegs.Add(New RegPlotterInfo With {.Reg = RegMap(row.Cells(0).Value)})
             End If
         Next
     End Sub

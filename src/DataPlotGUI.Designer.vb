@@ -25,13 +25,6 @@ Partial Class DataPlotGUI
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.regView = New System.Windows.Forms.DataGridView()
-        Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Plot = New System.Windows.Forms.DataGridViewCheckBoxColumn()
-        Me.Offset = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reg_scale = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.label_sampleFreq = New System.Windows.Forms.Label()
         Me.sampleFreq = New System.Windows.Forms.TextBox()
         Me.btn_startStop = New System.Windows.Forms.Button()
@@ -43,20 +36,24 @@ Partial Class DataPlotGUI
         Me.btn_saveChart = New System.Windows.Forms.Button()
         Me.playFromCSV = New System.Windows.Forms.Button()
         Me.btn_stopPlayback = New System.Windows.Forms.Button()
-        Me.axis_autoscale = New System.Windows.Forms.CheckBox()
-        Me.maxscale = New System.Windows.Forms.TextBox()
-        Me.minScale = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.check_fixedTime = New System.Windows.Forms.CheckBox()
         Me.x_timestamp = New System.Windows.Forms.CheckBox()
         Me.btn_SetLabel = New System.Windows.Forms.Button()
-        Me.x_axis_scroll = New System.Windows.Forms.CheckBox()
         Me.PlotOptions = New System.Windows.Forms.TabControl()
         Me.ControlPage = New System.Windows.Forms.TabPage()
+        Me.axis_autoscale = New System.Windows.Forms.CheckBox()
         Me.btn_copyPlot = New System.Windows.Forms.Button()
         Me.SettingsPage = New System.Windows.Forms.TabPage()
+        Me.x_axis_scroll = New System.Windows.Forms.CheckBox()
+        Me.btn_RemovePlot = New System.Windows.Forms.Button()
+        Me.btn_AddPlot = New System.Windows.Forms.Button()
         Me.btn_setTitle = New System.Windows.Forms.Button()
+        Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Offset = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.reg_scale = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PlotOptions.SuspendLayout()
@@ -70,7 +67,7 @@ Partial Class DataPlotGUI
         Me.regView.AllowUserToDeleteRows = False
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Plot, Me.Offset, Me.reg_scale})
+        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Offset, Me.reg_scale})
         Me.regView.Location = New System.Drawing.Point(11, 125)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
@@ -83,56 +80,6 @@ Partial Class DataPlotGUI
         Me.regView.Size = New System.Drawing.Size(515, 389)
         Me.regView.TabIndex = 3
         '
-        'Label
-        '
-        Me.Label.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.Label.HeaderText = "Label"
-        Me.Label.Name = "Label"
-        Me.Label.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Label.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Page
-        '
-        Me.Page.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Page.HeaderText = "Page"
-        Me.Page.Name = "Page"
-        Me.Page.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Page.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Page.Width = 35
-        '
-        'Address
-        '
-        Me.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Address.HeaderText = "Address"
-        Me.Address.Name = "Address"
-        Me.Address.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Address.Width = 50
-        '
-        'Contents
-        '
-        Me.Contents.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Contents.HeaderText = "Contents"
-        Me.Contents.Name = "Contents"
-        Me.Contents.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Contents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Plot
-        '
-        Me.Plot.HeaderText = "Plot"
-        Me.Plot.Name = "Plot"
-        Me.Plot.Width = 35
-        '
-        'Offset
-        '
-        Me.Offset.HeaderText = "Offset"
-        Me.Offset.Name = "Offset"
-        '
-        'reg_scale
-        '
-        Me.reg_scale.HeaderText = "Scale"
-        Me.reg_scale.Name = "reg_scale"
-        '
         'label_sampleFreq
         '
         Me.label_sampleFreq.AutoSize = True
@@ -144,7 +91,7 @@ Partial Class DataPlotGUI
         '
         'sampleFreq
         '
-        Me.sampleFreq.Location = New System.Drawing.Point(150, 6)
+        Me.sampleFreq.Location = New System.Drawing.Point(129, 7)
         Me.sampleFreq.Name = "sampleFreq"
         Me.sampleFreq.Size = New System.Drawing.Size(80, 20)
         Me.sampleFreq.TabIndex = 4
@@ -185,7 +132,7 @@ Partial Class DataPlotGUI
         '
         'samplesRendered
         '
-        Me.samplesRendered.Location = New System.Drawing.Point(150, 33)
+        Me.samplesRendered.Location = New System.Drawing.Point(129, 33)
         Me.samplesRendered.Name = "samplesRendered"
         Me.samplesRendered.Size = New System.Drawing.Size(80, 20)
         Me.samplesRendered.TabIndex = 5
@@ -202,11 +149,11 @@ Partial Class DataPlotGUI
         'logToCSV
         '
         Me.logToCSV.AutoSize = True
-        Me.logToCSV.Location = New System.Drawing.Point(253, 6)
+        Me.logToCSV.Location = New System.Drawing.Point(204, 62)
         Me.logToCSV.Name = "logToCSV"
-        Me.logToCSV.Size = New System.Drawing.Size(127, 17)
+        Me.logToCSV.Size = New System.Drawing.Size(106, 17)
         Me.logToCSV.TabIndex = 6
-        Me.logToCSV.Text = "Log Plot Data to CSV"
+        Me.logToCSV.Text = "Log Data to CSV"
         Me.logToCSV.UseVisualStyleBackColor = True
         '
         'btn_saveChart
@@ -236,52 +183,10 @@ Partial Class DataPlotGUI
         Me.btn_stopPlayback.Text = "Stop Playback"
         Me.btn_stopPlayback.UseVisualStyleBackColor = True
         '
-        'axis_autoscale
-        '
-        Me.axis_autoscale.AutoSize = True
-        Me.axis_autoscale.Location = New System.Drawing.Point(6, 63)
-        Me.axis_autoscale.Name = "axis_autoscale"
-        Me.axis_autoscale.Size = New System.Drawing.Size(107, 17)
-        Me.axis_autoscale.TabIndex = 7
-        Me.axis_autoscale.Text = "AutoScale Y-Axis"
-        Me.axis_autoscale.UseVisualStyleBackColor = True
-        '
-        'maxscale
-        '
-        Me.maxscale.Location = New System.Drawing.Point(286, 61)
-        Me.maxscale.Name = "maxscale"
-        Me.maxscale.Size = New System.Drawing.Size(80, 20)
-        Me.maxscale.TabIndex = 9
-        '
-        'minScale
-        '
-        Me.minScale.Location = New System.Drawing.Point(150, 61)
-        Me.minScale.Name = "minScale"
-        Me.minScale.Size = New System.Drawing.Size(80, 20)
-        Me.minScale.TabIndex = 8
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(119, 64)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(27, 13)
-        Me.Label3.TabIndex = 19
-        Me.Label3.Text = "Min:"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(250, 65)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(30, 13)
-        Me.Label4.TabIndex = 20
-        Me.Label4.Text = "Max:"
-        '
         'check_fixedTime
         '
         Me.check_fixedTime.AutoSize = True
-        Me.check_fixedTime.Location = New System.Drawing.Point(100, 57)
+        Me.check_fixedTime.Location = New System.Drawing.Point(213, 57)
         Me.check_fixedTime.Name = "check_fixedTime"
         Me.check_fixedTime.Size = New System.Drawing.Size(115, 17)
         Me.check_fixedTime.TabIndex = 21
@@ -291,7 +196,7 @@ Partial Class DataPlotGUI
         'x_timestamp
         '
         Me.x_timestamp.AutoSize = True
-        Me.x_timestamp.Location = New System.Drawing.Point(253, 43)
+        Me.x_timestamp.Location = New System.Drawing.Point(9, 62)
         Me.x_timestamp.Name = "x_timestamp"
         Me.x_timestamp.Size = New System.Drawing.Size(109, 17)
         Me.x_timestamp.TabIndex = 22
@@ -304,18 +209,8 @@ Partial Class DataPlotGUI
         Me.btn_SetLabel.Name = "btn_SetLabel"
         Me.btn_SetLabel.Size = New System.Drawing.Size(88, 35)
         Me.btn_SetLabel.TabIndex = 23
-        Me.btn_SetLabel.Text = "Set Y-Axis Label"
+        Me.btn_SetLabel.Text = "Set Y-Axis Labels"
         Me.btn_SetLabel.UseVisualStyleBackColor = True
-        '
-        'x_axis_scroll
-        '
-        Me.x_axis_scroll.AutoSize = True
-        Me.x_axis_scroll.Location = New System.Drawing.Point(253, 24)
-        Me.x_axis_scroll.Name = "x_axis_scroll"
-        Me.x_axis_scroll.Size = New System.Drawing.Size(103, 17)
-        Me.x_axis_scroll.TabIndex = 24
-        Me.x_axis_scroll.Text = "X-Axis Scroll Bar"
-        Me.x_axis_scroll.UseVisualStyleBackColor = True
         '
         'PlotOptions
         '
@@ -329,6 +224,7 @@ Partial Class DataPlotGUI
         '
         'ControlPage
         '
+        Me.ControlPage.Controls.Add(Me.axis_autoscale)
         Me.ControlPage.Controls.Add(Me.btn_copyPlot)
         Me.ControlPage.Controls.Add(Me.btn_startStop)
         Me.ControlPage.Controls.Add(Me.btn_stopPlayback)
@@ -344,6 +240,16 @@ Partial Class DataPlotGUI
         Me.ControlPage.Text = "Plotter Control"
         Me.ControlPage.UseVisualStyleBackColor = True
         '
+        'axis_autoscale
+        '
+        Me.axis_autoscale.AutoSize = True
+        Me.axis_autoscale.Location = New System.Drawing.Point(100, 57)
+        Me.axis_autoscale.Name = "axis_autoscale"
+        Me.axis_autoscale.Size = New System.Drawing.Size(107, 17)
+        Me.axis_autoscale.TabIndex = 23
+        Me.axis_autoscale.Text = "AutoScale Y-Axis"
+        Me.axis_autoscale.UseVisualStyleBackColor = True
+        '
         'btn_copyPlot
         '
         Me.btn_copyPlot.Location = New System.Drawing.Point(413, 47)
@@ -355,20 +261,17 @@ Partial Class DataPlotGUI
         '
         'SettingsPage
         '
+        Me.SettingsPage.Controls.Add(Me.x_axis_scroll)
+        Me.SettingsPage.Controls.Add(Me.btn_RemovePlot)
+        Me.SettingsPage.Controls.Add(Me.btn_AddPlot)
         Me.SettingsPage.Controls.Add(Me.btn_setTitle)
         Me.SettingsPage.Controls.Add(Me.btn_SetLabel)
         Me.SettingsPage.Controls.Add(Me.label_sampleFreq)
-        Me.SettingsPage.Controls.Add(Me.x_axis_scroll)
         Me.SettingsPage.Controls.Add(Me.x_timestamp)
         Me.SettingsPage.Controls.Add(Me.sampleFreq)
         Me.SettingsPage.Controls.Add(Me.samplesRendered)
         Me.SettingsPage.Controls.Add(Me.label_samplesRendered)
-        Me.SettingsPage.Controls.Add(Me.Label4)
         Me.SettingsPage.Controls.Add(Me.logToCSV)
-        Me.SettingsPage.Controls.Add(Me.Label3)
-        Me.SettingsPage.Controls.Add(Me.axis_autoscale)
-        Me.SettingsPage.Controls.Add(Me.minScale)
-        Me.SettingsPage.Controls.Add(Me.maxscale)
         Me.SettingsPage.Location = New System.Drawing.Point(4, 22)
         Me.SettingsPage.Name = "SettingsPage"
         Me.SettingsPage.Padding = New System.Windows.Forms.Padding(3)
@@ -376,6 +279,34 @@ Partial Class DataPlotGUI
         Me.SettingsPage.TabIndex = 1
         Me.SettingsPage.Text = "Settings"
         Me.SettingsPage.UseVisualStyleBackColor = True
+        '
+        'x_axis_scroll
+        '
+        Me.x_axis_scroll.AutoSize = True
+        Me.x_axis_scroll.Location = New System.Drawing.Point(124, 62)
+        Me.x_axis_scroll.Name = "x_axis_scroll"
+        Me.x_axis_scroll.Size = New System.Drawing.Size(74, 17)
+        Me.x_axis_scroll.TabIndex = 29
+        Me.x_axis_scroll.Text = "Plot Zoom"
+        Me.x_axis_scroll.UseVisualStyleBackColor = True
+        '
+        'btn_RemovePlot
+        '
+        Me.btn_RemovePlot.Location = New System.Drawing.Point(319, 47)
+        Me.btn_RemovePlot.Name = "btn_RemovePlot"
+        Me.btn_RemovePlot.Size = New System.Drawing.Size(88, 35)
+        Me.btn_RemovePlot.TabIndex = 28
+        Me.btn_RemovePlot.Text = "Remove Plot Window"
+        Me.btn_RemovePlot.UseVisualStyleBackColor = True
+        '
+        'btn_AddPlot
+        '
+        Me.btn_AddPlot.Location = New System.Drawing.Point(319, 6)
+        Me.btn_AddPlot.Name = "btn_AddPlot"
+        Me.btn_AddPlot.Size = New System.Drawing.Size(88, 35)
+        Me.btn_AddPlot.TabIndex = 27
+        Me.btn_AddPlot.Text = "Add Plot Window"
+        Me.btn_AddPlot.UseVisualStyleBackColor = True
         '
         'btn_setTitle
         '
@@ -385,6 +316,54 @@ Partial Class DataPlotGUI
         Me.btn_setTitle.TabIndex = 26
         Me.btn_setTitle.Text = "Set Title"
         Me.btn_setTitle.UseVisualStyleBackColor = True
+        '
+        'Label
+        '
+        Me.Label.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.Label.HeaderText = "Label"
+        Me.Label.Name = "Label"
+        Me.Label.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Label.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Page
+        '
+        Me.Page.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Page.HeaderText = "Page"
+        Me.Page.Name = "Page"
+        Me.Page.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Page.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Page.Width = 35
+        '
+        'Address
+        '
+        Me.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Address.HeaderText = "Address"
+        Me.Address.Name = "Address"
+        Me.Address.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Address.Width = 50
+        '
+        'Contents
+        '
+        Me.Contents.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Contents.HeaderText = "Contents"
+        Me.Contents.Name = "Contents"
+        Me.Contents.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Contents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Offset
+        '
+        Me.Offset.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.Offset.HeaderText = "Offset"
+        Me.Offset.Name = "Offset"
+        Me.Offset.Width = 60
+        '
+        'reg_scale
+        '
+        Me.reg_scale.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.reg_scale.HeaderText = "Scale"
+        Me.reg_scale.Name = "reg_scale"
+        Me.reg_scale.Width = 59
         '
         'DataPlotGUI
         '
@@ -422,25 +401,22 @@ Partial Class DataPlotGUI
     Friend WithEvents btn_saveChart As Button
     Friend WithEvents playFromCSV As Button
     Friend WithEvents btn_stopPlayback As Button
-    Friend WithEvents axis_autoscale As CheckBox
-    Friend WithEvents maxscale As TextBox
-    Friend WithEvents minScale As TextBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label4 As Label
     Friend WithEvents check_fixedTime As CheckBox
     Friend WithEvents x_timestamp As CheckBox
     Friend WithEvents btn_SetLabel As Button
-    Friend WithEvents x_axis_scroll As CheckBox
-    Friend WithEvents Label As DataGridViewTextBoxColumn
-    Friend WithEvents Page As DataGridViewTextBoxColumn
-    Friend WithEvents Address As DataGridViewTextBoxColumn
-    Friend WithEvents Contents As DataGridViewTextBoxColumn
-    Friend WithEvents Plot As DataGridViewCheckBoxColumn
-    Friend WithEvents Offset As DataGridViewTextBoxColumn
-    Friend WithEvents reg_scale As DataGridViewTextBoxColumn
     Friend WithEvents PlotOptions As TabControl
     Friend WithEvents ControlPage As TabPage
     Friend WithEvents btn_copyPlot As Button
     Friend WithEvents SettingsPage As TabPage
     Friend WithEvents btn_setTitle As Button
+    Friend WithEvents btn_RemovePlot As Button
+    Friend WithEvents btn_AddPlot As Button
+    Friend WithEvents x_axis_scroll As CheckBox
+    Friend WithEvents axis_autoscale As CheckBox
+    Friend WithEvents Label As DataGridViewTextBoxColumn
+    Friend WithEvents Page As DataGridViewTextBoxColumn
+    Friend WithEvents Address As DataGridViewTextBoxColumn
+    Friend WithEvents Contents As DataGridViewTextBoxColumn
+    Friend WithEvents Offset As DataGridViewTextBoxColumn
+    Friend WithEvents reg_scale As DataGridViewTextBoxColumn
 End Class
