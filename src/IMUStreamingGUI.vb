@@ -215,7 +215,7 @@ Public Class IMUStreamingGUI
     End Sub
 
     Private Sub UpdateRegmap()
-        If Use32BitRegs.Checked Then
+        If radio_32bit.Checked Then
             'Handle 32-bit registers
             tempRegList = m_TopGUI.RegMap.BurstReadList
             'Loop through each register and check for 32-bit locations
@@ -283,7 +283,7 @@ Public Class IMUStreamingGUI
         Invoke(New MethodInvoker(Sub() CaptureProgressBurst.Value = e.ProgressPercentage))
     End Sub
 
-    Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs) Handles Use32BitRegs.CheckedChanged
+    Private Sub BitModeCheckbox_CheckedChanged(sender As Object, e As EventArgs)
         UpdateRegmap()
     End Sub
 
