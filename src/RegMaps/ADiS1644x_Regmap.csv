@@ -1,5 +1,5 @@
 Label(i),BaseAddr(i),EmbMemflag(i),AuxAddr(i),AuxBaseAddr(i),NumBytes(i),RegOffset(i),RegScale(i),ReadLen(i),ReadFlag(i),WriteFlag(i),TwosCompl(i),Hidden(i),ECflag(i),NDflag(i),Default(i),CalReg(i),BURSTMODE
-ENDURANCE,0,0,0,0,2,0,1,16,TRUE,FALSE,FALSE,0,FALSE,FALSE,none,FALSE,12
+ENDURANCE,0,0,0,0,2,0,1,16,TRUE,FALSE,FALSE,0,FALSE,FALSE,none,FALSE,
 XGYRO_OUT,4,0,0,0,2,0,1,16,TRUE,FALSE,TRUE,0,FALSE,FALSE,none,FALSE,1
 YGYRO_OUT,6,0,0,0,2,0,1,16,TRUE,FALSE,TRUE,0,FALSE,FALSE,none,FALSE,2
 ZGYRO_OUT,8,0,0,0,2,0,1,16,TRUE,FALSE,TRUE,0,FALSE,FALSE,none,FALSE,3
