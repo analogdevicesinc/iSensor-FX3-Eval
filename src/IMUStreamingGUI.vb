@@ -13,6 +13,7 @@ Public Class IMUStreamingGUI
 
     Private WithEvents fileManager As Logger
     Private manager As BurstManager
+    Private initialized As Boolean = False
 
     ''' <summary>
     ''' Load the application
@@ -63,7 +64,6 @@ Public Class IMUStreamingGUI
                 radio_delta.Checked = True
             End If
             check_checksum.Checked = manager.BurstChecksum
-            UpdateConfiguration()
 
             'disable options which are not available for current IMU
             panel_dataformat.Enabled = manager.ConfigurableData
@@ -75,6 +75,10 @@ Public Class IMUStreamingGUI
             statusLabel.BackColor = Color.White
             check_drActive.Checked = m_TopGUI.FX3.DrActive
         End If
+
+        'Set initialized flag
+        initialized = True
+        UpdateConfiguration()
 
     End Sub
 
@@ -285,6 +289,9 @@ Public Class IMUStreamingGUI
     ''' Synchronize configuration between GUI and burst manager
     ''' </summary>
     Private Sub UpdateConfiguration()
+        'exit if in the load method
+        If Not initialized Then Exit Sub
+
         'apply settings
         manager.Burst16Bit = radio_16bit.Checked
         manager.BurstChecksum = check_checksum.Checked

@@ -44,6 +44,16 @@ Public Class BurstManager
     ''' </summary>
     Private m_checksum As RegClass
 
+    ''' <summary>
+    ''' Burst header register (if any)
+    ''' </summary>
+    Private m_burstHeader As RegClass
+
+    ''' <summary>
+    ''' Number of extra bytes (excluding burst payload) which must be added to transaction
+    ''' </summary>
+    Private m_paddingBytes As Integer
+
     Public Sub New(Dut As IDutInterface, FX3 As FX3Connection, Regmap As RegMapCollection, Personality As String)
         m_RegMap = Regmap
         m_Dut = Dut
@@ -104,7 +114,10 @@ Public Class BurstManager
             Return m_Burst16Bit
         End Get
         Set(value As Boolean)
-            If ConfigurableWordSize Then m_Burst16Bit = value
+            If ConfigurableWordSize Then
+                m_Burst16Bit = value
+                UpdateBurstRegs()
+            End If
         End Set
     End Property
     Private m_Burst16Bit As Boolean
@@ -118,7 +131,10 @@ Public Class BurstManager
             Return m_BurstInertialData
         End Get
         Set(value As Boolean)
-            If ConfigurableData Then m_BurstInertialData = value
+            If ConfigurableData Then
+                m_BurstInertialData = value
+                UpdateBurstRegs()
+            End If
         End Set
     End Property
     Private m_BurstInertialData As Boolean
@@ -132,7 +148,10 @@ Public Class BurstManager
             Return m_BurstChecksum
         End Get
         Set(value As Boolean)
-            If ConfigurableChecksum Then m_BurstChecksum = value
+            If ConfigurableChecksum Then
+                m_BurstChecksum = value
+                UpdateBurstRegs()
+            End If
         End Set
     End Property
     Private m_BurstChecksum As Boolean
@@ -169,6 +188,95 @@ Public Class BurstManager
     End Function
 
     ''' <summary>
+    ''' Update the burst registers based on the selected configuration.
+    ''' 
+    ''' I'm not in love with how this is being done, but here we are. This
+    ''' method relies on the burst inertial data being transmitted as
+    ''' X/Y/Z gyro then X/Y/Z accel, which is the case for all IMU products
+    ''' </summary>
+    Private Sub UpdateBurstRegs()
+        Dim i As Integer
+        Dim dataType As String
+        Dim numBytes As Integer
+        Dim done As Boolean
+        Dim label As String
+
+        'initially clear
+        m_regs.Clear()
+
+        'Is there a burst header?
+        If Not IsNothing(m_burstHeader) Then
+            m_regs.Add(m_burstHeader)
+        End If
+
+        'add registers from regmap until we hit inertial data
+        i = 0
+        For Each reg In m_RegMap.BurstReadList
+            If Not (reg.Label.Contains("GYR") Or reg.Label.Contains("ACC")) Then
+                m_regs.Add(reg)
+                i += 1
+            Else
+                Exit For
+            End If
+        Next
+        'move index past inertial regs
+        done = False
+        While Not done
+            If i < m_RegMap.BurstReadList.Count Then
+                label = m_RegMap.BurstReadList(i).Label
+                done = Not (label.Contains("GYR") Or label.Contains("ACC"))
+            Else
+                done = True
+            End If
+            If Not done Then i += 1
+        End While
+
+        'now we add the 6 inertial output channels based on selected config
+        If Burst16Bit Then
+            numBytes = 2
+        Else
+            numBytes = 4
+        End If
+        'gyro data first
+        If BurstInertialData Then
+            dataType = "GYR"
+        Else
+            dataType = "ANG"
+        End If
+        m_regs.Add(ParseRegMap("X", dataType, numBytes))
+        m_regs.Add(ParseRegMap("Y", dataType, numBytes))
+        m_regs.Add(ParseRegMap("Z", dataType, numBytes))
+        'accel data second
+        If BurstInertialData Then
+            dataType = "ACC"
+        Else
+            dataType = "VEL"
+        End If
+        m_regs.Add(ParseRegMap("X", dataType, numBytes))
+        m_regs.Add(ParseRegMap("Y", dataType, numBytes))
+        m_regs.Add(ParseRegMap("Z", dataType, numBytes))
+
+        'add remainder of registers in list
+        While i < m_RegMap.BurstReadList.Count
+            m_regs.Add(m_RegMap.BurstReadList(i))
+            i += 1
+        End While
+
+        'add checksum reg, if enabled
+        If Not IsNothing(m_checksum) And BurstChecksum Then
+            m_regs.Add(m_checksum)
+        End If
+
+    End Sub
+
+    Private Function ParseRegMap(axis As String, type As String, numBytes As Integer) As RegClass
+        For Each reg In m_RegMap
+            If reg.Label.Contains(axis) And reg.Label.Contains(type) And reg.NumBytes = numBytes Then Return reg
+        Next
+        Return New RegClass With {.Label = "ERROR", .NumBytes = numBytes, .ReadLen = 8 * numBytes}
+    End Function
+
+    ''' <summary>
     ''' Validate the selected device. First use the provided personality, then
     ''' try and read from the PROD_ID register, if the personality is not found.
     ''' 
@@ -198,6 +306,12 @@ Public Class BurstManager
             'Burst requires setup command
             m_burstSetupRequired = True
 
+            'no padding bytes
+            m_paddingBytes = 0
+
+            '32-bit burst header included
+            m_burstHeader = New RegClass With {.Label = "BURST_HEADER", .ReadLen = 32, .NumBytes = 4}
+
         ElseIf personality.Contains("1654") Then
             m_Device = BurstDevice.ADIS1654x
 
@@ -216,6 +330,9 @@ Public Class BurstManager
 
             'Burst does not require setup command
             m_burstSetupRequired = False
+
+            '6 padding bytes
+            m_paddingBytes = 6
 
         ElseIf personality.Contains("1650") Then
             m_Device = BurstDevice.ADIS1650x
@@ -236,6 +353,9 @@ Public Class BurstManager
             'Burst does not require setup command
             m_burstSetupRequired = False
 
+            '2 padding bytes
+            m_paddingBytes = 2
+
         ElseIf personality.Contains("1649") Then
             m_Device = BurstDevice.ADIS1649x
 
@@ -254,6 +374,9 @@ Public Class BurstManager
 
             'Burst does not require setup command
             m_burstSetupRequired = False
+
+            '4 padding bytes
+            m_paddingBytes = 4
 
         ElseIf personality.Contains("1647") Then
             m_Device = BurstDevice.ADIS1647x
@@ -274,6 +397,9 @@ Public Class BurstManager
             'Burst does not require setup command
             m_burstSetupRequired = False
 
+            '2 padding bytes
+            m_paddingBytes = 2
+
         ElseIf personality.Contains("1646") Then
             m_Device = BurstDevice.ADIS1646x
 
@@ -293,6 +419,9 @@ Public Class BurstManager
             'Burst does not require setup command
             m_burstSetupRequired = False
 
+            '2 padding bytes
+            m_paddingBytes = 2
+
         ElseIf personality.Contains("16445") Then
             m_Device = BurstDevice.ADIS16445
 
@@ -310,6 +439,9 @@ Public Class BurstManager
 
             'Burst does not require setup command
             m_burstSetupRequired = False
+
+            '2 padding bytes
+            m_paddingBytes = 2
 
         ElseIf personality.Contains("1644") Then
             m_Device = BurstDevice.ADIS1644x
@@ -329,6 +461,9 @@ Public Class BurstManager
 
             'Burst does not require setup command
             m_burstSetupRequired = False
+
+            '2 padding bytes
+            m_paddingBytes = 2
 
         Else
             'either no burst on selected device, or personality not found
