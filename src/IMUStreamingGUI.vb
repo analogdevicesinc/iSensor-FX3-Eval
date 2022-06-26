@@ -36,34 +36,46 @@ Public Class IMUStreamingGUI
             combo_DrSelect.SelectedItem = "Other"
         End If
 
-        'set up burst manager
-        manager = New BurstManager(m_TopGUI.Dut, m_TopGUI.FX3, m_TopGUI.RegMap, m_TopGUI.SelectedPersonality)
-
-        'set up config options based on burst manager
-        If manager.Burst16Bit Then
-            radio_16bit.Checked = True
-        Else
-            radio_32bit.Checked = True
-        End If
-        If manager.BurstInertialData Then
-            radio_inertial.Checked = True
-        Else
-            radio_delta.Checked = True
-        End If
-        check_checksum.Checked = manager.BurstChecksum
-
-        'disable options which are not available for current IMU
-        panel_dataformat.Enabled = manager.ConfigurableData
-        panel_wordsize.Enabled = manager.ConfigurableWordSize
-        check_checksum.Enabled = manager.ConfigurableChecksum
-
         'Set up labels
         label_measuredFreq.Text = ""
         btn_cancel.Enabled = False
         text_numSamples.Text = "10000"
-        statusLabel.Text = "Waiting"
-        statusLabel.BackColor = Color.White
-        check_drActive.Checked = m_TopGUI.FX3.DrActive
+
+        'set up burst manager
+        manager = New BurstManager(m_TopGUI.Dut, m_TopGUI.FX3, m_TopGUI.RegMap, m_TopGUI.SelectedPersonality)
+
+        'Check if the manager knows about the selected device
+        If manager.Device = BurstDevice.Unknown Then
+            statusLabel.Text = "ERROR: Unknown IMU!"
+            statusLabel.BackColor = m_TopGUI.ERROR_COLOR
+            btn_start.Enabled = False
+            group_config.Enabled = False
+        Else
+            'set up config options based on burst manager
+            If manager.Burst16Bit Then
+                radio_16bit.Checked = True
+            Else
+                radio_32bit.Checked = True
+            End If
+            If manager.BurstInertialData Then
+                radio_inertial.Checked = True
+            Else
+                radio_delta.Checked = True
+            End If
+            check_checksum.Checked = manager.BurstChecksum
+            UpdateConfiguration()
+
+            'disable options which are not available for current IMU
+            panel_dataformat.Enabled = manager.ConfigurableData
+            panel_wordsize.Enabled = manager.ConfigurableWordSize
+            check_checksum.Enabled = manager.ConfigurableChecksum
+
+            'set status
+            statusLabel.Text = "Waiting"
+            statusLabel.BackColor = Color.White
+            check_drActive.Checked = m_TopGUI.FX3.DrActive
+        End If
+
     End Sub
 
     ''' <summary>
