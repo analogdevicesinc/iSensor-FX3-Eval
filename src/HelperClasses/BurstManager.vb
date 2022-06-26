@@ -30,14 +30,27 @@ Public Class BurstManager
     Public Event StreamFinished As IStreamEventProducer.StreamFinishedEventHandler Implements IStreamEventProducer.StreamFinished
 
     Private m_Device As BurstDevice
-    Private m_FX3 As FX3Connection
+    Private WithEvents m_FX3 As FX3Connection
     Private m_Dut As IDutInterface
     Private m_RegMap As RegMapCollection
+
+    'buffered steam producer
+    Private m_buffProducer As adbfInterface
 
     ''' <summary>
     ''' Does burst require a setup command?
     ''' </summary>
     Private m_burstSetupRequired As Boolean
+
+    ''' <summary>
+    ''' Track if we are on first packet in a given stream
+    ''' </summary>
+    Private m_firstPacket As Boolean
+
+    ''' <summary>
+    ''' Burst sync word
+    ''' </summary>
+    Private m_burstSyncWord As UShort
 
     ''' <summary>
     ''' Burst checksum register
@@ -58,6 +71,7 @@ Public Class BurstManager
         m_RegMap = Regmap
         m_Dut = Dut
         m_FX3 = FX3
+        m_buffProducer = New adbfInterface(m_FX3, Nothing)
         m_regs = Regmap.BurstReadList
         LoadDeviceInfo(True, Personality)
     End Sub
@@ -167,25 +181,207 @@ Public Class BurstManager
     End Property
     Private m_regs As List(Of RegClass)
 
+    ''' <summary>
+    ''' Wraps the FX3 cancel stream async
+    ''' </summary>
     Public Sub CancelStreamAsync() Implements IStreamEventProducer.CancelStreamAsync
-        Throw New NotImplementedException()
+        m_FX3.CancelStreamAsync()
     End Sub
 
+    ''' <summary>
+    ''' Wrap FX3 event
+    ''' </summary>
+    ''' <param name="count"></param>
+    Public Sub FX3BufAvailable(count As UInteger) Handles m_FX3.NewBufferAvailable
+        RaiseEvent NewBufferAvailable(count)
+    End Sub
+
+    ''' <summary>
+    ''' Wrap FX3 event
+    ''' </summary>
+    ''' <param name="count"></param>
+    Public Sub FX3BufAvailable() Handles m_FX3.StreamFinished
+        RaiseEvent StreamFinished()
+    End Sub
+
+    ''' <summary>
+    ''' Start a stream. Sets up FX3 then DUT, then dispatches to the lower level producer
+    ''' </summary>
+    ''' <param name="regList"></param>
+    ''' <param name="numCaptures"></param>
+    ''' <param name="numBuffers"></param>
+    ''' <param name="timeoutSeconds"></param>
+    ''' <param name="worker"></param>
     Public Sub StartBufferedStream(regList As IEnumerable(Of RegClass), numCaptures As UInteger, numBuffers As UInteger, timeoutSeconds As Integer, worker As BackgroundWorker) Implements IBufferedStreamProducer.StartBufferedStream
-        Throw New NotImplementedException()
+        'Configure DUT, then FX3, then start the stream
+        ConfigureDUTForBurst()
+        ConfigureFX3ForBurst()
+        'is burst setup needed? Then request one extra capture
+        If m_burstSetupRequired Then
+            numBuffers += 1
+            m_firstPacket = True
+        End If
+        'dispatch stream to lower level implementation
+        m_buffProducer.StartBufferedStream(regList, numCaptures, numBuffers, timeoutSeconds, worker)
     End Sub
 
-    Public Function ConvertReadDataToU32(regList As IEnumerable(Of RegClass), u16data As IEnumerable(Of UShort)) As UInteger() Implements IBufferedStreamProducer.ConvertReadDataToU32
-        Throw New NotImplementedException()
-    End Function
-
+    ''' <summary>
+    ''' Retrieve a burst data packet. This function calls the lower level implementation, the post-processes the
+    ''' data packet to ensure that only the register data is contained
+    ''' </summary>
+    ''' <returns></returns>
     Public Function GetBufferedStreamDataPacket() As UShort() Implements IBufferedStreamProducer.GetBufferedStreamDataPacket
-        Throw New NotImplementedException()
+        Dim rawPacket As UShort() = m_buffProducer.GetBufferedStreamDataPacket()
+        Dim processedPacked As New List(Of UShort)
+        Dim i As Integer
+        'first run?
+        If m_firstPacket Then
+            m_firstPacket = False
+            If m_burstSetupRequired Then
+                'trash packet
+                Return Nothing
+            End If
+        End If
+
+        'Did we somehow get a null packet?
+        If IsNothing(rawPacket) Then
+            Return Nothing
+        End If
+
+        'process packet
+        Select Case m_Device
+            Case BurstDevice.ADIS1655x
+                'ADIS1655x just return whole packet
+                processedPacked = rawPacket.ToList()
+            Case BurstDevice.ADIS1649x, BurstDevice.ADIS1654x
+                'Search for sync word start
+                i = 0
+                While (i < rawPacket.Length) And (rawPacket(i) <> m_burstSyncWord)
+                    i += 1
+                End While
+                'go past sync word(s)
+                While (i < rawPacket.Length) And (rawPacket(i) = m_burstSyncWord)
+                    i += 1
+                End While
+                'add payload
+                While (i < rawPacket.Length)
+                    processedPacked.Add(rawPacket(i))
+                    i += 1
+                End While
+            Case Else
+                'remove first two bytes
+                processedPacked = rawPacket.ToList()
+                processedPacked.RemoveAt(0)
+        End Select
+        Return processedPacked.ToArray()
     End Function
 
-    Public Function ScaleRegData(regList As IEnumerable(Of RegClass), uintData As IEnumerable(Of UInteger)) As Double() Implements IBufferedStreamProducer.ScaleRegData
-        Throw New NotImplementedException()
+    ''' <summary>
+    ''' Wrapper
+    ''' </summary>
+    ''' <param name="regList"></param>
+    ''' <param name="u16data"></param>
+    ''' <returns></returns>
+    Public Function ConvertReadDataToU32(regList As IEnumerable(Of RegClass), u16data As IEnumerable(Of UShort)) As UInteger() Implements IBufferedStreamProducer.ConvertReadDataToU32
+        Return m_buffProducer.ConvertReadDataToU32(regList, u16data)
     End Function
+
+    ''' <summary>
+    ''' Wrapper
+    ''' </summary>
+    ''' <param name="regList"></param>
+    ''' <param name="uintData"></param>
+    ''' <returns></returns>
+    Public Function ScaleRegData(regList As IEnumerable(Of RegClass), uintData As IEnumerable(Of UInteger)) As Double() Implements IBufferedStreamProducer.ScaleRegData
+        Return m_buffProducer.ScaleRegData(regList, uintData)
+    End Function
+
+    ''' <summary>
+    ''' Configure the DUT control registers based on the selected burst read mode
+    ''' </summary>
+    Private Sub ConfigureDUTForBurst()
+        Dim readVal As UInteger
+        Select Case m_Device
+            Case BurstDevice.ADIS1654x
+                'delta vs inertial is bit 8 of CONFIG
+                readVal = m_Dut.ReadUnsigned(m_RegMap("CONFIG"))
+                If BurstInertialData Then
+                    readVal = readVal And &HFEFF
+                    m_burstSyncWord = &HA5A5
+                Else
+                    readVal = readVal Or &H100
+                    m_burstSyncWord = &HC3C3
+                End If
+                m_Dut.WriteUnsigned(m_RegMap("CONFIG"), readVal)
+                Threading.Thread.Sleep(10)
+            Case BurstDevice.ADIS1650x
+                'delta vs inertial is bit 8 of MSC_CTRL, 32-bit is bit 9
+                readVal = m_Dut.ReadUnsigned(m_RegMap("MSC_CTRL"))
+                If BurstInertialData Then
+                    readVal = readVal And &HFEFF
+                Else
+                    readVal = readVal Or &H100
+                End If
+                If Burst16Bit Then
+                    readVal = readVal And &HFDFF
+                Else
+                    readVal = readVal Or &H200
+                End If
+                m_Dut.WriteUnsigned(m_RegMap("MSC_CTRL"), readVal)
+                Threading.Thread.Sleep(10)
+            Case BurstDevice.ADIS1644x
+                'CRC enable is bit4 of MSC_CTRL
+                readVal = m_Dut.ReadUnsigned(m_RegMap("MSC_CTRL"))
+                If BurstChecksum Then
+                    readVal = readVal Or &H10
+                Else
+                    readVal = readVal And &HFFEF
+                End If
+                m_Dut.WriteUnsigned(m_RegMap("MSC_CTRL"), readVal)
+                Threading.Thread.Sleep(10)
+        End Select
+    End Sub
+
+    ''' <summary>
+    ''' Configure FX3 based on the selected burst transaction
+    ''' </summary>
+    Private Sub ConfigureFX3ForBurst()
+        Dim burstCommand As New List(Of Byte)
+        Dim burstLen As UInteger
+        'return full burst data in all cases
+        m_FX3.StripBurstTriggerWord = False
+        'dummy trigger register
+        m_FX3.TriggerReg = New RegClass With {.Address = 0, .Page = 0}
+        'build burst request
+        If m_Device = BurstDevice.ADIS1655x Then
+            'burst header depends on delta vs inertial
+            If BurstInertialData Then
+                burstCommand.Add(0)
+                burstCommand.Add(0)
+                burstCommand.Add(&HA)
+                burstCommand.Add(0)
+            Else
+                burstCommand.Add(0)
+                burstCommand.Add(0)
+                burstCommand.Add(&HB)
+                burstCommand.Add(&H1)
+            End If
+        Else
+            'burst header is just address of burst trigger register
+            burstCommand.Add(m_RegMap.BurstReadTrig.Address)
+            burstCommand.Add(0)
+        End If
+        m_FX3.BurstMOSIData = burstCommand.ToArray()
+        'burst length is length of payload (regs) plus padding
+        burstLen = m_paddingBytes
+        For Each reg In BurstRegisters
+            burstLen += reg.NumBytes
+        Next
+        m_FX3.BurstByteCount = burstLen
+
+        'enable burst mode
+        m_FX3.SetupBurstMode()
+    End Sub
 
     ''' <summary>
     ''' Update the burst registers based on the selected configuration.
@@ -377,6 +573,9 @@ Public Class BurstManager
 
             '4 padding bytes
             m_paddingBytes = 4
+
+            'Sync data is fixed
+            m_burstSyncWord = &HA5A5
 
         ElseIf personality.Contains("1647") Then
             m_Device = BurstDevice.ADIS1647x
