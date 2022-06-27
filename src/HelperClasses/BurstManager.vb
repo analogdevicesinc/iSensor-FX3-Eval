@@ -23,6 +23,7 @@ Public Enum BurstDevice
     ADIS1646x
     ADIS16445
     ADIS1644x
+    ADIS1636x
     Unknown
 End Enum
 
@@ -457,6 +458,9 @@ Public Class BurstManager
         'initially clear
         m_burstRegs.Clear()
 
+        'If invalid device, just exit
+        If m_device = BurstDevice.Unknown Then Exit Sub
+
         'Is there a burst header?
         If Not IsNothing(m_burstHeader) Then
             m_burstRegs.Add(m_burstHeader)
@@ -721,6 +725,27 @@ Public Class BurstManager
             m_configurableChecksum = True
             m_burstChecksum = True
             m_checksum = New RegClass With {.Label = "BURST_CHECKSUM", .ReadLen = 16, .NumBytes = 2}
+
+            'Burst does not require setup command
+            m_burstSetupRequired = False
+
+            '2 padding bytes
+            m_paddingBytes = 2
+
+        ElseIf personality.Contains("1636") Then
+            m_device = BurstDevice.ADIS1636x
+
+            'Fixed 16-bit burst
+            m_configurableWordSize = False
+            m_burst16Bit = True
+
+            'Only inertial
+            m_configurableData = False
+            m_burstInertialData = True
+
+            'No checksum
+            m_configurableChecksum = False
+            m_burstChecksum = False
 
             'Burst does not require setup command
             m_burstSetupRequired = False
