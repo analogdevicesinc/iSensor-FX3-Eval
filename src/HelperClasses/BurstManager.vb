@@ -291,19 +291,22 @@ Public Class BurstManager
                 'ADIS1655x just return whole packet
                 processedPacket = rawPacket.ToList()
             Case BurstDevice.ADIS1649x, BurstDevice.ADIS1654x
-                'Search for sync word start
                 i = 0
-                While (i < rawPacket.Length) And (rawPacket(i) <> m_burstSyncWord)
-                    i += 1
-                End While
-                'go past sync word(s)
-                While (i < rawPacket.Length) And (rawPacket(i) = m_burstSyncWord)
-                    i += 1
-                End While
-                'check that we found sync word
-                If (i = rawPacket.Length) Then
+                ' I thought .NET used lazy AND evaluation, but apparently not. Even if first
+                ' condition is false still evaluates second. Hence try-catch for case where sync 
+                ' word is not found, instead of while ((i < len)&&(i != burst sync));
+                Try
+                    'Search for sync word start
+                    While rawPacket(i) <> m_burstSyncWord
+                        i += 1
+                    End While
+                    'go past sync word(s)
+                    While rawPacket(i) = m_burstSyncWord
+                        i += 1
+                    End While
+                Catch ex As IndexOutOfRangeException
                     If m_parsingError = "" Then m_parsingError = "Sync word not found!"
-                End If
+                End Try
                 'add payload
                 While (i < rawPacket.Length)
                     processedPacket.Add(rawPacket(i))
