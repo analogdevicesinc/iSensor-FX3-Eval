@@ -128,10 +128,10 @@ Public Class BurstManager
             Return m_Burst16Bit
         End Get
         Set(value As Boolean)
-            UpdateBurstRegs()
             If ConfigurableWordSize Then
                 m_Burst16Bit = value
             End If
+            UpdateBurstRegs()
         End Set
     End Property
     Private m_Burst16Bit As Boolean
@@ -145,10 +145,10 @@ Public Class BurstManager
             Return m_BurstInertialData
         End Get
         Set(value As Boolean)
-            UpdateBurstRegs()
             If ConfigurableData Then
                 m_BurstInertialData = value
             End If
+            UpdateBurstRegs()
         End Set
     End Property
     Private m_BurstInertialData As Boolean
@@ -162,10 +162,10 @@ Public Class BurstManager
             Return m_BurstChecksum
         End Get
         Set(value As Boolean)
-            UpdateBurstRegs()
             If ConfigurableChecksum Then
                 m_BurstChecksum = value
             End If
+            UpdateBurstRegs()
         End Set
     End Property
     Private m_BurstChecksum As Boolean
