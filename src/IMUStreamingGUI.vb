@@ -268,8 +268,17 @@ Public Class IMUStreamingGUI
     ''' Clean up after a burst read capture has completed
     ''' </summary>
     Private Sub CaptureDoneWork()
-        statusLabel.Text = "Done"
-        statusLabel.BackColor = m_TopGUI.GOOD_COLOR
+
+        'check if a parsing error occurred?
+        If manager.ParsingError <> "" Then
+            statusLabel.Text = manager.ParsingError
+            statusLabel.BackColor = m_TopGUI.ERROR_COLOR
+        Else
+            statusLabel.Text = "Done"
+            statusLabel.BackColor = m_TopGUI.GOOD_COLOR
+        End If
+
+        'reset buttons
         btn_cancel.Enabled = False
         combo_DrSelect.Enabled = True
         text_numSamples.Enabled = True
