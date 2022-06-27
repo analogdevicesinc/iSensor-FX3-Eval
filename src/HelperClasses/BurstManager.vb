@@ -535,7 +535,11 @@ Public Class BurstManager
     ''' <returns>Register matching provided axis, type, and size. Dummy register if not found</returns>
     Private Function ParseRegMap(axis As String, type As String, numBytes As Integer) As RegClass
         For Each reg In m_regMap
-            If reg.Label.Contains(axis) And reg.Label.Contains(type) And reg.NumBytes = numBytes Then Return reg
+            If reg.Label.Contains(type) And reg.NumBytes = numBytes Then
+                ' Check for axis. Replace type before check due to Y in gyro.
+                ' This could be a one-line regex, but you know what they say about regex
+                If reg.Label.Replace(type, "").Contains(axis) Then Return reg
+            End If
         Next
         Return New RegClass With {.Label = "ERROR", .NumBytes = numBytes, .ReadLen = 8 * numBytes}
     End Function
