@@ -90,6 +90,13 @@ Public Class BurstManager
     ''' </summary>
     Private m_burstPayloadBytes As Integer
 
+    ''' <summary>
+    ''' Constructor
+    ''' </summary>
+    ''' <param name="Dut">IDutInterface to talk with IMU</param>
+    ''' <param name="FX3">FX3 Eval Board</param>
+    ''' <param name="Regmap">Loaded register map</param>
+    ''' <param name="Personality">DUT personality</param>
     Public Sub New(Dut As IDutInterface, FX3 As FX3Connection, Regmap As RegMapCollection, Personality As String)
         m_regMap = Regmap
         m_DUT = Dut
