@@ -143,6 +143,11 @@ Public Class IMUStreamingGUI
         fileManager.BuffersPerWrite = 10000
         'set the register word order
         fileManager.LowerWordFirst = m_TopGUI.Dut.IsLowerFirst
+        'for ADIS1655x product, the burst read transmits data upper 16-bits first
+        'However, upper 16-bits have a higher address
+        If manager.Device = BurstDevice.ADIS1655x Then
+            fileManager.LowerWordFirst = False
+        End If
 
         'hide other forms
         InteractWithOtherForms(True, Me)

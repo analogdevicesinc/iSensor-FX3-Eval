@@ -569,7 +569,7 @@ Public Class BurstManager
             'CRC included (32-bit), not configurable
             m_configurableChecksum = False
             m_burstChecksum = True
-            m_checksum = New RegClass With {.Label = "BURST_CHECKSUM", .ReadLen = 32, .NumBytes = 4}
+            m_checksum = New RegClass With {.Label = "BURST_CRC", .ReadLen = 32, .NumBytes = 4}
 
             'Burst requires setup command
             m_burstSetupRequired = True
@@ -578,7 +578,7 @@ Public Class BurstManager
             m_paddingBytes = 0
 
             '32-bit burst header included
-            m_burstHeader = New RegClass With {.Label = "BURST_HEADER", .ReadLen = 32, .NumBytes = 4}
+            m_burstHeader = New RegClass With {.Label = "BURST_RD", .ReadLen = 32, .NumBytes = 4}
 
         ElseIf personality.Contains("1654") Then
             m_device = BurstDevice.ADIS1654x
@@ -594,7 +594,7 @@ Public Class BurstManager
             'CRC included (32-bit), not configurable
             m_configurableChecksum = False
             m_burstChecksum = True
-            m_checksum = New RegClass With {.Label = "BURST_CHECKSUM", .ReadLen = 32, .NumBytes = 4}
+            m_checksum = New RegClass With {.Label = "BURST_CRC", .ReadLen = 32, .NumBytes = 4}
 
             'Burst does not require setup command
             m_burstSetupRequired = False
@@ -638,7 +638,7 @@ Public Class BurstManager
             'CRC included (32-bit), not configurable
             m_configurableChecksum = False
             m_burstChecksum = True
-            m_checksum = New RegClass With {.Label = "BURST_CHECKSUM", .ReadLen = 32, .NumBytes = 4}
+            m_checksum = New RegClass With {.Label = "BURST_CRC", .ReadLen = 32, .NumBytes = 4}
 
             'Burst does not require setup command
             m_burstSetupRequired = False
