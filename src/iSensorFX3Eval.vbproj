@@ -186,6 +186,7 @@
     <Compile Include="FacResetGUI.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="HelperClasses\BurstManager.vb" />
     <Compile Include="HelperClasses\DutPersonality.vb" />
     <Compile Include="HelperClasses\HelperFunctions.vb" />
     <Compile Include="HelperClasses\PlotterSettings.vb" />
@@ -603,6 +604,33 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="RegMaps\ADIS1650x_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS16545_1_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS16545_2_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS16545_3_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS16547_1_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS16547_2_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS16547_3_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS1654x_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS16550_RegMap.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="RegMaps\ADIS1655x_RegMap.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="RegMaps\ADXL35X_RegMap.csv">

@@ -419,23 +419,26 @@ Partial Class TopGUI
         Dim regIndex As Integer = 0
         currentRegList = New List(Of RegClass)
         For Each reg In RegMap
-            If reg.Page = selectPage.SelectedItem Then
-                currentRegList.Add(reg)
-                If reg.IsReadable Then
-                    readStr = "Not Read"
-                Else
-                    readStr = "Write Only"
+            'skip registers which are not readable or writeable (example, BURST_RD)
+            If reg.IsReadable Or reg.IsWriteable Then
+                If reg.Page = selectPage.SelectedItem Then
+                    currentRegList.Add(reg)
+                    If reg.IsReadable Then
+                        readStr = "Not Read"
+                    Else
+                        readStr = "Write Only"
+                    End If
+                    If regIndex >= regView.RowCount Then
+                        regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr}
+                        regView.Rows.Add(regStr)
+                    Else
+                        regView.Item("Label", regIndex).Value = reg.Label
+                        regView.Item("Page", regIndex).Value = reg.Page
+                        regView.Item("Address", regIndex).Value = reg.Address
+                        regView.Item("Contents", regIndex).Value = readStr
+                    End If
+                    regIndex += 1
                 End If
-                If regIndex >= regView.RowCount Then
-                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr}
-                    regView.Rows.Add(regStr)
-                Else
-                    regView.Item("Label", regIndex).Value = reg.Label
-                    regView.Item("Page", regIndex).Value = reg.Page
-                    regView.Item("Address", regIndex).Value = reg.Address
-                    regView.Item("Contents", regIndex).Value = readStr
-                End If
-                regIndex += 1
             End If
         Next
 
