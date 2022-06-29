@@ -643,8 +643,8 @@ Public Class BurstManager
             'Burst does not require setup command
             m_burstSetupRequired = False
 
-            '4 padding bytes
-            m_paddingBytes = 4
+            '8 padding bytes
+            m_paddingBytes = 8
 
             'Sync data is fixed
             m_burstSyncWord = &HA5A5
