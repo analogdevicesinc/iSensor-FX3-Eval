@@ -43,6 +43,8 @@ Partial Class IMUStreamingGUI
         Me.radio_32bit = New System.Windows.Forms.RadioButton()
         Me.radio_16bit = New System.Windows.Forms.RadioButton()
         Me.check_checksum = New System.Windows.Forms.CheckBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.lab_recTime = New System.Windows.Forms.Label()
         Me.group_config.SuspendLayout()
         Me.panel_dataformat.SuspendLayout()
         Me.panel_wordsize.SuspendLayout()
@@ -94,14 +96,14 @@ Partial Class IMUStreamingGUI
         '
         'text_numSamples
         '
-        Me.text_numSamples.Location = New System.Drawing.Point(93, 194)
+        Me.text_numSamples.Location = New System.Drawing.Point(97, 194)
         Me.text_numSamples.Name = "text_numSamples"
-        Me.text_numSamples.Size = New System.Drawing.Size(99, 20)
+        Me.text_numSamples.Size = New System.Drawing.Size(94, 20)
         Me.text_numSamples.TabIndex = 23
         '
         'btn_cancel
         '
-        Me.btn_cancel.Location = New System.Drawing.Point(106, 220)
+        Me.btn_cancel.Location = New System.Drawing.Point(106, 248)
         Me.btn_cancel.Name = "btn_cancel"
         Me.btn_cancel.Size = New System.Drawing.Size(86, 30)
         Me.btn_cancel.TabIndex = 22
@@ -110,7 +112,7 @@ Partial Class IMUStreamingGUI
         '
         'btn_start
         '
-        Me.btn_start.Location = New System.Drawing.Point(12, 220)
+        Me.btn_start.Location = New System.Drawing.Point(12, 248)
         Me.btn_start.Name = "btn_start"
         Me.btn_start.Size = New System.Drawing.Size(86, 30)
         Me.btn_start.TabIndex = 21
@@ -121,7 +123,7 @@ Partial Class IMUStreamingGUI
         '
         Me.burstRegList.Location = New System.Drawing.Point(201, 12)
         Me.burstRegList.Name = "burstRegList"
-        Me.burstRegList.Size = New System.Drawing.Size(207, 314)
+        Me.burstRegList.Size = New System.Drawing.Size(207, 342)
         Me.burstRegList.TabIndex = 20
         Me.burstRegList.UseCompatibleStateImageBehavior = False
         '
@@ -130,7 +132,7 @@ Partial Class IMUStreamingGUI
         Me.statusLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.statusLabel.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.statusLabel.Location = New System.Drawing.Point(55, 262)
+        Me.statusLabel.Location = New System.Drawing.Point(55, 290)
         Me.statusLabel.Name = "statusLabel"
         Me.statusLabel.Size = New System.Drawing.Size(137, 20)
         Me.statusLabel.TabIndex = 30
@@ -140,7 +142,7 @@ Partial Class IMUStreamingGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(9, 266)
+        Me.Label6.Location = New System.Drawing.Point(9, 294)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(43, 13)
         Me.Label6.TabIndex = 29
@@ -149,7 +151,7 @@ Partial Class IMUStreamingGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 292)
+        Me.Label1.Location = New System.Drawing.Point(9, 320)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(91, 13)
         Me.Label1.TabIndex = 32
@@ -157,7 +159,7 @@ Partial Class IMUStreamingGUI
         '
         'CaptureProgressBurst
         '
-        Me.CaptureProgressBurst.Location = New System.Drawing.Point(12, 308)
+        Me.CaptureProgressBurst.Location = New System.Drawing.Point(12, 336)
         Me.CaptureProgressBurst.Name = "CaptureProgressBurst"
         Me.CaptureProgressBurst.Size = New System.Drawing.Size(180, 18)
         Me.CaptureProgressBurst.TabIndex = 31
@@ -256,11 +258,32 @@ Partial Class IMUStreamingGUI
         Me.check_checksum.Text = "Burst Checksum"
         Me.check_checksum.UseVisualStyleBackColor = True
         '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(9, 225)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(82, 13)
+        Me.Label2.TabIndex = 36
+        Me.Label2.Text = "Rec. Time (est):"
+        '
+        'lab_recTime
+        '
+        Me.lab_recTime.BackColor = System.Drawing.SystemColors.Window
+        Me.lab_recTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lab_recTime.Location = New System.Drawing.Point(97, 221)
+        Me.lab_recTime.Name = "lab_recTime"
+        Me.lab_recTime.Size = New System.Drawing.Size(95, 20)
+        Me.lab_recTime.TabIndex = 37
+        Me.lab_recTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'IMUStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(420, 338)
+        Me.ClientSize = New System.Drawing.Size(420, 362)
+        Me.Controls.Add(Me.lab_recTime)
+        Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.group_config)
         Me.Controls.Add(Me.check_drActive)
         Me.Controls.Add(Me.Label1)
@@ -311,4 +334,6 @@ Partial Class IMUStreamingGUI
     Friend WithEvents radio_32bit As RadioButton
     Friend WithEvents panel_dataformat As Panel
     Friend WithEvents panel_wordsize As Panel
+    Friend WithEvents Label2 As Label
+    Friend WithEvents lab_recTime As Label
 End Class

@@ -14,6 +14,8 @@ Public Class IMUStreamingGUI
     Private WithEvents fileManager As Logger
     Private manager As BurstManager
     Private initialized As Boolean = False
+    Private totalDRCaptures As Integer = 0
+    Private measuredDrFreq As Double = Double.PositiveInfinity
 
     ''' <summary>
     ''' Load the application
@@ -136,7 +138,7 @@ Public Class IMUStreamingGUI
         fileManager.RegList = manager.BurstRegisters
         fileManager.FileBaseName = m_TopGUI.SelectedPersonality + "_Burst" + timeString
         fileManager.FilePath = savePath
-        fileManager.Buffers = Convert.ToUInt32(text_numSamples.Text)
+        fileManager.Buffers = totalDRCaptures
         fileManager.Captures = 1 'Number of times to read each register in the reg map
         fileManager.FileMaxDataRows = 1000000 'Keep this under 1M samples to open in Excel
         fileManager.BufferTimeoutSeconds = 10 'Timeout in seconds
@@ -201,7 +203,7 @@ Public Class IMUStreamingGUI
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles btn_measureDR.Click
-        label_measuredFreq.Text = FormatNumber(m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000), 3).ToString + "  Hz"
+        MeasureDrFreq(2000)
     End Sub
 
     ''' <summary>
@@ -242,6 +244,11 @@ Public Class IMUStreamingGUI
     ''' <param name="e"></param>
     Private Sub check_drActive_CheckedChanged(sender As Object, e As EventArgs) Handles check_drActive.CheckedChanged
         m_TopGUI.FX3.DrActive = check_drActive.Checked
+        If check_drActive.Checked Then
+            MeasureDrFreq(500)
+        Else
+            UpdateRecordTimeEstimate()
+        End If
     End Sub
 
     ''' <summary>
@@ -252,11 +259,13 @@ Public Class IMUStreamingGUI
     Private Sub text_numSamples_TextChanged(sender As Object, e As EventArgs) Handles text_numSamples.TextChanged
         'Check DR capture input
         Try
-            Convert.ToInt32(text_numSamples.Text)
+            totalDRCaptures = Convert.ToInt32(text_numSamples.Text)
         Catch ex As Exception
             MsgBox("ERROR: Invalid Input")
             text_numSamples.Text = "10000"
+            totalDRCaptures = 10000
         End Try
+        UpdateRecordTimeEstimate()
     End Sub
 
     ''' <summary>
@@ -268,6 +277,12 @@ Public Class IMUStreamingGUI
     End Sub
 
 #Region "Helper Functions"
+
+    Private Sub MeasureDrFreq(timeout As Integer)
+        measuredDrFreq = m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000)
+        label_measuredFreq.Text = FormatNumber(measuredDrFreq, 3).ToString + "  Hz"
+        UpdateRecordTimeEstimate()
+    End Sub
 
     ''' <summary>
     ''' Clean up after a burst read capture has completed
@@ -320,6 +335,21 @@ Public Class IMUStreamingGUI
             newItem.SubItems(0).Text = reg.Label
             burstRegList.Items.Add(newItem)
         Next
+    End Sub
+
+    Private Sub UpdateRecordTimeEstimate()
+        If check_drActive.Checked Then
+            If Not Double.IsPositiveInfinity(measuredDrFreq) Then
+                Dim seconds As Integer = 0
+                seconds = totalDRCaptures / measuredDrFreq
+                Dim span As TimeSpan = TimeSpan.FromSeconds(seconds)
+                lab_recTime.Text = New DateTime(span.Ticks).ToString("HH:mm:ss")
+            Else
+                lab_recTime.Text = "No data ready detected"
+            End If
+        Else
+            lab_recTime.Text = "Async Capture"
+        End If
     End Sub
 
 #End Region

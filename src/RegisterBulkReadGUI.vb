@@ -14,6 +14,7 @@ Public Class RegisterBulkReadGUI
 
     Private WithEvents fileManager As Logger
     Private totalDRCaptures As Integer = 0
+    Private measuredDrFreq As Double = Double.PositiveInfinity
 
     Public Sub FormSetup() Handles Me.Load
 
@@ -153,12 +154,8 @@ Public Class RegisterBulkReadGUI
     Private Sub MainButton_Click(sender As Object, e As EventArgs) Handles MainButton.Click
 
         Dim savePath As String
-        Dim MeasuredFreq As Double = Double.PositiveInfinity
         Dim timeString As String = "_" + DateTime.Now().ToString("s")
         timeString = timeString.Replace(":", "-")
-
-        'Update the data ready pin and measurement
-        UpdateDRPin()
 
         'Check whether user selected registers to stream
         If selectedRegview.Items.Count <= 0 Then
@@ -175,10 +172,9 @@ Public Class RegisterBulkReadGUI
         'Check whether the measured DR is valid
         If m_TopGUI.FX3.DrActive And ValidateDR.Checked Then
             'measure data ready frequency
-            MeasuredFreq = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 10000, 2)
-            DrFreq.Text = FormatNumber(MeasuredFreq, 3).ToString() + "Hz"
+            MeasureDrFreq(10000)
             'allow a freq up to 16KHz
-            If MeasuredFreq > 16000 Or MeasuredFreq = Double.PositiveInfinity Then
+            If measuredDrFreq > 16000 Or measuredDrFreq = Double.PositiveInfinity Then
                 If MessageBox.Show("Data ready frequency measured invalid. Continue?", "Invalid Data Ready!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
                     Exit Sub
                 End If
@@ -193,7 +189,7 @@ Public Class RegisterBulkReadGUI
 
         'Check the time it will take to capture each frame and ask the user if it exceeds the DR period
         If m_TopGUI.FX3.DrActive And ValidateDR.Checked Then
-            Dim drPeriod As Double = 1 / MeasuredFreq
+            Dim drPeriod As Double = 1 / measuredDrFreq
             Dim num16bitregs As Integer = 0
             For Each reg In regList
                 If reg.NumBytes = 1 Or reg.NumBytes = 2 Then
@@ -306,8 +302,7 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub MeasureDR_Click(sender As Object, e As EventArgs) Handles MeasureDR.Click
-        UpdateDRPin()
-        DrFreq.Text = FormatNumber(m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, 5000, 2), 3).ToString + "  Hz"
+        MeasureDrFreq(5000)
     End Sub
 
     Private Sub UpdateDRPin()
@@ -335,7 +330,7 @@ Public Class RegisterBulkReadGUI
         End If
     End Sub
 
-    Private Sub UpdateGUI()
+    Private Sub NumberDRToCapture_TextChanged(sender As Object, e As EventArgs) Handles NumberDRToCapture.TextChanged
         'Check DR capture input
         If NumberDRToCapture.Text = "" Then
             NumberDRToCapture.Text = 0
@@ -346,17 +341,18 @@ Public Class RegisterBulkReadGUI
             MsgBox("ERROR: Invalid Input")
             Exit Sub
         End Try
-    End Sub
-
-    Private Sub NumberDRToCapture_TextChanged(sender As Object, e As EventArgs) Handles NumberDRToCapture.TextChanged
-        UpdateGUI()
+        UpdateRecordTimeEstimate()
     End Sub
 
     Private Sub DrActiveBox_CheckedChanged(sender As Object, e As EventArgs) Handles DrActiveBox.CheckedChanged
         m_TopGUI.FX3.DrActive = DrActiveBox.Checked
-        MeasureDR.Enabled = m_TopGUI.FX3.DrActive
-        ValidateDR.Enabled = m_TopGUI.FX3.DrActive
+        MeasureDR.Enabled = DrActiveBox.Checked
+        ValidateDR.Enabled = DrActiveBox.Checked
         ValidateDR.Checked = DrActiveBox.Checked
+        If DrActiveBox.Checked Then
+            MeasureDrFreq(500)
+        End If
+        UpdateRecordTimeEstimate()
     End Sub
 
     Private Sub btn_loadregs_Click(sender As Object, e As EventArgs) Handles btn_loadregs.Click
@@ -403,6 +399,28 @@ Public Class RegisterBulkReadGUI
             MsgBox("ERROR: No register to save")
         End If
 
+    End Sub
+
+    Private Sub MeasureDrFreq(timeout As Integer)
+        UpdateDRPin()
+        measuredDrFreq = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, timeout, 2)
+        DrFreq.Text = FormatNumber(measuredDrFreq, 3).ToString + "  Hz"
+        UpdateRecordTimeEstimate()
+    End Sub
+
+    Private Sub UpdateRecordTimeEstimate()
+        If DrActiveBox.Checked Then
+            If Not Double.IsPositiveInfinity(measuredDrFreq) Then
+                Dim seconds As Integer = 0
+                seconds = totalDRCaptures / measuredDrFreq
+                Dim span As TimeSpan = TimeSpan.FromSeconds(seconds)
+                label_recTime.Text = New DateTime(span.Ticks).ToString("HH:mm:ss")
+            Else
+                label_recTime.Text = "No data ready detected"
+            End If
+        Else
+            label_recTime.Text = "Async Capture"
+        End If
     End Sub
 
 End Class
