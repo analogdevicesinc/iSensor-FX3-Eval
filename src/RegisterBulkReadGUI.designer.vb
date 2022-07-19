@@ -42,8 +42,6 @@ Partial Class RegisterBulkReadGUI
         Me.DrActiveBox = New System.Windows.Forms.CheckBox()
         Me.linesPerFile = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.SamplesPerWrite = New System.Windows.Forms.TextBox()
         Me.regStreamingList = New System.Windows.Forms.Label()
         Me.btn_saveregs = New System.Windows.Forms.Button()
         Me.btn_loadregs = New System.Windows.Forms.Button()
@@ -238,23 +236,6 @@ Partial Class RegisterBulkReadGUI
         Me.Label2.TabIndex = 33
         Me.Label2.Text = "# Lines Per File:"
         '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(8, 340)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(107, 13)
-        Me.Label8.TabIndex = 34
-        Me.Label8.Text = "# Samples Per Write:"
-        '
-        'SamplesPerWrite
-        '
-        Me.SamplesPerWrite.Location = New System.Drawing.Point(11, 356)
-        Me.SamplesPerWrite.Name = "SamplesPerWrite"
-        Me.SamplesPerWrite.Size = New System.Drawing.Size(111, 20)
-        Me.SamplesPerWrite.TabIndex = 10
-        Me.SamplesPerWrite.Text = "10000"
-        '
         'regStreamingList
         '
         Me.regStreamingList.AutoSize = True
@@ -321,8 +302,6 @@ Partial Class RegisterBulkReadGUI
         Me.Controls.Add(Me.btn_loadregs)
         Me.Controls.Add(Me.btn_saveregs)
         Me.Controls.Add(Me.regStreamingList)
-        Me.Controls.Add(Me.SamplesPerWrite)
-        Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.linesPerFile)
         Me.Controls.Add(Me.DrActiveBox)
@@ -371,8 +350,6 @@ Partial Class RegisterBulkReadGUI
     Friend WithEvents DrActiveBox As CheckBox
     Friend WithEvents linesPerFile As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents Label8 As Label
-    Friend WithEvents SamplesPerWrite As TextBox
     Friend WithEvents regStreamingList As Label
     Friend WithEvents btn_saveregs As Button
     Friend WithEvents btn_loadregs As Button

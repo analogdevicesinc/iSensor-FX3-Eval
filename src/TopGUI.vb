@@ -38,7 +38,6 @@ Public Class TopGUI
     'List of list view items for bulk register read
     Friend BulkRegList As List(Of ListViewItem)
     Friend numRegSamples As Integer
-    Friend samplesPerWrite As Integer
     Friend linesPerFile As Integer
 
     'data visualization color palette
@@ -176,7 +175,6 @@ Public Class TopGUI
         BulkRegList = New List(Of ListViewItem)
         numRegSamples = 10000
         linesPerFile = 1000000
-        samplesPerWrite = 10000
 
         'load plotter settings
         If My.Settings.PlotSettings <> "" Then

@@ -61,7 +61,6 @@ Public Class RegisterBulkReadGUI
             selectedRegview.Items.Add(item)
         Next
         NumberDRToCapture.Text = m_TopGUI.numRegSamples.ToString()
-        SamplesPerWrite.Text = m_TopGUI.samplesPerWrite.ToString()
         linesPerFile.Text = m_TopGUI.linesPerFile.ToString()
         UpdateRegCountLabel()
         SetupToolTips()
@@ -93,7 +92,6 @@ Public Class RegisterBulkReadGUI
         tip0.SetToolTip(RegisterList, "Select register from the loaded register map to log")
         tip0.SetToolTip(DrFreq, "The current data ready frequency")
         tip0.SetToolTip(NumberDRToCapture, "The total number of reads of the selected register list to log")
-        tip0.SetToolTip(SamplesPerWrite, "The total number of reads of the selected register list to write to the log file in a single operation")
         tip0.SetToolTip(linesPerFile, "Maximum lines in a single log file")
         tip0.SetToolTip(MainButton, "Start the register stream operation")
         tip0.SetToolTip(StreamingAVARCancelButton, "Cancel a running register stream operation")
@@ -111,7 +109,6 @@ Public Class RegisterBulkReadGUI
         'sample settings
         m_TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
         m_TopGUI.linesPerFile = Convert.ToInt32(linesPerFile.Text)
-        m_TopGUI.samplesPerWrite = Convert.ToInt32(SamplesPerWrite.Text)
 
         're-enable button
         m_TopGUI.btn_BulkRegRead.Enabled = True
@@ -235,13 +232,11 @@ Public Class RegisterBulkReadGUI
         fileManager.Captures = 1 'Number of times to read each register in the reg map
         'set the register word order
         fileManager.LowerWordFirst = m_TopGUI.Dut.IsLowerFirst
+        fileManager.BuffersPerWrite = 10000
         Try
             fileManager.FileMaxDataRows = Convert.ToInt32(linesPerFile.Text()) 'Keep this under 1M samples to open in Excel
-            fileManager.BuffersPerWrite = Convert.ToInt32(SamplesPerWrite.Text) 'Dynamic buffers per write to avoid storing too much data in RAM
         Catch ex As Exception
             fileManager.FileMaxDataRows = 1000000
-            fileManager.BuffersPerWrite = 10000
-            SamplesPerWrite.Text = "10000"
             linesPerFile.Text = "1000000"
             MsgBox("ERROR: Invalid settings entered, using default")
         End Try
@@ -268,7 +263,6 @@ Public Class RegisterBulkReadGUI
         RegisterList.Enabled = False
         selectedRegview.Enabled = False
         MainButton.Enabled = False
-        SamplesPerWrite.Enabled = False
         linesPerFile.Enabled = False
         btn_loadregs.Enabled = False
         btn_saveregs.Enabled = False
@@ -296,7 +290,6 @@ Public Class RegisterBulkReadGUI
         RegisterList.Enabled = True
         selectedRegview.Enabled = True
         MainButton.Enabled = True
-        SamplesPerWrite.Enabled = True
         linesPerFile.Enabled = True
         btn_loadregs.Enabled = True
         btn_saveregs.Enabled = True
