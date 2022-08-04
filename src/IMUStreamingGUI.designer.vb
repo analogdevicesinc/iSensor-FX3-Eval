@@ -44,7 +44,7 @@ Partial Class IMUStreamingGUI
         Me.radio_16bit = New System.Windows.Forms.RadioButton()
         Me.check_checksum = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.lab_recTime = New System.Windows.Forms.Label()
+        Me.text_recTime = New System.Windows.Forms.TextBox()
         Me.group_config.SuspendLayout()
         Me.panel_dataformat.SuspendLayout()
         Me.panel_wordsize.SuspendLayout()
@@ -267,22 +267,19 @@ Partial Class IMUStreamingGUI
         Me.Label2.TabIndex = 36
         Me.Label2.Text = "Rec. Time (est):"
         '
-        'lab_recTime
+        'text_recTime
         '
-        Me.lab_recTime.BackColor = System.Drawing.SystemColors.Window
-        Me.lab_recTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.lab_recTime.Location = New System.Drawing.Point(97, 221)
-        Me.lab_recTime.Name = "lab_recTime"
-        Me.lab_recTime.Size = New System.Drawing.Size(95, 20)
-        Me.lab_recTime.TabIndex = 37
-        Me.lab_recTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.text_recTime.Location = New System.Drawing.Point(97, 222)
+        Me.text_recTime.Name = "text_recTime"
+        Me.text_recTime.Size = New System.Drawing.Size(94, 20)
+        Me.text_recTime.TabIndex = 37
         '
         'IMUStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(420, 362)
-        Me.Controls.Add(Me.lab_recTime)
+        Me.Controls.Add(Me.text_recTime)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.group_config)
         Me.Controls.Add(Me.check_drActive)
@@ -335,5 +332,5 @@ Partial Class IMUStreamingGUI
     Friend WithEvents panel_dataformat As Panel
     Friend WithEvents panel_wordsize As Panel
     Friend WithEvents Label2 As Label
-    Friend WithEvents lab_recTime As Label
+    Friend WithEvents text_recTime As TextBox
 End Class

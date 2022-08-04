@@ -49,7 +49,7 @@ Partial Class RegisterBulkReadGUI
         Me.Label4 = New System.Windows.Forms.Label()
         Me.fileBaseName = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
-        Me.label_recTime = New System.Windows.Forms.Label()
+        Me.text_recTime = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'Label1
@@ -223,7 +223,7 @@ Partial Class RegisterBulkReadGUI
         '
         'linesPerFile
         '
-        Me.linesPerFile.Location = New System.Drawing.Point(12, 398)
+        Me.linesPerFile.Location = New System.Drawing.Point(11, 398)
         Me.linesPerFile.Name = "linesPerFile"
         Me.linesPerFile.Size = New System.Drawing.Size(111, 20)
         Me.linesPerFile.TabIndex = 11
@@ -302,22 +302,20 @@ Partial Class RegisterBulkReadGUI
         Me.Label8.TabIndex = 103
         Me.Label8.Text = "# Record Time (est):"
         '
-        'label_recTime
+        'text_recTime
         '
-        Me.label_recTime.BackColor = System.Drawing.SystemColors.Window
-        Me.label_recTime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.label_recTime.Location = New System.Drawing.Point(11, 356)
-        Me.label_recTime.Name = "label_recTime"
-        Me.label_recTime.Size = New System.Drawing.Size(111, 21)
-        Me.label_recTime.TabIndex = 104
-        Me.label_recTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.text_recTime.Location = New System.Drawing.Point(11, 357)
+        Me.text_recTime.Name = "text_recTime"
+        Me.text_recTime.Size = New System.Drawing.Size(111, 20)
+        Me.text_recTime.TabIndex = 104
+        Me.text_recTime.Text = "10000"
         '
         'RegisterBulkReadGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(444, 566)
-        Me.Controls.Add(Me.label_recTime)
+        Me.Controls.Add(Me.text_recTime)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.fileBaseName)
@@ -380,5 +378,5 @@ Partial Class RegisterBulkReadGUI
     Friend WithEvents Label4 As Label
     Friend WithEvents fileBaseName As TextBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents label_recTime As Label
+    Friend WithEvents text_recTime As TextBox
 End Class

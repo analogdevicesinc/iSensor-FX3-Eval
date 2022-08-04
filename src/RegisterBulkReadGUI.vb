@@ -16,6 +16,10 @@ Public Class RegisterBulkReadGUI
     Private totalDRCaptures As Integer = 0
     Private measuredDrFreq As Double = Double.PositiveInfinity
 
+    Private capturesUpdated As Boolean = False
+    Private timeUpdated As Boolean = False
+    Private recTimeEnabled As Boolean
+
     Public Sub FormSetup() Handles Me.Load
 
         'create control handle if needed
@@ -65,6 +69,7 @@ Public Class RegisterBulkReadGUI
         linesPerFile.Text = m_TopGUI.linesPerFile.ToString()
         UpdateRegCountLabel()
         SetupToolTips()
+        UpdateRecordTimeEstimate()
 
     End Sub
 
@@ -96,7 +101,7 @@ Public Class RegisterBulkReadGUI
         tip0.SetToolTip(linesPerFile, "Maximum lines in a single log file")
         tip0.SetToolTip(MainButton, "Start the register stream operation")
         tip0.SetToolTip(StreamingAVARCancelButton, "Cancel a running register stream operation")
-
+        tip0.SetToolTip(text_recTime, "Set or view the capture time (hh:mm:ss). This option is only active when reading synchronous to the IMU data ready")
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing
@@ -262,6 +267,8 @@ Public Class RegisterBulkReadGUI
         linesPerFile.Enabled = False
         btn_loadregs.Enabled = False
         btn_saveregs.Enabled = False
+        recTimeEnabled = text_recTime.Enabled
+        text_recTime.Enabled = False
 
     End Sub
 
@@ -289,6 +296,7 @@ Public Class RegisterBulkReadGUI
         linesPerFile.Enabled = True
         btn_loadregs.Enabled = True
         btn_saveregs.Enabled = True
+        text_recTime.Enabled = recTimeEnabled
         InteractWithOtherForms(False, Me)
     End Sub
 
@@ -331,6 +339,12 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub NumberDRToCapture_TextChanged(sender As Object, e As EventArgs) Handles NumberDRToCapture.TextChanged
+        'ensure user can change time or captures
+        If timeUpdated Then
+            timeUpdated = False
+            Exit Sub
+        End If
+        capturesUpdated = True
         'Check DR capture input
         If NumberDRToCapture.Text = "" Then
             NumberDRToCapture.Text = 0
@@ -344,8 +358,31 @@ Public Class RegisterBulkReadGUI
         UpdateRecordTimeEstimate()
     End Sub
 
+    Private Sub text_recTime_TextChanged(sender As Object, e As EventArgs) Handles text_recTime.TextChanged
+        'ensure user can change time or captures
+        If capturesUpdated Then
+            capturesUpdated = False
+            Exit Sub
+        End If
+        timeUpdated = True
+        Dim seconds As Integer
+        Dim values() As String
+        Try
+            values = text_recTime.Text.Split(":")
+            seconds = Convert.ToInt32(values(2))
+            seconds += (60 * Convert.ToInt32(values(1)))
+            seconds += (60 * 60 * Convert.ToInt32(values(0)))
+        Catch ex As Exception
+            timeUpdated = False
+            Exit Sub
+        End Try
+        totalDRCaptures = CInt(seconds * measuredDrFreq)
+        NumberDRToCapture.Text = totalDRCaptures.ToString()
+    End Sub
+
     Private Sub DrActiveBox_CheckedChanged(sender As Object, e As EventArgs) Handles DrActiveBox.CheckedChanged
         m_TopGUI.FX3.DrActive = DrActiveBox.Checked
+        capturesUpdated = True
         MeasureDR.Enabled = DrActiveBox.Checked
         ValidateDR.Enabled = DrActiveBox.Checked
         ValidateDR.Checked = DrActiveBox.Checked
@@ -405,21 +442,32 @@ Public Class RegisterBulkReadGUI
         UpdateDRPin()
         measuredDrFreq = m_TopGUI.FX3.MeasurePinFreq(m_TopGUI.FX3.DrPin, 1, timeout, 2)
         DrFreq.Text = FormatNumber(measuredDrFreq, 3).ToString + "  Hz"
+        capturesUpdated = True
         UpdateRecordTimeEstimate()
     End Sub
 
     Private Sub UpdateRecordTimeEstimate()
+        text_recTime.Enabled = True
         If DrActiveBox.Checked Then
             If Not Double.IsPositiveInfinity(measuredDrFreq) Then
-                Dim seconds As Integer = 0
-                seconds = totalDRCaptures / measuredDrFreq
-                Dim span As TimeSpan = TimeSpan.FromSeconds(seconds)
-                label_recTime.Text = New DateTime(span.Ticks).ToString("HH:mm:ss")
+                If Not timeUpdated Then
+                    Dim seconds As Integer = 0
+                    Dim minutes As Integer
+                    Dim hours As Integer
+                    seconds = totalDRCaptures / measuredDrFreq
+                    minutes = Math.Floor(seconds / 60)
+                    hours = Math.Floor(minutes / 60)
+                    seconds = seconds Mod 60
+                    minutes = minutes Mod 60
+                    text_recTime.Text = hours.ToString() + ":" + minutes.ToString("D2") + ":" + seconds.ToString("D2")
+                End If
             Else
-                label_recTime.Text = "No data ready detected"
+                text_recTime.Text = "No data ready detected"
+                text_recTime.Enabled = False
             End If
         Else
-            label_recTime.Text = "Async Capture"
+            text_recTime.Text = "Async Capture"
+            text_recTime.Enabled = False
         End If
     End Sub
 

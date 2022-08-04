@@ -17,6 +17,10 @@ Public Class IMUStreamingGUI
     Private totalDRCaptures As Integer = 0
     Private measuredDrFreq As Double = Double.PositiveInfinity
 
+    Private capturesUpdated As Boolean = False
+    Private timeUpdated As Boolean = False
+    Private recTimeEnabled As Boolean
+
     ''' <summary>
     ''' Load the application
     ''' </summary>
@@ -169,6 +173,8 @@ Public Class IMUStreamingGUI
         check_drActive.Enabled = False
         btn_start.Enabled = False
         group_config.Enabled = False
+        recTimeEnabled = text_recTime.Enabled
+        text_recTime.Enabled = False
 
     End Sub
 
@@ -247,6 +253,7 @@ Public Class IMUStreamingGUI
         If check_drActive.Checked Then
             MeasureDrFreq(500)
         Else
+            capturesUpdated = True
             UpdateRecordTimeEstimate()
         End If
     End Sub
@@ -257,6 +264,12 @@ Public Class IMUStreamingGUI
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
     Private Sub text_numSamples_TextChanged(sender As Object, e As EventArgs) Handles text_numSamples.TextChanged
+        'ensure user can change time or captures
+        If timeUpdated Then
+            timeUpdated = False
+            Exit Sub
+        End If
+        capturesUpdated = True
         'Check DR capture input
         Try
             totalDRCaptures = Convert.ToInt32(text_numSamples.Text)
@@ -281,6 +294,7 @@ Public Class IMUStreamingGUI
     Private Sub MeasureDrFreq(timeout As Integer)
         measuredDrFreq = m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000)
         label_measuredFreq.Text = FormatNumber(measuredDrFreq, 3).ToString + "  Hz"
+        capturesUpdated = True
         UpdateRecordTimeEstimate()
     End Sub
 
@@ -306,6 +320,7 @@ Public Class IMUStreamingGUI
         btn_start.Enabled = True
         group_config.Enabled = True
         check_drActive.Enabled = True
+        text_recTime.Enabled = recTimeEnabled
 
         'Clear burst mode
         m_TopGUI.FX3.ClearBurstMode()
@@ -337,18 +352,50 @@ Public Class IMUStreamingGUI
         Next
     End Sub
 
+    Private Sub text_recTime_TextChanged(sender As Object, e As EventArgs) Handles text_recTime.TextChanged
+        'ensure user can change time or captures
+        If capturesUpdated Then
+            capturesUpdated = False
+            Exit Sub
+        End If
+        timeUpdated = True
+        Dim seconds As Integer
+        Dim values() As String
+        Try
+            values = text_recTime.Text.Split(":")
+            seconds = Convert.ToInt32(values(2))
+            seconds += (60 * Convert.ToInt32(values(1)))
+            seconds += (60 * 60 * Convert.ToInt32(values(0)))
+        Catch ex As Exception
+            timeUpdated = False
+            Exit Sub
+        End Try
+        totalDRCaptures = CInt(seconds * measuredDrFreq)
+        text_numSamples.Text = totalDRCaptures.ToString()
+    End Sub
+
     Private Sub UpdateRecordTimeEstimate()
+        text_recTime.Enabled = True
         If check_drActive.Checked Then
             If Not Double.IsPositiveInfinity(measuredDrFreq) Then
-                Dim seconds As Integer = 0
-                seconds = totalDRCaptures / measuredDrFreq
-                Dim span As TimeSpan = TimeSpan.FromSeconds(seconds)
-                lab_recTime.Text = New DateTime(span.Ticks).ToString("HH:mm:ss")
+                If Not timeUpdated Then
+                    Dim seconds As Integer = 0
+                    Dim minutes As Integer
+                    Dim hours As Integer
+                    seconds = totalDRCaptures / measuredDrFreq
+                    minutes = Math.Floor(seconds / 60)
+                    hours = Math.Floor(minutes / 60)
+                    seconds = seconds Mod 60
+                    minutes = minutes Mod 60
+                    text_recTime.Text = hours.ToString() + ":" + minutes.ToString("D2") + ":" + seconds.ToString("D2")
+                End If
             Else
-                lab_recTime.Text = "No data ready detected"
+                text_recTime.Text = "No data ready detected"
+                text_recTime.Enabled = False
             End If
         Else
-            lab_recTime.Text = "Async Capture"
+            text_recTime.Text = "Async Capture"
+            text_recTime.Enabled = False
         End If
     End Sub
 
