@@ -87,6 +87,10 @@ Public Class TopGUI
         Dim colors As String()
         Dim validPersonality As Boolean
 
+        'Register exception handlers
+        AddHandler Application.ThreadException, AddressOf ThreadErrorHandler
+        AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf GeneralErrorHandler
+
         'show welcome guide if selected
         If My.Settings.ShowWelcome Then
             Dim welcomeGuide As New WelcomeGuideGUI()
@@ -203,9 +207,6 @@ Public Class TopGUI
         m_disconnectTimer.Enabled = False
         AddHandler m_disconnectTimer.Elapsed, New ElapsedEventHandler(AddressOf timeoutHandler)
 
-        'Add exception handler
-        AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf GeneralErrorHandler
-
         'Set up automotive SPI interface
         m_AutoSpi = New iSensorAutomotiveSpi(FX3)
         m_AutoSpi.IgnoreExceptions = True
@@ -222,11 +223,6 @@ Public Class TopGUI
 
         'Set tool tips
         SetupToolTips()
-
-        'Register exception handlers
-        Dim myApp As AppDomain = AppDomain.CurrentDomain
-        AddHandler myApp.UnhandledException, AddressOf GeneralErrorHandler
-        AddHandler Application.ThreadException, AddressOf ThreadErrorHandler
 
         'check screen settings
         Dim goodLoc As Boolean = False
