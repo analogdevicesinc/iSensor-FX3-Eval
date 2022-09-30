@@ -480,7 +480,7 @@ Partial Class TopGUI
         Dim fileBrowseResult As DialogResult
         Dim loadPath As String
         Dim writeRegs As New List(Of RegClass)
-        Dim writeVals As New List(Of UInteger)
+        Dim writeVals As New List(Of Integer)
         fileBrowser.Title = "Please Select the Register Dump File"
         fileBrowser.Filter = "Register Dump Files|*.csv"
         fileBrowseResult = fileBrowser.ShowDialog()
@@ -505,7 +505,7 @@ Partial Class TopGUI
                 'if readable then add value
                 If reg.IsWriteable Then
                     writeRegs.Add(reg)
-                    writeVals.Add(Convert.ToUInt32(regLine(3)))
+                    writeVals.Add(Convert.ToInt32(regLine(3)))
                 End If
             Catch ex As Exception
                 If MessageBox.Show("Error Parsing CSV file! Continue?", "Error", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
@@ -517,7 +517,7 @@ Partial Class TopGUI
         csvReader.Close()
 
         'apply data to DUT
-        Dut.WriteUnsigned(writeRegs, writeVals)
+        Dut.WriteSigned(writeRegs, writeVals)
 
         'check if exceptions occurred
         ValidateAutomotiveSpiData()
