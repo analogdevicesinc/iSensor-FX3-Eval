@@ -479,8 +479,10 @@ Partial Class TopGUI
         Dim fileBrowser As New OpenFileDialog
         Dim fileBrowseResult As DialogResult
         Dim loadPath As String
-        Dim writeRegs As New List(Of RegClass)
-        Dim writeVals As New List(Of Integer)
+        Dim signedRegs As New List(Of RegClass)
+        Dim unsignedRegs As New List(Of RegClass)
+        Dim signedWriteData As New List(Of Integer)
+        Dim unsignedWriteData As New List(Of UInteger)
         fileBrowser.Title = "Please Select the Register Dump File"
         fileBrowser.Filter = "Register Dump Files|*.csv"
         fileBrowseResult = fileBrowser.ShowDialog()
@@ -495,6 +497,8 @@ Partial Class TopGUI
 
         Dim regLine As String()
         Dim reg As RegClass
+        Dim errorMsg As String
+        Dim signedVal As Integer
         'clear header
         csvReader.ReadLine()
         While Not csvReader.EndOfData
@@ -504,11 +508,23 @@ Partial Class TopGUI
                 reg = RegMap(regLine(0))
                 'if readable then add value
                 If reg.IsWriteable Then
-                    writeRegs.Add(reg)
-                    writeVals.Add(Convert.ToInt32(regLine(3)))
+                    If reg.IsTwosComp Then
+                        If Not Integer.TryParse(regLine(3), signedVal) Then
+                            'some data logs have signed register data stored as unsigned
+                            unsignedWriteData.Add(Convert.ToUInt32(regLine(3)))
+                            unsignedRegs.Add(reg)
+                        Else
+                            signedWriteData.Add(signedVal)
+                            signedRegs.Add(reg)
+                        End If
+                    Else
+                        unsignedWriteData.Add(Convert.ToUInt32(regLine(3)))
+                        unsignedRegs.Add(reg)
+                    End If
                 End If
             Catch ex As Exception
-                If MessageBox.Show("Error Parsing CSV file! Continue?", "Error", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
+                errorMsg = "Error Parsing CSV file! " + Environment.NewLine + ex.Message + Environment.NewLine + " Continue?"
+                If MessageBox.Show(errorMsg, "Error", MessageBoxButtons.OKCancel) <> DialogResult.OK Then
                     csvReader.Close()
                     Exit Sub
                 End If
@@ -517,7 +533,8 @@ Partial Class TopGUI
         csvReader.Close()
 
         'apply data to DUT
-        Dut.WriteSigned(writeRegs, writeVals)
+        Dut.WriteSigned(signedRegs, signedWriteData)
+        Dut.WriteUnsigned(unsignedRegs, unsignedWriteData)
 
         'check if exceptions occurred
         ValidateAutomotiveSpiData()
