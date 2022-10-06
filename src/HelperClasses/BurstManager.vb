@@ -24,6 +24,7 @@ Public Enum BurstDevice
     ADIS16445
     ADIS1644x
     ADIS1636x
+    NoBurst
     Unknown
 End Enum
 
@@ -757,6 +758,10 @@ Public Class BurstManager
             '2 padding bytes
             m_paddingBytes = 2
 
+        ElseIf personality.Contains("1648") Or personality.Contains("ADcm") Then
+            m_device = BurstDevice.NoBurst
+            'burst not supported for ADIS1648x family
+            'ADcmXL is supported via dedicated form
         Else
             'either no burst on selected device, or personality not found
             Dim prod_id As UInteger = 0

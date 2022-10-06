@@ -57,6 +57,11 @@ Public Class IMUStreamingGUI
             statusLabel.BackColor = m_TopGUI.ERROR_COLOR
             btn_start.Enabled = False
             group_config.Enabled = False
+        ElseIf manager.Device = BurstDevice.NoBurst Then
+            statusLabel.Text = "Burst read not supported!"
+            statusLabel.BackColor = m_TopGUI.ERROR_COLOR
+            btn_start.Enabled = False
+            group_config.Enabled = False
         Else
             'set up config options based on burst manager
             If manager.Burst16Bit Then
