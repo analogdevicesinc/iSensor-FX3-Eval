@@ -784,7 +784,13 @@ Public Class TopGUI
         Dim FX3SN As String = "ERROR"
         Dim FX3BoardType As String = "ERROR"
         If Not firstException Then
-            'force kill after first exception
+            'shut down the FX3
+            Try
+                FX3.Disconnect()
+            Catch ex As Exception
+                'squash - might not be able to talk to the FX3 board here
+            End Try
+            'force kill the process
             Environment.Exit(1)
         Else
             'set first exception flag to false (static means is persistent through calls)
