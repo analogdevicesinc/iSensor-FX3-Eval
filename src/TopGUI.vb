@@ -804,13 +804,9 @@ Public Class TopGUI
             End If
         End If
         currentTimeStr = currentTimeStr.Replace(":", "-")
-        Dim logPath As String = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Analog Devices", "iSensorFX3Eval")
-        'check dir
-        If Not Directory.Exists(logPath) Then
-            Directory.CreateDirectory(logPath)
-        End If
+        Dim logPath As String = Environment.CurrentDirectory
         'check file
-        logPath = Path.Combine(logPath, "ERROR_LOG.csv")
+        logPath = Path.Combine(logPath, "iSensor_FX3_Eval_Error_Log.csv")
         If Not File.Exists(logPath) Then
             File.WriteAllLines(logPath, {"DATE,USER,OS,REGMAP,FX3VERSION,FX3UPTIME,FX3SN,FX3TYPE,EXCEPTION"})
         End If
@@ -827,7 +823,7 @@ Public Class TopGUI
                             FX3SN + "," +
                             FX3BoardType + "," +
                             exStr})
-        MsgBox("ERROR: Un-handled exception has occurred. Detailed data has been stored at " + logPath)
+        MsgBox("Error: Un-handled exception has occurred: " + e.Message + Environment.NewLine + "Detailed data has been stored at " + logPath)
     End Sub
 
     ''' <summary>
