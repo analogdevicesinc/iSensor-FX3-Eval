@@ -309,9 +309,9 @@ Public Class ADcmXLStreamingGUI
 
         'Set REC_CTRL
         If timeoutEnable = 1 Then
-            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("REC_CTRL1"), &H8103)
+            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("REC_CTRL"), &H8103)
         ElseIf timeoutEnable = 0 Then
-            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("REC_CTRL1"), &H103)
+            m_TopGUI.Dut.WriteUnsigned(m_TopGUI.RegMap("REC_CTRL"), &H103)
         End If
         System.Threading.Thread.Sleep(100)
 
