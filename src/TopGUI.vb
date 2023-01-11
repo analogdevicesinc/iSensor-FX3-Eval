@@ -273,6 +273,8 @@ Public Class TopGUI
                 SetupToolTips()
                 RegFormSetup()
                 DataPlotRegsInit()
+                'Ensure we are set to read in hex by default
+                scaledData.Checked = False
             Catch ex As Exception
                 MsgBox("ERROR: Invalid RegMap Selected! " + ex.Message() + " " + RegMap.ErrorText)
             End Try
