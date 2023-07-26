@@ -1,0 +1,14 @@
+Screaming Circuits SMD component position file.
+
+Centroid Data for pc board: "Cypress FX3 Breakout No SR RevC.brd" as of: 9/26/2018 1:09 PM
+Measurements are in inches. Comma delimited
+Only surface mount components included
+
+RefDes,Layer,LocationX,LocationY,Rotation
+J1,Top,0.235,2.570,270
+J2,Top,1.875,2.570,270
+J5,Top,3.035,1.610,270
+R1,Top,0.650,1.720,180
+R2,Top,0.650,1.620,180
+R3,Top,0.650,1.420,180
+R4,Top,0.650,1.520,180
