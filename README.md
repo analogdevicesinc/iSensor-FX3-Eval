@@ -6,7 +6,7 @@ In addition to launching a redesigned hardware platform, we’ve also developed 
 
 The documentation for the iSensor FX3Api can be accessed here:
 
-
+https://analogdevicesinc.github.io/iSensor-FX3-Eval/
 
 ## Supporting Documentation
 
