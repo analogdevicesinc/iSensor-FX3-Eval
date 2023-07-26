@@ -9,11 +9,15 @@ clear
 H = uicontrol('Style', 'PushButton', ...
                     'String', 'Break', ...
                     'Callback', 'delete(gcbf)');
+                
+
+%How many levels up is root dir of repo?
+root_dir = '../../../../';
 
 %Get paths
-wrapperPath = fullfile(strcat(pwd, '../../../../resources/FX3ApiWrapper.dll'));
-regMapPath = fullfile(strcat(pwd, '../../../regmaps/ADIS1650x_Regmap.csv'));
-resourcePath = fullfile(strcat(pwd, '../../../../resources/'));
+wrapperPath = fullfile(strcat(pwd, root_dir, 'resources/FX3ApiWrapper.dll'));
+regMapPath = fullfile(strcat(pwd, root_dir, 'regmaps/ADIS1650x_Regmap.csv'));
+resourcePath = fullfile(strcat(pwd, root_dir, 'resources/'));
 
 %Load wrapper DLL
 NET.addAssembly(wrapperPath);
