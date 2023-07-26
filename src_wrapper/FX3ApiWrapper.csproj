@@ -33,20 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="adisApi">
+    <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\resources\adisApi.dll</HintPath>
     </Reference>
-    <Reference Include="adisInterface">
+    <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\resources\adisInterface.dll</HintPath>
     </Reference>
-    <Reference Include="CyUSB">
+    <Reference Include="CyUSB, Version=1.2.3.0, Culture=neutral, PublicKeyToken=01f1d2b6c851ae92, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Api">
+    <Reference Include="FX3Api, Version=2.9.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\resources\FX3Api.dll</HintPath>
-    </Reference>
-    <Reference Include="FX3USB">
-      <HintPath>..\resources\FX3USB.dll</HintPath>
     </Reference>
     <Reference Include="RegMapClasses">
       <HintPath>..\resources\RegMapClasses.dll</HintPath>
