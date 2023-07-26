@@ -1,0 +1,459 @@
+﻿<html><head><meta http-equiv="X-UA-Compatible" content="IE=edge" /><link rel="shortcut icon" href="../icons/favicon.ico" /><link rel="stylesheet" type="text/css" href="../styles/branding.css" /><link rel="stylesheet" type="text/css" href="../styles/branding-en-US.css" /><script type="text/javascript" src="../scripts/branding.js"> </script><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>FX3Connection Class</title><meta name="Language" content="en-us" /><meta name="System.Keywords" content="FX3Connection class" /><meta name="System.Keywords" content="FX3Api.FX3Connection class" /><meta name="Microsoft.Help.F1" content="FX3Api.FX3Connection" /><meta name="Microsoft.Help.Id" content="T:FX3Api.FX3Connection" /><meta name="Description" content="This is the primary class for interfacing with the FX3 based eval platform. Implements IRegInterface, ISpi32Interface, and IPinFcns, in addition to a superset of extra interfacing functions specific to the FX3 platform." /><meta name="Microsoft.Help.ContentType" content="Reference" /><meta name="BrandingAware" content="true" /><meta name="container" content="FX3Api" /><meta name="file" content="8620563f-3f40-5410-ed4b-dfba03527986" /><meta name="guid" content="8620563f-3f40-5410-ed4b-dfba03527986" /><link rel="stylesheet" type="text/css" href="../styles/branding-Website.css" /><script type="text/javascript" src="../scripts/jquery-3.3.1.min.js"></script><script type="text/javascript" src="../scripts/branding-Website.js"></script><script type="text/javascript" src="../scripts/clipboard.min.js"></script></head><body onload="OnLoad('cs')"><input type="hidden" id="userDataCache" class="userDataStyle" /><div class="pageHeader" id="PageHeader">Analog Devices iSensor FX3 API Documentation<form id="SearchForm" method="get" action="#" onsubmit="javascript:TransferToSearchPage(); return false;"><input id="SearchTextBox" type="text" maxlength="200" /><button id="SearchButton" type="submit"></button></form></div><div class="pageBody"><div class="leftNav" id="leftNav"><div id="tocNav"><div class="toclevel0" data-toclevel="0"><a class="tocCollapsed" onclick="javascript: Toggle(this);" href="#!" /><a data-tochassubtree="true" href="../html/d75eb659-6335-53f6-af7a-81814a21ab7f.htm" title="Analog Devices iSensor FX3 API Documentation" tocid="roottoc">Analog Devices iSensor FX3 API Documentation</a></div><div class="toclevel0" data-toclevel="0"><a class="tocCollapsed" onclick="javascript: Toggle(this);" href="#!" /><a data-tochassubtree="true" href="../html/d75eb659-6335-53f6-af7a-81814a21ab7f.htm" title="Namespaces" tocid="d75eb659-6335-53f6-af7a-81814a21ab7f">Namespaces</a></div><div class="toclevel0" data-toclevel="0"><a class="tocCollapsed" onclick="javascript: Toggle(this);" href="#!" /><a data-tochassubtree="true" href="../html/338939de-c7bb-3899-fea8-9b1a456a0a9c.htm" title="FX3Api" tocid="338939de-c7bb-3899-fea8-9b1a456a0a9c">FX3Api</a></div><div class="toclevel1 current" data-toclevel="1" data-childrenloaded="true"><a class="tocExpanded" onclick="javascript: Toggle(this);" href="#!" /><a data-tochassubtree="true" href="../html/8620563f-3f40-5410-ed4b-dfba03527986.htm" title="FX3Connection Class" tocid="8620563f-3f40-5410-ed4b-dfba03527986">FX3Connection Class</a></div><div class="toclevel2" data-toclevel="2"><a data-tochassubtree="false" href="../html/2dec6402-3f29-cd7d-7f98-92cec2a66342.htm" title="FX3Connection Constructor " tocid="2dec6402-3f29-cd7d-7f98-92cec2a66342">FX3Connection Constructor </a></div><div class="toclevel2" data-toclevel="2"><a class="tocCollapsed" onclick="javascript: Toggle(this);" href="#!" /><a data-tochassubtree="true" href="../html/1d16c313-17db-cbfa-9d2c-f05cbdfbda6a.htm" title="FX3Connection Properties" tocid="1d16c313-17db-cbfa-9d2c-f05cbdfbda6a">FX3Connection Properties</a></div><div class="toclevel2" data-toclevel="2"><a class="tocCollapsed" onclick="javascript: Toggle(this);" href="#!" /><a data-tochassubtree="true" href="../html/cb93209d-541f-8e98-d3b9-bbfba5e489e2.htm" title="FX3Connection Methods" tocid="cb93209d-541f-8e98-d3b9-bbfba5e489e2">FX3Connection Methods</a></div><div class="toclevel2" data-toclevel="2"><a class="tocCollapsed" onclick="javascript: Toggle(this);" href="#!" /><a data-tochassubtree="true" href="../html/3229f3fd-c50b-54bb-f322-51ec6b5e81d3.htm" title="FX3Connection Events" tocid="3229f3fd-c50b-54bb-f322-51ec6b5e81d3">FX3Connection Events</a></div></div><div id="tocResizableEW" onmousedown="OnMouseDown(event);"></div><div id="TocResize" class="tocResize"><img id="ResizeImageIncrease" src="../icons/TocOpen.gif" onclick="OnIncreaseToc()" alt="Click or drag to resize" title="Click or drag to resize" /><img id="ResizeImageReset" src="../icons/TocClose.gif" style="display:none" onclick="OnResetToc()" alt="Click or drag to resize" title="Click or drag to resize" /></div></div><div class="topicContent" id="TopicContent"><table class="titleTable"><tr><td class="titleColumn"><h1>FX3Connection Class</h1></td></tr></table><span class="introStyle"></span> <div class="summary">
+ This is the primary class for interfacing with the FX3 based eval platform. Implements IRegInterface, ISpi32Interface, and IPinFcns,
+ in addition to a superset of extra interfacing functions specific to the FX3 platform.
+ </div><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID0RB')" onkeypress="SectionExpandCollapse_CheckKey('ID0RB', event)" tabindex="0"><img id="ID0RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Inheritance Hierarchy</span></div><div id="ID0RBSection" class="collapsibleSection"><a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">System<span id="LSTCF5D35B0_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_0?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>Object</a><br />  <span class="selflink">FX3Api<span id="LSTCF5D35B0_1"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_1?cs=.|vb=.|cpp=::|nu=.|fs=.");</script>FX3Connection</span><br /></div><p> </p>
+    <strong>Namespace:</strong> 
+   <a href="338939de-c7bb-3899-fea8-9b1a456a0a9c.htm">FX3Api</a><br />
+    <strong>Assembly:</strong>
+   FX3Api (in FX3Api.dll) Version: 2.9.4.0 (2.9.4)<div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID2RB')" onkeypress="SectionExpandCollapse_CheckKey('ID2RB', event)" tabindex="0"><img id="ID2RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Syntax</span></div><div id="ID2RBSection" class="collapsibleSection"><div class="codeSnippetContainer"><div class="codeSnippetContainerTabs"><div id="ID1EDCA_tab1" class="codeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID1EDCA','cs','1','4');return false;">C#</a></div><div id="ID1EDCA_tab2" class="codeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID1EDCA','vb','2','4');return false;">VB</a></div><div id="ID1EDCA_tab3" class="codeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID1EDCA','cpp','3','4');return false;">C++</a></div><div id="ID1EDCA_tab4" class="codeSnippetContainerTab"><a href="#" onclick="javascript:ChangeTab('ID1EDCA','fs','4','4');return false;">F#</a></div></div><div class="codeSnippetContainerCodeContainer"><div class="codeSnippetToolBar"><div class="codeSnippetToolBarText"><a id="ID1EDCA_copyCode" href="#" class="copyCodeSnippet" onclick="javascript:CopyToClipboard('ID1EDCA');return false;" title="Copy">Copy</a></div></div><div id="ID1EDCA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre xml:space="preserve"><span class="keyword">public</span> <span class="keyword">class</span> <span class="identifier">FX3Connection</span> : <span class="identifier">IRegInterface</span>, 
+	<span class="identifier">IPinFcns</span>, <span class="identifier">ISpi32Interface</span>, <span class="identifier">IStreamEventProducer</span></pre></div><div id="ID1EDCA_code_Div2" class="codeSnippetContainerCode" style="display: none"><pre xml:space="preserve"><span class="keyword">Public</span> <span class="keyword">Class</span> <span class="identifier">FX3Connection</span>
+	<span class="keyword">Implements</span> <span class="identifier">IRegInterface</span>, <span class="identifier">IPinFcns</span>, <span class="identifier">ISpi32Interface</span>, <span class="identifier">IStreamEventProducer</span></pre></div><div id="ID1EDCA_code_Div3" class="codeSnippetContainerCode" style="display: none"><pre xml:space="preserve"><span class="keyword">public</span> <span class="keyword">ref class</span> <span class="identifier">FX3Connection</span> : <span class="identifier">IRegInterface</span>, 
+	<span class="identifier">IPinFcns</span>, <span class="identifier">ISpi32Interface</span>, <span class="identifier">IStreamEventProducer</span></pre></div><div id="ID1EDCA_code_Div4" class="codeSnippetContainerCode" style="display: none"><pre xml:space="preserve"><span class="keyword">type</span> <span class="identifier">FX3Connection</span> =  
+    <span class="keyword">class</span>
+        <span class="keyword">interface</span> <span class="identifier">IRegInterface</span>
+        <span class="keyword">interface</span> <span class="identifier">IPinFcns</span>
+        <span class="keyword">interface</span> <span class="identifier">ISpi32Interface</span>
+        <span class="keyword">interface</span> <span class="identifier">IStreamEventProducer</span>
+    <span class="keyword">end</span></pre></div></div></div><script type="text/javascript">AddLanguageTabSet("ID1EDCA");</script></div><p>The <span class="selflink">FX3Connection</span> type exposes the following members.</p><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID3RB')" onkeypress="SectionExpandCollapse_CheckKey('ID3RB', event)" tabindex="0"><img id="ID3RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Constructors</span></div><div id="ID3RBSection" class="collapsibleSection"><table class="members" id="constructorList"><tr><th class="iconColumn">
+								 
+							</th><th>Name</th><th>Description</th></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="2dec6402-3f29-cd7d-7f98-92cec2a66342.htm">FX3Connection</a></td><td><div class="summary">
+ Class Constructor. Loads SPI settings and default values for the interface, and starts a background thread to manage programming newly
+ connected boards with the ADI bootloader.
+ </div></td></tr></table><a href="#PageHeader">Top</a></div><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID4RB')" onkeypress="SectionExpandCollapse_CheckKey('ID4RB', event)" tabindex="0"><img id="ID4RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Properties</span></div><div id="ID4RBSection" class="collapsibleSection"><table class="members" id="propertyList"><tr><th class="iconColumn">
+								 
+							</th><th>Name</th><th>Description</th></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="90ceee1c-9915-03cd-3fba-7c83831cedf2.htm">ActiveFX3</a></td><td><div class="summary">
+ Property which returns the active FX3 board. Returns nothing if there is not a board connected.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="d1a213b2-2e95-933b-5cc6-b08fc4cc4f1b.htm">ActiveFX3SerialNumber</a></td><td><div class="summary">
+ Property which returns the serial number of the active FX3 board. 
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="5ecd11dc-34a8-24ad-67bb-e7dea5408541.htm">AvailableFX3s</a></td><td><div class="summary">
+ Property which returns a list of the serial numbers of all FX3 boards running the ADI bootloader
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="675f80fc-8e2c-30c8-a659-17dfe8e1ead5.htm">BitBangSpiConfig</a></td><td><div class="summary">
+ Property to get or set the bit bang SPI configuration. Can select pins, timings, etc
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="2086190f-f48c-3691-57a8-debd1d1b0254.htm">BootloaderPath</a></td><td><div class="summary">
+ Set/get the blink USB bootloader firmware .img file used for multi-board identification
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="e92c6a5d-4828-2487-991e-571f4dc99e61.htm">BufferAvailable</a></td><td><div class="summary">
+ Checks if a streaming frame is available, or will be available soon in thread safe queue. If there is no data in the queue
+ and the streaming thread is not currently running, it will return false.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="b000be76-b0d9-2d31-eb94-2b64c42220c3.htm">BurstByteCount</a></td><td><div class="summary">
+ Get or set the burst word length, in bytes. Is the total count of bytes transfered, including trigger
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="7984a80e-023d-e96f-f8dd-9df74751fd4c.htm">BurstMode</a></td><td><div class="summary">
+ Switches burstMode on and off. Set burstMode to the number of burst read registers. 
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="4064994a-58b9-c855-a7fe-ff4e8eb82427.htm">BurstMOSIData</a></td><td><div class="summary">
+ Data to transmit on the MOSI line during a burst read operation. This value is over written
+ if you set the trigger reg, since trigger reg is given priority.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="775a9e53-dceb-246f-f434-1d487470f894.htm">BusyFX3s</a></td><td><div class="summary">
+ Property which returns a list of the serial numbers of all FX3 boards currently in use, running the application firmware.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="ff2ef39a-270d-8f97-acb1-6810c2f7bab7.htm">ChipSelectControl</a></td><td><div class="summary">
+ Property to get or set the FX3 SPI controller chip select setting. Should be left on hardware control, changing modes will likely cause unexpected behavior.
+ Reqcode:   B2
+ Value:     Desired setting (as SpiChipselectControl )
+ Index:     4  
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="dee2b4d5-6b7a-972c-2ccb-e46cc339bde0.htm">ChipSelectLagTime</a></td><td><div class="summary">
+ The number of SPI clock cycles after the transaction ends that chip select is toggled to idle.
+ Reqcode:   B2
+ Value:     Desired Setting (as SpiLagLeadTime )
+ Index:     6 
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="9b063545-83c3-01c2-c40e-410d4d8a694a.htm">ChipSelectLeadTime</a></td><td><div class="summary">
+ The number of SPI clock cycles before the SPI transaction that chip select is toggled to active.
+ Reqcode:   B2
+ Value:     Desired Setting (as SpiLagLeadTime )
+ Index:     5 
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="b19164ee-0ca0-5cf0-6c08-54fa73158b3c.htm">ChipSelectPolarity</a></td><td><div class="summary">
+ Property to get or set the FX3 SPI chip select polarity (True - Active High, False - Active Low)
+ Reqcode:   B2
+ Value:     Polarity (0 active low, 1 active high)
+ Index:     3
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="511c950b-5384-4fba-8694-f6ce93a52bf3.htm">Cpha</a></td><td><div class="summary">
+ Property to get or set the FX3 SPI controller chip select phase
+ Reqcode:   B2
+ Value:     Polarity (0 active low, 1 active high)
+ Index:     2
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="4698f39a-d93d-39ec-b638-b0df87040103.htm">Cpol</a></td><td><div class="summary">
+ Property to get or set the FX3 SPI controller clock polarity setting (True - Idles High, False - Idles Low)
+ Reqcode:   B2
+ Value:     Polarity (0 active low, 1 active high)
+ 'Index:    1
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="0fc32cde-f9e3-2b87-04e5-7873c3d20e80.htm">CrcFirstIndex</a></td><td><div class="summary">
+ Gets or sets the index of the first burst data word used in CRC calculations.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="53ac9cb5-acc8-f8d9-8bc3-0b7be4a4e7d1.htm">CrcLastIndex</a></td><td><div class="summary">
+ Gets or sets the index of the last burst data word used in CRC calculations.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="599b773f-2fa3-0c37-a0f4-ac4b6ddb0dc8.htm">CrcResultIndex</a></td><td><div class="summary">
+ Gets or sets the index of the word that contains the CRC result.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="bcfc08bd-bff7-ed18-25c4-cbe6cec2b520.htm">DIO1</a></td><td><div class="summary">
+ Read-only property to get the DIO1 pin
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="c26d9c4a-1b40-0d99-6147-850f68e42d46.htm">DIO2</a></td><td><div class="summary">
+ Read-only property to get the DIO2 pin
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="f8d610ef-1825-946b-9d14-c919c6ef64dc.htm">DIO3</a></td><td><div class="summary">
+ Read-only property to get the DIO3 pin
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="6e423e79-885c-e31b-111c-bc9da26d766d.htm">DIO4</a></td><td><div class="summary">
+ Read-only property to get the DIO4 pin
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="5ac2f594-9622-f092-574e-deaf6fee7f88.htm">DrActive</a></td><td><div class="summary">
+ If the data ready is used for register reads
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="a4decb77-e564-6454-3fd5-dfaf67605d46.htm">DrPin</a></td><td><div class="summary">
+ This property is used to get or set the data ready pin. Is tied to the ReadyPin property
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="1dfdbb35-c050-ad83-225d-afd67dd6fe7c.htm">DrPolarity</a></td><td><div class="summary">
+ The Data Ready polarity for streaming mode (index 11)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="cc15f68f-c3a9-b91f-2c7f-e48b41086422.htm">DutSupplyMode</a></td><td><div class="summary">
+ Get or set the DUT supply mode on the FX3. Available options are regulated 3.3V, USB 5V, and off. This feature is only available on the 
+ ADI in-house iSensor FX3 eval platform, not the platform based on the Cypress Explorer kit. If a Cypress Explorer kit is connected, the 
+ setter for this property will be disabled.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="a9ae94f8-9c05-5ddf-c844-07c1fdd8801f.htm">FirmwarePath</a></td><td><div class="summary">
+ The path to the firmware .img file. Needs to be set before the FX3 can be programmed
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="5fe03c8a-7331-43a0-a084-cab0c1c0d8ad.htm">FlashProgrammerPath</a></td><td><div class="summary">
+ Path to the programmer firmware which is loaded in RAM to allow flashing the EEPROM with the bootloader.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="96e1f5a9-b989-801a-8619-73a4375bd56d.htm">FX3_GPIO1</a></td><td><div class="summary">
+ Read-only property to get the FX3_GPIO1 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="062bb664-caed-6c19-103e-9d678e13bcbd.htm">FX3_GPIO2</a></td><td><div class="summary">
+ Read-only property to get the FX3_GPIO2 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="2cc932b7-d462-e090-2200-515781160808.htm">FX3_GPIO3</a></td><td><div class="summary">
+ Read-only property to get the FX3_GPIO3 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="69ddaf10-0a3f-c39c-a184-69ebc305ac3d.htm">FX3_GPIO4</a></td><td><div class="summary">
+ Read-only property to get the FX3_GPIO4 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing. This pin shares a complex GPIO block with DIO1. If DIO1 is being used
+ as a clock source, via the StartPWM function, then this pin cannot be used as a clock source.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="16b094bc-f2b3-ff1c-e302-4c3c28aab12f.htm">FX3_LOOPBACK1</a></td><td><div class="summary">
+ Read-only property to get loop back pin 1. This pin (CTL8) is wired directly to 
+ loop back pin 2 (CTL9) on the iSensor FX3 Board, Revision C or newer. These loop
+ back pins allow for fixed transaction timing on "asynchronous" SPI/I2C reads. One 
+ of the loop back pins can be configured as a PWM output using the "StartPWM" API, 
+ and the other loop back pin can be set as the DrPin, allowing the FX3 to trigger 
+ itself at a known rate.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="083d05a5-f13e-da87-4dde-856d7c112dfa.htm">FX3_LOOPBACK2</a></td><td><div class="summary">
+ Read-only property to get loop back pin 2. This pin (CTL9) is wired directly to 
+ loop back pin 1 (CTL8) on the iSensor FX3 Board, Revision C or newer. These loop
+ back pins allow for fixed transaction timing on "asynchronous" SPI/I2C reads. One 
+ of the loop back pins can be configured as a PWM output using the "StartPWM" API, 
+ and the other loop back pin can be set as the DrPin, allowing the FX3 to trigger 
+ itself at a known rate.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="7b540c3d-26b6-4eab-f435-56fbbcbfb586.htm">FX3BoardAttached</a></td><td><div class="summary">
+ Checks if there is a Cypress FX3 USB device connected to the system
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="21d7d836-4af0-0d22-c5eb-bc32f57488c0.htm">GetBootStatus</a></td><td><div class="summary">
+ Checks the boot status of the FX3 board by sending a vendor request
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="a6d7d534-1e91-c21c-5573-8a4bbd2c1b80.htm">GetFirmwareVersion</a></td><td><div class="summary">
+ Property which reads the firmware version from the FX3
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="a033c331-624a-1791-cf31-ab7e1f365ced.htm">GetFX3ApiInfo</a></td><td><div class="summary">
+ This property returns a class containing some useful information about the current FX3 Dll. Some of the
+ information is available as a attribute of the DLL, while others (build date/time and git revision) are
+ generated at compile time using a pre-build batch file script.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="f840778c-5819-eca2-7cd2-c51ffa8488f8.htm">GetNumBuffersRead</a></td><td><div class="summary">
+ Read-only property to get the number of buffers read in from the DUT in buffered streaming mode
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="cc91d8ae-630b-17e6-37c3-8892995359c5.htm">GetTargetSerialNumber</a></td><td><div class="summary">
+ Read-only property to get the serial number of the active FX3 board
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="87b29b64-a6c9-5e8a-9994-78aca3dc9041.htm">I2CBitRate</a></td><td><div class="summary">
+ Get/Set the FX3 I2C bit rate. Valid range 100KHz - 1MHz. Defaults to 100KHz
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="66517eae-fb03-d676-35dc-4204c911f7e7.htm">I2CRetryCount</a></td><td><div class="summary">
+ Get/Set the FX3 I2C retry count. This is the number of times the FX3
+ will retry a read/write when a NAK is received from the slave device
+ being addressed.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="f37c14dd-441b-f398-e41c-1f80b6033194.htm">IsLSBFirst</a></td><td><div class="summary">
+ The FX3 SPI Controller LSB setting. The controller flips the bits depending on this setting.
+ Reqcode:   B2
+ Value:     Polarity (0 MSB first, 1 LSB first)
+ Index:     7 
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="a9c441e2-05c5-4ede-a74f-2b657b158a9d.htm">NumFramesPurged</a></td><td><div class="summary">
+ Read-only property to get the number of bad frames purged with a call to PurgeBadFrameData. Frames are purged when the CRC appended to the end of
+ the frame does not match the expected CRC.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="2b2df8a0-585e-e9f1-0379-38700b659b06.htm">NumFramesSkipped</a></td><td><div class="summary">
+ Property to get the number of frame skips in an ADcmXL real time stream
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="5f8f4499-b516-fb23-7581-b621192fae71.htm">PartType</a></td><td><div class="summary">
+ The DUT type connected to the board.
+ Reqcode:   B2
+ Value:     Part type to set
+ Index:     10 
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="339fcb41-1c0e-a687-552a-27bed02fcbd9.htm">PinExit</a></td><td><div class="summary">
+ Gets and sets the sync pin exit configuration for exiting real-time stream mode on ADcmXL DUT's.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="2de991c2-5a59-a394-9329-9e3a023b9669.htm">PinStart</a></td><td><div class="summary">
+ Gets and sets the sync pin start configuration for starting real-time stream mode on ADcmXL DUT's.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="b401267a-f0c2-614d-2271-bd69d08e8727.htm">ReadyPin</a></td><td><div class="summary">
+ Property to get or set the DUT data ready pin.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="323fa924-24da-f60d-2c4d-b0e63c274ee7.htm">ResetPin</a></td><td><div class="summary">
+ Read-only property to get the reset pin
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="6c81a4f6-5c6c-36a0-9c51-90450e3a156a.htm">SclkFrequency</a></td><td><div class="summary">
+ Property to get or set the FX3 SPI clock frequency setting.
+ Reqcode:   B2
+ Value:     Don't Care
+ Index:     0
+ Length:    4
+ Data:      Clock Frequency to be set
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="9e341986-58e8-d7fe-7994-f5dc0f2913f7.htm">SensorType</a></td><td><div class="summary">
+ Property to get the device family type the FX3 was initialized for. Setting this property restores all SPI settings to the
+ default for the selected device family.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="77c71401-7caa-1f28-a555-c44ae22ca6d4.htm">StallTime</a></td><td><div class="summary">
+ Property to get/set the number of microseconds between words
+ Reqcode:   B2
+ Value:     Stall time in microseconds (as int16)
+ Index:     9  
+ Length:    4
+ Data:      None
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="6888ab0a-2da7-f276-76d9-b5d69e4ff964.htm">StreamTimeoutSeconds</a></td><td><div class="summary">
+ Sets the timeout for the Bulk Endpoint used in real time streaming modes.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="78a17f1f-02bb-6de4-5bb5-a84bf81c6d02.htm">StripBurstTriggerWord</a></td><td><div class="summary">
+ Property to choose if the readback from the 16 bit trigger word at the start of each burst is discarded or not
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="f4d99a00-12bd-256d-c74b-743c2a3e3cfb.htm">TimerTickScaleFactor</a></td><td><div class="summary">
+ Read only property to get the timer tick scale factor used for converting ticks to ms.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="4aa26a12-7224-2dfd-42c2-f305f6845318.htm">TriggerReg</a></td><td><div class="summary">
+ Gets or sets register that is used to trigger burst operation.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="008456cb-b07c-24a6-8027-076d87d43fdc.htm">WatchdogEnable</a></td><td><div class="summary">
+ Enable or disable the FX3 firmware watchdog.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="53fc52a6-d722-566b-8128-e528ceba524b.htm">WatchdogTimeoutSeconds</a></td><td><div class="summary">
+ Set the FX3 firmware watchdog timeout period (in seconds). If the watchdog is triggered the FX3 will reset.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="af129f70-ec8e-ba83-dba9-84003867000c.htm">WordCount</a></td><td><div class="summary">
+ Gets or sets the number of 16 bit words that are read during the burst. Does not include trigger, real transfer will be 2 bytes larger.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubproperty.gif" alt="Public property" title="Public property" /></td><td><a href="fd51c3f2-6254-8d71-64a0-8e63d51b3cb5.htm">WordLength</a></td><td><div class="summary">
+ The FX3 SPI controller word length. Default is 8 (1 byte per word)
+ Reqcode:   B2
+ Value:     Word length (as int8)
+ Index:     8
+ Length:    4
+ Data:      None
+ </div></td></tr></table><a href="#PageHeader">Top</a></div><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID5RB')" onkeypress="SectionExpandCollapse_CheckKey('ID5RB', event)" tabindex="0"><img id="ID5RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Methods</span></div><div id="ID5RBSection" class="collapsibleSection"><table class="members" id="methodList"><tr><th class="iconColumn">
+								 
+							</th><th>Name</th><th>Description</th></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="ba5c797a-4c59-39b4-c383-b5602bf0f6b0.htm">BitBangReadReg16</a></td><td><div class="summary">
+ Read a standard iSensors 16-bit register using a bitbang SPI connection
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="487c4e1e-f9e5-0c79-d7f4-d68770e0a0ee.htm">BitBangSpi</a></td><td><div class="summary">
+ Perform a bit banged SPI transfer, using the config set in BitBangSpiConfig.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="62a425f0-db94-2159-1733-d340d7551ad6.htm">BitBangWriteRegByte</a></td><td><div class="summary">
+ Write a byte to an iSensor register using a bitbang SPI connection
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="36824e9a-6a88-3094-304a-90a377419241.htm">BootloaderBlinkLED</a></td><td><div class="summary">
+ BOOTLOADER FW: Blink the on-board LED
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="d8ed82c3-e676-2b11-9f04-2d4f7f73c8b8.htm">BootloaderTurnOffLED</a></td><td><div class="summary">
+ BOOTLOADER FW: Turn off the LED
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="5a7529d1-fb20-b1af-c740-b705d3c5af4e.htm">BootloaderTurnOnLED</a></td><td><div class="summary">
+ BOOTLOADER FW: Turn on the LED
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="a1b196c4-9356-0e0d-b5aa-8a706a6de939.htm">CancelStreamAsync</a></td><td><div class="summary">
+ Cancel a any running stream
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="0db9153e-9792-111c-4df9-b433ca651157.htm">ClearBurstMode</a></td><td><div class="summary">
+ Takes interface out of burst mode by setting BurstMode to zero.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="907f1e92-42a0-60b7-8715-827644937de7.htm">ClearErrorLog</a></td><td><div class="summary">
+ Clear the error log stored in flash
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="4b6e5cd7-b945-45e2-6275-936e9b9b4a5e.htm">Connect</a></td><td><div class="summary">
+ Attempts to program the selected FX3 board with the application firmware. The FX3 board should be programmed
+ with the ADI bootloader.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="a1714e7f-2664-172c-b24d-96db264ea09f.htm">Disconnect<span id="LSTCF5D35B0_2"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_2?cs=()|vb=|cpp=()|nu=()|fs=()");</script></a></td><td><div class="summary">
+ This function sends a reset command to the specified FX3 board, or does nothing if no board is connected
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="1f212ee9-b807-773c-907c-2434d2b7dfdb.htm">Disconnect(String)</a></td><td><div class="summary">
+ Overload of Disconnect which lets you specify the FX3 serial number to disconnect. Returns a boolean
+ indicating if the board was disconnected.
+ </div></td></tr><tr data="public;inherited;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="https://docs.microsoft.com/dotnet/api/system.object.equals#System_Object_Equals_System_Object_" target="_blank">Equals</a></td><td><div class="summary">Determines whether the specified object is equal to the current object.</div> (Inherited from <a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">Object</a>.)</td></tr><tr data="protected;inherited;notNetfw;"><td><img src="../icons/protmethod.gif" alt="Protected method" title="Protected method" /></td><td><a href="https://docs.microsoft.com/dotnet/api/system.object.finalize#System_Object_Finalize" target="_blank">Finalize</a></td><td><div class="summary">Allows an object to try to free resources and perform other cleanup operations before it is reclaimed by garbage collection.</div> (Inherited from <a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">Object</a>.)</td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="2ffc4023-b4c8-1c27-15c2-f34ecdcec13e.htm">FX3CodeRunningOnTarget</a></td><td><div class="summary">
+ Function which checks if the FX3 is connected and programmed
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="75e7752d-96ab-fd21-d7a0-7cdbb57c32aa.htm">GetBuffer</a></td><td><div class="summary">
+ Gets one frame from the thread safe queue. Waits to return until a frame is available if there is a stream running. If
+ there is not a stream running, and there is no data in the queue this call returns "Nothing".
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="446de784-a2ef-34e7-894b-eef207deea21.htm">GetBufferedStreamDataPacket</a></td><td><div class="summary">
+ This function returns a single buffered stream packet. Needed for IBufferedStreamProducer
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="b4fab9a9-e4a3-90a0-a8e0-4672c3d2ad8f.htm">GetErrorLog</a></td><td><div class="summary">
+ Gets the current error log from FX3 flash memory
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="869a5b14-0f8e-d79e-4834-b1fb64f07673.htm">GetErrorLogCount</a></td><td><div class="summary">
+ Get the number of errors logged to the FX3 flash memory
+ </div></td></tr><tr data="public;inherited;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="https://docs.microsoft.com/dotnet/api/system.object.gethashcode#System_Object_GetHashCode" target="_blank">GetHashCode</a></td><td><div class="summary">Serves as the default hash function. </div> (Inherited from <a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">Object</a>.)</td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="aa792fcd-93a8-db57-939c-90268513bd69.htm">GetI2CBuffer</a></td><td><div class="summary">
+ Get I2C buffer from I2C read stream
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="dc3151b3-bdff-ae79-87df-171b9403b17f.htm">GetPinPWMInfo</a></td><td><div class="summary">
+ Allows the user to retrieve a set of information about the current pin PWM configuration.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="c6a66559-824f-4fbf-0fa6-8aa54f486d13.htm">GetStreamDataPacketU16</a></td><td><div class="summary">
+ This function does the same thing as GetBufferedStreamDataPacket()
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="c93809d2-b137-b4b8-1ae5-fd95d7a347af.htm">GetTimerValue</a></td><td><div class="summary">
+ This function reads the current value from the 10MHz timer running on the FX3
+ </div></td></tr><tr data="public;inherited;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="https://docs.microsoft.com/dotnet/api/system.object.gettype#System_Object_GetType" target="_blank">GetType</a></td><td><div class="summary">Gets the <a href="https://docs.microsoft.com/dotnet/api/system.type" target="_blank">Type</a> of the current instance.</div> (Inherited from <a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">Object</a>.)</td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="ea954d82-dae6-dc07-14b2-2d6bd5a20208.htm">I2CReadBytes</a></td><td><div class="summary">
+ Read bytes from an I2C slave device attached to the FX3.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="3bdb9b89-7f53-1c6a-bdc7-d92e0b3bf335.htm">I2CWriteBytes</a></td><td><div class="summary">
+ Write bytes to an I2C slave device attached to the FX3
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="52a3102f-a983-352b-9eb6-7477399b0856.htm">ISpi32StopStream</a></td><td><div class="summary">
+ ISpi32 StopStream implementation. Calls generic version.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="fe7d19f7-40da-11f1-de8d-42c07116628f.htm">isPWMPin</a></td><td><div class="summary">
+ This function checks to see if the selected pin has already been configured to act as a PWM output pin.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="e5d647f8-db65-c6df-0501-d8891ba7350b.htm">MeasureBusyPulse(<span id="LSTCF5D35B0_3"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_3?cpp=array&lt;");</script>Byte<span id="LSTCF5D35B0_4"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_4?cpp=&gt;|cs=[]|vb=()|nu=[]|fs=[]");</script>, IPinObject, UInt32, UInt32)</a></td><td><div class="summary">
+ Overload of measure busy pulse which triggers the DUT event using a SPI write instead of a pin drive.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="7e13dafb-f06e-23e6-2ed5-5ac36e85ed60.htm">MeasureBusyPulse(IPinObject, UInt32, UInt32, IPinObject, UInt32, UInt32)</a></td><td><div class="summary">
+ This function triggers a DUT action using a pulse drive, and then measures the following pulse width on a separate busy line.
+ The pulse time on the busy pin is measured using a 10MHz timer with approx. 0.1us accuracy.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="a3e67348-5853-6f1c-97d8-3e79b9328142.htm">MeasurePinDelay</a></td><td><div class="summary">
+ This function measures the time delay between toggling a trigger pin, and a state change on the busy pin. This can be used to measure
+ the propagation delay between a sync edge and data ready being de-asserted.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="3aa1bf05-a720-4f7e-df82-790e8b584f4f.htm">MeasurePinFreq</a></td><td><div class="summary">
+ Measures the frequency of an input signal to the selected pin.
+ </div></td></tr><tr data="protected;inherited;notNetfw;"><td><img src="../icons/protmethod.gif" alt="Protected method" title="Protected method" /></td><td><a href="https://docs.microsoft.com/dotnet/api/system.object.memberwiseclone#System_Object_MemberwiseClone" target="_blank">MemberwiseClone</a></td><td><div class="summary">Creates a shallow copy of the current <a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">Object</a>.</div> (Inherited from <a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">Object</a>.)</td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="80d24cdc-deef-3180-0111-e36fa9384cf1.htm">PulseDrive</a></td><td><div class="summary">
+ This function drives a pin to the specified level for a given time interval in ms
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="031dbd3e-7143-bcaf-b813-5366bd1ba351.htm">PulseWait</a></td><td><div class="summary">
+ This function waits for a pin to reach a specified level
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="0744f798-2a6a-c364-49c1-0bd96c885021.htm">PurgeBadFrameData</a></td><td><div class="summary">
+ This function checks the CRC of each real time streaming frame stored in the Stream Data Queue, 
+ and purges the bad ones. This operation is only valid for an ADcmXL series DUT.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="6457666b-d132-487d-9a96-099ef097ac44.htm">ReadDRFreq</a></td><td><div class="summary">
+ Reads the measured DR value
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="b678319c-6f9b-b788-4ff1-e925d0bda34f.htm">ReadFlash</a></td><td><div class="summary">
+ Read data from the FX3 non-volatile memory
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="661afed3-df1d-d1f6-9f84-83c93b07a1cb.htm">ReadPin</a></td><td><div class="summary">
+ Reads the value of a GPIO pin on the FX3
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="40215716-8ec0-b89f-db11-a8113d840adb.htm">ReadPins(<span id="LSTCF5D35B0_5"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_5?cpp=array&lt;");</script>IPinObject<span id="LSTCF5D35B0_6"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_6?cpp=&gt;|cs=[]|vb=()|nu=[]|fs=[]");</script>)</a></td><td><div class="summary">
+ Reads a list of FX3 GPIO pins. This function calls the overload which takes an IEnumerable
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="1fc2b5e9-f1f8-16e8-9044-29ff745ca157.htm">ReadPins(IEnumerable<span id="LSTCF5D35B0_7"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_7?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>IPinObject<span id="LSTCF5D35B0_8"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_8?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>)</a></td><td><div class="summary">
+ Reads a list of FX3 GPIO pins
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="f2b89cbf-4012-be1d-f1d5-ac72e7197141.htm">ReadRegArray(IEnumerable<span id="LSTCF5D35B0_9"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_9?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_10"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_10?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>)</a></td><td><div class="summary">
+ Reads an array of 16 bit register values.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="2a7ccf97-65d3-222d-9287-d27d230caed5.htm">ReadRegArray(IEnumerable<span id="LSTCF5D35B0_11"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_11?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>AddrDataPair<span id="LSTCF5D35B0_12"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_12?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32)</a></td><td><div class="summary">
+ ReadRegArray overload which includes register writes. Breaks the call into multiple calls of readRegByte and writeRegByte
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="24116cfa-69f7-4ae9-d55e-3036b7c22ec9.htm">ReadRegArray(IEnumerable<span id="LSTCF5D35B0_13"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_13?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_14"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_14?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32)</a></td><td><div class="summary">
+ Overload of ReadRegArray which builds a new IEnumerable of addr and call the overload which takes an enumerable of addr
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="990c3a73-5898-a35c-4a87-65e8d497e79f.htm">ReadRegArrayStream(IEnumerable<span id="LSTCF5D35B0_15"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_15?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>AddrDataPair<span id="LSTCF5D35B0_16"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_16?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32, UInt32)</a></td><td><div class="summary">
+ This is the most generic array register function. All other array read/write functions call down to this one.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="9263c760-5a97-0024-8c57-29448e7f0ecf.htm">ReadRegArrayStream(IEnumerable<span id="LSTCF5D35B0_17"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_17?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_18"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_18?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32, UInt32)</a></td><td><div class="summary" /></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="e6c7ea43-7db8-57b0-7984-fab0365ca1b7.htm">ReadRegByte</a></td><td><div class="summary">
+ This is the most general ReadRegByte. Other implementations are based on this.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="c135dd0d-5bf8-9202-e795-6b3fb09b9809.htm">ReadRegWord</a></td><td><div class="summary">
+ Reads a single 16 bit register on the DUT
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="a8a69a90-583a-e20c-c8c6-4d143f6f5737.htm">ReadTime</a></td><td><div class="summary">
+ Not implemented
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="f0bff5d7-785a-008d-08eb-9f7aaa2992b5.htm">Reset</a></td><td><div class="summary">
+ Drives the Reset pin low for 10ms, sleeps for 100ms, and then blocks until the ReadyPin is high (500ms timeout)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="4c19ef3f-5883-86b8-38cc-ddcf1ec14044.htm">ResetAllFX3s</a></td><td><div class="summary">
+ Looks for and resets boards in application mode. Should only be called at program start, after InitBoardList()
+ Note: Should not be used if running multiple instances of the GUI.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="7bffc307-014c-a89b-8d5c-9978358c74bb.htm">RestoreHardwareSpi</a></td><td><div class="summary">
+ Resets the hardware SPI pins to their default operating mode. Can be used to recover the SPI functionality after a bit-bang SPI transaction over the hardware SPI pins
+ without having to reboot the FX3.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="a0b0d20e-e383-ae04-0367-3caa0c1a00d6.htm">SetBitBangSpiFreq(Double)</a></td><td><div class="summary">
+ Sets the SCLK frequency for a bit bang SPI connection. 
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="75e483c4-f7e1-64f0-0253-f01d4a460f16.htm">SetBitBangSpiFreq(UInt32)</a></td><td><div class="summary">
+ Set the SCLK frequency for a bit banged SPI connection. Overloaded to allow for a UInt
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="56f4fec7-eb04-322b-49e9-b544d201b9ea.htm">SetBitBangStallTime</a></td><td><div class="summary">
+ Set the bit bang SPI stall time. Driven by a clock with resolution of 49.3ns
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="7c878496-b143-52d3-657e-ac23ead892db.htm">SetPin</a></td><td><div class="summary">
+ Sets the value of a FX3 GPIO pin. This value will persist until the pin is set to a different value, or read from
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="dd796022-2abc-efad-5a3e-4e7b657c01bb.htm">SetPinResistorSetting</a></td><td><div class="summary">
+ Set the FX3 GPIO input stage pull up or pull down resistor setting. All FX3 GPIOs have a software configurable
+ pull up / pull down resistor (10KOhm).
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="464bda3e-6bf3-722c-dab0-7e60d8597bff.htm">SetupBurstMode</a></td><td><div class="summary">
+ Puts interface into burst mode by setting burstMode to match word count.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="dc818414-2c3c-b7d8-acf4-aa6a3bc9cebd.htm">Start</a></td><td><div class="summary">
+ This function is not currently implemented. Calling it will throw a NotImplementedException.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="71615ff4-5c08-774b-c3a3-da1690af6376.htm">StartBufferedStream(IEnumerable<span id="LSTCF5D35B0_19"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_19?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>AddrDataPair<span id="LSTCF5D35B0_20"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_20?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32, UInt32, Int32, BackgroundWorker)</a></td><td><div class="summary">
+ Starts a buffered stream operation. This is usually called from the TextFileStreamManager. DUTType must be set before executing. 
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="c9950b91-239e-76ad-66fb-4b19d3c7ebdb.htm">StartBufferedStream(IEnumerable<span id="LSTCF5D35B0_21"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_21?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_22"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_22?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32, UInt32, Int32, BackgroundWorker)</a></td><td><div class="summary">
+ Starts a buffered stream operation. The registers listed in addr are read numCaptures times per register buffer. This process is repeated numBuffers times. 
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="b14aca4a-b866-baab-6f17-52b7a04f7b0c.htm">StartBurstStream</a></td><td><div class="summary">
+ Function to start a burst read using the BurstStreamManager
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="861e5663-3039-cbca-2e1d-33865390bba2.htm">StartGenericStream</a></td><td><div class="summary">
+ Starts a generic data stream. This allows you to read/write a set of registers on the DUT, triggering off the data ready if needed.
+ The data read is placed in the thread-safe queue and can be retrieved with a call to GetBuffer. Each "buffer" is the result of
+ reading the addr list of registers numCaptures times. For example, if addr is set to [0, 2, 4] and numCaptures is set to 10, each
+ buffer will contain the 30 register values. The total number of register reads performed is numCaptures * numBuffers
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="b4d3ea2f-4daa-ed76-8ace-a17c1ef8da5a.htm">StartI2CStream</a></td><td><div class="summary">
+ Start an asynchronous I2C read stream. This stream runs on the stream thread
+ and places all data in a thread safe queue. The data can be retrieved using
+ GetI2CBuffer()
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="8358c89e-ed27-5b1d-0622-6b5b8f5e7a17.htm">StartPWM</a></td><td><div class="summary">
+ This function configures the selected pin to drive a pulse width modulated output.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="2edcb204-8c49-d289-b966-ae0616c3519c.htm">StartRealTimeStreaming</a></td><td><div class="summary">
+ This function starts real time streaming on the ADcmXLx021 (interface and FX3). Specifying pin exit is optional and must be 0 (disabled) or 1 (enabled)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="d20424b6-ec7c-f4ce-6c15-1ad377a54a18.htm">StartStream</a></td><td><div class="summary">
+ Starts a buffered stream for only a single buffer. 
+ This is equivalent to StartBufferedStream(addr, numCaptures, 1, CurrentTimeout, Nothing)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="e986b4a1-c3c5-b184-a03e-35dbacc81e05.htm">StopPWM</a></td><td><div class="summary">
+ This function call disables the PWM output from the FX3 and returns the pin to a tri-stated mode.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="c2c1b045-c7b9-563c-c316-d8d9827c26f1.htm">StopRealTimeStreaming</a></td><td><div class="summary">
+ This function stops real time streaming on the ADcmXLx021 (stream thread in FX3 API and FX3 firmware)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="47cb4928-2637-9c27-ed27-d149550fe939.htm">StopStream</a></td><td><div class="summary">
+ Stops the currently running data stream, if any.
+ </div></td></tr><tr data="public;inherited;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="https://docs.microsoft.com/dotnet/api/system.object.tostring#System_Object_ToString" target="_blank">ToString</a></td><td><div class="summary">Returns a string that represents the current object.</div> (Inherited from <a href="https://docs.microsoft.com/dotnet/api/system.object" target="_blank">Object</a>.)</td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="0cfc934b-2eab-4327-e5f7-1f7e45438ab7.htm">Transfer</a></td><td><div class="summary">
+ This function performs a single bi-directional 32 bit SPI transaction. If DrActive is set to false the transfer is performed asynchronously. If DrActive is set to true, 
+ the transfer should wait until a data ready condition (determined by DrPin and DrPolarity) is true.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="dc77f6c9-55f9-4f89-8b67-bde2853f30f2.htm">TransferArray(IEnumerable<span id="LSTCF5D35B0_23"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_23?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_24"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_24?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>)</a></td><td><div class="summary">
+ This function performs an array bi-directional SPI transfer. WriteData.Count() total SPI transfers are performed. If DrActive is set to true, the transfer should wait
+ until a data ready condition (determined by DrPin and DrPolarity) is true, and then perform all SPI transfers. If DrActive is false it is performed asynchronously.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="7766b49c-6420-e626-5263-9731005347fe.htm">TransferArray(IEnumerable<span id="LSTCF5D35B0_25"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_25?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_26"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_26?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32)</a></td><td><div class="summary">
+ This function performs an array bi-directional SPI transfer. This overload transfers all the data in WriteData numCaptures times. The total
+ number of SPI words transfered is WriteData.Count() * numCaptures.
+ If DrActive is set to true, the transfer should wait until a data ready condition (determined by DrPin and DrPolarity) is true, and
+ then perform all SPI transfers. If DrActive is false it is performed asynchronously.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="18232515-7333-a5a2-063b-02223610fd44.htm">TransferArray(IEnumerable<span id="LSTCF5D35B0_27"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_27?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_28"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_28?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, UInt32, UInt32)</a></td><td><div class="summary">
+ This function performs an array bi-directional SPI transfer. If DrActive is set to true, this overload transfers all the data in WriteData
+ numCaptures times per data ready condition being met. It captures data from numBuffers data ready signals. If DrActive is set to false, all the
+ transfers are performed asynchronously. The total number of SPI transfers is WriteData.Count()*numCaptures*numBuffers.
+ 
+ The following pseduo-code snippet would perform 400 total SPI transfers, across 100 data ready conditions. 
+ 
+ MOSI = {0x1234, 0x5678}
+ myISpi32.DrActive = True
+ MISO = myISpi32.TransferArray(MOSI, 2, 100)
+ 
+ During the transfers, the SPI bus would look like the following:
+ 
+ MOSI: ---(0x1234)---(0x5678)---(0x1234)---(0x5678)-----------------(0x1234)---(0x5678)---(0x1234)---(0x5678)--...-----(0x1234)-----(0x5678)-----(0x1234)-----(0x5678)--
+ MISO:----MISO(0)----MISO(1)----MISO(2)----MISO(3)------------------MISO(4)----MISO(5)----MISO(6)----MISO(7)---...-----MISO(196)----MISO(197)----MISO(198)----MISO(199)-
+ DR:   ___|¯¯¯|_____________________________________________________|¯¯¯|______________________________________..._____|¯¯¯|____________________________________________
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="01886df4-a0c5-b5b2-46d6-9f81a92200c4.htm">UserLEDBlink</a></td><td><div class="summary">
+ Blink user LED using timer hardware (not available on Cypress Explorer FX3 board)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="2c7497f7-c6e6-eb82-717b-71cc68e0d450.htm">UserLEDOff</a></td><td><div class="summary">
+ Turn off user LED (not available on Cypress Explorer FX3 board)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="2223357b-5a85-e4ad-6982-b6892ba8a64d.htm">UserLEDOn</a></td><td><div class="summary">
+ Turn on user LED (not available on Cypress Explorer FX3 board)
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="4e574267-34de-9f80-0cc0-dddf0a93d40d.htm">WaitForBoard</a></td><td><div class="summary">
+ This function is used to wait for an FX3 to be programmed with the ADI bootloader. In general, the programming model would go as follows,
+ to connect and program the first board attached:
+ 
+ Dim myFX3 as FX3Connection = New FX3Connection(firmwarepath, bootloaderpath, devicetype)
+ If Not myFX3.WaitForBoard(10) Then
+     Msgbox("No boards found")
+     Exit Sub
+ End If
+ myFX3.Connect(myFX3.AvailableFX3s(0))
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="e8985c55-3115-9956-a569-a1b680dc31c2.htm">WaitForStreamCompletion<span id="LSTCF5D35B0_29"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_29?cs=()|vb=|cpp=()|nu=()|fs=()");</script></a></td><td><div class="summary">
+ Overload of WaitForStreamCompletion which blocks indefinitely
+ until a stream completion event is seen.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="1a4276f2-4516-b85e-f049-0f1e3c86c872.htm">WaitForStreamCompletion(Int32)</a></td><td><div class="summary">
+ Blocks until the streaming endpoint mutex can be acquired. Allows a user to synchronize external application
+ the completion of a stream. Returns false if there is not a stream running, or if the timeout is reached without
+ the stream mutex being acquired.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="f9111a0c-8350-dffb-dd54-36a0dc26e92b.htm">WriteReadTransferArray</a></td><td><div class="summary">
+ Array transfer which performs an initial SPI transmit (MOSI only, no read back) then
+ starts a read stream. This is useful if you need to issue a write to the DUT, then 
+ immediately start reading back data, without the USB transfer overhead of approx 150us
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="90de83a6-7190-4e44-dea8-e60390a4cf91.htm">WriteRegByte(AddrDataPair)</a></td><td><div class="summary">
+ This function writes a single register byte, given as an Address / Data pair
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="8580e64a-9072-7d5e-ea51-213fd75408ee.htm">WriteRegByte(IEnumerable<span id="LSTCF5D35B0_30"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_30?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>AddrDataPair<span id="LSTCF5D35B0_31"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_31?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>)</a></td><td><div class="summary">
+ This function writes an enumerable list of data to the DUT as AddrDataPairs
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="6dce60eb-8389-b809-5e83-fcb62f45c990.htm">WriteRegByte(IEnumerable<span id="LSTCF5D35B0_32"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_32?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_33"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_33?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>, IEnumerable<span id="LSTCF5D35B0_34"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_34?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>UInt32<span id="LSTCF5D35B0_35"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCF5D35B0_35?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>)</a></td><td><div class="summary">
+ Overload of WriteRegByte which allows for multiple registers to be specified to write to, as an IEnumerable list of register addresses.
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="f8766307-1396-1e4d-ecce-d8fa7fc91663.htm">WriteRegByte(UInt32, UInt32)</a></td><td><div class="summary">
+ This is the most general WriteRegByte, which the others are based on
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubmethod.gif" alt="Public method" title="Public method" /></td><td><a href="bd17d83e-656a-fb48-f222-fb658ea122a2.htm">WriteRegWord</a></td><td><div class="summary">
+ This function is not currently implemented. Calling it will throw a NotImplementedException.
+ </div></td></tr></table><a href="#PageHeader">Top</a></div><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID6RB')" onkeypress="SectionExpandCollapse_CheckKey('ID6RB', event)" tabindex="0"><img id="ID6RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Events</span></div><div id="ID6RBSection" class="collapsibleSection"><table class="members" id="eventList"><tr><th class="iconColumn">
+								 
+							</th><th>Name</th><th>Description</th></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubevent.gif" alt="Public event" title="Public event" /></td><td><a href="1eab635c-251d-ae8d-eee9-bfbfb2619199.htm">DisconnectFinished</a></td><td><div class="summary">
+ This event is raised when the disconnect event for a board has finished, and it is reprogrammed with the ADI bootloader. This event only is triggered for boards
+ which were explicitly disconnected (boards which were physically reset will not trigger this event).
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubevent.gif" alt="Public event" title="Public event" /></td><td><a href="68540fa1-0b29-2ca7-a29b-0be6ba9a71c8.htm">NewBufferAvailable</a></td><td><div class="summary">
+ This event is raised when there is a new buffer available from a buffered stream
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubevent.gif" alt="Public event" title="Public event" /></td><td><a href="9a44759b-8b32-ff0a-55a5-c1f848d35857.htm">StreamFinished</a></td><td><div class="summary">
+ This event is raised when a stream is finished
+ </div></td></tr><tr data="public;declared;notNetfw;"><td><img src="../icons/pubevent.gif" alt="Public event" title="Public event" /></td><td><a href="fc16a835-4d83-3e8b-3239-995c79ad8e5a.htm">UnexpectedDisconnect</a></td><td><div class="summary">
+ This event is raised when the active board is disconnected unexpectedly (IE unplugged)
+ </div></td></tr></table><a href="#PageHeader">Top</a></div><div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID7RB')" onkeypress="SectionExpandCollapse_CheckKey('ID7RB', event)" tabindex="0"><img id="ID7RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />Explicit Interface Implementations</span></div><div id="ID7RBSection" class="collapsibleSection"><table class="members" id="explicitInterfaceImplementationList"><tr><th class="iconColumn">
+								 
+							</th><th>Name</th><th>Description</th></tr><tr data="explicit;declared;notNetfw;"><td><img src="../icons/pubinterface.gif" alt="Explicit interface implementation" title="Explicit interface implementation" /><img src="../icons/privproperty.gif" alt="Private property" title="Private property" /></td><td><a href="5cde595d-de21-042d-d16d-179086287b19.htm">ISpi32Interface.DrActive</a></td><td /></tr><tr data="explicit;declared;notNetfw;"><td><img src="../icons/pubinterface.gif" alt="Explicit interface implementation" title="Explicit interface implementation" /><img src="../icons/privproperty.gif" alt="Private property" title="Private property" /></td><td><a href="fea85fa3-ee06-4d4c-fdc7-fb76ecaa3eab.htm">ISpi32Interface.DrPolarity</a></td><td /></tr><tr data="explicit;declared;notNetfw;"><td><img src="../icons/pubinterface.gif" alt="Explicit interface implementation" title="Explicit interface implementation" /><img src="../icons/privmethod.gif" alt="Private method" title="Private method" /></td><td><a href="83e536d1-4099-3451-e532-29f647fec8fc.htm">ISpi32Interface.GetBufferedStreamDataPacket</a></td><td /></tr><tr data="explicit;declared;notNetfw;"><td><img src="../icons/pubinterface.gif" alt="Explicit interface implementation" title="Explicit interface implementation" /><img src="../icons/privmethod.gif" alt="Private method" title="Private method" /></td><td><a href="0cda3979-b0e4-ec44-da38-baabf1ebef74.htm">ISpi32Interface.StartBufferedStream</a></td><td /></tr><tr data="explicit;declared;notNetfw;"><td><img src="../icons/pubinterface.gif" alt="Explicit interface implementation" title="Explicit interface implementation" /><img src="../icons/privproperty.gif" alt="Private property" title="Private property" /></td><td><a href="74f7d484-f16f-c7fd-5082-ad9ddd95e29c.htm">ISpi32Interface.StreamTimeoutSeconds</a></td><td /></tr></table><a href="#PageHeader">Top</a></div><div class="collapsibleAreaRegion" id="seeAlsoSection"><span class="collapsibleRegionTitle" onclick="SectionExpandCollapse('ID8RB')" onkeypress="SectionExpandCollapse_CheckKey('ID8RB', event)" tabindex="0"><img id="ID8RBToggle" class="collapseToggle" src="../icons/SectionExpanded.png" />See Also</span></div><div id="ID8RBSection" class="collapsibleSection"><h4 class="subHeading">Reference</h4><div class="seeAlsoStyle"><a href="338939de-c7bb-3899-fea8-9b1a456a0a9c.htm">FX3Api Namespace</a></div></div></div></div><div id="pageFooter" class="pageFooter"><p><a href="https://github.com/juchong/iSensor-FX3-API/blob/master/LICENSE" target="_blank">Copyright 2018 - 2020, Analog Devices Inc.</a></p><div class="feedbackLink">Send comments on this topic to
+        <a id="HT_MailLink" href="mailto:alex.nolan%40analog.com?Subject=Analog%20Devices%20iSensor%20FX3%20API%20Documentation">Analog Devices iSensor Group</a></div>
+        <script type="text/javascript">
+        var HT_mailLink = document.getElementById("HT_MailLink");
+        var HT_mailLinkText = HT_mailLink.innerHTML;
+        HT_mailLink.href += ": " + document.title + "\u0026body=" + encodeURIComponent("Your feedback is used to improve the documentation and the product. Your e-mail address will not be used for any other purpose and is disposed of after the issue you report is resolved. While working to resolve the issue that you report, you may be contacted via e-mail to get further details or clarification on the feedback you sent. After the issue you report has been addressed, you may receive an e-mail to let you know that your feedback has been addressed.");
+        HT_mailLink.innerHTML = HT_mailLinkText;
+        </script> </div></body></html>
