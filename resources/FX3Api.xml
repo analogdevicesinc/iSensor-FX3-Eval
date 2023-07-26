@@ -1,0 +1,2308 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+FX3Api
+</name>
+</assembly>
+<members>
+<member name="T:FX3Api.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:FX3Api.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:FX3Api.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:FX3Api.My.Resources.Resources.BuildDate">
+<summary>
+  Looks up a localized string similar to Thu 06/27/2019 13:24:43.01 
+.
+</summary>
+</member>
+<member name="P:FX3Api.My.Resources.Resources.CurrentBranch">
+<summary>
+  Looks up a localized string similar to generic_stream
+.
+</summary>
+</member>
+<member name="P:FX3Api.My.Resources.Resources.CurrentCommit">
+<summary>
+  Looks up a localized string similar to eee943f2cf38653a06efbb679c7477744f99a6ed
+.
+</summary>
+</member>
+<member name="P:FX3Api.My.Resources.Resources.CurrentURL">
+<summary>
+  Looks up a localized string similar to https://github.com/juchong/iSensor-FX3-Interface.git
+.
+</summary>
+</member>
+<member name="T:FX3Api.FX3Connection">
+ <summary>
+ This is the primary class for interfacing with the FX3 based eval platform. Implements IRegInterface, ISpi32Interface, and IPinFcns,
+ in addition to a superset of extra interfacing functions specific to the FX3 platform.
+ </summary>
+</member>
+<member name="E:FX3Api.FX3Connection.UnexpectedDisconnect">
+ <summary>
+ This event is raised when the active board is disconnected unexpectedly (IE unplugged)
+ </summary>
+ <param name="FX3SerialNum">Serial number of the board which was disconnected</param>
+</member>
+<member name="E:FX3Api.FX3Connection.DisconnectFinished">
+ <summary>
+ This event is raised when the disconnect event for a board has finished, and it is reprogrammed with the ADI bootloader. This event only is triggered for boards
+ which were explicitly disconnected (boards which were physically reset will not trigger this event).
+ </summary>
+ <param name="FX3SerialNum">Serial number of the board</param>
+ <param name="DisconnectTime">Time (in ms) elapsed between the disconnect call and board re-enumeration</param>
+</member>
+<member name="E:FX3Api.FX3Connection.NewBufferAvailable">
+ <summary>
+ This event is raised when there is a new buffer available from a buffered stream
+ </summary>
+</member>
+<member name="E:FX3Api.FX3Connection.StreamFinished">
+ <summary>
+ This event is raised when a stream is finished
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.#ctor(System.String,System.String,System.String,FX3Api.DeviceType)">
+ <summary>
+ Class Constructor. Loads SPI settings and default values for the interface, and starts a background thread to manage programming newly
+ connected boards with the ADI bootloader.
+ </summary>
+ <param name="FX3FirmwarePath">The path to the FX3 application firmware image file.</param>
+ <param name="FX3BootloaderPath">The path to the ADI FX3 bootloader image file.</param>
+ <param name="FX3ProgrammerPath">The path to the flash programmer application image file.</param>
+ <param name="SensorType">The sensor type. Valid inputs are IMU and ADcmXL. Default is IMU.</param>
+</member>
+<member name="M:FX3Api.FX3Connection.SetDefaultValues(FX3Api.DeviceType)">
+ <summary>
+ Sets the default values for the interface. Used in constructor and after FX3 reset.
+ </summary>
+ <param name="SensorType">Parameter to specify default device SPI settings. Valid options are IMU and ADcmXL</param>
+</member>
+<member name="P:FX3Api.FX3Connection.SclkFrequency">
+ <summary>
+ Property to get or set the FX3 SPI clock frequency setting.
+ Reqcode:   B2
+ Value:     Don't Care
+ Index:     0
+ Length:    4
+ Data:      Clock Frequency to be set
+ </summary>
+ <returns>The current SPI clock frequency, in MHZ. Valid values are in the range 1 to 40,000,000</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.Cpol">
+ <summary>
+ Property to get or set the FX3 SPI controller clock polarity setting (True - Idles High, False - Idles Low)
+ Reqcode:   B2
+ Value:     Polarity (0 active low, 1 active high)
+ 'Index:    1
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current polarity setting</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.Cpha">
+ <summary>
+ Property to get or set the FX3 SPI controller chip select phase
+ Reqcode:   B2
+ Value:     Polarity (0 active low, 1 active high)
+ Index:     2
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current chip select phase setting</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ChipSelectPolarity">
+ <summary>
+ Property to get or set the FX3 SPI chip select polarity (True - Active High, False - Active Low)
+ Reqcode:   B2
+ Value:     Polarity (0 active low, 1 active high)
+ Index:     3
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current chip select polarity</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ChipSelectControl">
+ <summary>
+ Property to get or set the FX3 SPI controller chip select setting. Should be left on hardware control, changing modes will likely cause unexpected behavior.
+ Reqcode:   B2
+ Value:     Desired setting (as SpiChipselectControl )
+ Index:     4  
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current chip select control mode</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ChipSelectLeadTime">
+ <summary>
+ The number of SPI clock cycles before the SPI transaction that chip select is toggled to active.
+ Reqcode:   B2
+ Value:     Desired Setting (as SpiLagLeadTime )
+ Index:     5 
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current chip select lead time setting</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ChipSelectLagTime">
+ <summary>
+ The number of SPI clock cycles after the transaction ends that chip select is toggled to idle.
+ Reqcode:   B2
+ Value:     Desired Setting (as SpiLagLeadTime )
+ Index:     6 
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current chip select lag time setting</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.IsLSBFirst">
+ <summary>
+ The FX3 SPI Controller LSB setting. The controller flips the bits depending on this setting.
+ Reqcode:   B2
+ Value:     Polarity (0 MSB first, 1 LSB first)
+ Index:     7 
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current LSB First setting, as a boolean</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.WordLength">
+ <summary>
+ The FX3 SPI controller word length. Default is 8 (1 byte per word)
+ Reqcode:   B2
+ Value:     Word length (as int8)
+ Index:     8
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current word length</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.StallTime">
+ <summary>
+ Property to get/set the number of microseconds between words
+ Reqcode:   B2
+ Value:     Stall time in microseconds (as int16)
+ Index:     9  
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>The current stall time, in microseconds</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.PartType">
+ <summary>
+ The DUT type connected to the board.
+ Reqcode:   B2
+ Value:     Part type to set
+ Index:     10 
+ Length:    4
+ Data:      None
+ </summary>
+ <returns>Returns the DUTType. Defaults to 3 axis</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DrPolarity">
+ <summary>
+ The Data Ready polarity for streaming mode (index 11)
+ </summary>
+ <returns>The data ready polarity, as a boolean (True - low to high, False - high to low)</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ReadyPin">
+ <summary>
+ Property to get or set the DUT data ready pin.
+ </summary>
+ <returns>The IPinObject of the pin currently configured as the data ready</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.TimerTickScaleFactor">
+ <summary>
+ Read only property to get the timer tick scale factor used for converting ticks to ms.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetBoardSpiParameters">
+ <summary>
+ Function to read the current SPI parameters from the FX3 board
+ </summary>
+ <returns>Returns a FX3SPIConfig struct representing the current board configuration</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteBoardSpiParameters">
+ <summary>
+ Function which writes the current SPI config to the FX3
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.ConfigureSPI(System.Int32)">
+ <summary>
+ Function which performs the SPI configuration option based on the current control endpoint setting
+ </summary>
+ <param name="clockFrequency">The SPI clock frequency, if it needs to be set</param>
+</member>
+<member name="M:FX3Api.FX3Connection.GetTimerValue">
+ <summary>
+ This function reads the current value from the 10MHz timer running on the FX3
+ </summary>
+ <returns>The 32-bit timer value</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.SetPinResistorSetting(AdisApi.IPinObject,FX3Api.FX3PinResistorSetting)">
+ <summary>
+ Set the FX3 GPIO input stage pull up or pull down resistor setting. All FX3 GPIOs have a software configurable
+ pull up / pull down resistor (10KOhm).
+ </summary>
+ <param name="Pin">The pin to set (FX3PinObject)</param>
+ <param name="Setting">The pin resistor setting to apply</param>
+</member>
+<member name="P:FX3Api.FX3Connection.WatchdogTimeoutSeconds">
+ <summary>
+ Set the FX3 firmware watchdog timeout period (in seconds). If the watchdog is triggered the FX3 will reset.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.WatchdogEnable">
+ <summary>
+ Enable or disable the FX3 firmware watchdog.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DutSupplyMode">
+ <summary>
+ Get or set the DUT supply mode on the FX3. Available options are regulated 3.3V, USB 5V, and off. This feature is only available on the 
+ ADI in-house iSensor FX3 eval platform, not the platform based on the Cypress Explorer kit. If a Cypress Explorer kit is connected, the 
+ setter for this property will be disabled.
+ </summary>
+ <returns>The DUT supply voltage setting</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetFirmwareBuildDate">
+ <summary>
+ Get the firmware build date and time
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.SetBootTimeStamp">
+ <summary>
+ Set the boot unix timestamp in the FX3 application firmware
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GetBoardStatus(System.Boolean@)">
+ <summary>
+ Gets the current status code from the FX3.
+ </summary>
+ <param name="VerboseMode">Return by reference of the verbose mode of the FX3</param>
+</member>
+<member name="P:FX3Api.FX3Connection.GetFX3ApiInfo">
+ <summary>
+ This property returns a class containing some useful information about the current FX3 Dll. Some of the
+ information is available as a attribute of the DLL, while others (build date/time and git revision) are
+ generated at compile time using a pre-build batch file script.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.NumFramesPurged">
+ <summary>
+ Read-only property to get the number of bad frames purged with a call to PurgeBadFrameData. Frames are purged when the CRC appended to the end of
+ the frame does not match the expected CRC.
+ </summary>
+ <returns>Number of frames purged from data array</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.NumFramesSkipped">
+ <summary>
+ Property to get the number of frame skips in an ADcmXL real time stream
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.SensorType">
+ <summary>
+ Property to get the device family type the FX3 was initialized for. Setting this property restores all SPI settings to the
+ default for the selected device family.
+ </summary>
+ <returns>The current device mode, as an FX3Interface.DeviceType</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.PinExit">
+ <summary>
+ Gets and sets the sync pin exit configuration for exiting real-time stream mode on ADcmXL DUT's.
+ </summary>
+ <returns>RTS pin exit configuration (false = Pin Exit Disabled, true = Pin Exit Enabled)</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.PinStart">
+ <summary>
+ Gets and sets the sync pin start configuration for starting real-time stream mode on ADcmXL DUT's.
+ </summary>
+ <returns>RTS pin start configuration (false = Pin Start Disabled, true = Pin Start Enabled</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.BufferAvailable">
+ <summary>
+ Checks if a streaming frame is available, or will be available soon in thread safe queue. If there is no data in the queue
+ and the streaming thread is not currently running, it will return false.
+ </summary>
+ <returns>The frame availability</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetBuffer">
+ <summary>
+ Gets one frame from the thread safe queue. Waits to return until a frame is available if there is a stream running. If
+ there is not a stream running, and there is no data in the queue this call returns "Nothing".
+ </summary>
+ <returns>The frame, as a byte array</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.GetNumBuffersRead">
+ <summary>
+ Read-only property to get the number of buffers read in from the DUT in buffered streaming mode
+ </summary>
+ <returns>The current buffer read count</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.calcCCITT16(System.Byte[])">
+ <summary>
+Expects bytes in the order they are clocked out of ADcmXLx021
+CRC-16-CCITT, initialized with CRC = 0xFFFF, No final XOR.
+Limit crc accumulation to 16 bits to prevent U32 overflow.
+ </summary>
+ <param name="ByteData">The input data set to calculate the CRC of</param>
+ <returns>The CRC value for the input array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.calcCCITT16(System.UInt16[])">
+ <summary>
+ Overload for CRC calculation which takes UShort array
+ </summary>
+ <param name="UShortData">The data to calculate CRC for</param>
+ <returns>The CRC value</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.CheckDUTCRC(System.UInt16[]@)">
+ <summary>
+ Checks the CRC for a real time frame
+ </summary>
+ <param name="frame">The frame to check</param>
+ <returns>A boolean indicating if the accelerometer data CRC matches the frame CRC</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.BitBangSpiConfig">
+ <summary>
+ Property to get or set the bit bang SPI configuration. Can select pins, timings, etc
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BitBangSpi(System.UInt32,System.UInt32,System.Byte[],System.UInt32)">
+ <summary>
+ Perform a bit banged SPI transfer, using the config set in BitBangSpiConfig.
+ </summary>
+ <param name="BitsPerTransfer">The total number of bits to clock in a single transfer. Can be any number greater than 0.</param>
+ <param name="NumTransfers">The number of separate SPI transfers to clock out</param>
+ <param name="MOSIData">The MOSI data to clock out. Each SPI transfer must be byte aligned. Data is clocked out MSB first</param>
+ <param name="TimeoutInMs">The time to wait on the bulk endpoint for a return transfer (in ms)</param>
+ <returns>The data received over the selected MISO line</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BitBangReadReg16(System.UInt32)">
+ <summary>
+ Read a standard iSensors 16-bit register using a bitbang SPI connection
+ </summary>
+ <param name="addr">The address of the register to read (7 bit) </param>
+ <returns>The register value</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BitBangWriteRegByte(System.Byte,System.Byte)">
+ <summary>
+ Write a byte to an iSensor register using a bitbang SPI connection
+ </summary>
+ <param name="addr">The address of the register to write to</param>
+ <param name="data">The data to write to the register</param>
+</member>
+<member name="M:FX3Api.FX3Connection.RestoreHardwareSpi">
+ <summary>
+ Resets the hardware SPI pins to their default operating mode. Can be used to recover the SPI functionality after a bit-bang SPI transaction over the hardware SPI pins
+ without having to reboot the FX3.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.SetBitBangSpiFreq(System.UInt32)">
+ <summary>
+ Set the SCLK frequency for a bit banged SPI connection. Overloaded to allow for a UInt
+ </summary>
+ <param name="Freq">The SPI frequency, in Hz</param>
+ <returns>A boolean indicating if the frequency could be set.</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.SetBitBangStallTime(System.Double)">
+ <summary>
+ Set the bit bang SPI stall time. Driven by a clock with resolution of 49.3ns
+ </summary>
+ <param name="MicroSecondsStall">Stall time desired, in microseconds. Minimum of 0.7us</param>
+ <returns>A boolean indicating if value is good or not. Defaults to closest possible value</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.SetBitBangSpiFreq(System.Double)">
+ <summary>
+ Sets the SCLK frequency for a bit bang SPI connection. 
+ </summary>
+ <param name="Freq">The desired SPI frequency. Can go from 1.5MHz to approx 0.001Hz</param>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.CrcFirstIndex">
+ <summary>
+ Gets or sets the index of the first burst data word used in CRC calculations.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:FX3Api.FX3Connection.CrcLastIndex">
+ <summary>
+ Gets or sets the index of the last burst data word used in CRC calculations.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:FX3Api.FX3Connection.CrcResultIndex">
+ <summary>
+ Gets or sets the index of the word that contains the CRC result.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:FX3Api.FX3Connection.WordCount">
+ <summary>
+ Gets or sets the number of 16 bit words that are read during the burst. Does not include trigger, real transfer will be 2 bytes larger.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:FX3Api.FX3Connection.BurstByteCount">
+ <summary>
+ Get or set the burst word length, in bytes. Is the total count of bytes transfered, including trigger
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.TriggerReg">
+ <summary>
+ Gets or sets register that is used to trigger burst operation.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="P:FX3Api.FX3Connection.BurstMOSIData">
+ <summary>
+ Data to transmit on the MOSI line during a burst read operation. This value is over written
+ if you set the trigger reg, since trigger reg is given priority.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ClearBurstMode">
+ <summary>
+ Takes interface out of burst mode by setting BurstMode to zero.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FX3Api.FX3Connection.SetupBurstMode">
+ <summary>
+ Puts interface into burst mode by setting burstMode to match word count.
+ </summary>
+ <remarks></remarks>
+ <exception cref="T:System.InvalidOperationException">Thrown if word count has not been set.</exception>
+</member>
+<member name="M:FX3Api.FX3Connection.WaitForStreamCompletion">
+ <summary>
+ Overload of WaitForStreamCompletion which blocks indefinitely
+ until a stream completion event is seen.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.WaitForStreamCompletion(System.Int32)">
+ <summary>
+ Blocks until the streaming endpoint mutex can be acquired. Allows a user to synchronize external application
+ the completion of a stream. Returns false if there is not a stream running, or if the timeout is reached without
+ the stream mutex being acquired.
+ </summary>
+ <param name="MillisecondsTimeout">The time to wait trying to acquire the stream mutex (ms) </param>
+ <returns>If the stream wait was successful</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.EnqueueStreamData(System.UInt16[]@)">
+ <summary>
+ Place data in the thread safe queue and raise a buffer available event
+ </summary>
+ <param name="buf"></param>
+</member>
+<member name="M:FX3Api.FX3Connection.CancelStreamAsync">
+ <summary>
+ Cancel a any running stream
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.ExitStreamThread">
+ <summary>
+ Function to exit any stream thread and clean up stream state variables
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.CancelStreamImplementation(FX3Api.USBCommands)">
+ <summary>
+ Cancel running stream
+ </summary>
+ <param name="ReqCode">ReqCode for the type of stream to cancel</param>
+</member>
+<member name="M:FX3Api.FX3Connection.StartBurstStream(System.UInt32,System.Collections.Generic.IEnumerable{System.Byte})">
+ <summary>
+ Function to start a burst read using the BurstStreamManager
+ </summary>
+ <param name="numBuffers">The number of buffers to read in the stream operation</param>
+</member>
+<member name="M:FX3Api.FX3Connection.BurstStreamDone">
+ <summary>
+ Cleanup function for when a burst stream is done. This function frees resources on the FX3 firmware.
+ </summary>
+</member>
+<member name="P:FX3Api.FX3Connection.StripBurstTriggerWord">
+ <summary>
+ Property to choose if the readback from the 16 bit trigger word at the start of each burst is discarded or not
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BurstStreamManager">
+ <summary>
+ This function reads burst stream data from the DUT over the streaming endpoint. It is intended to operate in its own thread, and should not be called directly.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.ValidateBurstStreamConfig">
+ <summary>
+ Validate burst stream SPI config
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GenericStreamDone">
+ <summary>
+ Cleanup function for when a generic stream is done. Frees resources on FX3 firmware
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.StartGenericStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
+ <summary>
+ Starts a generic data stream. This allows you to read/write a set of registers on the DUT, triggering off the data ready if needed.
+ The data read is placed in the thread-safe queue and can be retrieved with a call to GetBuffer. Each "buffer" is the result of
+ reading the addr list of registers numCaptures times. For example, if addr is set to [0, 2, 4] and numCaptures is set to 10, each
+ buffer will contain the 30 register values. The total number of register reads performed is numCaptures * numBuffers
+ </summary>
+ <param name="addr">The list of registers to </param>
+ <param name="numCaptures">The number of captures of the register list per data ready</param>
+ <param name="numBuffers">The total number of capture sequences to perform</param>
+</member>
+<member name="M:FX3Api.FX3Connection.GenericStreamSetup(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
+ <summary>
+ Set up for a generic register read stream
+ </summary>
+ <param name="addrData">AddrDataPairs to read/write</param>
+ <param name="numCaptures">Num captures to perform per buffer</param>
+ <param name="numBuffers">Number of buffers to read</param>
+</member>
+<member name="M:FX3Api.FX3Connection.GenericStreamManager(System.Object)">
+ <summary>
+ This function pulls generic stream data from the FX3 over a bulk endpoint (DataIn). It is intended to run in its own thread,
+ and should not be called by itself.
+ </summary>
+ <param name="BytesPerBuffer">Number of bytes per generic stream buffer</param>
+</member>
+<member name="M:FX3Api.FX3Connection.ValidateGenericStreamConfig">
+ <summary>
+ Validate the SPI configuration for a generic stream
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.StartRealTimeStreaming(System.UInt32)">
+ <summary>
+ This function starts real time streaming on the ADcmXLx021 (interface and FX3). Specifying pin exit is optional and must be 0 (disabled) or 1 (enabled)
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.StopRealTimeStreaming">
+ <summary>
+ This function stops real time streaming on the ADcmXLx021 (stream thread in FX3 API and FX3 firmware)
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.RealTimeStreamingDone">
+ <summary>
+ Clean up function when real time streaming is done. Frees required resources on FX3
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.RealTimeStreamManager">
+ <summary>
+ This function pulls real time data from the DUT over the streaming endpoint. It is intended to operate in its own thread, and should not be called directly
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.PurgeBadFrameData">
+ <summary>
+ This function checks the CRC of each real time streaming frame stored in the Stream Data Queue, 
+ and purges the bad ones. This operation is only valid for an ADcmXL series DUT.
+ </summary>
+ <returns>The success of the data purge operation</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ValidateRealTimeStreamConfig">
+ <summary>
+ This function validates the current SPI settings to ensure that they are compatible with the machine health
+ real time streaming mode. If the settings are not compatible, a FX3ConfigException is thrown.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadFlash(System.UInt32,System.UInt16)">
+ <summary>
+ Read data from the FX3 non-volatile memory
+ </summary>
+ <param name="ByteAddress">The flash byte address to read from (valid range 0x0 - 0x40000)</param>
+ <param name="ReadLength">The number of bytes to read. Max 4096</param>
+ <returns>The data read from the FX3 flash memory</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ClearErrorLog">
+ <summary>
+ Clear the error log stored in flash
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GetErrorLogCount">
+ <summary>
+ Get the number of errors logged to the FX3 flash memory
+ </summary>
+ <returns>The error log count in flash</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetErrorLog">
+ <summary>
+ Gets the current error log from FX3 flash memory
+ </summary>
+ <returns>The stored error log, as a list of FX3ErrorLog objects</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.I2CBitRate">
+ <summary>
+ Get/Set the FX3 I2C bit rate. Valid range 100KHz - 1MHz. Defaults to 100KHz
+ </summary>
+ <returns>Current I2C bit rate setting</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.I2CRetryCount">
+ <summary>
+ Get/Set the FX3 I2C retry count. This is the number of times the FX3
+ will retry a read/write when a NAK is received from the slave device
+ being addressed.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.I2CReadBytes(FX3Api.I2CPreamble,System.UInt32,System.UInt32)">
+ <summary>
+ Read bytes from an I2C slave device attached to the FX3.
+ </summary>
+ <param name="Preamble">The I2C preamble to transmit at the start of the read operation</param>
+ <param name="NumBytes">The number of bytes to read over I2C after sending the preamble</param>
+ <param name="TimeoutInMs">Read timeout period, in ms</param>
+ <returns>The data read from the I2C slave device</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.I2CWriteBytes(FX3Api.I2CPreamble,System.Collections.Generic.IEnumerable{System.Byte},System.UInt32)">
+ <summary>
+ Write bytes to an I2C slave device attached to the FX3
+ </summary>
+ <param name="Preamble">The I2C preamble to transmit at the start of the write operation</param>
+ <param name="WriteData">The write data to transmit on SDA after finishing the preamble</param>
+ <param name="TimeoutInMs">Write timeout period, in ms</param>
+</member>
+<member name="M:FX3Api.FX3Connection.SetI2CBitRate(System.UInt32)">
+ <summary>
+ Helper function to set i2c bit rate on FX3
+ </summary>
+ <param name="BitRate">Bit rate setting</param>
+</member>
+<member name="M:FX3Api.FX3Connection.SetI2CRetryCount(System.UInt16)">
+ <summary>
+ Helper function to set i2c retry count in case of NAK on FX3
+ </summary>
+ <param name="Count">Number of times to transfer</param>
+</member>
+<member name="M:FX3Api.FX3Connection.StartI2CStream(FX3Api.I2CPreamble,System.UInt32,System.UInt32)">
+ <summary>
+ Start an asynchronous I2C read stream. This stream runs on the stream thread
+ and places all data in a thread safe queue. The data can be retrieved using
+ GetI2CBuffer()
+ </summary>
+ <param name="Preamble">The preamble to send at the start of the read</param>
+ <param name="BytesPerRead">Number of read bytes following the preamble</param>
+ <param name="numBuffers">Total number of separate I2C transactions to send</param>
+</member>
+<member name="M:FX3Api.FX3Connection.I2CStreamManager(System.Object)">
+ <summary>
+ Stream thread function for I2C stream
+ </summary>
+ <param name="BytesPerBuffer">Number of bytes to read</param>
+</member>
+<member name="M:FX3Api.FX3Connection.I2CStreamDone">
+ <summary>
+ Cleanup function when I2C stream is done
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GetI2CBuffer">
+ <summary>
+ Get I2C buffer from I2C read stream
+ </summary>
+ <returns>I2C data read</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.PulseDrive(AdisApi.IPinObject,System.UInt32,System.Double,System.UInt32)">
+ <summary>
+ This function drives a pin to the specified level for a given time interval in ms
+ </summary>
+ <param name="pin">The FX3PinObject for the pin to drive</param>
+ <param name="polarity">The level to drive the pin to. 1 - high, 0 - low</param>
+ <param name="pperiod">The time to drive the pin for, in ms. Minimum of 3us.</param>
+ <param name="mode">Not implemented</param>
+</member>
+<member name="M:FX3Api.FX3Connection.PulseWait(AdisApi.IPinObject,System.UInt32,System.UInt32,System.UInt32)">
+ <summary>
+ This function waits for a pin to reach a specified level
+ </summary>
+ <param name="pin">The pin to poll</param>
+ <param name="polarity">The level to wait for. 1 - high, 0 - low</param>
+ <param name="delayInMs">The delay from the start of the function call to when the pin polling starts</param>
+ <param name="timeoutInMs">The timeout from when the pin polling starts to when the function returns, if the desired level is never reached</param>
+ <returns>The total time waited (including delay) in ms</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadPin(AdisApi.IPinObject)">
+ <summary>
+ Reads the value of a GPIO pin on the FX3
+ </summary>
+ <param name="pin">The pin to read, as a FX3PinObject</param>
+ <returns>The pin value - 1 is high, 0 is low</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadPins(AdisApi.IPinObject[])">
+ <summary>
+ Reads a list of FX3 GPIO pins. This function calls the overload which takes an IEnumerable
+ </summary>
+ <param name="pins">An array of FX3PinObjects to read</param>
+ <returns>The pin values, as a UInteger. The first pin is in bit 0, second is in bit 1, and so on</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadPins(System.Collections.Generic.IEnumerable{AdisApi.IPinObject})">
+ <summary>
+ Reads a list of FX3 GPIO pins
+ </summary>
+ <param name="pins">An enumerable list of FX3PinObjects to read (maximum of 32)</param>
+ <returns>The pin values, as a UInteger. The first pin is in bit 0, second is in bit 1, and so on</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadTime(System.UInt32,System.UInt32,System.UInt32,System.UInt32,System.UInt32)">
+ <summary>
+ Not implemented
+ </summary>
+ <param name="start_pin">Not implemented</param>
+ <param name="start_polarity">Not implemented</param>
+ <param name="stop_pin">Not implemented</param>
+ <param name="stop_polarity">Not implemented</param>
+ <param name="delay">Not implemented</param>
+ <returns>Not implemented</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.SetPin(AdisApi.IPinObject,System.UInt32)">
+ <summary>
+ Sets the value of a FX3 GPIO pin. This value will persist until the pin is set to a different value, or read from
+ </summary>
+ <param name="pin">The FX3PinObject pin to read</param>
+ <param name="value">The polarity to set the pin to, 1 - high, 0 - low</param>
+</member>
+<member name="M:FX3Api.FX3Connection.MeasurePinFreq(AdisApi.IPinObject,System.UInt32,System.UInt32,System.UInt16)">
+ <summary>
+ Measures the frequency of an input signal to the selected pin.
+ </summary>
+ <param name="pin">The pin to measure. Must be an FX3 pin object</param>
+ <param name="polarity">THe edge to measure from. 0 - falling edge, 1 - rising edge</param>
+ <param name="timeoutInMs">The time to wait for the FX3 to return values before defaulting to infinity (in ms)</param>
+ <param name="numPeriods">THe number of periods to sample for. Minimum value of 1</param>
+ <returns>The signal frequency, in Hz. Goes to infinity if no signal found.</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadDRFreq(AdisApi.IPinObject,System.UInt32,System.UInt32)">
+ <summary>
+ Reads the measured DR value
+ </summary>
+ <param name="pin">The DR pin to measure</param>
+ <param name="polarity">The edge to measure from. 1 - low to high, 0 - high to low</param>
+ <param name="timeoutInMs">The timeout from when the pin measurement starts to when the function returns if the signal cannot be found</param>
+ <returns>The DR frequency in Hz</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.MeasurePinDelay(AdisApi.IPinObject,System.UInt32,AdisApi.IPinObject,System.UInt32)">
+ <summary>
+ This function measures the time delay between toggling a trigger pin, and a state change on the busy pin. This can be used to measure
+ the propagation delay between a sync edge and data ready being de-asserted.
+ </summary>
+ <param name="TriggerPin">The pin to toggle. When this pin is driven to the selected polarity the delay timer starts</param>
+ <param name="TriggerDrivePolarity">The polarity to drive the trigger pin to. 1- high, 0 - low</param>
+ <param name="BusyPin">The pin to measure.</param>
+ <param name="Timeout">Operation timeout period, in ms</param>
+ <returns>The delay time, in ms</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.MeasureBusyPulse(AdisApi.IPinObject,System.UInt32,System.UInt32,AdisApi.IPinObject,System.UInt32,System.UInt32)">
+ <summary>
+ This function triggers a DUT action using a pulse drive, and then measures the following pulse width on a separate busy line.
+ The pulse time on the busy pin is measured using a 10MHz timer with approx. 0.1us accuracy.
+ </summary>
+ <param name="TriggerPin">The pin to drive for the trigger condition (for example a sync pin)</param>
+ <param name="TriggerDriveTime">The time, in ms, to drive the trigger pin for</param>
+ <param name="TriggerDrivePolarity">The polarity to drive the trigger pin at (0 - low, 1 - high)</param>
+ <param name="BusyPin">The pin to measure a busy pulse on</param>
+ <param name="BusyPolarity">The polarity of the pulse being measured (0 will measure a low pulse, 1 will measure a high pulse)</param>
+ <param name="Timeout">The timeout, in ms, to wait before canceling, if the pulse is never detected</param>
+ <returns>The pulse width, in ms. Accurate to approx. 1us</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.MeasureBusyPulse(System.Byte[],AdisApi.IPinObject,System.UInt32,System.UInt32)">
+ <summary>
+ Overload of measure busy pulse which triggers the DUT event using a SPI write instead of a pin drive.
+ </summary>
+ <param name="SpiTriggerData">The data to transmit on the MOSI line, to trigger the operation being measured</param>
+ <param name="BusyPin">The pin to measure a busy pulse on</param>
+ <param name="BusyPolarity">The polarity of the pulse being measured (0 will measure a low pulse, 1 will measure a high pulse)</param>
+ <param name="Timeout">The timeout, in ms, to wait before canceling, if the pulse is never detected</param>
+ <returns>The pulse width, in ms. Accurate to approx. 1us</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.StartPWM(System.Double,System.Double,AdisApi.IPinObject)">
+ <summary>
+ This function configures the selected pin to drive a pulse width modulated output.
+ </summary>
+ <param name="Frequency">The desired PWM frequency, in Hz. Valid values are in the range of 0.05Hz (0.05) - 50MHz (20000000.0)</param>
+ <param name="DutyCycle">The PWM duty cycle. Valid values are in the range 0.0 - 1.0. To achieve a "clock" signal set the duty cycle to 0.5</param>
+ <param name="Pin">The pin to configure as a PWM signal.</param>
+</member>
+<member name="M:FX3Api.FX3Connection.StopPWM(AdisApi.IPinObject)">
+ <summary>
+ This function call disables the PWM output from the FX3 and returns the pin to a tri-stated mode.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.isPWMPin(AdisApi.IPinObject)">
+ <summary>
+ This function checks to see if the selected pin has already been configured to act as a PWM output pin.
+ </summary>
+ <param name="Pin">The pin to check. Must be an FX3PinObject pin</param>
+ <returns>True if the pin is configured as a PWM pin, false otherwise</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetPinPWMInfo(AdisApi.IPinObject)">
+ <summary>
+ Allows the user to retrieve a set of information about the current pin PWM configuration.
+ </summary>
+ <param name="Pin">The pin to pull from the PinPWMInfo List</param>
+ <returns>The PinPWMInfo corresponding to the selected pin. If the pin is not found all fields will be -1</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.IsFX3Pin(AdisApi.IPinObject)">
+ <summary>
+ This function determines if the pin object being passed is an FX3 version of the IPinObject (as opposed to a blackfin pin for the SDP).
+ </summary>
+ <param name="Pin">The pin to check</param>
+ <returns>True if Pin is an FX3 pin, false if not</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.UserLEDOn">
+ <summary>
+ Turn on user LED (not available on Cypress Explorer FX3 board)
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.UserLEDOff">
+ <summary>
+ Turn off user LED (not available on Cypress Explorer FX3 board)
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.UserLEDBlink(System.Double)">
+ <summary>
+ Blink user LED using timer hardware (not available on Cypress Explorer FX3 board)
+ </summary>
+ <param name="BlinkFreq">Frequency to blink LED at</param>
+</member>
+<member name="P:FX3Api.FX3Connection.ResetPin">
+ <summary>
+ Read-only property to get the reset pin
+ </summary>
+ <returns>The reset pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DIO1">
+ <summary>
+ Read-only property to get the DIO1 pin
+ </summary>
+ <returns>Returns the DIO1 pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DIO2">
+ <summary>
+ Read-only property to get the DIO2 pin
+ </summary>
+ <returns>Returns the DIO2 pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DIO3">
+ <summary>
+ Read-only property to get the DIO3 pin
+ </summary>
+ <returns>Returns the DIO3 pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DIO4">
+ <summary>
+ Read-only property to get the DIO4 pin
+ </summary>
+ <returns>Returns the DIO4 pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3_GPIO1">
+ <summary>
+ Read-only property to get the FX3_GPIO1 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing.
+ </summary>
+ <returns>Returns the GPIO pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3_GPIO2">
+ <summary>
+ Read-only property to get the FX3_GPIO2 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing.
+ </summary>
+ <returns>Returns the GPIO pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3_GPIO3">
+ <summary>
+ Read-only property to get the FX3_GPIO3 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing.
+ </summary>
+ <returns>Returns the GPIO pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3_GPIO4">
+ <summary>
+ Read-only property to get the FX3_GPIO4 pin. This pin does not map to the standard iSensor breakout,
+ and should be used for other general purpose interfacing. This pin shares a complex GPIO block with DIO1. If DIO1 is being used
+ as a clock source, via the StartPWM function, then this pin cannot be used as a clock source.
+ </summary>
+ <returns>Returns the GPIO pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3_LOOPBACK1">
+ <summary>
+ Read-only property to get loop back pin 1. This pin (CTL8) is wired directly to 
+ loop back pin 2 (CTL9) on the iSensor FX3 Board, Revision C or newer. These loop
+ back pins allow for fixed transaction timing on "asynchronous" SPI/I2C reads. One 
+ of the loop back pins can be configured as a PWM output using the "StartPWM" API, 
+ and the other loop back pin can be set as the DrPin, allowing the FX3 to trigger 
+ itself at a known rate.
+ </summary>
+ <returns>The first loop back pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3_LOOPBACK2">
+ <summary>
+ Read-only property to get loop back pin 2. This pin (CTL9) is wired directly to 
+ loop back pin 1 (CTL8) on the iSensor FX3 Board, Revision C or newer. These loop
+ back pins allow for fixed transaction timing on "asynchronous" SPI/I2C reads. One 
+ of the loop back pins can be configured as a PWM output using the "StartPWM" API, 
+ and the other loop back pin can be set as the DrPin, allowing the FX3 to trigger 
+ itself at a known rate.
+ </summary>
+ <returns>The second loop back pin, as an IPinObject</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DrActive">
+ <summary>
+ If the data ready is used for register reads
+ </summary>
+ <returns>The current data ready usage setting</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.BurstMode">
+ <summary>
+ Switches burstMode on and off. Set burstMode to the number of burst read registers. 
+ </summary>
+ <returns>The number of burst read registers.</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.StreamTimeoutSeconds">
+ <summary>
+ Sets the timeout for the Bulk Endpoint used in real time streaming modes.
+ </summary>
+ <returns>The timeout time, in seconds</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.StartStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ Starts a buffered stream for only a single buffer. 
+ This is equivalent to StartBufferedStream(addr, numCaptures, 1, CurrentTimeout, Nothing)
+ </summary>
+ <param name="addr">The address list to read from</param>
+ <param name="numCaptures">The number of times to capture that address list</param>
+</member>
+<member name="M:FX3Api.FX3Connection.StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Starts a buffered stream operation. The registers listed in addr are read numCaptures times per register buffer. This process is repeated numBuffers times. 
+ </summary>
+ <param name="addr">List of register addresses to read</param>
+ <param name="numCaptures">Number of times to read the register list per buffer.</param>
+ <param name="numBuffers">Number of total register buffers to read.</param>
+ <param name="timeoutSeconds">Stream timeout, in seconds</param>
+ <param name="worker">Background worker to handle progress updates</param>
+</member>
+<member name="M:FX3Api.FX3Connection.StartBufferedStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ Starts a buffered stream operation. This is usually called from the TextFileStreamManager. DUTType must be set before executing. 
+ </summary>
+ <param name="addrData">The list of register addresses to read from, when PartType is not ADcmXLx021</param>
+ <param name="numCaptures">The number of reads to perform on each register listed in addr</param>
+ <param name="numBuffers">The total number of buffers to read. One buffer is either a frame or a set of register reads</param>
+ <param name="timeoutSeconds">The bulk endpoint timeout time</param>
+ <param name="worker">A Background worker object which can be used by a GUI to track the current stream status and send cancellation requests</param>
+</member>
+<member name="M:FX3Api.FX3Connection.StopStream">
+ <summary>
+ Stops the currently running data stream, if any.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GetBufferedStreamDataPacket">
+ <summary>
+ This function returns a single buffered stream packet. Needed for IBufferedStreamProducer
+ </summary>
+ <returns>The stream data packet, as a short</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetStreamDataPacketU16">
+ <summary>
+ This function does the same thing as GetBufferedStreamDataPacket()
+ </summary>
+ <returns>The last buffer read from the DUT</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegByte(System.UInt32)">
+ <summary>
+ This is the most general ReadRegByte. Other implementations are based on this.
+ </summary>
+ <param name="addr">The address to read</param>
+ <returns>Returns the value read in over SPI as a short</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegWord(System.UInt32)">
+ <summary>
+ Reads a single 16 bit register on the DUT
+ </summary>
+ <param name="addr">The address of the register to read</param>
+ <returns>The 16 bit register value, as a UShort</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(System.UInt32,System.UInt32)">
+ <summary>
+ This is the most general WriteRegByte, which the others are based on
+ </summary>
+ <param name="addr">The address to write to</param>
+ <param name="data">The byte of data to write</param>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(AdisApi.AddrDataPair)">
+ <summary>
+ This function writes a single register byte, given as an Address / Data pair
+ </summary>
+ <param name="addrData">The AddrDataPair to be written</param>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegWord(System.UInt32,System.UInt32)">
+ <summary>
+ This function is not currently implemented. Calling it will throw a NotImplementedException.
+ </summary>
+ <param name="addr"></param>
+ <param name="data"></param>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArrayStream(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32,System.UInt32)">
+ <summary>
+ This is the most generic array register function. All other array read/write functions call down to this one.
+ </summary>
+ <param name="addrData">The list of register addresses and optional write data for each capture</param>
+ <param name="numCaptures">The number of times to iterate through addrData per DUT data ready (if DrActive is set)</param>
+ <param name="numBuffers">The total number of buffers to read, where one buffer is considered numCaptures iterations through addrData</param>
+ <returns>An array of 16 bit values read back from the DUT. The size will be addrData.Count() * numCaptures * numBuffers</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArrayStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ 
+ </summary>
+ <param name="addr"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ Overload of ReadRegArray which builds a new IEnumerable of addr and call the overload which takes an enumerable of addr
+ </summary>
+ <param name="addr">List of register address's to read</param>
+ <param name="numCaptures">Number of captures to perform on the register list</param>
+ <returns>The register values, as a short array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair})">
+ <summary>
+ This function writes an enumerable list of data to the DUT as AddrDataPairs
+ </summary>
+ <param name="addrData">The list of AddrDataPair to be written to DUT</param>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteRegByte(System.Collections.Generic.IEnumerable{System.UInt32},System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Overload of WriteRegByte which allows for multiple registers to be specified to write to, as an IEnumerable list of register addresses.
+ </summary>
+ <param name="addr">The list of register addresses to write to.</param>
+ <param name="data">The data to write to each register in the address list.</param>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ Reads an array of 16 bit register values.
+ </summary>
+ <param name="addr">The list of registers to read</param>
+ <returns>The register values, as a UShort array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ReadRegArray(System.Collections.Generic.IEnumerable{AdisApi.AddrDataPair},System.UInt32)">
+ <summary>
+ ReadRegArray overload which includes register writes. Breaks the call into multiple calls of readRegByte and writeRegByte
+ </summary>
+ <param name="addrData">The data to read/write</param>
+ <param name="numCaptures">The number of times to perform the read/write operation</param>
+ <returns>The output data, as a UShort array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.Reset">
+ <summary>
+ Drives the Reset pin low for 10ms, sleeps for 100ms, and then blocks until the ReadyPin is high (500ms timeout)
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.Start">
+ <summary>
+ This function is not currently implemented. Calling it will throw a NotImplementedException.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.Connect(System.String)">
+ <summary>
+ Attempts to program the selected FX3 board with the application firmware. The FX3 board should be programmed
+ with the ADI bootloader.
+ </summary>
+ <param name="FX3SerialNumber">Serial number of the device being connected to.</param>
+</member>
+<member name="M:FX3Api.FX3Connection.Disconnect">
+ <summary>
+ This function sends a reset command to the specified FX3 board, or does nothing if no board is connected
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.Disconnect(System.String)">
+ <summary>
+ Overload of Disconnect which lets you specify the FX3 serial number to disconnect. Returns a boolean
+ indicating if the board was disconnected.
+ </summary>
+ <param name="FX3SerialNumber">Serial number of board to disconnect from</param>
+ <returns>Success status of the board disconnect operation</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetFX3BoardType">
+ <summary>
+ Get the FX3 board type from the connected firmware.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.WaitForBoard(System.Int32)">
+ <summary>
+ This function is used to wait for an FX3 to be programmed with the ADI bootloader. In general, the programming model would go as follows,
+ to connect and program the first board attached:
+ 
+ Dim myFX3 as FX3Connection = New FX3Connection(firmwarepath, bootloaderpath, devicetype)
+ If Not myFX3.WaitForBoard(10) Then
+     Msgbox("No boards found")
+     Exit Sub
+ End If
+ myFX3.Connect(myFX3.AvailableFX3s(0))
+ </summary>
+ <param name="TimeoutInSeconds">The timeout to wait for a board to connect, in seconds</param>
+ <returns>If there is a board available (false indicates timeout occurred)</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ActiveFX3">
+ <summary>
+ Property which returns the active FX3 board. Returns nothing if there is not a board connected.
+ </summary>
+ <returns>Returns active FX3 board if enumeration has been completed. Returns nothing otherwise.</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ActiveFX3SerialNumber">
+ <summary>
+ Property which returns the serial number of the active FX3 board. 
+ </summary>
+ <returns>Returns the serial number of the active FX3 device.</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.AvailableFX3s">
+ <summary>
+ Property which returns a list of the serial numbers of all FX3 boards running the ADI bootloader
+ </summary>
+ <returns>All detected FX3 boards.</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.BusyFX3s">
+ <summary>
+ Property which returns a list of the serial numbers of all FX3 boards currently in use, running the application firmware.
+ </summary>
+ <returns>The list of board serial numbers</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.GetFirmwareVersion">
+ <summary>
+ Property which reads the firmware version from the FX3
+ </summary>
+ <returns>The firmware version, as a string</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.GetTargetSerialNumber">
+ <summary>
+ Read-only property to get the serial number of the active FX3 board
+ </summary>
+ <returns>The current serial number, as a string</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.InitBoardList">
+ <summary>
+ Initializes the interrupt handlers for connecting/disconnecting boards and forces an FX3 list refresh
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.usbDevices_DeviceAttached(System.Object,System.EventArgs)">
+ <summary>
+ Handles connect events generated by the Cypress USB library
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:FX3Api.FX3Connection.usbDevices_DeviceRemoved(System.Object,System.EventArgs)">
+ <summary>
+ Handles disconnect events generated by the cypress USB library
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+</member>
+<member name="M:FX3Api.FX3Connection.CheckDisconnectEvent(CyUSB.USBEventArgs)">
+ <summary>
+ This function checks the event arguments when a USB disconnect occurs. If the FX3 which was
+ disconnected is marked as the active device, this function attempts to gracefully update the 
+ interface state to prevent application lockup from accessing a disconnected board.
+ </summary>
+ <param name="usbEvent">The event to handle</param>
+</member>
+<member name="M:FX3Api.FX3Connection.CheckConnectEvent(CyUSB.USBEventArgs)">
+ <summary>
+ This function parses connect events. If the board connecting is running the ADI bootloader,
+ and has a serial number which matches that of the most recently disconnected FX3, a disconnect
+ finished event is raised. This allows GUIs or applications up the stack to better manage their
+ event flow (rather than blocking in a disconnect call).
+ </summary>
+ <param name="usbEvent">The event to handle</param>
+</member>
+<member name="M:FX3Api.FX3Connection.RefreshDeviceList">
+ <summary>
+ Refreshes the list of FX3 boards connected to the PC and indicates to bootloader programmer thread if any need to be programmed
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.ProgramBootloaderThread">
+ <summary>
+ This function runs in a separate thread from the main application. When a new, un-programmed board
+ is connected to the system, the device identifier is placed in a queue, indicating to this thread
+ that a new board needs to be programmed with the ADI bootloader.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.ProgramBootloader(CyUSB.CyFX3Device)">
+ <summary>
+ This function programs the bootloader of a single board
+ </summary>
+ <param name="selectedBoard">The handle for the FX3 board to be programmed with the ADI bootloader firmware</param>
+</member>
+<member name="M:FX3Api.FX3Connection.ProgramAppFirmware(CyUSB.CyFX3Device)">
+ <summary>
+ This function programs a single board running the ADI bootloader with the ADI application firmware.
+ </summary>
+ <param name="selectedBoard">The handle for the board to be programmed with the ADI application firmware</param>
+</member>
+<member name="M:FX3Api.FX3Connection.FX3CodeRunningOnTarget">
+ <summary>
+ Function which checks if the FX3 is connected and programmed
+ </summary>
+ <returns>A boolean indicating if the board is programmed</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FirmwarePath">
+ <summary>
+ The path to the firmware .img file. Needs to be set before the FX3 can be programmed
+ </summary>
+ <returns>A string, representing the path</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.BootloaderPath">
+ <summary>
+ Set/get the blink USB bootloader firmware .img file used for multi-board identification
+ </summary>
+ <returns>A string representing the path to the firmware on the user machine</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FlashProgrammerPath">
+ <summary>
+ Path to the programmer firmware which is loaded in RAM to allow flashing the EEPROM with the bootloader.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.GetBootStatus">
+ <summary>
+ Checks the boot status of the FX3 board by sending a vendor request
+ </summary>
+ <returns>The current connection status</returns>
+</member>
+<member name="P:FX3Api.FX3Connection.FX3BoardAttached">
+ <summary>
+ Checks if there is a Cypress FX3 USB device connected to the system
+ </summary>
+ <returns>A boolean indicating if there is an FX3 attached</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ResetFX3Firmware(CyUSB.CyFX3Device)">
+ <summary>
+ Send a reset command to the FX3 firmware. This command works for either the application or bootloader firmware.
+ </summary>
+ <param name="BoardHandle">Handle of the board to be reset.</param>
+</member>
+<member name="M:FX3Api.FX3Connection.ResetAllFX3s">
+ <summary>
+ Looks for and resets boards in application mode. Should only be called at program start, after InitBoardList()
+ Note: Should not be used if running multiple instances of the GUI.
+ </summary>
+ <returns>The number of boards running the application firmware which were reset</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.IsFirmwarePathValid(System.String@)">
+ <summary>
+ Checks to see if a provided firmware path is valid. Throws exception if it is not.
+ </summary>
+ <param name="Path">The firmware path to check</param>
+ <returns>A boolean indicating if the firmware path is valid</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.XferControlData(System.Byte[]@,System.Int32,System.Int32)">
+ <summary>
+ Performs a data transfer on the control endpoint with a check to see if the transaction times out
+ </summary>
+ <param name="Buf">The buffer to transfer</param>
+ <param name="NumBytes">The number of bytes to transfer</param>
+ <param name="Timeout">The timeout time (in milliseconds)</param>
+ <returns>Returns a boolean indicating if the transfer timed out or not</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ConfigureControlEndpoint(FX3Api.USBCommands,System.Boolean)">
+ <summary>
+ Validates that the control endpoint is enumerated and configures it with some default values
+ </summary>
+ <param name="Reqcode">The vendor command reqcode to provide</param>
+ <param name="toDevice">Whether the transaction is DIR_TO_DEVICE (true) or DIR_FROM_DEVICE(false)</param>
+</member>
+<member name="M:FX3Api.FX3Connection.GetFirmwareID">
+ <summary>
+ Gets the current firmware ID from the FX3
+ </summary>
+ <returns>Returns the firmware ID, as a string</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.GetSerialNumber">
+ <summary>
+ Gets the serial number of the target FX3 using the control endpoint
+ </summary>
+ <returns>The unique FX3 serial number</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.CheckEndpointStatus">
+ <summary>
+ Checks that all the endpoints are properly enumerated
+ </summary>
+ <returns>A boolean indicating if the endpoints are properly enumerated</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ResetEndpoints">
+ <summary>
+ Resets all the currently configured endpoints on the FX3.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.EnumerateEndpointsOnTarget">
+ <summary>
+ Enumerates all the FX3 endpoints used
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.CheckConnectionSpeedOnTarget">
+ <summary>
+ Checks that the board is enumerated and connected via USB 2.0 or 3.0. Throws general exceptions for an invalid speed.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.GetBootloaderVersion(System.String)">
+ <summary>
+ Read bootloader image and pull the version number
+ </summary>
+ <param name="Path">Path to the image</param>
+ <returns>The version image string</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.BootloaderBlinkLED(System.String)">
+ <summary>
+ BOOTLOADER FW: Blink the on-board LED
+ </summary>
+ <param name="SerialNumber">Serial number of the selected board</param>
+</member>
+<member name="M:FX3Api.FX3Connection.BootloaderTurnOffLED(System.String)">
+ <summary>
+ BOOTLOADER FW: Turn off the LED
+ </summary>
+ <param name="SerialNumber">Serial number of the selected board</param>
+</member>
+<member name="M:FX3Api.FX3Connection.BootloaderTurnOnLED(System.String)">
+ <summary>
+ BOOTLOADER FW: Turn on the LED
+ </summary>
+ <param name="SerialNumber">Serial number of the selected board</param>
+</member>
+<member name="F:FX3Api.FX3Connection.m_SPI32InitialMOSI">
+ <summary>
+ SPI data to transmit at the start of a transfer stream. No read
+ back performed
+ </summary>
+</member>
+<member name="F:FX3Api.FX3Connection.m_SPI32InitialDrActive">
+ <summary>
+ Track if initial MOSI data is transfered with DrActive
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.Transfer(System.UInt32)">
+ <summary>
+ This function performs a single bi-directional 32 bit SPI transaction. If DrActive is set to false the transfer is performed asynchronously. If DrActive is set to true, 
+ the transfer should wait until a data ready condition (determined by DrPin and DrPolarity) is true.
+ </summary>
+ <param name="WriteData">The 32 bit data to be send to the slave on the MOSI line</param>
+ <returns>The 32 bit data sent to the master over the MISO line during the SPI transaction</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32})">
+ <summary>
+ This function performs an array bi-directional SPI transfer. WriteData.Count() total SPI transfers are performed. If DrActive is set to true, the transfer should wait
+ until a data ready condition (determined by DrPin and DrPolarity) is true, and then perform all SPI transfers. If DrActive is false it is performed asynchronously.
+ </summary>
+ <param name="WriteData">The data to be written to the slave on the MOSI line in each SPI transaction. The total number of transfers performed is determined by the size of WriteData.</param>
+ <returns>The data received from the slave device on the MISO line, as an array</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ This function performs an array bi-directional SPI transfer. This overload transfers all the data in WriteData numCaptures times. The total
+ number of SPI words transfered is WriteData.Count() * numCaptures.
+ If DrActive is set to true, the transfer should wait until a data ready condition (determined by DrPin and DrPolarity) is true, and
+ then perform all SPI transfers. If DrActive is false it is performed asynchronously.
+ </summary>
+ <param name="WriteData">The data to be written to the slave on the MOSI line in each SPI transaction.</param>
+ <param name="numCaptures">The number of transfers of the WriteData array performed.</param>
+ <returns>The data received from the slave device on the MISO line, as an array. The total size is WriteData.Count() * numCaptures</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ This function performs an array bi-directional SPI transfer. If DrActive is set to true, this overload transfers all the data in WriteData
+ numCaptures times per data ready condition being met. It captures data from numBuffers data ready signals. If DrActive is set to false, all the
+ transfers are performed asynchronously. The total number of SPI transfers is WriteData.Count()*numCaptures*numBuffers.
+ 
+ The following pseduo-code snippet would perform 400 total SPI transfers, across 100 data ready conditions. 
+ 
+ MOSI = {0x1234, 0x5678}
+ myISpi32.DrActive = True
+ MISO = myISpi32.TransferArray(MOSI, 2, 100)
+ 
+ During the transfers, the SPI bus would look like the following:
+ 
+ MOSI: ---(0x1234)---(0x5678)---(0x1234)---(0x5678)-----------------(0x1234)---(0x5678)---(0x1234)---(0x5678)--...-----(0x1234)-----(0x5678)-----(0x1234)-----(0x5678)--
+ MISO:----MISO(0)----MISO(1)----MISO(2)----MISO(3)------------------MISO(4)----MISO(5)----MISO(6)----MISO(7)---...-----MISO(196)----MISO(197)----MISO(198)----MISO(199)-
+ DR:   ___|¯¯¯|_____________________________________________________|¯¯¯|______________________________________..._____|¯¯¯|____________________________________________
+ </summary>
+ <param name="WriteData">The data to be written to the slave over the MOSI line in each SPI transaction</param>
+ <param name="numCaptures">The number of transfers of the WriteData array performed on each data ready (if enabled).</param>
+ <param name="numBuffers">The total number of data ready's to capture.</param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.TransferArrayImplementation(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32)">
+ <summary>
+ Transfer array low level implementation
+ </summary>
+ <param name="WriteData"></param>
+ <param name="numCaptures"></param>
+ <param name="numBuffers"></param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Connection.WriteReadTransferArray(System.Collections.Generic.IEnumerable{System.UInt32},System.Boolean,System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32)">
+ <summary>
+ Array transfer which performs an initial SPI transmit (MOSI only, no read back) then
+ starts a read stream. This is useful if you need to issue a write to the DUT, then 
+ immediately start reading back data, without the USB transfer overhead of approx 150us
+ </summary>
+ <param name="InitialMOSIData">MOSI data to transmit before read (SPI words)</param>
+ <param name="InitialDrActive">If the initial transmission is DR active or not</param>
+ <param name="MOSIReadData">Data sent over the MOSI line during the transfer</param>
+ <param name="NumBuffers">Number of buffers (samples) to read</param>
+ <returns>MISO data from the DUT during the whole transfer</returns>
+</member>
+<member name="M:FX3Api.FX3Connection.ISpi32Interface_StartBufferedStream(System.Collections.Generic.IEnumerable{System.UInt32},System.UInt32,System.UInt32,System.Int32,System.ComponentModel.BackgroundWorker)">
+ <summary>
+ This is similar to the most general streaming function used by the IRegInterface, and all other buffered streaming functions can be derived from 
+ it with a little glue logic. When a stream is started, a second thread should be started to pull buffers from the interfacing board asynchronously.
+ Each buffer will consist of WriteData.count() * numCaptures 32-bit words, which are just the raw data read back from the DUT over the MISO line. 
+ The stream is expected to produce numBuffers total buffers.
+ </summary>
+ <param name="WriteData">The data to send over the MOSI line</param>
+ <param name="numCaptures">The number of iterations of the WriteData array to perform in a single buffer</param>
+ <param name="numBuffers">The total number of buffers to capture</param>
+ <param name="timeoutSeconds">The time to wait on the interfacing board before stopping the stream</param>
+ <param name="worker">A background worker used to notify the caller of progress made in the stream. You MUST check that this parameter has been initialized</param>
+</member>
+<member name="M:FX3Api.FX3Connection.ISpi32StopStream">
+ <summary>
+ ISpi32 StopStream implementation. Calls generic version.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Connection.ISpi32Interface_GetBufferedStreamDataPacket">
+ <summary>
+ Gets a buffer from the TransferStreamData thread safe queue. Same implementation as GetBuffer.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ISpi32Interface_StreamTimeoutSeconds">
+ <summary>
+ Set the timeout period used for dequeuing a buffer from the thread safe queue.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ISpi32Interface_DrActive">
+ <summary>
+ Sets of data ready triggering is used for the ISpi32Interface
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.DrPin">
+ <summary>
+ This property is used to get or set the data ready pin. Is tied to the ReadyPin property
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Connection.ISpi32Interface_DrPolarity">
+ <summary>
+ Sets/Gets the data ready polarity for the ISpi32Interface.
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:FX3Api.StreamType">
+ <summary>
+ Enum of all possible stream types which can be running
+ </summary>
+</member>
+<member name="T:FX3Api.EndpointAddresses">
+ <summary>
+ This enum lists all USB endpoints generated and used by the application firmware.
+ </summary>
+</member>
+<member name="T:FX3Api.StreamCommands">
+ <summary>
+ This enum lists all the available streaming commands which can be sent to the FX3 (in the endpoint index)
+ </summary>
+</member>
+<member name="T:FX3Api.FX3BoardType">
+ <summary>
+ Possible FX3 board types. Used to differentiate iSensors FX3 board from Cypress Explorer kit. This list enumerates 
+ all possible hardware ID's provided by the FX3 ID pins. Most are not used.
+ </summary>
+</member>
+<member name="T:FX3Api.FX3PinResistorSetting">
+ <summary>
+ Setting for pull up / pull down resistors on FX3 GPIO input stage.
+ </summary>
+</member>
+<member name="T:FX3Api.USBCommands">
+ <summary>
+ This enum lists all supported vendor commands for the FX3 firmware. The LED commands can only be used with the ADI bootloader firmware.
+ </summary>
+</member>
+<member name="T:FX3Api.SpiChipselectControl">
+ <summary>
+ Enum for the possible chip select modes
+ </summary>
+</member>
+<member name="T:FX3Api.DeviceType">
+ <summary>
+ Enum for determining the default device settings to be initialized
+ </summary>
+</member>
+<member name="T:FX3Api.SpiLagLeadTime">
+ <summary>
+ Enum for the possible chip select lag/lead times, in SPI clock cycles
+ </summary>
+</member>
+<member name="T:FX3Api.DUTType">
+ <summary>
+ Enum of the possible iSensors DUT types
+ </summary>
+</member>
+<member name="T:FX3Api.DutVoltage">
+ <summary>
+ Enum for DUT power supply modes. These power supply modes are only available on the ADI in-house
+ FX3 Demonstration platform.
+ </summary>
+</member>
+<member name="T:FX3Api.BitBangSpiConfig">
+ <summary>
+ This class stores all the relevant information about a given bit bang SPI connection.
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CS">
+ <summary>
+ Chip select pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.SCLK">
+ <summary>
+ SCLK pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.MOSI">
+ <summary>
+ MOSI (master out, slave in) pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.MISO">
+ <summary>
+ MISO (master is, slave out) pin for bit bang SPI
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CSLeadTicks">
+ <summary>
+ Number of timer ticks from CS falling edge to first sclk edge
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CSLagTicks">
+ <summary>
+ Number of timer ticks from last sclk edge to CS rising edge
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.SCLKHalfPeriodTicks">
+ <summary>
+ Half SCLK period timer ticks
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.StallTicks">
+ <summary>
+ Stall time timer ticks
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CPHA">
+ <summary>
+ Bit bang SPI clock phase. If set to false (0) data is sampled
+ on the clock active to inactive edge, and updated on the inactive to active
+ edge. If set to true (1), data is updated on the clock 
+ active to inactive transition, and data is sampled on the inactive to 
+ active edge. The CPHA/CPOL settings used are based on this diagram:
+ https://en.wikipedia.org/wiki/Serial_Peripheral_Interface#/media/File:SPI_timing_diagram2.svg
+ </summary>
+</member>
+<member name="F:FX3Api.BitBangSpiConfig.CPOL">
+ <summary>
+ Bit bang SPI clock polarity. True (1) is idle high, False (0) is
+ idle low. 
+ </summary>
+</member>
+<member name="M:FX3Api.BitBangSpiConfig.#ctor(System.Boolean)">
+ <summary>
+ Constructor which lets you specify set of default pins to use as bit bang SPI pins
+ </summary>
+ <param name="OverrideHardwareSpi">If the constructed BitBangSpiConfig should use hardware SPI pins, or FX3GPIO</param>
+</member>
+<member name="M:FX3Api.BitBangSpiConfig.GetParameterArray">
+ <summary>
+ Get a parameters array for the current bit bang SPI configuration
+ </summary>
+ <returns>The parameter array to send to the FX3 for a bit bang vendor command</returns>
+</member>
+<member name="P:FX3Api.BitBangSpiConfig.UpdatePinsRequired">
+ <summary>
+ Kinda jank. Flag pin update required at construction so FX3 Connection can fix pin assignments.
+ Will only return true one time (if pin update is required)
+ </summary>
+ <returns>If GPIO re-assignment is required</returns>
+</member>
+<member name="T:FX3Api.FX3SPIConfig">
+ <summary>
+ Class for all the programmable SPI configuration options on the FX3.
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.WordLength">
+ <summary>
+ SPI word length (in bits)
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.Cpol">
+ <summary>
+ SCLK polarity
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectPolarity">
+ <summary>
+ CS polarity
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.Cpha">
+ <summary>
+ Clock phase
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.IsLSBFirst">
+ <summary>
+ Select if SPI controller works LSB first or MSB first
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectControl">
+ <summary>
+ Chip select control mode
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectLeadTime">
+ <summary>
+ Chip select lead delay mode
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.ChipSelectLagTime">
+ <summary>
+ Chip select lag delay mode
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.DUTType">
+ <summary>
+ Connected DUT type
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.DrActive">
+ <summary>
+ Enable/Disable data ready interrupt triggering for SPI
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.DrPolarity">
+ <summary>
+ Data ready polarity for interrupt triggering (posedge or negedge)
+ </summary>
+</member>
+<member name="F:FX3Api.FX3SPIConfig.SecondsToTimerTicks">
+ <summary>
+ Scale factor to convert seconds to timer ticks)
+ </summary>
+</member>
+<member name="P:FX3Api.FX3SPIConfig.SCLKFrequency">
+ <summary>
+ Property to store the current SPI clock. Updates the StallTime when set.
+ </summary>
+ <returns>The current SPI clock frequency</returns>
+</member>
+<member name="P:FX3Api.FX3SPIConfig.StallTime">
+ <summary>
+ Property to get/set the stall time (in microseconds)
+ </summary>
+ <returns>The current stall time setting, in microseconds</returns>
+</member>
+<member name="P:FX3Api.FX3SPIConfig.StallCycles">
+ <summary>
+ Property to set the stall time, in terms of SPI clock cycles
+ </summary>
+ <returns>The current stall cycles</returns>
+</member>
+<member name="P:FX3Api.FX3SPIConfig.DataReadyPin">
+ <summary>
+ Property to get/set the data ready pin
+ </summary>
+ <returns>The ready pin, as an FX3PinObject</returns>
+</member>
+<member name="P:FX3Api.FX3SPIConfig.DataReadyPinFX3GPIO">
+ <summary>
+ Property to get/set the data ready FX3 GPIO number
+ </summary>
+ <returns>The GPIO number, as a UInteger</returns>
+</member>
+<member name="M:FX3Api.FX3SPIConfig.#ctor(FX3Api.DeviceType,FX3Api.FX3BoardType)">
+ <summary>
+ Class Constructor, sets reasonable default values for IMU and ADcmXL devices
+ </summary>
+ <param name="SensorType">Optional parameter to specify default device SPI settings. Valid options are IMU and ADcmXL</param>
+</member>
+<member name="T:FX3Api.FX3ApiInfo">
+ <summary>
+ This class provides a collection of information about the FX3 API. All the fields are hard-coded into the DLL at compile time.
+ To retrieve the FX3ApiInfo set during compile time, use the GetFX3ApiInfo call within FX3 connection.
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.Name">
+ <summary>
+ The project name (should be FX3Api)
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.Description">
+ <summary>
+ The project description
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.BuildDateTime">
+ <summary>
+ The date and time of the current FX3Api build in use.
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ApiInfo.VersionNumber">
+ <summary>
+ The build version of this FX3Api instance. Should match application firmware.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ApiInfo.#ctor">
+ <summary>
+ Constructor which initializes values to "Error: Not Set"
+ </summary>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitURL">
+ <summary>
+ The base git remote URL which this version of the FX3Api was build on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitBranch">
+ <summary>
+ The branch which this version of the FX3Api was built on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitCommitSHA1">
+ <summary>
+ The hast for the git commit which this version of the FX3Api was built on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3ApiInfo.GitCommitURL">
+ <summary>
+ The URL of the git commit which this version of the FX3Api was built on.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3ApiInfo.ToString">
+ <summary>
+ Overload of the toString function to allow for better formatting.
+ </summary>
+ <returns>A string representing all available FX3 API information.</returns>
+</member>
+<member name="T:FX3Api.PinPWMInfo">
+ <summary>
+ Structure which contains all the info about the PWM status of a given pin
+ </summary>
+</member>
+<member name="M:FX3Api.PinPWMInfo.#ctor">
+ <summary>
+ Constructor sets defaults
+ </summary>
+</member>
+<member name="M:FX3Api.PinPWMInfo.ToString">
+ <summary>
+ Overload of toString for a PinPWMInfo
+ </summary>
+ <returns>String with all pertinent data about the pin PWM</returns>
+</member>
+<member name="P:FX3Api.PinPWMInfo.FX3GPIONumber">
+ <summary>
+ The FX3 GPIO number for the pin (0-63)
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.FX3TimerBlock">
+ <summary>
+ The associated complex timer block used to drive the PWM signal (0-7)
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.IdealFrequency">
+ <summary>
+ The selected frequency (in Hz)
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.RealFrequency">
+ <summary>
+ The actual frequency the PWM signal should be (in Hz).
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.IdealDutyCycle">
+ <summary>
+ The selected duty cycle
+ </summary>
+</member>
+<member name="P:FX3Api.PinPWMInfo.RealDutyCycle">
+ <summary>
+ The actual duty cycle of the PWM pin.
+ </summary>
+</member>
+<member name="T:FX3Api.PinList">
+ <summary>
+ Custom list class with some extra ease of use functions added.
+ </summary>
+</member>
+<member name="M:FX3Api.PinList.AddReplace(FX3Api.PinPWMInfo)">
+ <summary>
+ Adds a pin to the list. Replaces any existing pin with the same FX3 GPIO number.
+ </summary>
+ <param name="Pin">The PinPWMInfo to add</param>
+</member>
+<member name="M:FX3Api.PinList.GetPinPWMInfo(AdisApi.IPinObject)">
+ <summary>
+ Gets the info for the selected pin
+ </summary>
+ <param name="Pin">The pin to get the info for, as an IPinObject</param>
+ <returns>The pin info, as PinPWMInfo. Will have -1 for all fields if not found</returns>
+</member>
+<member name="M:FX3Api.PinList.GetPinPWMInfo(System.UInt32)">
+ <summary>
+ Gets the info for the selected pin
+ </summary>
+ <param name="Pin">The pin to get the info for, as a UInteger (FX3 GPIO number)</param>
+ <returns>The pin info, as PinPWMInfo. Will have -1 for all fields if not found</returns>
+</member>
+<member name="M:FX3Api.PinList.Contains(AdisApi.IPinObject)">
+ <summary>
+ Overload of contains which checks if the list contains the given Pin
+ </summary>
+ <param name="Pin">The pin to look for (As IPinObject)</param>
+ <returns>If the pin is contained in the list</returns>
+</member>
+<member name="M:FX3Api.PinList.Contains(System.UInt32)">
+ <summary>
+ Overload of contains which checks if the list contains the given Pin
+ </summary>
+ <param name="Pin">The pin to look for (As Integer)</param>
+ <returns>If the pin is contained in the list</returns>
+</member>
+<member name="T:FX3Api.FX3Board">
+ <summary>
+ This class contains information about the connected FX3 board
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Board.#ctor(System.String,System.DateTime)">
+ <summary>
+ Constructor, should be only called by FX3Connection instance
+ </summary>
+ <param name="SerialNumber">Board SN</param>
+ <param name="BootTime">Board boot time</param>
+</member>
+<member name="P:FX3Api.FX3Board.BoardType">
+ <summary>
+ The FX3 board type (iSensor FX3 board or Cypress eval FX3 board)
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3Board.ToString">
+ <summary>
+ Override of the ToString function
+ </summary>
+ <returns>String with board information</returns>
+</member>
+<member name="P:FX3Api.FX3Board.Uptime">
+ <summary>
+ Read-only property to get the current board uptime
+ </summary>
+ <returns>The board uptime, in ms, as a long</returns>
+</member>
+<member name="P:FX3Api.FX3Board.BuildDateTime">
+ <summary>
+ Gets the date and time the FX3 application firmware was compiled.
+ </summary>
+ <returns>The date time string</returns>
+</member>
+<member name="P:FX3Api.FX3Board.SerialNumber">
+ <summary>
+ Read-only property to get the active FX3 serial number
+ </summary>
+ <returns>The board serial number, as a string</returns>
+</member>
+<member name="P:FX3Api.FX3Board.FirmwareVersion">
+ <summary>
+ Read-only property to get the current application firmware version on the FX3
+ </summary>
+ <returns>The firmware version, as a string</returns>
+</member>
+<member name="P:FX3Api.FX3Board.FirmwareVersionNumber">
+ <summary>
+ Read-only property to get the firmware version number
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Board.VerboseMode">
+ <summary>
+ Read-only property to check if the firmware version was compiled with verbose mode enabled. When verbose mode
+ is enabled, much more data will be logged to the UART output. This is useful for debugging, but causes significant
+ performance loss for high throughput applications.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3Board.BootloaderVersion">
+ <summary>
+ Get the FX3 bootloader version. This is a second stage bootloader which is stored on the I2C EEPROM
+ </summary>
+ <returns>The bootloader version, as a string</returns>
+</member>
+<member name="M:FX3Api.FX3Board.SetFirmwareVersion(System.String)">
+ <summary>
+ Set the firmware version. Is friend so as to not be accessible to outside classes.
+ </summary>
+ <param name="FirmwareVersion">The firmware version to set, as a string</param>
+</member>
+<member name="M:FX3Api.FX3Board.SetVerboseMode(System.Boolean)">
+ <summary>
+ Sets if the firmware is currently running in verbose mode. Should NOT be used in verbose mode in normal operating conditions.
+ </summary>
+ <param name="isVerbose">If the board is in verbose mode or not</param>
+</member>
+<member name="M:FX3Api.FX3Board.SetBootloaderVersion(System.String)">
+ <summary>
+ Sets the bootloader version
+ </summary>
+ <param name="BootloaderVersion">The current bootloader version</param>
+</member>
+<member name="M:FX3Api.FX3Board.SetDateTime(System.String)">
+ <summary>
+ Set the Date/time string after connecting
+ </summary>
+ <param name="DateTime"></param>
+</member>
+<member name="T:FX3Api.FX3ErrorLog">
+ <summary>
+ FX3 flash error log class. These are generated and stored on the FX3 board
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.Line">
+ <summary>
+ The FX3 firmware line which generated the error
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.FileIdentifier">
+ <summary>
+ The FX3 firmware file which generated the error. See FileIdentifier enum in firmware docs for details
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.BootTimeStamp">
+ <summary>
+ The FX3 boot time when the error occurred. This is a 32-bit unix timestamp
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.ErrorCode">
+ <summary>
+ The error code supplied with the error. Usually sourced from RTOS
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.FirmwareRev">
+ <summary>
+ The firmware revision the FX3 was running when the error log was generated. Can be used with the File/Line to track down exact source of error
+ </summary>
+</member>
+<member name="F:FX3Api.FX3ErrorLog.OSUptime">
+ <summary>
+ FX3 ThreadX RTOS uptime when the error event occurred
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ErrorLog.#ctor(System.Byte[])">
+ <summary>
+ Error log constructor
+ </summary>
+ <param name="FlashData">The 32 byte block of data read from flash which contains the error log struct</param>
+</member>
+<member name="M:FX3Api.FX3ErrorLog.op_Equality(FX3Api.FX3ErrorLog,FX3Api.FX3ErrorLog)">
+ <summary>
+ Value-wise equality comparison
+ </summary>
+ <param name="Right">FX3ErrorLog object to compare to left for equality</param>
+ <param name="Left">FX3ErrorLog object to compare to right for equality</param>
+ <returns>True if all fields are equal, else false</returns>
+</member>
+<member name="M:FX3Api.FX3ErrorLog.op_Inequality(FX3Api.FX3ErrorLog,FX3Api.FX3ErrorLog)">
+ <summary>
+ Inequality operator for FX3ErrorLog object
+ </summary>
+ <param name="Right">FX3ErrorLog object to compare to left for inequality</param>
+ <param name="Left">FX3ErrorLog object to compare to right for inequality</param>
+ <returns>!(Right == Left)</returns>
+</member>
+<member name="T:FX3Api.FX3ConfigurationException">
+ <summary>
+ This exception is used when the FX3 is configured with an invalid setting. Typically, these exceptions will not cause the board or interface
+ to enter an invalid state, since they are caught before the setting is applied.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ConfigurationException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ConfigurationException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:FX3Api.FX3ConfigurationException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previous exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:FX3Api.FX3CommunicationException">
+ <summary>
+ This exception is used when there is a communication failure with the FX3 board during
+ a data transfer.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3CommunicationException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:FX3Api.FX3CommunicationException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:FX3Api.FX3CommunicationException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previous exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:FX3Api.FX3BadStatusException">
+ <summary>
+ This exception is used when the status returned from the FX3 board is not success (0). This typically
+ indicates some sort of failure in the FX3 application firmware, which may require a board reset. The
+ status codes are defined in the Cypress FX3 SDK.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3BadStatusException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:FX3Api.FX3BadStatusException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:FX3Api.FX3BadStatusException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previous exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:FX3Api.FX3ProgrammingException">
+ <summary>
+ This exception is used when the FX3 board enumeration and programming process fails. This typically
+ indicates a flash failure at the cypress driver level, or a timeout when re-enumerating a programmed board.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ProgrammingException.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:FX3Api.FX3ProgrammingException.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:FX3Api.FX3ProgrammingException.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previous exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:FX3Api.FX3Exception">
+ <summary>
+ This exception is used for general faults which do not fit with the other defined exception types.
+ These exceptions are still generated within the FX3 interface, and are not system exceptions.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Exception.#ctor">
+ <summary>
+ Create a new exception
+ </summary>
+</member>
+<member name="M:FX3Api.FX3Exception.#ctor(System.String)">
+ <summary>
+ Create a new exception with a specified message
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+</member>
+<member name="M:FX3Api.FX3Exception.#ctor(System.String,System.Exception)">
+ <summary>
+ Create a new exception with a specified message and the previous exception from down the stack
+ </summary>
+ <param name="message">The message to pass with the exception</param>
+ <param name="innerException">The lower level exception to pass up</param>
+</member>
+<member name="T:FX3Api.I2CPreamble">
+ <summary>
+ I2C pre-amble class.
+ </summary>
+</member>
+<member name="M:FX3Api.I2CPreamble.#ctor">
+ <summary>
+ I2C Preamble constructor. Initializes all fields to zero
+ </summary>
+</member>
+<member name="F:FX3Api.I2CPreamble.PreambleData">
+ <summary>
+ The bytes to transmit following the device address and R/W bit.
+ The maximum size of this list is 7 bytes, giving 8 total bytes 
+ transmitted as part of the pre-amble.
+ </summary>
+</member>
+<member name="P:FX3Api.I2CPreamble.DeviceAddress">
+ <summary>
+ This is the 7-bit slave address for the device to access on the I2C bus.
+ The address value must be left justified, with a zero in the least significant
+ bit. The address bits (starting at DeviceAddress bit 7) are the first data transmitted
+ by the FX3 when starting an I2C transaction. A R/W bit (generated by the firmware)
+ follows the seven device address bits to complete the first byte.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.I2CPreamble.StopMask">
+ <summary>
+ This field controls the stop condition sent after every byte of preamble
+ data. The device address is the first byte of data, following by up to 
+ seven additional bytes in PreAmbleData. For example, setting StopMask to
+ 0x01 will cause a stop condition to be generated after sending DeviceAddress, while
+ setting StopMask to 0x02 will cause a stop condition to be generated after 
+ sending PreambleData[0], and so on. Note, setting a bit in StopMask will cause 
+ the corresponding bit in StartMask to be cleared, if it is also set.
+ </summary>
+ <returns>The 8 bit preamble stop mask</returns>
+</member>
+<member name="P:FX3Api.I2CPreamble.StartMask">
+ <summary>
+ This field controls the start condition sent after every byte of preamble
+ data. The device address is the first byte of data, following by up to 
+ seven additional bytes in PreAmbleData. For example, setting StartMask to
+ 0x04 will cause a start condition to be generated after sending PreambleData[1], while
+ setting StartMask to 0x08 will cause a start condition to be generated after 
+ sending PreambleData[2], and so on. Note, setting a bit in StartMask will cause 
+ the corresponding bit in StopMask to be cleared, if it is also set.
+ </summary>
+ <returns>The 8 bit preamble start mask</returns>
+</member>
+<member name="M:FX3Api.I2CPreamble.Serialize">
+ <summary>
+ Helper function to serialize an I2C preamble. Puts the 
+ preamble into a byte array which can be sent over USB
+ </summary>
+ <returns>Byte array containing the pre-amble</returns>
+</member>
+<member name="T:FX3Api.FX3PinObject">
+ <summary>
+ Object to store configuration information for a Cypress FX3 GPIO pin.
+ </summary>
+</member>
+<member name="M:FX3Api.FX3PinObject.#ctor">
+ <summary>
+ Creates a new instance of FX3PinObject
+ </summary>
+</member>
+<member name="M:FX3Api.FX3PinObject.#ctor(System.UInt32)">
+ <summary>
+ Creates a new instance of PinObject with the given pin Number.
+ </summary>
+ <param name="pinNumber">Number of FX3 GPIO Pin to Use</param>
+</member>
+<member name="M:FX3Api.FX3PinObject.#ctor(System.UInt32,System.Boolean)">
+ <summary>
+ creates a new instance of PinObject with the given pin number and inversion.
+ </summary>
+ <param name="pinNumber">Number of FX3 GPIO Pin to Use</param>
+ <param name="invert"></param>
+</member>
+<member name="P:FX3Api.FX3PinObject.PinNumber">
+ <summary>
+ GPIO pin number for the FX3.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3PinObject.Invert">
+ <summary>
+ True if pin logic is to be inverted.
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FX3Api.FX3PinObject.pinConfig">
+ <summary>
+ Provides a FX3 Configuration word for the parameter array.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3PinObject.IPinObject_Equals(System.Object)">
+ <summary>
+ Returns true if instances contain the same pin configuration.
+ </summary>
+ <param name="obj">Object to be compared.</param>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3PinObject.IPinObject_GetHashCode">
+ <summary>
+ Returns a hash code
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FX3Api.FX3PinObject.IPinObject_ToString">
+ <summary>
+ Returns a string representation of the FX3PinObject.
+ </summary>
+ <returns></returns>
+</member>
+</members>
+</doc>
