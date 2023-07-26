@@ -39,7 +39,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -50,7 +50,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>
     </DocumentationFile>
-    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <NoWarn>41999,42016,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -71,39 +71,35 @@
     <ApplicationIcon>Analog.ICO</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="adisApi, Version=1.2.0.999, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\adisApi.dll</HintPath>
+    <Reference Include="adisApi">
+      <HintPath>..\resources\adisApi.dll</HintPath>
     </Reference>
-    <Reference Include="adisInterface, Version=1.1.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\adisInterface.dll</HintPath>
+    <Reference Include="adisInterface">
+      <HintPath>..\resources\adisInterface.dll</HintPath>
     </Reference>
     <Reference Include="AForge.Math">
-      <HintPath>..\resouces\AForge.Math.dll</HintPath>
+      <HintPath>..\resources\AForge.Math.dll</HintPath>
     </Reference>
-    <Reference Include="CyUSB, Version=1.2.3.0, Culture=neutral, PublicKeyToken=01f1d2b6c851ae92, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\CyUSB.dll</HintPath>
+    <Reference Include="CyUSB">
+      <HintPath>..\resources\CyUSB.dll</HintPath>
     </Reference>
-    <Reference Include="FX3Api, Version=2.9.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\FX3Api.dll</HintPath>
+    <Reference Include="FX3Api">
+      <HintPath>..\resources\FX3Api.dll</HintPath>
     </Reference>
-    <Reference Include="FX3USB, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\FX3USB.dll</HintPath>
+    <Reference Include="FX3ApiWrapper">
+      <HintPath>..\resources\FX3ApiWrapper.dll</HintPath>
     </Reference>
-    <Reference Include="RegMapClasses, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\RegMapClasses.dll</HintPath>
+    <Reference Include="FX3USB">
+      <HintPath>..\resources\FX3USB.dll</HintPath>
+    </Reference>
+    <Reference Include="RegMapClasses">
+      <HintPath>..\resources\RegMapClasses.dll</HintPath>
     </Reference>
     <Reference Include="SignalProcessing">
-      <HintPath>..\resouces\SignalProcessing.dll</HintPath>
+      <HintPath>..\resources\SignalProcessing.dll</HintPath>
     </Reference>
-    <Reference Include="StreamDataLogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\iSensor-FX3-API\resources\StreamDataLogger.dll</HintPath>
+    <Reference Include="StreamDataLogger">
+      <HintPath>..\resources\StreamDataLogger.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -352,15 +348,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FX3Binaries\boot_fw.img">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="FX3Binaries\FX3_Firmware.img">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="FX3Binaries\USBFlashProg.img">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -396,252 +383,6 @@
       <DependentUpon>TopGUI.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="RegMaps\ADcmXL1021_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADcmXLx021_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16133_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16135_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16136_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16137_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1613x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16201_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16203_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16209_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1620x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16210_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16228_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16265_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16266_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16300_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16305_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1630x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16334_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16362_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16364_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16365_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16367_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1636x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16375_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16385_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16405_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16407_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1640x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16445_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16446_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16448_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADiS1644x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16460_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16465_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16465_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16465_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16467_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16467_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16467_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1646x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16475_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16475_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16475_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16477_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16477_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16477_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1647x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16480_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16485_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16486_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16487_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16488_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16489_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1648x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16490_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16495_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16495_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16495_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16497_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16497_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16497_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1649x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16505_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16505_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16505_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16507_1_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16507_2_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16507_3_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1650x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16545_1_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16545_2_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16545_3_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16547_1_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16547_2_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16547_3_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1654x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS16550_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADIS1655x_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADXL35X_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\ADXRS295_Regmap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="RegMaps\iSensor_SPI_Buf_RegMap.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="UserConfig\dut_personalities.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -723,13 +464,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>mkdir $(ProjectDir)$(OutDir)RegMaps
+copy /Y $(SolutionDir)RegMaps\* $(ProjectDir)$(OutDir)RegMaps\
+mkdir $(ProjectDir)$(OutDir)FX3Binaries
+copy /Y $(SolutionDir)resources\*.img $(ProjectDir)$(OutDir)FX3Binaries\</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>copy /Y "$(ProjectDir)..\iSensor-FX3-API\resources\FX3_Firmware.img" "$(ProjectDir)\FX3Binaries\FX3_Firmware.img"
-copy /Y "$(ProjectDir)..\iSensor-FX3-API\resources\boot_fw.img" "$(ProjectDir)\FX3Binaries\boot_fw.img"
-copy /Y "$(ProjectDir)..\iSensor-FX3-API\resources\USBFlashProg.img" "$(ProjectDir)\FX3Binaries\USBFlashProg.img"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
