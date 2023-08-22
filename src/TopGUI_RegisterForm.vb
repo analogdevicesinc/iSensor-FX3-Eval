@@ -533,8 +533,18 @@ Partial Class TopGUI
         csvReader.Close()
 
         'apply data to DUT
-        Dut.WriteSigned(signedRegs, signedWriteData)
-        Dut.WriteUnsigned(unsignedRegs, unsignedWriteData)
+        Dim cnt As Integer = 0
+        For i As Integer = 0 To signedRegs.Count - 1
+            Dut.WriteSigned(signedRegs(i), signedWriteData(i))
+            Threading.Thread.Sleep(1)
+            cnt += 1
+        Next
+        For i As Integer = 0 To unsignedRegs.Count - 1
+            Dut.WriteUnsigned(unsignedRegs(i), unsignedWriteData(i))
+            Threading.Thread.Sleep(1)
+            cnt += 1
+        Next
+        MessageBox.Show("Wrote " + cnt.ToString() + " register values to DUT", "Register Write Result", MessageBoxButtons.OK)
 
         'check if exceptions occurred
         ValidateAutomotiveSpiData()
