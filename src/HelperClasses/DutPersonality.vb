@@ -107,6 +107,8 @@ Public Class DutPersonality
     ''' </summary>
     Public SoftResetCmdBit As Integer
 
+    Private Const CommaToken As String = "{comma}"
+
     Public Sub New()
         DisplayName = "Custom"
         RegMapFileName = "NotSet"
@@ -209,10 +211,17 @@ Public Class DutPersonality
         writer.Write(Environment.NewLine)
 
         For Each personality In Personalities
+            'Sanitize register map path in case of commas in path name
+            If personality.RegMapFileName.Contains(CommaToken) Then
+                MsgBox("ERROR: Invalid register map path " + personality.RegMapFileName)
+            End If
+            Dim sanitizedRegMapPath As String = personality.RegMapFileName.Replace(",", CommaToken)
+
+            'Build each line in CSV
             vals.Clear()
             vals.Add(personality.DisplayName)
             vals.Add(personality.Parent)
-            vals.Add(personality.RegMapFileName)
+            vals.Add(sanitizedRegMapPath)
             vals.Add([Enum].GetName(GetType(DeviceType), personality.SensorType))
             vals.Add([Enum].GetName(GetType(DUTType), personality.PartType))
             vals.Add(personality.SPIMode.ToString())
@@ -295,6 +304,8 @@ Public Class DutPersonality
                 Try
                     item.DisplayName = line(indexes(0))
                     item.RegMapFileName = line(indexes(1))
+                    'De-sanitize the register map file name
+                    item.RegMapFileName = item.RegMapFileName.Replace(CommaToken, ",")
                     item.SensorType = [Enum].Parse(GetType(DeviceType), line(indexes(2)))
                     item.PartType = [Enum].Parse(GetType(DUTType), line(indexes(3)))
                     item.SPIMode = Convert.ToUInt32(line(indexes(4)))
