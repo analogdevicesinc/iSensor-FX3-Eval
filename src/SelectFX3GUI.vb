@@ -24,6 +24,9 @@ Public Class SelectFX3GUI
         'if last connected fx3 is available select it by default
         If m_TopGUI.FX3.AvailableFX3s.Contains(m_TopGUI.LastFX3SN) Then
             SelectFX3ComboBox.SelectedItem = m_TopGUI.LastFX3SN
+        Else
+            'Otherwise select first board
+            SelectFX3ComboBox.SelectedIndex = 0
         End If
     End Sub
 
