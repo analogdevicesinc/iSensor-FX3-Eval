@@ -209,6 +209,18 @@ Namespace My
                 Me("PlotSettings") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastValidDutPersonality() As String
+            Get
+                Return CType(Me("LastValidDutPersonality"),String)
+            End Get
+            Set
+                Me("LastValidDutPersonality") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
