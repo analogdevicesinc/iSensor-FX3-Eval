@@ -10,6 +10,8 @@ Imports System.IO
 
 Public Class DutPersonality
 
+    Public Const CUSTOM_PERSONALITY_STRING As String = "Custom"
+
     ''' <summary>
     ''' Parent personality (e.g. for ADIS16505, parent is ADIS1650x.
     ''' For a top level personality, parent should be ""
@@ -110,7 +112,7 @@ Public Class DutPersonality
     Private Const CommaToken As String = "{comma}"
 
     Public Sub New()
-        DisplayName = "Custom"
+        DisplayName = CUSTOM_PERSONALITY_STRING
         RegMapFileName = "NotSet"
         Parent = ""
         SensorType = DeviceType.IMU
