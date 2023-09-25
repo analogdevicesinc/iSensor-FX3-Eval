@@ -26,11 +26,11 @@ Public Class SelectDUTGUI
 
         For Each item In m_TopGUI.DutOptions
             'Only add items with no parent. Ignore custom
-            If item.Parent = "" And item.DisplayName <> "Custom" Then
+            If item.Parent = "" And item.DisplayName <> DutPersonality.CUSTOM_PERSONALITY_STRING Then
                 familyInput.Items.Add(item.DisplayName)
             End If
             'check if this personality is selected
-            If item.DisplayName = m_TopGUI.SelectedPersonality Then
+            If (item.DisplayName = m_TopGUI.SelectedPersonality) Or (item.DisplayName = m_TopGUI.LastValidSelectedPersonality) Then
                 defaultPer = item
             End If
         Next
@@ -87,6 +87,7 @@ Public Class SelectDUTGUI
         Else
             If isStartup Then
                 m_TopGUI.SelectedPersonality = modelInput.Text
+                m_TopGUI.LastValidSelectedPersonality = modelInput.Text
             Else
                 Try
                     If m_TopGUI.ApplyDutPersonality(modelInput.Text) Then

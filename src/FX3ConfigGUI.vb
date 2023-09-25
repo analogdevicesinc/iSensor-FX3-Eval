@@ -197,7 +197,7 @@ Public Class FX3ConfigGUI
     Private Sub SetConfig_Click(sender As Object, e As EventArgs) Handles SetConfig.Click
 
         'set config as custom for any change
-        m_TopGUI.SelectedPersonality = "Custom"
+        m_TopGUI.SelectedPersonality = DutPersonality.CUSTOM_PERSONALITY_STRING
 
         'Get the current values from the form and check for validity
         m_TopGUI.FX3.ChipSelectControl = chipSelectControlInput.SelectedItem

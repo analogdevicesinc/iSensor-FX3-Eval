@@ -33,6 +33,7 @@ Public Class TopGUI
 
     'DUT settings management
     Friend SelectedPersonality As String
+    Friend LastValidSelectedPersonality As String
     Friend DutOptions As List(Of DutPersonality)
 
     'List of list view items for bulk register read
@@ -142,6 +143,7 @@ Public Class TopGUI
 
         'load DUT personality settings
         SelectedPersonality = My.Settings.DutPersonality
+        LastValidSelectedPersonality = My.Settings.LastValidDutPersonality
         LoadDUTOptions()
 
         'load personality based on last selection
@@ -166,7 +168,7 @@ Public Class TopGUI
                 End If
             Next
             'go to custom if none set
-            If Not validPersonality Then SelectedPersonality = "Custom"
+            If Not validPersonality Then SelectedPersonality = DutPersonality.CUSTOM_PERSONALITY_STRING
         End If
 
         'Check that all the register maps required for the application are properly bundled
@@ -1044,7 +1046,7 @@ Public Class TopGUI
 
         Dim path As String = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv"
         Dim personality As New DutPersonality()
-        personality.DisplayName = "Custom"
+        personality.DisplayName = DutPersonality.CUSTOM_PERSONALITY_STRING
         personality.RegMapFileName = RegMapPath
         personality.IsLowerFirst = m_isLowerWordFirst
         If Not IsNothing(FX3) Then personality.GetSettingsFromFX3(FX3)
@@ -1121,14 +1123,15 @@ Public Class TopGUI
         My.Settings.BackColor = BACK_COLOR
         My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
         My.Settings.DutPersonality = SelectedPersonality
-        'serialize plot settings and save
+        My.Settings.LastValidDutPersonality = LastValidSelectedPersonality
+        'serialize plot settings and save. Should probably refactor this
         Dim serializer As New XmlSerializer(GetType(PlotterSettings))
         Using writer As New StringWriter
             serializer.Serialize(writer, plotSettings)
             My.Settings.PlotSettings = writer.ToString()
         End Using
         My.Settings.Save()
-        If SelectedPersonality = "Custom" Then
+        If SelectedPersonality = DutPersonality.CUSTOM_PERSONALITY_STRING Then
             SaveCustomPersonality()
         End If
     End Sub
@@ -1215,7 +1218,7 @@ Public Class TopGUI
         Dim savedRegmapPath As String = ""
 
         For Each item In DutOptions
-            If item.DisplayName <> "Custom" Then
+            If item.DisplayName <> DutPersonality.CUSTOM_PERSONALITY_STRING Then
                 savedRegmapPath = AppDomain.CurrentDomain.BaseDirectory + "RegMaps\" + item.RegMapFileName
                 If Not File.Exists(savedRegmapPath) Then
                     MsgBox("Register map " + savedRegmapPath + " Not found!")
@@ -1241,7 +1244,7 @@ Public Class TopGUI
             If DutOptions(i).DisplayName = displayName Then
                 'load DUT endianness setting here
                 m_isLowerWordFirst = DutOptions(i).IsLowerFirst
-                If displayName = "Custom" Then
+                If displayName = DutPersonality.CUSTOM_PERSONALITY_STRING Then
                     'custom uses absolute path
                     savedRegmapPath = DutOptions(i).RegMapFileName
                 Else
@@ -1252,7 +1255,7 @@ Public Class TopGUI
         Next
         If Not File.Exists(savedRegmapPath) Then
             'go to custom personality and manually select register map
-            SelectedPersonality = "Custom"
+            SelectedPersonality = DutPersonality.CUSTOM_PERSONALITY_STRING
             Dim regMapSelector As New SelectRegmapGUI()
             If Not IsNothing(regMapSelector.SelectedPath) Then
                 RegMapPath = regMapSelector.SelectedPath
@@ -1264,7 +1267,7 @@ Public Class TopGUI
             End If
             regMapSelector.Dispose()
             For i As Integer = 0 To DutOptions.Count - 1
-                If DutOptions(i).DisplayName = "Custom" Then
+                If DutOptions(i).DisplayName = DutPersonality.CUSTOM_PERSONALITY_STRING Then
                     DutOptions(i).RegMapFileName = RegMapPath
                 End If
             Next
@@ -1319,7 +1322,11 @@ Public Class TopGUI
         'save setting
         m_isLowerWordFirst = personality.IsLowerFirst
 
+        'Save personality setting
         SelectedPersonality = displayName
+        If SelectedPersonality <> DutPersonality.CUSTOM_PERSONALITY_STRING Then
+            LastValidSelectedPersonality = SelectedPersonality
+        End If
 
         Return True
 
