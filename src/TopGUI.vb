@@ -1047,7 +1047,7 @@ Public Class TopGUI
         Dim path As String = AppDomain.CurrentDomain.BaseDirectory + "UserConfig\custom_personality.csv"
         Dim personality As New DutPersonality()
         personality.DisplayName = DutPersonality.CUSTOM_PERSONALITY_STRING
-        personality.RegMapFileName = RegMapPath
+        If Not IsNothing(RegMapPath) Then personality.RegMapFileName = RegMapPath
         personality.IsLowerFirst = m_isLowerWordFirst
         If Not IsNothing(FX3) Then personality.GetSettingsFromFX3(FX3)
 
