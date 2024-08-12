@@ -15,6 +15,7 @@ Imports FX3Api
 ''' Enum for all IMU products which support burst read
 ''' </summary>
 Public Enum BurstDevice
+    ADIS1657x
     ADIS1655x
     ADIS1654x
     ADIS1650x
@@ -296,8 +297,8 @@ Public Class BurstManager
 
         'process packet
         Select Case m_device
-            Case BurstDevice.ADIS1655x
-                'ADIS1655x just return whole packet
+            Case BurstDevice.ADIS1655x, BurstDevice.ADIS1657x
+                'ADIS1655x, ADIS1657x just return whole packet
                 processedPacket = rawPacket.ToList()
             Case BurstDevice.ADIS1649x, BurstDevice.ADIS1654x
                 i = 0
@@ -374,7 +375,7 @@ Public Class BurstManager
                 End If
                 m_DUT.WriteUnsigned(m_regMap("CONFIG"), readVal)
                 Threading.Thread.Sleep(10)
-            Case BurstDevice.ADIS1650x
+            Case BurstDevice.ADIS1650x, BurstDevice.ADIS1657x
                 'delta vs inertial is bit 8 of MSC_CTRL, 32-bit is bit 9
                 readVal = m_DUT.ReadUnsigned(m_regMap("MSC_CTRL"))
                 If BurstInertialData Then
@@ -516,7 +517,12 @@ Public Class BurstManager
 
         'add remainder of registers in list
         While i < m_regMap.BurstReadList.Count
-            m_burstRegs.Add(m_regMap.BurstReadList(i))
+            Dim burstReg = m_regMap.BurstReadList(i)
+            'ADIS1657x DATA_CNT / TIMESTAMP output follows 16-bit / 32-bit select
+            If (Device = BurstDevice.ADIS1657x) And burstReg.Label.Contains("DATA_CNT") Then
+                burstReg.NumBytes = numBytes
+            End If
+            m_burstRegs.Add(burstReg)
             i += 1
         End While
 
@@ -580,6 +586,28 @@ Public Class BurstManager
 
             '32-bit burst header included
             m_burstHeader = New RegClass With {.Label = "BURST_RD", .ReadLen = 32, .NumBytes = 4}
+
+        ElseIf personality.Contains("1657") Then
+            m_device = BurstDevice.ADIS1657x
+
+            'Configurable 32-bit or 16-bit burst
+            m_configurableWordSize = True
+            m_burst16Bit = True
+
+            'selectable delta vs inertial
+            m_configurableData = True
+            m_burstInertialData = True
+
+            'Checksum included (16-bit), not configurable
+            m_configurableChecksum = False
+            m_burstChecksum = True
+            m_checksum = New RegClass With {.Label = "BURST_CHECKSUM", .ReadLen = 16, .NumBytes = 2}
+
+            'Burst requires setup command
+            m_burstSetupRequired = True
+
+            'no padding bytes
+            m_paddingBytes = 0
 
         ElseIf personality.Contains("1654") Then
             m_device = BurstDevice.ADIS1654x
