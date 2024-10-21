@@ -2,7 +2,9 @@
 
 The FX3ApiWrapper library presents the target application with a simplified subset of the FX3 API and interfacing libraries.
 
-This library is intended to make using the FX3 API and adisInterface easier in non-dot-NET languages capable of consuming(wrapping) .NET DLLs. 
+Wrapper documentation is available here: https://analogdevicesinc.github.io/iSensor-FX3-Eval/
+
+This library simplifies integration between the FX3Api and non-dot-NET languages capable of consuming .NET DLLs via interop. 
 
 The FX3ApiWrapper library translates all the interfacing functions such that they only use numeric or string primitives instead of .NET class objects. This greatly simplifies the interface for the caller (LabVIEW, Python, etc.) and boosts wrapper compatibility.
 
