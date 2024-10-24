@@ -2,11 +2,21 @@
 
 This repository contains all evaluation software for the EVAL-ADIS-FX3 iSensor evaluation board. The EVAL-ADIS-FX3 is the latest addition to the iSensor evaluation portfolio and was designed from the ground up to provide users with an easy-to-use solution for capturing reliable inertial data in lab and characterization environments. The EVAL-ADIS-FX3 incorporates the ability to capture inertial sensor data at maximum throughput while interfacing with external test equipment and reacting to external triggers.
 
-In addition to launching a redesigned hardware platform, we’ve also developed a robust API that allows users to quickly build custom applications that capture reliable sensor data. We’ve included many useful features into the API that enable designers to characterize sensor performance in any .NET compatible environment.
+See the [Quick Start Guide](\src\guide\guide.md) for an overview of eval software functionality, or download the latest [Release](https://github.com/analogdevicesinc/iSensor-FX3-Eval/releases/) installer.
 
-The documentation for the iSensor FX3Api can be accessed here:
+In addition to the dedicated hardware platform, a .NET API and interop wrapper are provided which allow for simple development of custom applications. We’ve included many useful features into the API that enable designers to characterize sensor performance in any .NET compatible environment.
+
+The API documentation for the iSensor FX3Api can be accessed here:
 
 https://analogdevicesinc.github.io/iSensor-FX3-Eval/
+
+The iSensor FX3 Evaluation GUI documentation and user guide has been moved to the official Analog Devices Wiki: 
+
+https://wiki.analog.com/resources/eval/user-guides/inertial-mems/evaluation-systems/eval-adis-fx3
+
+Analog Devices product page:
+
+https://www.analog.com/en/resources/evaluation-hardware-and-software/evaluation-boards-kits/eval-adis-fx3.html
 
 ## Supporting Documentation
 
@@ -16,15 +26,13 @@ The custom windows driver installer is provided in the /drivers directory
 
 Register map definition files for all supported iSensor products are provided in the /RegMaps directory
 
-# iSensor FX3Api Wrapper (/src_wrapper)
+# iSensor FX3Api Wrapper [src_wrapper](/src_wrapper)
 
-The wrapper library provides a simplified interface for working with an IMU in languages which support .NET interop, such as Python, Matlab, and Labview.
+The wrapper library provides a simplified interface to configure and capture data from an ADI IMU. This interface can be used in the .NET ecosystem, or with languages which support .NET interop, such as Python, Matlab, and Labview.
 
 # iSensor FX3 Evaluation GUI (/src)
 
-The iSensor FX3 Evaluation GUI documentation and user guide has been moved to the official Analog Devices Wiki: 
-
-https://wiki.analog.com/resources/eval/user-guides/inertial-mems/evaluation-systems/eval-adis-fx3
+Source code for the iSensor-FX3-Eval IMU evaluation GUI. This is a Winforms application, built on the iSensor-FX3-API. Developed for minumum .NET framework 4.5
 
 ## iSensor FX3 Eval GUI - Developer Setup Guide
 
