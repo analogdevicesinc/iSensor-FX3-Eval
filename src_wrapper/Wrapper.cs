@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
  * This software is proprietary to Analog Devices, Inc. and its licensors.
  * 
@@ -85,10 +85,11 @@ namespace FX3ApiWrapper
         /// <param name="FX3ResourcePath">Path the FX3 firmware binaries</param>
         /// <param name="RegMapPath">Path to register map file</param>
         /// <param name="Type"></param>
-        public Wrapper(string FX3ResourcePath, string RegMapPath, SensorType Type)
+        /// <param name="FX3SerialNumber">Serial number of board to connect to (optional)</param>
+        public Wrapper(string FX3ResourcePath, string RegMapPath, SensorType Type, System.String FX3SerialNumber = null)
         {
             FX3 = new FX3Connection(FX3ResourcePath, FX3ResourcePath, FX3ResourcePath);
-            ConnectToBoard();
+            ConnectToBoard(FX3SerialNumber: FX3SerialNumber);
             UpdateDutType(Type);
             UpdateRegMap(RegMapPath);
         }
@@ -763,10 +764,16 @@ namespace FX3ApiWrapper
         /// <summary>
         /// Connect to FX3 board
         /// </summary>
-        private void ConnectToBoard()
+        /// <param name="FX3SerialNumber">Serial number of board to connect to (optional)</param>
+        private void ConnectToBoard(System.String FX3SerialNumber = null)
         {
             FX3.WaitForBoard(2);
-            if (FX3.AvailableFX3s.Count() > 0)
+            // If a serial number is specified, then connect to that board
+            if (FX3SerialNumber != null)
+            {
+                FX3.Connect(FX3SerialNumber);
+            }
+            else if (FX3.AvailableFX3s.Count() > 0)
             {
                 FX3.Connect(FX3.AvailableFX3s[0]);
             }
