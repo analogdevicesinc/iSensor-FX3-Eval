@@ -21,7 +21,8 @@ from System import Array
 from System import String
 
 #Create FX3 Wrapper and load ADIS1650x regmap
-Dut = Wrapper(topDir + '\\resources\\', topDir + '\\regmaps\\ADIS1650x_Regmap.csv',0)
+
+Dut = Wrapper(topDir + '\\resources\\', topDir + '\\regmaps\\ADIS1650x_Regmap.csv',SensorType.StandardImu)
 
 print(Dut.FX3.GetFirmwareVersion)
 Dut.UserLEDBlink(2.0)
