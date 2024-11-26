@@ -2,7 +2,7 @@
 
 This repository contains all evaluation software for the EVAL-ADIS-FX3 iSensor evaluation board. The EVAL-ADIS-FX3 is the latest addition to the iSensor evaluation portfolio and was designed from the ground up to provide users with an easy-to-use solution for capturing reliable inertial data in lab and characterization environments. The EVAL-ADIS-FX3 incorporates the ability to capture inertial sensor data at maximum throughput while interfacing with external test equipment and reacting to external triggers.
 
-See the [Quick Start Guide](\src\guide\guide.md) for an overview of eval software functionality, or download the latest [Release](https://github.com/analogdevicesinc/iSensor-FX3-Eval/releases/) installer.
+See the [Quick Start Guide](/src/guide/guide.md) for an overview of eval software functionality, or download the latest [Release](https://github.com/analogdevicesinc/iSensor-FX3-Eval/releases/) installer.
 
 In addition to the dedicated hardware platform, a .NET API and interop wrapper are provided which allow for simple development of custom applications. We’ve included many useful features into the API that enable designers to characterize sensor performance in any .NET compatible environment.
 
@@ -30,7 +30,7 @@ Register map definition files for all supported iSensor products are provided in
 
 The wrapper library provides a simplified interface to configure and capture data from an ADI IMU. This interface can be used in the .NET ecosystem, or with languages which support .NET interop, such as Python, Matlab, and Labview.
 
-# iSensor FX3 Evaluation GUI (/src)
+# iSensor FX3 Evaluation GUI [src](/src)
 
 Source code for the iSensor-FX3-Eval IMU evaluation GUI. This is a Winforms application, built on the iSensor-FX3-API. Developed for minumum .NET framework 4.5
 
