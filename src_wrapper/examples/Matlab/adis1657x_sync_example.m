@@ -107,7 +107,7 @@ function PlotDUTData(Dut, plot_title, plot_time_sec)
     Dut.SetDrActive(false);
     %Extract channel values
     names = string(regs);
-    dataSorted = zeros(num_samples, length(names));
+    dataSorted = zeros(num_samples, length(names), 'int32');
     sample = 1;
     for i = 1:length(names):length(rawData)
         for j = 1:1:length(names)
