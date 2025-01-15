@@ -43,11 +43,19 @@ regs_py = ['XACCL_OUT','YACCL_OUT','ZACCL_OUT','TEMP_OUT']
 regs = Array[String](regs_py)
 data = []
 
+#Enable data ready on DIO1 (0x0005)
+Dut.WriteSigned("DIO_CTRL", 5)
+
+print("Configuring decimation filter")
+#Sample rate = 512/2^AVG_CNT
+Dut.WriteSigned("AVG_CNT", 6)
+print("Fs = " + str(Dut.MeasurePinFreq(1)) + "Hz") #DIO1 is data ready
+
+Dut.SetDrActive(True)
 while True:
     data = Dut.ReadSigned(regs)
     temp_c = (data[3] - 1331.0) * -0.47 #Zero C at 1331, -0.47C/LSB
     print("XA: " + str(data[0] * accel_scale) + " YA: " + str(data[1] * accel_scale) + " ZA: " + str(data[2] * accel_scale) + " TEMP: " + str(temp_c))
-    sleep(0.5)
 
 
 
