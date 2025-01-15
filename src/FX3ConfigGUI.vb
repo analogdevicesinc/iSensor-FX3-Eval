@@ -1,4 +1,4 @@
-﻿'Copyright (c) 2018-2020 Analog Devices, Inc. All Rights Reserved.
+﻿'Copyright (c) 2018-2025 Analog Devices, Inc. All Rights Reserved.
 'This software is proprietary to Analog Devices, Inc. and its licensors.
 '
 'File:          FX3ConfigGUI.vb
@@ -59,8 +59,6 @@ Public Class FX3ConfigGUI
         SelectedRegMap.Text = m_TopGUI.RegMapPath.Substring(m_TopGUI.RegMapPath.LastIndexOf("\") + 1)
         m_regmappath = ""
 
-        StallCyclesInput.ReadOnly = True
-
         DutInput.DataSource = ([Enum].GetValues(GetType(DUTType)))
         sensorInput.DataSource = ([Enum].GetValues(GetType(DeviceType)))
 
@@ -94,7 +92,6 @@ Public Class FX3ConfigGUI
         tip.SetToolTip(wordLenInput, "Set the SPI word length (in bits)")
         tip.SetToolTip(lsbFirstInput, "Set the SPI port bit endianness (LSB transmitted first or MSB transmitted first)")
         tip.SetToolTip(stallTimeInput, "Set stall time between SPI words (in microseconds)")
-        tip.SetToolTip(StallCyclesInput, "View the stall time (in terms of SPI clock cycles)")
         tip.SetToolTip(dataReadyPinInput, "Set the data ready digital I/O")
         tip.SetToolTip(dataReadyActiveInput, "Set data ready active (SPI transfers triggered by data ready) or inactive (asynchronous SPI transfers)")
         tip.SetToolTip(dataReadyPolarityInput, "Set the data ready polarity (trigger on data ready rising edge or data ready falling edge)")
@@ -155,7 +152,6 @@ Public Class FX3ConfigGUI
         End If
 
         stallTimeInput.Text = CStr(m_TopGUI.FX3.StallTime)
-        StallCyclesInput.Text = CStr((m_TopGUI.FX3.StallTime / 1000000) / (1 / m_TopGUI.FX3.SclkFrequency))
 
         If m_TopGUI.FX3.DrActive Then
             dataReadyActiveInput.SelectedItem = "True: Data ready active"
