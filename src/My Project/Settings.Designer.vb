@@ -221,6 +221,30 @@ Namespace My
                 Me("LastValidDutPersonality") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property LogScaledData() As Boolean
+            Get
+                Return CType(Me("LogScaledData"),Boolean)
+            End Get
+            Set
+                Me("LogScaledData") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property LogTimestampData() As Boolean
+            Get
+                Return CType(Me("LogTimestampData"),Boolean)
+            End Get
+            Set
+                Me("LogTimestampData") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

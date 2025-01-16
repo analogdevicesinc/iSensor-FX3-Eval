@@ -70,6 +70,9 @@ Partial Class FX3ConfigGUI
         Me.group_DataReady = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.group_AppSettings = New System.Windows.Forms.GroupBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.check_Scaled = New System.Windows.Forms.CheckBox()
+        Me.check_timestamps = New System.Windows.Forms.CheckBox()
         Me.group_SPIConfig.SuspendLayout()
         Me.group_DataReady.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -361,7 +364,7 @@ Partial Class FX3ConfigGUI
         '
         'WatchdogTimeout
         '
-        Me.WatchdogTimeout.Location = New System.Drawing.Point(130, 46)
+        Me.WatchdogTimeout.Location = New System.Drawing.Point(129, 75)
         Me.WatchdogTimeout.Name = "WatchdogTimeout"
         Me.WatchdogTimeout.Size = New System.Drawing.Size(219, 20)
         Me.WatchdogTimeout.TabIndex = 15
@@ -369,7 +372,7 @@ Partial Class FX3ConfigGUI
         'WatchdogEnable
         '
         Me.WatchdogEnable.AutoSize = True
-        Me.WatchdogEnable.Location = New System.Drawing.Point(130, 23)
+        Me.WatchdogEnable.Location = New System.Drawing.Point(129, 55)
         Me.WatchdogEnable.Name = "WatchdogEnable"
         Me.WatchdogEnable.Size = New System.Drawing.Size(174, 17)
         Me.WatchdogEnable.TabIndex = 14
@@ -379,7 +382,7 @@ Partial Class FX3ConfigGUI
         'Label18
         '
         Me.Label18.AutoSize = True
-        Me.Label18.Location = New System.Drawing.Point(7, 49)
+        Me.Label18.Location = New System.Drawing.Point(7, 78)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(107, 13)
         Me.Label18.TabIndex = 38
@@ -388,7 +391,7 @@ Partial Class FX3ConfigGUI
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(7, 24)
+        Me.Label13.Location = New System.Drawing.Point(6, 56)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(91, 13)
         Me.Label13.TabIndex = 39
@@ -416,15 +419,15 @@ Partial Class FX3ConfigGUI
         'Label20
         '
         Me.Label20.AutoSize = True
-        Me.Label20.Location = New System.Drawing.Point(7, 77)
+        Me.Label20.Location = New System.Drawing.Point(7, 106)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(89, 13)
+        Me.Label20.Size = New System.Drawing.Size(111, 13)
         Me.Label20.TabIndex = 42
-        Me.Label20.Text = "Set Color Palette:"
+        Me.Label20.Text = "Set App Color Palette:"
         '
         'btn_edit_colors
         '
-        Me.btn_edit_colors.Location = New System.Drawing.Point(130, 72)
+        Me.btn_edit_colors.Location = New System.Drawing.Point(129, 101)
         Me.btn_edit_colors.Name = "btn_edit_colors"
         Me.btn_edit_colors.Size = New System.Drawing.Size(219, 22)
         Me.btn_edit_colors.TabIndex = 18
@@ -553,6 +556,9 @@ Partial Class FX3ConfigGUI
         '
         'group_AppSettings
         '
+        Me.group_AppSettings.Controls.Add(Me.check_timestamps)
+        Me.group_AppSettings.Controls.Add(Me.check_Scaled)
+        Me.group_AppSettings.Controls.Add(Me.Label12)
         Me.group_AppSettings.Controls.Add(Me.btn_edit_colors)
         Me.group_AppSettings.Controls.Add(Me.Label20)
         Me.group_AppSettings.Controls.Add(Me.Label18)
@@ -561,16 +567,45 @@ Partial Class FX3ConfigGUI
         Me.group_AppSettings.Controls.Add(Me.WatchdogEnable)
         Me.group_AppSettings.Location = New System.Drawing.Point(12, 578)
         Me.group_AppSettings.Name = "group_AppSettings"
-        Me.group_AppSettings.Size = New System.Drawing.Size(359, 100)
+        Me.group_AppSettings.Size = New System.Drawing.Size(359, 131)
         Me.group_AppSettings.TabIndex = 51
         Me.group_AppSettings.TabStop = False
         Me.group_AppSettings.Text = "App Settings"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(6, 16)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(112, 13)
+        Me.Label12.TabIndex = 43
+        Me.Label12.Text = "Datalog Configuration:"
+        '
+        'check_Scaled
+        '
+        Me.check_Scaled.AutoSize = True
+        Me.check_Scaled.Location = New System.Drawing.Point(129, 15)
+        Me.check_Scaled.Name = "check_Scaled"
+        Me.check_Scaled.Size = New System.Drawing.Size(142, 17)
+        Me.check_Scaled.TabIndex = 44
+        Me.check_Scaled.Text = "Log Scaled Sensor Data"
+        Me.check_Scaled.UseVisualStyleBackColor = True
+        '
+        'check_timestamps
+        '
+        Me.check_timestamps.AutoSize = True
+        Me.check_timestamps.Location = New System.Drawing.Point(129, 33)
+        Me.check_timestamps.Name = "check_timestamps"
+        Me.check_timestamps.Size = New System.Drawing.Size(141, 17)
+        Me.check_timestamps.TabIndex = 45
+        Me.check_timestamps.Text = "Log Sample Timestamps"
+        Me.check_timestamps.UseVisualStyleBackColor = True
         '
         'FX3ConfigGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(466, 690)
+        Me.ClientSize = New System.Drawing.Size(466, 717)
         Me.Controls.Add(Me.group_DataReady)
         Me.Controls.Add(Me.group_AppSettings)
         Me.Controls.Add(Me.GroupBox1)
@@ -642,4 +677,7 @@ Partial Class FX3ConfigGUI
     Friend WithEvents group_DataReady As GroupBox
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents group_AppSettings As GroupBox
+    Friend WithEvents check_timestamps As CheckBox
+    Friend WithEvents check_Scaled As CheckBox
+    Friend WithEvents Label12 As Label
 End Class

@@ -19,6 +19,10 @@ Public Class FX3ConfigGUI
 
         SetupToolTips()
 
+        'Logger settings
+        check_Scaled.Checked = m_TopGUI.logScaledData
+        check_timestamps.Checked = m_TopGUI.logTimestampData
+
         polarityInput.Items.Add("False: Idle Low")
         polarityInput.Items.Add("True: Idle High")
 
@@ -372,6 +376,10 @@ Public Class FX3ConfigGUI
 
         'update IDUTInterface object based on selection. Note, the endianness setting is applied here
         m_TopGUI.UpdateDutLabel(DutInput.SelectedItem)
+
+        'Save logger settings
+        m_TopGUI.logScaledData = check_Scaled.Checked
+        m_TopGUI.logTimestampData = check_timestamps.Checked
 
         'save app settings (settings file and custom personality)
         m_TopGUI.SaveAppSettings()

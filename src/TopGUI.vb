@@ -41,6 +41,8 @@ Public Class TopGUI
     Friend BulkRegList As List(Of ListViewItem)
     Friend numRegSamples As Integer
     Friend linesPerFile As Integer
+    Friend logScaledData As Boolean
+    Friend logTimestampData As Boolean
 
     'data visualization color palette
     Friend PlotColorPalette As List(Of Color)
@@ -182,6 +184,9 @@ Public Class TopGUI
         BulkRegList = New List(Of ListViewItem)
         numRegSamples = 10000
         linesPerFile = 1000000
+        'Load saved settings for data logging
+        logScaledData = My.Settings.LogScaledData
+        logTimestampData = My.Settings.LogTimestampData
 
         'load plotter settings
         If My.Settings.PlotSettings <> "" Then
@@ -1125,6 +1130,8 @@ Public Class TopGUI
         My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
         My.Settings.DutPersonality = SelectedPersonalityLabel
         My.Settings.LastValidDutPersonality = LastValidSelectedPersonality
+        My.Settings.LogScaledData = logScaledData
+        My.Settings.LogTimestampData = logTimestampData
         'serialize plot settings and save. Should probably refactor this
         Dim serializer As New XmlSerializer(GetType(PlotterSettings))
         Using writer As New StringWriter
