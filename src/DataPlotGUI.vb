@@ -187,7 +187,7 @@ Public Class DataPlotGUI
         If dataPlot.Titles.Count > 0 Then
             startTitle = dataPlot.Titles(0).Text
         Else
-            startTitle = m_TopGUI.SelectedPersonality + " Time Domain Plot"
+            startTitle = m_TopGUI.SelectedPersonalityLabel + " Time Domain Plot"
         End If
 
         'If title is empty then remove
@@ -246,7 +246,7 @@ Public Class DataPlotGUI
 
     Private Sub saveChart_Click(sender As Object, e As EventArgs) Handles btn_saveChart.Click
         Dim filebrowser As New SaveFileDialog
-        Dim fileName As String = "data_plot_" + m_TopGUI.SelectedPersonality + "_" + GetTime() + ".png"
+        Dim fileName As String = "data_plot_" + m_TopGUI.SelectedPersonalityLabel + "_" + GetTime() + ".png"
         Try
             filebrowser.FileName = fileName
             filebrowser.Filter = "Image Files (*.png) | *.png"

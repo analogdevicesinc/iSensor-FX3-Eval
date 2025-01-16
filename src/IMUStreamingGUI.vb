@@ -49,7 +49,7 @@ Public Class IMUStreamingGUI
         text_numSamples.Text = "10000"
 
         'set up burst manager
-        manager = New BurstManager(m_TopGUI.Dut, m_TopGUI.FX3, m_TopGUI.RegMap, m_TopGUI.SelectedPersonality)
+        manager = New BurstManager(m_TopGUI.Dut, m_TopGUI.FX3, m_TopGUI.RegMap, m_TopGUI.SelectedPersonalityLabel)
 
         'Check if the manager knows about the selected device
         If manager.Device = BurstDevice.Unknown Then
@@ -145,7 +145,7 @@ Public Class IMUStreamingGUI
 
         'Set up stream data logger properties
         fileManager.RegList = manager.BurstRegisters
-        fileManager.FileBaseName = m_TopGUI.SelectedPersonality + "_Burst" + timeString
+        fileManager.FileBaseName = m_TopGUI.SelectedPersonalityLabel + "_Burst" + timeString
         fileManager.FilePath = savePath
         fileManager.Buffers = totalDRCaptures
         fileManager.Captures = 1 'Number of times to read each register in the reg map

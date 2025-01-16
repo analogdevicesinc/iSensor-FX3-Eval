@@ -30,7 +30,7 @@ Public Class SelectDUTGUI
                 familyInput.Items.Add(item.DisplayName)
             End If
             'check if this personality is selected
-            If (item.DisplayName = m_TopGUI.SelectedPersonality) Or (item.DisplayName = m_TopGUI.LastValidSelectedPersonality) Then
+            If (item.DisplayName = m_TopGUI.SelectedPersonalityLabel) Or (item.DisplayName = m_TopGUI.LastValidSelectedPersonality) Then
                 defaultPer = item
             End If
         Next
@@ -86,7 +86,7 @@ Public Class SelectDUTGUI
             MsgBox("Error: Invalid DUT selected!")
         Else
             If isStartup Then
-                m_TopGUI.SelectedPersonality = modelInput.Text
+                m_TopGUI.SelectedPersonalityLabel = modelInput.Text
                 m_TopGUI.LastValidSelectedPersonality = modelInput.Text
             Else
                 Try

@@ -32,7 +32,8 @@ Public Class TopGUI
     Public Dut As IDutInterface
 
     'DUT settings management
-    Friend SelectedPersonality As String
+    Friend SelectedPersonalityLabel As String
+    Friend SelectedPersonality As DutPersonality
     Friend LastValidSelectedPersonality As String
     Friend DutOptions As List(Of DutPersonality)
 
@@ -142,14 +143,14 @@ Public Class TopGUI
         End Try
 
         'load DUT personality settings
-        SelectedPersonality = My.Settings.DutPersonality
+        SelectedPersonalityLabel = My.Settings.DutPersonality
         LastValidSelectedPersonality = My.Settings.LastValidDutPersonality
         LoadDUTOptions()
 
         'load personality based on last selection
         validPersonality = False
         For Each item In DutOptions
-            If item.DisplayName = SelectedPersonality Then
+            If item.DisplayName = SelectedPersonalityLabel Then
                 validPersonality = True
                 Exit For
             End If
@@ -162,20 +163,20 @@ Public Class TopGUI
             'if valid personality not selected then override
             validPersonality = False
             For Each item In DutOptions
-                If item.DisplayName = SelectedPersonality Then
+                If item.DisplayName = SelectedPersonalityLabel Then
                     validPersonality = True
                     Exit For
                 End If
             Next
             'go to custom if none set
-            If Not validPersonality Then SelectedPersonality = DutPersonality.CUSTOM_PERSONALITY_STRING
+            If Not validPersonality Then SelectedPersonalityLabel = DutPersonality.CUSTOM_PERSONALITY_STRING
         End If
 
         'Check that all the register maps required for the application are properly bundled
         CheckRegmapResources()
 
         'load register map
-        ApplyDutPersonalityRegmap(SelectedPersonality)
+        ApplyDutPersonalityRegmap(SelectedPersonalityLabel)
 
         'Set bulk reg list
         BulkRegList = New List(Of ListViewItem)
@@ -1122,7 +1123,7 @@ Public Class TopGUI
         My.Settings.IdleColor = IDLE_COLOR
         My.Settings.BackColor = BACK_COLOR
         My.Settings.LastFX3Board = FX3.ActiveFX3SerialNumber
-        My.Settings.DutPersonality = SelectedPersonality
+        My.Settings.DutPersonality = SelectedPersonalityLabel
         My.Settings.LastValidDutPersonality = LastValidSelectedPersonality
         'serialize plot settings and save. Should probably refactor this
         Dim serializer As New XmlSerializer(GetType(PlotterSettings))
@@ -1131,7 +1132,7 @@ Public Class TopGUI
             My.Settings.PlotSettings = writer.ToString()
         End Using
         My.Settings.Save()
-        If SelectedPersonality = DutPersonality.CUSTOM_PERSONALITY_STRING Then
+        If SelectedPersonalityLabel = DutPersonality.CUSTOM_PERSONALITY_STRING Then
             SaveCustomPersonality()
         End If
     End Sub
@@ -1255,7 +1256,7 @@ Public Class TopGUI
         Next
         If Not File.Exists(savedRegmapPath) Then
             'go to custom personality and manually select register map
-            SelectedPersonality = DutPersonality.CUSTOM_PERSONALITY_STRING
+            SelectedPersonalityLabel = DutPersonality.CUSTOM_PERSONALITY_STRING
             Dim regMapSelector As New SelectRegmapGUI()
             If Not IsNothing(regMapSelector.SelectedPath) Then
                 RegMapPath = regMapSelector.SelectedPath
@@ -1323,10 +1324,13 @@ Public Class TopGUI
         m_isLowerWordFirst = personality.IsLowerFirst
 
         'Save personality setting
-        SelectedPersonality = displayName
-        If SelectedPersonality <> DutPersonality.CUSTOM_PERSONALITY_STRING Then
-            LastValidSelectedPersonality = SelectedPersonality
+        SelectedPersonalityLabel = displayName
+        If SelectedPersonalityLabel <> DutPersonality.CUSTOM_PERSONALITY_STRING Then
+            LastValidSelectedPersonality = SelectedPersonalityLabel
         End If
+
+        'Save personality last applied for use elsewhere
+        SelectedPersonality = personality
 
         Return True
 
@@ -1397,7 +1401,7 @@ Public Class TopGUI
         dut_access.Select()
 
         'Load settings
-        ApplyDutPersonality(SelectedPersonality)
+        ApplyDutPersonality(SelectedPersonalityLabel)
 
         'disable watchdog
         FX3.WatchdogEnable = False
@@ -1467,7 +1471,7 @@ Public Class TopGUI
     ''' </summary>
     Private Sub SetDUTTypeLabel()
         label_DUTType.BackColor = GOOD_COLOR
-        label_DUTType.Text = SelectedPersonality + " - " + FX3.SensorType.ToString() +
+        label_DUTType.Text = SelectedPersonalityLabel + " - " + FX3.SensorType.ToString() +
             ": " + FX3.PartType.ToString() +
             ", Supply " + FX3.DutSupplyMode.ToString()
 
@@ -1575,6 +1579,7 @@ Public Class TopGUI
         Next
         dataPlotRegsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
         dataPlotRegsView.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+
     End Sub
 
     ''' <summary>

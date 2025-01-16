@@ -27,7 +27,7 @@ Public Class FacResetGUI
         'validate inputs
         m_Personality = Nothing
         For Each per In m_TopGUI.DutOptions
-            If per.DisplayName = m_TopGUI.SelectedPersonality Then m_Personality = per
+            If per.DisplayName = m_TopGUI.SelectedPersonalityLabel Then m_Personality = per
         Next
         If IsNothing(m_Personality) Then
             MessageBox.Show("DUT Personality Not Loaded!")

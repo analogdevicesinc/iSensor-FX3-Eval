@@ -431,7 +431,7 @@ Public Class FrequencyPlotGUI
 
     Private Sub btn_saveplot_Click(sender As Object, e As EventArgs) Handles btn_saveplot.Click
         Dim filebrowser As New SaveFileDialog
-        Dim fileName As String = "FFT_plot_" + m_TopGUI.SelectedPersonality + "_" + GetTime() + ".png"
+        Dim fileName As String = "FFT_plot_" + m_TopGUI.SelectedPersonalityLabel + "_" + GetTime() + ".png"
         Try
             filebrowser.FileName = fileName
             filebrowser.Filter = "Image Files (*.png) | *.png"

@@ -465,7 +465,7 @@ Partial Class TopGUI
             strValues.Add(reg.Label + "," + reg.Page.ToString() + "," + reg.Address.ToString() + "," + values(index).ToString())
             index += 1
         Next
-        saveCSV("RegDump_" + SelectedPersonality, strValues.ToArray(), lastFilePath)
+        saveCSV("RegDump_" + SelectedPersonalityLabel, strValues.ToArray(), lastFilePath)
 
         'check if exceptions occurred
         ValidateAutomotiveSpiData()
