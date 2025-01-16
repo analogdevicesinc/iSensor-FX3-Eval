@@ -109,6 +109,11 @@ Public Class DutPersonality
     ''' </summary>
     Public SoftResetCmdBit As Integer
 
+    ''' <summary>
+    ''' Registers to load to plotter view by default. Space separated, format {RegPattern PlotNumber}
+    ''' </summary>
+    Public DefaultPlotRegs As String
+
     Private Const CommaToken As String = "{comma}"
 
     Public Sub New()
@@ -129,6 +134,7 @@ Public Class DutPersonality
         WriteBitPosition = 15
         WriteBitPolarity = True
         IsLowerFirst = True
+        DefaultPlotRegs = ""
     End Sub
 
     ''' <summary>
@@ -207,6 +213,7 @@ Public Class DutPersonality
         header.Add("ISLOWERFIRST")
         header.Add("SOFTRESETBIT")
         header.Add("FLASHUPDATEBIT")
+        header.Add("DEFAULT_PLOT_REGS")
         For Each item In header
             writer.Write(item + ",")
         Next
@@ -240,6 +247,7 @@ Public Class DutPersonality
             vals.Add(personality.IsLowerFirst.ToString())
             vals.Add(personality.SoftResetCmdBit.ToString())
             vals.Add(personality.FlashUpdateCmdBit.ToString())
+            vals.Add(personality.DefaultPlotRegs)
             For Each item In vals
                 writer.Write(item + ",")
             Next
@@ -280,25 +288,26 @@ Public Class DutPersonality
             lines = File.ReadAllLines(PersonalityFile)
             'get indexes for all parameters from header
             line = lines(0).Split(",")
-            indexes.Add(Array.IndexOf(line, "DISPLAYNAME"))
-            indexes.Add(Array.IndexOf(line, "REGMAP"))
-            indexes.Add(Array.IndexOf(line, "SENSORTYPE"))
-            indexes.Add(Array.IndexOf(line, "PARTTYPE"))
-            indexes.Add(Array.IndexOf(line, "SPIMODE"))
-            indexes.Add(Array.IndexOf(line, "SPIFREQ"))
-            indexes.Add(Array.IndexOf(line, "SPISTALL"))
-            indexes.Add(Array.IndexOf(line, "DRDIONUMBER"))
-            indexes.Add(Array.IndexOf(line, "DRPOLARITY"))
-            indexes.Add(Array.IndexOf(line, "SUPPLY"))
-            indexes.Add(Array.IndexOf(line, "VDDIO"))
-            indexes.Add(Array.IndexOf(line, "ADDRPOS"))
-            indexes.Add(Array.IndexOf(line, "DATAPOS"))
-            indexes.Add(Array.IndexOf(line, "WRITEBITPOS"))
-            indexes.Add(Array.IndexOf(line, "WRITEBITPOLARITY"))
-            indexes.Add(Array.IndexOf(line, "ISLOWERFIRST"))
-            indexes.Add(Array.IndexOf(line, "SOFTRESETBIT"))
-            indexes.Add(Array.IndexOf(line, "FLASHUPDATEBIT"))
-            indexes.Add(Array.IndexOf(line, "PARENT"))
+            indexes.Add(Array.IndexOf(line, "DISPLAYNAME"))     '0
+            indexes.Add(Array.IndexOf(line, "REGMAP"))          '1
+            indexes.Add(Array.IndexOf(line, "SENSORTYPE"))      '2
+            indexes.Add(Array.IndexOf(line, "PARTTYPE"))        '3
+            indexes.Add(Array.IndexOf(line, "SPIMODE"))         '4
+            indexes.Add(Array.IndexOf(line, "SPIFREQ"))         '5
+            indexes.Add(Array.IndexOf(line, "SPISTALL"))        '6
+            indexes.Add(Array.IndexOf(line, "DRDIONUMBER"))     '7
+            indexes.Add(Array.IndexOf(line, "DRPOLARITY"))      '8
+            indexes.Add(Array.IndexOf(line, "SUPPLY"))          '9
+            indexes.Add(Array.IndexOf(line, "VDDIO"))           '10
+            indexes.Add(Array.IndexOf(line, "ADDRPOS"))         '11
+            indexes.Add(Array.IndexOf(line, "DATAPOS"))         '12
+            indexes.Add(Array.IndexOf(line, "WRITEBITPOS"))     '13
+            indexes.Add(Array.IndexOf(line, "WRITEBITPOLARITY")) '14
+            indexes.Add(Array.IndexOf(line, "ISLOWERFIRST"))    '15
+            indexes.Add(Array.IndexOf(line, "SOFTRESETBIT"))    '16
+            indexes.Add(Array.IndexOf(line, "FLASHUPDATEBIT"))  '17
+            indexes.Add(Array.IndexOf(line, "PARENT"))          '18
+            indexes.Add(Array.IndexOf(line, "DEFAULT_PLOT_REGS")) '19
             'parse file
             For i As Integer = 1 To lines.Count - 1
                 line = lines(i).Split(",")
@@ -325,6 +334,7 @@ Public Class DutPersonality
                     item.SoftResetCmdBit = Convert.ToInt32(line(indexes(16)))
                     item.FlashUpdateCmdBit = Convert.ToInt32(line(indexes(17)))
                     item.Parent = line(indexes(18))
+                    item.DefaultPlotRegs = line(indexes(19))
                     ret.Add(item)
                 Catch ex As Exception
                     'Add the personality to the list. This is a lazy way to make this parser
