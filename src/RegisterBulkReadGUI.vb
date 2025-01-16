@@ -104,6 +104,8 @@ Public Class RegisterBulkReadGUI
         tip0.SetToolTip(MainButton, "Start the register stream operation")
         tip0.SetToolTip(StreamingAVARCancelButton, "Cancel a running register stream operation")
         tip0.SetToolTip(text_recTime, "Set or view the capture time (hh:mm:ss). This option is only active when reading synchronous to the IMU data ready")
+        tip0.SetToolTip(check_LogTimestamps, "Log USB packet timestamps and log duration to file")
+        tip0.SetToolTip(check_ScaleData, "Log data scaled to native units based on the loaded RegMap")
     End Sub
 
     Private Sub ReturnToMain(sender As Object, e As EventArgs) Handles Me.Closing

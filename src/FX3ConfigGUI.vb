@@ -107,6 +107,8 @@ Public Class FX3ConfigGUI
         tip.SetToolTip(DutVoltage, "Set the DUT supply mode (off, 3.3V (regulator output), 5V (USB supply)")
         tip.SetToolTip(SelectedRegMap, "Select a register map file to load")
         tip.SetToolTip(btn_edit_colors, "Configure the GUI color palette")
+        tip.SetToolTip(check_timestamps, "Log USB packet timestamps and log duration to file")
+        tip.SetToolTip(check_Scaled, "Log data scaled to native units based on the loaded RegMap")
 
     End Sub
 

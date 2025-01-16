@@ -370,7 +370,7 @@ Partial Class RegisterBulkReadGUI
         Me.group_LogConfig.Size = New System.Drawing.Size(185, 145)
         Me.group_LogConfig.TabIndex = 108
         Me.group_LogConfig.TabStop = False
-        Me.group_LogConfig.Text = "File Log Options"
+        Me.group_LogConfig.Text = "Log File Options"
         '
         'RegisterBulkReadGUI
         '
