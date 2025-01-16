@@ -1580,6 +1580,35 @@ Public Class TopGUI
         dataPlotRegsView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
         dataPlotRegsView.Columns(0).AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
 
+        'Populate the plot settings based on the loaded regmap / personality
+        If SelectedPersonality.DefaultPlotRegs <> "" Then
+            Dim defaultRegInfo As String() = SelectedPersonality.DefaultPlotRegs.Split(" ")
+            'Reset plot info
+            dataPlotRegs.Clear()
+            plotSettings.NumberPlots = 0
+            Try
+                For i As Integer = 0 To (defaultRegInfo.Length - 1) Step 2
+                    Dim pattern As String = defaultRegInfo(i)
+                    Dim plotIndex As Integer = Convert.ToInt32(defaultRegInfo(i + 1))
+                    'Limit to 3 matches per plot
+                    Dim matchCount As Integer = 0
+                    For Each reg In RegMap
+                        If reg.Label.Contains(pattern) Then
+                            dataPlotRegs.Add(New RegPlotterInfo With {.Reg = reg, .Index = plotIndex})
+                            matchCount += 1
+                        End If
+                        If matchCount >= 3 Then Exit For
+                    Next
+                    If matchCount > 0 Then plotSettings.NumberPlots += 1
+                Next
+            Catch ex As Exception
+                'Don't configure
+                Return
+            End Try
+            'Update checks in top GUI based on new defaults loaded
+            SaveDataPlotRegList()
+        End If
+
     End Sub
 
     ''' <summary>
