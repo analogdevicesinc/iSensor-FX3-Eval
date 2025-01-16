@@ -53,6 +53,8 @@ Public Class RegisterBulkReadGUI
         DrActiveBox.Checked = m_TopGUI.FX3.DrActive
         ValidateDR.Checked = m_TopGUI.FX3.DrActive
         ValidateDR.Enabled = m_TopGUI.FX3.DrActive
+        check_LogTimestamps.Checked = m_TopGUI.logTimestampData
+        check_ScaleData.Checked = m_TopGUI.logScaledData
 
         selectedRegview.View = View.Details
         selectedRegview.Columns.Add("Register", selectedRegview.Width - 1, HorizontalAlignment.Left)
@@ -115,6 +117,9 @@ Public Class RegisterBulkReadGUI
         'sample settings
         m_TopGUI.numRegSamples = Convert.ToInt32(NumberDRToCapture.Text)
         m_TopGUI.linesPerFile = Convert.ToInt32(linesPerFile.Text)
+        'Log settings
+        m_TopGUI.logTimestampData = check_LogTimestamps.Checked
+        m_TopGUI.logScaledData = check_ScaleData.Checked
 
         're-enable button
         m_TopGUI.btn_BulkRegRead.Enabled = True
@@ -234,6 +239,9 @@ Public Class RegisterBulkReadGUI
         'set the register word order
         fileManager.LowerWordFirst = m_TopGUI.Dut.IsLowerFirst
         fileManager.BuffersPerWrite = 10000
+        'Log settings
+        fileManager.LogTimestamps = check_LogTimestamps.Checked
+        fileManager.ScaleData = check_ScaleData.Checked
         Try
             fileManager.FileMaxDataRows = Convert.ToInt32(linesPerFile.Text()) 'Keep this under 1M samples to open in Excel
         Catch ex As Exception
