@@ -43,6 +43,10 @@ Public Class IMUStreamingGUI
             combo_DrSelect.SelectedItem = "Other"
         End If
 
+        'Log settings
+        check_logTimestamps.Checked = m_TopGUI.logTimestampData
+        check_scaleData.Checked = m_TopGUI.logScaledData
+
         'Set up labels
         label_measuredFreq.Text = ""
         btn_cancel.Enabled = False
@@ -159,6 +163,12 @@ Public Class IMUStreamingGUI
         If manager.Device = BurstDevice.ADIS1655x Then
             fileManager.LowerWordFirst = False
         End If
+        'Log settings
+        fileManager.LogTimestamps = check_logTimestamps.Checked
+        fileManager.ScaleData = check_scaleData.Checked
+        'Also update global state
+        m_TopGUI.logScaledData = check_scaleData.Checked
+        m_TopGUI.logTimestampData = check_logTimestamps.Checked
 
         'hide other forms
         InteractWithOtherForms(True, Me)

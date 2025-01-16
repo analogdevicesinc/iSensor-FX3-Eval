@@ -45,6 +45,8 @@ Partial Class IMUStreamingGUI
         Me.check_checksum = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.text_recTime = New System.Windows.Forms.TextBox()
+        Me.check_scaleData = New System.Windows.Forms.CheckBox()
+        Me.check_logTimestamps = New System.Windows.Forms.CheckBox()
         Me.group_config.SuspendLayout()
         Me.panel_dataformat.SuspendLayout()
         Me.panel_wordsize.SuspendLayout()
@@ -88,7 +90,7 @@ Partial Class IMUStreamingGUI
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(9, 197)
+        Me.Label3.Location = New System.Drawing.Point(10, 239)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(78, 13)
         Me.Label3.TabIndex = 24
@@ -96,14 +98,14 @@ Partial Class IMUStreamingGUI
         '
         'text_numSamples
         '
-        Me.text_numSamples.Location = New System.Drawing.Point(97, 194)
+        Me.text_numSamples.Location = New System.Drawing.Point(98, 236)
         Me.text_numSamples.Name = "text_numSamples"
         Me.text_numSamples.Size = New System.Drawing.Size(94, 20)
         Me.text_numSamples.TabIndex = 23
         '
         'btn_cancel
         '
-        Me.btn_cancel.Location = New System.Drawing.Point(106, 248)
+        Me.btn_cancel.Location = New System.Drawing.Point(107, 291)
         Me.btn_cancel.Name = "btn_cancel"
         Me.btn_cancel.Size = New System.Drawing.Size(86, 30)
         Me.btn_cancel.TabIndex = 22
@@ -112,7 +114,7 @@ Partial Class IMUStreamingGUI
         '
         'btn_start
         '
-        Me.btn_start.Location = New System.Drawing.Point(12, 248)
+        Me.btn_start.Location = New System.Drawing.Point(13, 291)
         Me.btn_start.Name = "btn_start"
         Me.btn_start.Size = New System.Drawing.Size(86, 30)
         Me.btn_start.TabIndex = 21
@@ -132,7 +134,7 @@ Partial Class IMUStreamingGUI
         Me.statusLabel.BackColor = System.Drawing.SystemColors.ButtonHighlight
         Me.statusLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.statusLabel.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.statusLabel.Location = New System.Drawing.Point(55, 290)
+        Me.statusLabel.Location = New System.Drawing.Point(55, 328)
         Me.statusLabel.Name = "statusLabel"
         Me.statusLabel.Size = New System.Drawing.Size(137, 20)
         Me.statusLabel.TabIndex = 30
@@ -142,7 +144,7 @@ Partial Class IMUStreamingGUI
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(9, 294)
+        Me.Label6.Location = New System.Drawing.Point(9, 332)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(43, 13)
         Me.Label6.TabIndex = 29
@@ -151,7 +153,7 @@ Partial Class IMUStreamingGUI
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(9, 320)
+        Me.Label1.Location = New System.Drawing.Point(9, 354)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(91, 13)
         Me.Label1.TabIndex = 32
@@ -159,7 +161,7 @@ Partial Class IMUStreamingGUI
         '
         'CaptureProgressBurst
         '
-        Me.CaptureProgressBurst.Location = New System.Drawing.Point(12, 336)
+        Me.CaptureProgressBurst.Location = New System.Drawing.Point(12, 370)
         Me.CaptureProgressBurst.Name = "CaptureProgressBurst"
         Me.CaptureProgressBurst.Size = New System.Drawing.Size(180, 18)
         Me.CaptureProgressBurst.TabIndex = 31
@@ -261,7 +263,7 @@ Partial Class IMUStreamingGUI
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(9, 225)
+        Me.Label2.Location = New System.Drawing.Point(10, 267)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(82, 13)
         Me.Label2.TabIndex = 36
@@ -269,16 +271,38 @@ Partial Class IMUStreamingGUI
         '
         'text_recTime
         '
-        Me.text_recTime.Location = New System.Drawing.Point(97, 222)
+        Me.text_recTime.Location = New System.Drawing.Point(98, 264)
         Me.text_recTime.Name = "text_recTime"
         Me.text_recTime.Size = New System.Drawing.Size(94, 20)
         Me.text_recTime.TabIndex = 37
+        '
+        'check_scaleData
+        '
+        Me.check_scaleData.AutoSize = True
+        Me.check_scaleData.Location = New System.Drawing.Point(18, 192)
+        Me.check_scaleData.Name = "check_scaleData"
+        Me.check_scaleData.Size = New System.Drawing.Size(115, 17)
+        Me.check_scaleData.TabIndex = 38
+        Me.check_scaleData.Text = "Scale Sensor Data"
+        Me.check_scaleData.UseVisualStyleBackColor = True
+        '
+        'check_logTimestamps
+        '
+        Me.check_logTimestamps.AutoSize = True
+        Me.check_logTimestamps.Location = New System.Drawing.Point(18, 215)
+        Me.check_logTimestamps.Name = "check_logTimestamps"
+        Me.check_logTimestamps.Size = New System.Drawing.Size(103, 17)
+        Me.check_logTimestamps.TabIndex = 39
+        Me.check_logTimestamps.Text = "Log Timestamps"
+        Me.check_logTimestamps.UseVisualStyleBackColor = True
         '
         'IMUStreamingGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(420, 362)
+        Me.ClientSize = New System.Drawing.Size(420, 394)
+        Me.Controls.Add(Me.check_logTimestamps)
+        Me.Controls.Add(Me.check_scaleData)
         Me.Controls.Add(Me.text_recTime)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.group_config)
@@ -333,4 +357,6 @@ Partial Class IMUStreamingGUI
     Friend WithEvents panel_wordsize As Panel
     Friend WithEvents Label2 As Label
     Friend WithEvents text_recTime As TextBox
+    Friend WithEvents check_scaleData As CheckBox
+    Friend WithEvents check_logTimestamps As CheckBox
 End Class
