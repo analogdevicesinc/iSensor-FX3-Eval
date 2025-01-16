@@ -306,8 +306,8 @@ Public Class IMUStreamingGUI
 
 #Region "Helper Functions"
 
-    Private Sub MeasureDrFreq(timeout As Integer)
-        measuredDrFreq = m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, 2000)
+    Private Sub MeasureDrFreq(timeout_ms As UInteger)
+        measuredDrFreq = m_TopGUI.FX3.ReadDRFreq(m_TopGUI.FX3.DrPin, 1, timeout_ms)
         label_measuredFreq.Text = FormatNumber(measuredDrFreq, 3).ToString + "  Hz"
         capturesUpdated = True
         UpdateRecordTimeEstimate()
