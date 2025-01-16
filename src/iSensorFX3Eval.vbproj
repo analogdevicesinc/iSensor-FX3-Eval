@@ -98,9 +98,6 @@
     <Reference Include="SignalProcessing">
       <HintPath>..\resources\SignalProcessing.dll</HintPath>
     </Reference>
-    <Reference Include="StreamDataLogger">
-      <HintPath>..\resources\StreamDataLogger.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -461,6 +458,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src_StreamDataLogger\StreamDataLogger.vbproj">
+      <Project>{6c4fda58-8972-43a9-9452-d76e54f8f0fb}</Project>
+      <Name>StreamDataLogger</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <PropertyGroup>

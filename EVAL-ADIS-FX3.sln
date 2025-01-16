@@ -7,6 +7,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "iSensorFX3Eval", "src\iSens
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FX3ApiWrapper", "src_wrapper\FX3ApiWrapper.csproj", "{9CE7D7D2-8138-4D33-9BF6-BBF53FCA83B7}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "StreamDataLogger", "src_StreamDataLogger\StreamDataLogger.vbproj", "{6C4FDA58-8972-43A9-9452-D76E54F8F0FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9CE7D7D2-8138-4D33-9BF6-BBF53FCA83B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CE7D7D2-8138-4D33-9BF6-BBF53FCA83B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CE7D7D2-8138-4D33-9BF6-BBF53FCA83B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4FDA58-8972-43A9-9452-D76E54F8F0FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4FDA58-8972-43A9-9452-D76E54F8F0FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4FDA58-8972-43A9-9452-D76E54F8F0FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4FDA58-8972-43A9-9452-D76E54F8F0FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
