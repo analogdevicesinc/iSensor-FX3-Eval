@@ -86,6 +86,13 @@ adisInterface
  <param name="rtsFrame"></param>
  <param name="list"></param>
 </member>
+<member name="M:adisInterface.CerberusInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
+ <summary>
+ Create a new instance of the Cerberus DUT interface class.
+ </summary>
+ <param name="adis">Reg interface object to use for dut communication.</param>
+ <param name="burstMode">Burst Class to use to support burst mode.  Nothing/null if Dut does not support burst mode.</param>
+</member>
 <member name="M:adisInterface.ComponentInterface.#ctor(AdisApi.IRegInterface,adisInterface.BurstBase)">
  <summary>
  Create a new instance of a Dut interface class.

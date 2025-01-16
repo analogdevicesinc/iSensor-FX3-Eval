@@ -33,6 +33,12 @@ StreamDataLogger
  </summary>
  <returns></returns>
 </member>
+<member name="P:StreamDataLogger.Logger.ScaleData">
+ <summary>
+ Enable or disable scaling data to native units
+ </summary>
+ <returns></returns>
+</member>
 <member name="P:StreamDataLogger.Logger.LowerWordFirst">
  <summary>
  Property to get/set if the lower word is returned first for a 32-bit register
@@ -122,7 +128,7 @@ StreamDataLogger
  This event is raised when all data is done being written to the disk.
  </summary>
 </member>
-<member name="M:StreamDataLogger.Logger.#ctor(StreamDataLogger.IStreamEventProducer@,adisInterface.IBufferedStreamProducer@)">
+<member name="M:StreamDataLogger.Logger.#ctor(adisInterface.IStreamEventProducer@,adisInterface.IBufferedStreamProducer@)">
  <summary>
  Constructor, takes stream producer and event producer
  </summary>

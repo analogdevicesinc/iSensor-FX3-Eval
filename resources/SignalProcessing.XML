@@ -39,7 +39,7 @@
             This event is raised when an FFT has completed
             </summary>
         </member>
-        <member name="M:SignalProcessing.FFT_Streamer.#ctor(StreamDataLogger.IStreamEventProducer@,adisInterface.IBufferedStreamProducer@)">
+        <member name="M:SignalProcessing.FFT_Streamer.#ctor(adisInterface.IStreamEventProducer@,adisInterface.IBufferedStreamProducer@)">
             <summary>
             FFT_Streamer constructor
             </summary>
