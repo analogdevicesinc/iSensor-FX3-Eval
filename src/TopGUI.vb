@@ -1603,12 +1603,14 @@ Public Class TopGUI
                     Dim matchCount As Integer = 0
                     For Each reg In RegMap
                         If reg.Label.Contains(pattern) Then
-                            dataPlotRegs.Add(New RegPlotterInfo With {.Reg = reg, .Index = plotIndex})
+                            dataPlotRegs.Add(New RegPlotterInfo With {.Reg = reg, .PlotIndex = plotIndex})
                             matchCount += 1
                         End If
                         If matchCount >= 3 Then Exit For
                     Next
-                    If matchCount > 0 Then plotSettings.NumberPlots += 1
+                    If (matchCount > 0) And plotIndex >= plotSettings.NumberPlots Then
+                        plotSettings.NumberPlots += 1
+                    End If
                 Next
             Catch ex As Exception
                 'Don't configure
