@@ -65,7 +65,7 @@ Public Class Logger : Implements IDisposable
     Private m_DutStreamRunning As Boolean
 
     'Track stream running time
-    Private m_StreamTimer As Stopwatch
+    Private m_StreamStartTime As DateTime
 
 #End Region
 
@@ -565,10 +565,10 @@ Public Class Logger : Implements IDisposable
             header = header + reg.Label + m_DataSeparator
         Next
         If m_logTimestamps Then
-            'Add buffer time field
-            header += "PACKET_TIME" + m_DataSeparator
-            'Add stream duration time
-            header += "STREAM_DURATION_MS"
+            'Add timestamp
+            header += "SAMPLE_TIMESTAMP_MS" + m_DataSeparator
+            'Add date / time
+            header += "PACKET_DATE_TIME"
         Else
             'remove last separator
             Return header.Substring(0, header.Length() - m_DataSeparator.Length())
@@ -636,11 +636,12 @@ Public Class Logger : Implements IDisposable
                 sb.Append(m_DataSeparator)
             Next
             If m_logTimestamps Then
+                Dim duration As TimeSpan = (Buf.Time - m_StreamStartTime)
+                'add stream running time
+                sb.Append(duration.TotalMilliseconds.ToString())
+                sb.Append(m_DataSeparator)
                 'add USB packet time
                 sb.Append(Buf.Time.ToString("hh:mm:ss:fff"))
-                sb.Append(m_DataSeparator)
-                'add stream running time
-                sb.Append(m_StreamTimer.ElapsedMilliseconds.ToString())
             Else
                 'remove last separator
                 sb.Remove(sb.Length - m_DataSeparator.Length, m_DataSeparator.Length)
@@ -658,10 +659,6 @@ Public Class Logger : Implements IDisposable
     End Function
 
     Private Sub LoadDefaultValues()
-
-        'Set up stopwatch for logging stream times
-        m_StreamTimer = New Stopwatch()
-
         'initialize public property values
         m_DataSeparator = ","
         m_BufferTimeoutSeconds = 10
@@ -692,7 +689,7 @@ Public Class Logger : Implements IDisposable
         m_DutStreamRunning = False
 
         'start timer
-        m_StreamTimer.Restart()
+        m_StreamStartTime = DateTime.Now
     End Sub
 
 #End Region
