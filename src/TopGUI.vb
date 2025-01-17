@@ -144,6 +144,18 @@ Public Class TopGUI
             'squash
         End Try
 
+        'load plotter settings
+        If My.Settings.PlotSettings <> "" Then
+            Dim serializer As New XmlSerializer(GetType(PlotterSettings))
+            Try
+                plotSettings = CType(serializer.Deserialize(New MemoryStream(Encoding.Unicode.GetBytes(My.Settings.PlotSettings))), PlotterSettings)
+            Catch ex As Exception
+                plotSettings = New PlotterSettings()
+            End Try
+        Else
+            plotSettings = New PlotterSettings()
+        End If
+
         'load DUT personality settings
         SelectedPersonalityLabel = My.Settings.DutPersonality
         LastValidSelectedPersonality = My.Settings.LastValidDutPersonality
@@ -187,18 +199,6 @@ Public Class TopGUI
         'Load saved settings for data logging
         logScaledData = My.Settings.LogScaledData
         logTimestampData = My.Settings.LogTimestampData
-
-        'load plotter settings
-        If My.Settings.PlotSettings <> "" Then
-            Dim serializer As New XmlSerializer(GetType(PlotterSettings))
-            Try
-                plotSettings = CType(serializer.Deserialize(New MemoryStream(Encoding.Unicode.GetBytes(My.Settings.PlotSettings))), PlotterSettings)
-            Catch ex As Exception
-                plotSettings = New PlotterSettings()
-            End Try
-        Else
-            plotSettings = New PlotterSettings()
-        End If
 
         'Seed random number generator
         Randomize()
@@ -1250,6 +1250,8 @@ Public Class TopGUI
         'Set the register map path using the SelectRegMap GUI
         For i As Integer = 0 To DutOptions.Count - 1
             If DutOptions(i).DisplayName = displayName Then
+                'Save selected personality for use later
+                SelectedPersonality = DutOptions(i)
                 'load DUT endianness setting here
                 m_isLowerWordFirst = DutOptions(i).IsLowerFirst
                 If displayName = DutPersonality.CUSTOM_PERSONALITY_STRING Then
@@ -1306,6 +1308,9 @@ Public Class TopGUI
             Return False
         End If
 
+        'Save personality last applied for use elsewhere
+        SelectedPersonality = personality
+
         If (personality.Supply = DutVoltage.On5_0Volts) And (FX3.ActiveFX3.BoardType <> FX3BoardType.CypressFX3Board) Then
             If MessageBox.Show("Enabling 5V supply can cause damage to 3.3V devices - Continue?", "Confirmation",
                                MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) <> DialogResult.OK Then
@@ -1335,9 +1340,6 @@ Public Class TopGUI
         If SelectedPersonalityLabel <> DutPersonality.CUSTOM_PERSONALITY_STRING Then
             LastValidSelectedPersonality = SelectedPersonalityLabel
         End If
-
-        'Save personality last applied for use elsewhere
-        SelectedPersonality = personality
 
         Return True
 
