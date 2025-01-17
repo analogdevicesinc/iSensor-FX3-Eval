@@ -1,8 +1,8 @@
 Label,Page,Addr,NumBytes,RegOffset,RegScale,ReadLen,ReadFlag,WriteFlag,TwosCompl,Hidden,Default,CalReg
 FLASH_CNT,0,0,2,0,1,16,1,0,0,0,,0
 TEMP_OUT,0,2,2,0,0.0058,16,1,0,1,0,,0
-GYRO_OUT (32 bit),0,4,4,0,1.91E-07,32,1,0,1,0,,0
-GYRO_OUT (16 bit),0,6,2,0,0.0125,16,1,0,1,0,,0
+GYRO_LWR,0,4,4,0,1.91E-07,32,1,0,1,0,,0
+GYRO_OUT,0,6,2,0,0.0125,16,1,0,1,0,,0
 GYRO_OFF2,0,8,2,0,1,16,1,1,1,0,0,0
 GYRO_OFF,0,10,2,0,1,16,1,1,1,0,0,0
 ALM_MAG1,0,16,2,0,1,16,1,1,0,0,0,0
