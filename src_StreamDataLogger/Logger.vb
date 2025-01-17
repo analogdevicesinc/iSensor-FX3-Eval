@@ -659,7 +659,8 @@ Public Class Logger : Implements IDisposable
 
     Private Sub LoadDefaultValues()
 
-        ResetStateVariables()
+        'Set up stopwatch for logging stream times
+        m_StreamTimer = New Stopwatch()
 
         'initialize public property values
         m_DataSeparator = ","
@@ -675,8 +676,7 @@ Public Class Logger : Implements IDisposable
         m_EventTimer.Enabled = False
         AddHandler m_EventTimer.Elapsed, New ElapsedEventHandler(AddressOf TimeoutCallback)
 
-        'Set up stopwatch for logging stream times
-        m_StreamTimer = New Stopwatch()
+        ResetStateVariables()
 
     End Sub
 
