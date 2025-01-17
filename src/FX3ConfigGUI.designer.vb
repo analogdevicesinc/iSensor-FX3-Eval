@@ -70,9 +70,9 @@ Partial Class FX3ConfigGUI
         Me.group_DataReady = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.group_AppSettings = New System.Windows.Forms.GroupBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.check_Scaled = New System.Windows.Forms.CheckBox()
         Me.check_timestamps = New System.Windows.Forms.CheckBox()
+        Me.check_Scaled = New System.Windows.Forms.CheckBox()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.group_SPIConfig.SuspendLayout()
         Me.group_DataReady.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -572,14 +572,15 @@ Partial Class FX3ConfigGUI
         Me.group_AppSettings.TabStop = False
         Me.group_AppSettings.Text = "App Settings"
         '
-        'Label12
+        'check_timestamps
         '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(6, 16)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(112, 13)
-        Me.Label12.TabIndex = 43
-        Me.Label12.Text = "Datalog Configuration:"
+        Me.check_timestamps.AutoSize = True
+        Me.check_timestamps.Location = New System.Drawing.Point(129, 35)
+        Me.check_timestamps.Name = "check_timestamps"
+        Me.check_timestamps.Size = New System.Drawing.Size(141, 17)
+        Me.check_timestamps.TabIndex = 45
+        Me.check_timestamps.Text = "Log Sample Timestamps"
+        Me.check_timestamps.UseVisualStyleBackColor = True
         '
         'check_Scaled
         '
@@ -591,15 +592,14 @@ Partial Class FX3ConfigGUI
         Me.check_Scaled.Text = "Log Scaled Sensor Data"
         Me.check_Scaled.UseVisualStyleBackColor = True
         '
-        'check_timestamps
+        'Label12
         '
-        Me.check_timestamps.AutoSize = True
-        Me.check_timestamps.Location = New System.Drawing.Point(129, 33)
-        Me.check_timestamps.Name = "check_timestamps"
-        Me.check_timestamps.Size = New System.Drawing.Size(141, 17)
-        Me.check_timestamps.TabIndex = 45
-        Me.check_timestamps.Text = "Log Sample Timestamps"
-        Me.check_timestamps.UseVisualStyleBackColor = True
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(6, 16)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(112, 13)
+        Me.Label12.TabIndex = 43
+        Me.Label12.Text = "Datalog Configuration:"
         '
         'FX3ConfigGUI
         '
