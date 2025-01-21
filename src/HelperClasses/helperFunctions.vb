@@ -6,8 +6,55 @@
 'Description:   Module of generic helper functions for use in the EVAL-ADIS-FX3 GUI
 
 Imports System.IO
+Imports RegMapClasses
 
 Module HelperFunctions
+
+    ''' <summary>
+    ''' Update labels on loaded regmap with 32-bit / 16-bit tags
+    ''' </summary>
+    ''' <param name="RegMap"></param>
+    Private Sub AddRegisterBitWidthLabels(ByRef RegMap As RegMapCollection)
+
+        'Get all the keys initially
+        Dim regLabels As New List(Of String)
+        For Each reg As RegClass In RegMap
+            regLabels.Add(reg.Label)
+        Next
+
+        'Parse through all registers
+        Dim i As Integer = 0
+        For Each reg In regLabels
+            If RegMap(reg).NumBytes = 4 Then
+                '32bit register found. See if adjacent register is 16-bit and shares labeling
+                Dim newReg32Label As String = Nothing
+                Dim newReg16Label As String = Nothing
+                Dim adjacentRegs() As String = New String() {regLabels(Math.Max(0, i - 1)), regLabels(Math.Min(i + 1, regLabels.Count))}
+                For Each otherReg In adjacentRegs
+                    'Does next label match, and have 16-bits?
+                    If (otherReg.Substring(0, 5) = reg.Substring(0, 5)) And (RegMap(otherReg).NumBytes = 2) Then
+                        newReg32Label = reg + " (32-Bit)"
+                        newReg16Label = otherReg
+                    End If
+                Next
+                'Are we relabelling the reg?
+                If Not IsNothing(newReg32Label) Then
+                    'Add and remove to update keys
+                    Dim temp32 As RegClass = RegMap(reg)
+                    Dim temp16 As RegClass = RegMap(newReg16Label)
+                    RegMap.Remove(reg)
+                    RegMap.Remove(newReg16Label)
+                    newReg16Label = newReg16Label + " (16-Bit)"
+                    temp32.Label = newReg32Label
+                    temp16.Label = newReg16Label
+                    RegMap.Add(temp32)
+                    RegMap.Add(temp16)
+                End If
+            End If
+            i += 1
+        Next
+
+    End Sub
 
     ''' <summary>
     ''' Calculates a 4 bit CRC on 28 bits of input data
