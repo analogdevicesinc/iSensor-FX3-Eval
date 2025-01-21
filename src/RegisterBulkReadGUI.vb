@@ -63,10 +63,21 @@ Public Class RegisterBulkReadGUI
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
 
+        'Set load register logging list
         selectedRegview.Items.Clear()
-        For Each item In m_TopGUI.BulkRegList
-            selectedRegview.Items.Add(item)
-        Next
+        If m_TopGUI.BulkRegList.Count > 0 Then
+            For Each item In m_TopGUI.BulkRegList
+                selectedRegview.Items.Add(item)
+            Next
+        Else
+            'Load from the register selection
+            For Each reg In m_TopGUI.dataPlotRegs
+                If m_TopGUI.RegMap.Contains(reg.Reg.Label) Then
+                    selectedRegview.Items.Add(New ListViewItem() With {.Text = reg.Reg.Label})
+                End If
+            Next
+        End If
+
         NumberDRToCapture.Text = m_TopGUI.numRegSamples.ToString()
         linesPerFile.Text = m_TopGUI.linesPerFile.ToString()
         UpdateRegCountLabel()
