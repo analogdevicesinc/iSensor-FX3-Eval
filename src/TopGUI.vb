@@ -1017,6 +1017,16 @@ Public Class TopGUI
 
 #Region "Helper Functions"
 
+    Friend Function GetProductImage(prodFamily As String) As Image
+        Dim resourceSet = My.Resources.ResourceManager.GetResourceSet(Globalization.CultureInfo.CurrentCulture, True, True)
+        Dim prodImage = resourceSet.GetObject(prodFamily)
+        If Not IsNothing(prodImage) Then
+            Return prodImage
+        Else
+            Return My.Resources.MEMS_Icon
+        End If
+    End Function
+
     Friend Sub ApplyBackgroundColors()
         'apply to all open forms
         For Each openForm As Form In Application.OpenForms
@@ -1340,6 +1350,15 @@ Public Class TopGUI
         If SelectedPersonalityLabel <> DutPersonality.CUSTOM_PERSONALITY_STRING Then
             LastValidSelectedPersonality = SelectedPersonalityLabel
         End If
+
+        'Update product image
+        prodImage.SizeMode = PictureBoxSizeMode.Zoom
+        prodImage.Visible = True
+        Dim prodFamily = SelectedPersonality.Parent
+        If prodFamily = "" Then
+            prodFamily = SelectedPersonality.DisplayName
+        End If
+        prodImage.Image = GetProductImage(prodFamily)
 
         Return True
 

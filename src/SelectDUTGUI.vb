@@ -116,14 +116,7 @@ Public Class SelectDUTGUI
     Private Sub UpdateDeviceImage()
         devPicture.SizeMode = PictureBoxSizeMode.Zoom
         devPicture.Visible = True
-        Dim resourceSet = My.Resources.ResourceManager.GetResourceSet(Globalization.CultureInfo.CurrentCulture, True, True)
-        Dim prodImage = resourceSet.GetObject(familyInput.Text)
-        If Not IsNothing(prodImage) Then
-            devPicture.Image = prodImage
-        Else
-            devPicture.Image = My.Resources.MEMS_Icon
-        End If
-
+        devPicture.Image = m_TopGUI.GetProductImage(modelInput.Text)
     End Sub
 
     Private Sub UpdateModelInput()

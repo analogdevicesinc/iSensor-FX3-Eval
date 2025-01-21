@@ -76,6 +76,7 @@ Partial Class TopGUI
         Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tab_dataPlot = New System.Windows.Forms.TabPage()
+        Me.btn_ADcmXlBufCapture = New System.Windows.Forms.Button()
         Me.tab_dataLog = New System.Windows.Forms.TabPage()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.dataPlotRegsView = New System.Windows.Forms.DataGridView()
@@ -128,7 +129,7 @@ Partial Class TopGUI
         Me.btn_MeasureUSB = New System.Windows.Forms.Button()
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
-        Me.btn_ADcmXlBufCapture = New System.Windows.Forms.Button()
+        Me.prodImage = New System.Windows.Forms.PictureBox()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -153,6 +154,7 @@ Partial Class TopGUI
         Me.GroupBox9.SuspendLayout()
         Me.GroupBox8.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
+        CType(Me.prodImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -344,7 +346,7 @@ Partial Class TopGUI
         '
         Me.group_util.Controls.Add(Me.btn_ResetDUT)
         Me.group_util.Controls.Add(Me.btn_CheckDUTConnection)
-        Me.group_util.Location = New System.Drawing.Point(451, 108)
+        Me.group_util.Location = New System.Drawing.Point(275, 12)
         Me.group_util.Name = "group_util"
         Me.group_util.Size = New System.Drawing.Size(170, 90)
         Me.group_util.TabIndex = 34
@@ -692,6 +694,15 @@ Partial Class TopGUI
         Me.tab_dataPlot.TabIndex = 1
         Me.tab_dataPlot.Text = "Data Logging"
         Me.tab_dataPlot.UseVisualStyleBackColor = True
+        '
+        'btn_ADcmXlBufCapture
+        '
+        Me.btn_ADcmXlBufCapture.Location = New System.Drawing.Point(168, 6)
+        Me.btn_ADcmXlBufCapture.Name = "btn_ADcmXlBufCapture"
+        Me.btn_ADcmXlBufCapture.Size = New System.Drawing.Size(75, 62)
+        Me.btn_ADcmXlBufCapture.TabIndex = 8
+        Me.btn_ADcmXlBufCapture.Text = "ADcmXL Buffer Capture"
+        Me.btn_ADcmXlBufCapture.UseVisualStyleBackColor = True
         '
         'tab_dataLog
         '
@@ -1220,20 +1231,20 @@ Partial Class TopGUI
         Me.link_help.TabStop = True
         Me.link_help.Text = "Welcome Guide"
         '
-        'btn_ADcmXlBufCapture
+        'prodImage
         '
-        Me.btn_ADcmXlBufCapture.Location = New System.Drawing.Point(168, 6)
-        Me.btn_ADcmXlBufCapture.Name = "btn_ADcmXlBufCapture"
-        Me.btn_ADcmXlBufCapture.Size = New System.Drawing.Size(75, 62)
-        Me.btn_ADcmXlBufCapture.TabIndex = 8
-        Me.btn_ADcmXlBufCapture.Text = "ADcmXL Buffer Capture"
-        Me.btn_ADcmXlBufCapture.UseVisualStyleBackColor = True
+        Me.prodImage.Location = New System.Drawing.Point(477, 105)
+        Me.prodImage.Name = "prodImage"
+        Me.prodImage.Size = New System.Drawing.Size(116, 116)
+        Me.prodImage.TabIndex = 45
+        Me.prodImage.TabStop = False
         '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(634, 736)
+        Me.Controls.Add(Me.prodImage)
         Me.Controls.Add(Me.link_help)
         Me.Controls.Add(Me.dut_access)
         Me.Controls.Add(Me.GroupBox7)
@@ -1284,6 +1295,7 @@ Partial Class TopGUI
         Me.GroupBox9.ResumeLayout(False)
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
+        CType(Me.prodImage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1393,4 +1405,5 @@ Partial Class TopGUI
     Friend WithEvents btn_MeasureUSB As Button
     Friend WithEvents btn_FactoryReset As Button
     Friend WithEvents btn_ADcmXlBufCapture As Button
+    Friend WithEvents prodImage As PictureBox
 End Class
