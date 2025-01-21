@@ -320,7 +320,7 @@ Partial Class RegisterBulkReadGUI
         '
         Me.check_ScaleData.Checked = True
         Me.check_ScaleData.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.check_ScaleData.Location = New System.Drawing.Point(5, 99)
+        Me.check_ScaleData.Location = New System.Drawing.Point(4, 100)
         Me.check_ScaleData.Name = "check_ScaleData"
         Me.check_ScaleData.Size = New System.Drawing.Size(140, 21)
         Me.check_ScaleData.TabIndex = 105
