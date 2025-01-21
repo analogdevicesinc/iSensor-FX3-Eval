@@ -14,7 +14,7 @@ Module HelperFunctions
     ''' Update labels on loaded regmap with 32-bit / 16-bit tags
     ''' </summary>
     ''' <param name="RegMap"></param>
-    Private Sub AddRegisterBitWidthLabels(ByRef RegMap As RegMapCollection)
+    Public Sub AddRegisterBitWidthLabels(ByRef RegMap As RegMapCollection)
 
         'Get all the keys initially
         Dim regLabels As New List(Of String)
