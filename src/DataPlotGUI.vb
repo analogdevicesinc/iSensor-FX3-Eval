@@ -33,6 +33,8 @@ Public Class DataPlotGUI
     Private plotFocus As Boolean
     Private numberPlotAreas As Integer
 
+    Private Const PLOT_LABEL As String = "Scaled Data"
+
 #Region "Event Handlers"
 
     Public Sub FormSetup() Handles Me.Load
@@ -59,7 +61,6 @@ Public Class DataPlotGUI
         'set up display
         btn_stopPlayback.Enabled = False
         btn_stopPlayback.Visible = False
-        plotYLabel = "Scaled Value"
 
         'Load settings
         sampleFreq.Text = m_TopGUI.plotSettings.UpdateRate
@@ -203,7 +204,12 @@ Public Class DataPlotGUI
 
     Private Sub btn_AddPlot_Click(sender As Object, e As EventArgs) Handles btn_AddPlot.Click
         numberPlotAreas += 1
-        plotYLabel = plotYLabel + ",Scaled Data"
+        If numberPlotAreas = 1 Then
+            plotYLabel = PLOT_LABEL
+        Else
+            plotYLabel = plotYLabel + "," + PLOT_LABEL
+        End If
+
         Dim col As DataGridViewColumn
         col = New DataGridViewCheckBoxColumn()
         col.HeaderText = "Plot" + numberPlotAreas.ToString()
