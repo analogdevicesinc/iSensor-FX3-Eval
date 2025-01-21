@@ -26,11 +26,13 @@ Partial Class SelectDUTGUI
         Me.familyInput = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.modelInput = New System.Windows.Forms.ComboBox()
+        Me.devPicture = New System.Windows.Forms.PictureBox()
+        CType(Me.devPicture, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'btn_ApplySetting
         '
-        Me.btn_ApplySetting.Location = New System.Drawing.Point(110, 77)
+        Me.btn_ApplySetting.Location = New System.Drawing.Point(169, 78)
         Me.btn_ApplySetting.Name = "btn_ApplySetting"
         Me.btn_ApplySetting.Size = New System.Drawing.Size(75, 64)
         Me.btn_ApplySetting.TabIndex = 27
@@ -71,11 +73,20 @@ Partial Class SelectDUTGUI
         Me.modelInput.Size = New System.Drawing.Size(161, 21)
         Me.modelInput.TabIndex = 33
         '
+        'devPicture
+        '
+        Me.devPicture.Location = New System.Drawing.Point(297, 12)
+        Me.devPicture.Name = "devPicture"
+        Me.devPicture.Size = New System.Drawing.Size(130, 130)
+        Me.devPicture.TabIndex = 34
+        Me.devPicture.TabStop = False
+        '
         'SelectDUTGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(305, 153)
+        Me.ClientSize = New System.Drawing.Size(437, 152)
+        Me.Controls.Add(Me.devPicture)
         Me.Controls.Add(Me.modelInput)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.familyInput)
@@ -83,6 +94,7 @@ Partial Class SelectDUTGUI
         Me.Controls.Add(Me.btn_ApplySetting)
         Me.Name = "SelectDUTGUI"
         Me.Text = "Select DUT"
+        CType(Me.devPicture, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -92,4 +104,5 @@ Partial Class SelectDUTGUI
     Friend WithEvents familyInput As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents modelInput As ComboBox
+    Friend WithEvents devPicture As PictureBox
 End Class

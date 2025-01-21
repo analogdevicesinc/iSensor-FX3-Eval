@@ -443,6 +443,17 @@
     <Content Include="guide\image_9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\ADIS16575-chip-illustration.png" />
+    <None Include="Resources\Products-Category-Icons_MEMS-Inertia-icon.png" />
+    <None Include="Resources\ADIS16446_ML-20-3-chip-illustration.png" />
+    <None Include="Resources\ADIS16495-chip-illustration.png" />
+    <None Include="Resources\ADIS16460-TR-chip-illustration.png" />
+    <None Include="Resources\ADIS16470-TR-TAG-chip-illustration.png" />
+    <None Include="Resources\ADIS16480-TR-chip-illustration.png" />
+    <None Include="Resources\ADIS16505-chip-illustration.png" />
+    <None Include="Resources\ADIS16545-chip-illustration.png" />
+    <None Include="Resources\ADIS16550-chip-illustration.png" />
+    <None Include="Resources\ADcmXL3021-chip-illustration.png" />
     <Content Include="UserConfig\plot_colors.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -5,6 +5,8 @@
 'Author:        Alex Nolan (alex.nolan@analog.com)
 'Description:   Allows a user to select their DUT (ADcmXL series or IMU).
 
+Imports System.Reflection
+
 Public Class SelectDUTGUI
     Inherits FormBase
 
@@ -64,6 +66,8 @@ Public Class SelectDUTGUI
         Else
             modelInput.SelectedIndex = 0
         End If
+        'set product image
+        UpdateDeviceImage()
 
     End Sub
 
@@ -106,6 +110,20 @@ Public Class SelectDUTGUI
 
     Private Sub familyInput_Changed(sender As Object, e As EventArgs) Handles familyInput.TextChanged
         UpdateModelInput()
+        UpdateDeviceImage()
+    End Sub
+
+    Private Sub UpdateDeviceImage()
+        devPicture.SizeMode = PictureBoxSizeMode.Zoom
+        devPicture.Visible = True
+        Dim resourceSet = My.Resources.ResourceManager.GetResourceSet(Globalization.CultureInfo.CurrentCulture, True, True)
+        Dim prodImage = resourceSet.GetObject(familyInput.Text)
+        If Not IsNothing(prodImage) Then
+            devPicture.Image = prodImage
+        Else
+            devPicture.Image = My.Resources.MEMS_Icon
+        End If
+
     End Sub
 
     Private Sub UpdateModelInput()
