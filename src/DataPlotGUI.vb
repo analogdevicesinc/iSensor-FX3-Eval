@@ -348,22 +348,6 @@ Public Class DataPlotGUI
         plotFocus = False
     End Sub
 
-    Private Sub WriteEnterHandler(sender As Object, e As KeyEventArgs)
-
-        If e.KeyCode = Keys.Return Then
-            e.Handled = True
-            e.SuppressKeyPress = True
-        End If
-
-    End Sub
-
-    Private Sub AnnoyingNoiseHandler(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = Keys.Return Then
-            e.Handled = True
-            e.SuppressKeyPress = True
-        End If
-    End Sub
-
 #End Region
 
 #Region "Helper Functions"
