@@ -321,61 +321,62 @@ Public Class FrequencyPlotGUI
 
         Dim freq, mag As Double
         Dim formatString As String
-        Dim render As Boolean = True
+        Dim ch = dataPlot.ChartAreas(0)
         Try
-            freq = dataPlot.ChartAreas(0).AxisX.PixelPositionToValue(e.X)
-            mag = dataPlot.ChartAreas(0).AxisY.PixelPositionToValue(e.Y)
+            freq = ch.AxisX.PixelPositionToValue(e.X)
+            mag = ch.AxisY.PixelPositionToValue(e.Y)
         Catch ex As Exception
-            render = False
+            Return
         End Try
 
         'convert log scale data
         If dataPlot.ChartAreas(0).AxisX.IsLogarithmic Then
             freq = 10 ^ freq
         End If
-
         If dataPlot.ChartAreas(0).AxisY.IsLogarithmic Then
             mag = 10 ^ mag
         End If
 
-        If render Then
-            'place point and label on screen
-            Dim loc As Point = New Point
-            loc.X = e.X
-            loc.Y = e.Y
-            Dim pointLabel As New Label()
-            Controls.Add(pointLabel)
-            'scientific format
-            formatString = "#0.0#e0"
-            If Not check_sciLabel.Checked Then
-                'set format string based on magnitude
-                If mag > 1000 Then
-                    formatString = "f0"
-                ElseIf mag > 10 Then
-                    formatString = "f1"
-                ElseIf mag > 1 Then
-                    formatString = "f2"
-                ElseIf mag > 0.1 Then
-                    formatString = "f3"
-                ElseIf mag > 0.01 Then
-                    formatString = "f4"
-                ElseIf mag > 0.001 Then
-                    formatString = "f5"
-                Else
-                    formatString = "f6"
-                End If
+        'Make sure we clicked in the active chart area
+        If freq < ch.AxisX.Minimum Or freq > ch.AxisX.Maximum Then Return
+        If mag < ch.AxisY.Minimum Or mag > ch.AxisY.Maximum Then Return
+
+        'place point and label on screen
+        Dim loc As Point = New Point
+        loc.X = e.X
+        loc.Y = e.Y
+        Dim pointLabel As New Label()
+        Controls.Add(pointLabel)
+        'scientific format
+        formatString = "#0.0#e0"
+        If Not check_sciLabel.Checked Then
+            'set format string based on magnitude
+            If mag > 1000 Then
+                formatString = "f0"
+            ElseIf mag > 10 Then
+                formatString = "f1"
+            ElseIf mag > 1 Then
+                formatString = "f2"
+            ElseIf mag > 0.1 Then
+                formatString = "f3"
+            ElseIf mag > 0.01 Then
+                formatString = "f4"
+            ElseIf mag > 0.001 Then
+                formatString = "f5"
+            Else
+                formatString = "f6"
             End If
-            pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString(formatString) + " mag" + Environment.NewLine + "●"
-            pointLabel.Font = New Font(pointLabel.Font, FontStyle.Bold)
-            pointLabel.AutoSize = True
-            loc.X = loc.X - (pointLabel.Width / 2)
-            loc.Y = loc.Y - (0.85 * pointLabel.Height)
-            pointLabel.Location = loc
-            pointLabel.Parent = dataPlot
-            pointLabel.BackColor = Color.Transparent
-            pointLabel.TextAlign = ContentAlignment.BottomCenter
-            pointLabel.BringToFront()
         End If
+        pointLabel.Text = freq.ToString("0.#") + "Hz " + mag.ToString(formatString) + " mag" + Environment.NewLine + "●"
+        pointLabel.Font = New Font(pointLabel.Font, FontStyle.Bold)
+        pointLabel.AutoSize = True
+        loc.X = loc.X - (pointLabel.Width / 2)
+        loc.Y = loc.Y - (0.85 * pointLabel.Height)
+        pointLabel.Location = loc
+        pointLabel.Parent = dataPlot
+        pointLabel.BackColor = Color.Transparent
+        pointLabel.TextAlign = ContentAlignment.BottomCenter
+        pointLabel.BringToFront()
 
     End Sub
 
