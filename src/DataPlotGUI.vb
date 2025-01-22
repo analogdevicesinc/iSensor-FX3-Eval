@@ -30,7 +30,6 @@ Public Class DataPlotGUI
     Private plotMutex As Mutex
     Private CSVRegData As List(Of String())
     Private plotYLabel As String
-    Private plotFocus As Boolean
     Private numberPlotAreas As Integer
 
     Private Const PLOT_LABEL As String = "Scaled Data"
@@ -309,10 +308,6 @@ Public Class DataPlotGUI
         playBackRunning = False
     End Sub
 
-    Private Sub DataPlotMouseClick() Handles dataPlot.MouseClick
-        plotFocus = True
-    End Sub
-
     Private Sub axis_autoscale_CheckedChanged(sender As Object, e As EventArgs) Handles axis_autoscale.CheckedChanged
         Dim zoomFlag As Boolean = Not axis_autoscale.Checked
         For Each chart In dataPlot.ChartAreas
@@ -342,10 +337,6 @@ Public Class DataPlotGUI
         If val = "" Then Exit Sub
         plotYLabel = val
         ApplyYAxisTitles()
-    End Sub
-
-    Private Sub FormClick() Handles Me.Click
-        plotFocus = False
     End Sub
 
 #End Region
@@ -678,9 +669,6 @@ Public Class DataPlotGUI
 
         'Set plotter position
         plotXPosition = 0
-
-        'plot out of focus
-        plotFocus = False
 
         'Remove all existing series
         dataPlot.Series.Clear()
