@@ -52,6 +52,9 @@ Public Class DataPlotGUI
         sampleFreq.Text = "20"
         dataPlot.Series.Clear()
         runTime = Long.MaxValue
+        'default plot title
+        dataPlot.Titles.Add(m_TopGUI.SelectedPersonalityLabel + " Time Domain Plot")
+        dataPlot.Titles(0).Font = New Font(sampleFreq.Font.Name, 16.0F)
 
         'Set up timer
         plotTimer = New System.Timers.Timer(500)
@@ -74,6 +77,7 @@ Public Class DataPlotGUI
         playBackMutex = New Mutex()
         plotMutex = New Mutex()
 
+        'Make last column fill remaining space
         regView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
         Dim lastColumn As DataGridViewColumn = regView.Columns(regView.Columns.Count - 1)
         lastColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
@@ -185,16 +189,13 @@ Public Class DataPlotGUI
         Dim startTitle As String = ""
         If dataPlot.Titles.Count > 0 Then
             startTitle = dataPlot.Titles(0).Text
-        Else
-            startTitle = m_TopGUI.SelectedPersonalityLabel + " Time Domain Plot"
         End If
-
-        'If title is empty then remove
-        dataPlot.Titles.Clear()
 
         Dim val As String = InputBox("Enter Plot Title: ", "Input", startTitle)
         'check for cancel
         If val = "" Then Exit Sub
+        'Only have one title
+        dataPlot.Titles.Clear()
         dataPlot.Titles.Add(val)
         dataPlot.Titles(0).Font = New Font(sampleFreq.Font.Name, 16.0F)
 
@@ -241,7 +242,7 @@ Public Class DataPlotGUI
         'Read the registers and apply offset to register selection
         regValues = GetPlotRegValues()
         For i As Integer = 0 To selectedRegList.Count() - 1
-            regView.Item("Offset", selectedRegList(i).Index).Value = selectedRegList(i).Reg.Offset.ToString()
+            regView.Item("Offset", selectedRegList(i).Index).Value = regValues(i).ToString()
         Next
 
     End Sub
