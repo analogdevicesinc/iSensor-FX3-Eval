@@ -609,6 +609,8 @@ Public Class FrequencyPlotGUI
         dataPlot.ChartAreas(0).AxisY.IsLogarithmic = check_logYaxis.Checked
         'recalculate scale based on newest values
         dataPlot.ChartAreas(0).RecalculateAxesScale()
+        'Reset labels since they are not accurate anymore
+        ResetLabels()
     End Sub
 
     Private Sub btn_SetLabel_Click(sender As Object, e As EventArgs) Handles btn_SetLabel.Click
