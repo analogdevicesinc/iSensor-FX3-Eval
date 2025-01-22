@@ -76,6 +76,8 @@ Public Class DataPlotGUI
         plotMutex = New Mutex()
 
         regView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+        Dim lastColumn As DataGridViewColumn = regView.Columns(regView.Columns.Count - 1)
+        lastColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
         RegisterToolTips()
     End Sub
 
