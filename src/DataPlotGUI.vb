@@ -131,7 +131,7 @@ Public Class DataPlotGUI
             StopPlot()
             'save log if there is data
             If logData.Count > 1 Then
-                saveCSV("PLOT_LOG", logData.ToArray(), m_TopGUI.lastFilePath)
+                saveCSV("Plot_Log_" + m_TopGUI.SelectedPersonalityLabel, logData.ToArray(), m_TopGUI.lastFilePath)
                 logData.Clear()
             End If
             sampleFreq.Enabled = True
