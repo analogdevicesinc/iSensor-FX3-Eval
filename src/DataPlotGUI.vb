@@ -31,6 +31,7 @@ Public Class DataPlotGUI
     Private CSVRegData As List(Of String())
     Private plotYLabel As String
     Private numberPlotAreas As Integer
+    Private regTextUpdateTime As Integer
 
     Private Const PLOT_LABEL As String = "Scaled Data"
 
@@ -239,11 +240,9 @@ Public Class DataPlotGUI
             Exit Sub
         End If
 
-        'Read the registers
+        'Read the registers and apply offset to register selection
         regValues = GetPlotRegValues()
-
         For i As Integer = 0 To selectedRegList.Count() - 1
-            selectedRegList(i).Reg.Offset += regValues(i)
             regView.Item("Offset", selectedRegList(i).Index).Value = selectedRegList(i).Reg.Offset.ToString()
         Next
 
@@ -366,21 +365,18 @@ Public Class DataPlotGUI
         Dim regIndex As Integer = 0
         Dim regStr() As String
         Dim readStr As String = "Not Read"
-        Dim scaleStr As String
         For Each reg In m_TopGUI.RegMap
             If reg.IsReadable Then
                 'scale is 1/register map scale factor to match datasheet better
-                scaleStr = (1.0 / reg.Scale).ToString()
                 If regIndex >= regView.RowCount Then
-                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr, reg.Offset.ToString(), scaleStr}
+                    regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr, "0"}
                     regView.Rows.Add(regStr)
                 Else
                     regView.Item("Label", regIndex).Value = reg.Label
                     regView.Item("Page", regIndex).Value = reg.Page
                     regView.Item("Address", regIndex).Value = reg.Address
                     regView.Item("Contents", regIndex).Value = readStr
-                    regView.Item("Offset", regIndex).Value = reg.Offset.ToString()
-                    regView.Item("reg_scale", regIndex).Value = scaleStr
+                    regView.Item("Offset", regIndex).Value = "0"
                 End If
                 regIndex += 1
             End If
@@ -563,27 +559,35 @@ Public Class DataPlotGUI
             Exit Sub
         End If
 
+        'Get most recent sample
         regValues = GetPlotRegValues()
 
+        'Save string data for logging later if needed
         If logToCSV.Checked Then
             logStr = logTimer.ElapsedMilliseconds().ToString()
+            For Each regVal In regValues
+                logStr = logStr + "," + regVal.ToString()
+            Next
+            logData.Add(logStr)
         End If
 
-        'Update reg view and scale plot values
+        'Apply offset to each channel
         Dim index As Integer = 0
         For Each item In selectedRegList
-            regView.Item("Contents", item.Index).Value = regValues(index).ToString()
-            regView.Item("Contents", item.Index).Style = New DataGridViewCellStyle With {.BackColor = item.Color}
-            plotValues.Add(regValues(index))
-            'Log if needed
-            If logToCSV.Checked Then
-                logStr = logStr + "," + regValues(index).ToString()
-            End If
+            Dim offset As Double = Convert.ToDouble(regView.Item("Offset", item.Index).Value)
+            plotValues.Add(regValues(index) - offset)
             index += 1
         Next
 
-        If logToCSV.Checked Then
-            logData.Add(logStr)
+        'Update text periodically (every 500ms)
+        If logTimer.ElapsedMilliseconds > regTextUpdateTime Then
+            regTextUpdateTime = logTimer.ElapsedMilliseconds + 500
+            index = 0
+            For Each item In selectedRegList
+                regView.Item("Contents", item.Index).Value = plotValues(index).ToString()
+                regView.Item("Contents", item.Index).Style = New DataGridViewCellStyle With {.BackColor = item.Color}
+                index += 1
+            Next
         End If
 
         'Update the series for the plot area
@@ -692,6 +696,9 @@ Public Class DataPlotGUI
         'update scaling based on check state
         axis_autoscale_CheckedChanged(Me, Nothing)
 
+        'reset reg text update time
+        regTextUpdateTime = 0
+
     End Sub
 
     Private Sub GetPlotDuration()
@@ -713,8 +720,6 @@ Public Class DataPlotGUI
     Private Sub BuildPlotRegList()
         Dim headers As String
         Dim reg As RegClass
-        Dim scale As Double
-        Dim offset As Double
         selectedRegList.Clear()
         For index As Integer = 0 To regView.RowCount() - 1
             For plotArea As Integer = 1 To numberPlotAreas
@@ -724,12 +729,6 @@ Public Class DataPlotGUI
                     End If
                     Try
                         reg = m_TopGUI.RegMap(regView.Item("Label", index).Value)
-                        scale = Convert.ToDouble(regView.Item("reg_scale", index).Value)
-                        If scale = 0 Then Throw New ArgumentException("ERROR: Invalid scale!")
-                        'reg scale is 1/scale factor
-                        reg.Scale = 1.0 / scale
-                        offset = Convert.ToDouble(regView.Item("Offset", index).Value)
-                        reg.Offset = offset
                         selectedRegList.Add(New RegPlotterInfo With {.PlotIndex = plotArea - 1, .Reg = reg, .Index = index, .Color = m_TopGUI.PlotColorPalette(selectedRegList.Count())})
                     Catch ex As Exception
                         MsgBox("Error loading register! " + ex.Message)

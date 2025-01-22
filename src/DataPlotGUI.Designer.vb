@@ -53,7 +53,6 @@ Partial Class DataPlotGUI
         Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Offset = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.reg_scale = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PlotOptions.SuspendLayout()
@@ -67,7 +66,7 @@ Partial Class DataPlotGUI
         Me.regView.AllowUserToDeleteRows = False
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Offset, Me.reg_scale})
+        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents, Me.Offset})
         Me.regView.Location = New System.Drawing.Point(11, 125)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
@@ -358,13 +357,6 @@ Partial Class DataPlotGUI
         Me.Offset.Name = "Offset"
         Me.Offset.Width = 60
         '
-        'reg_scale
-        '
-        Me.reg_scale.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.reg_scale.HeaderText = "Scale"
-        Me.reg_scale.Name = "reg_scale"
-        Me.reg_scale.Width = 59
-        '
         'DataPlotGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -418,5 +410,4 @@ Partial Class DataPlotGUI
     Friend WithEvents Address As DataGridViewTextBoxColumn
     Friend WithEvents Contents As DataGridViewTextBoxColumn
     Friend WithEvents Offset As DataGridViewTextBoxColumn
-    Friend WithEvents reg_scale As DataGridViewTextBoxColumn
 End Class
