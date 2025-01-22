@@ -24,7 +24,7 @@ Public Class PlotterSettings
 
     Public ScrollBar As Boolean = False
 
-    Public Timestamp As Boolean = False
+    Public Timestamp As Boolean = True
 
     Public NumberPlots As Integer = 1
 
