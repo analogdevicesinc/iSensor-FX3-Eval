@@ -116,7 +116,7 @@ Public Class SelectDUTGUI
     Private Sub UpdateDeviceImage()
         devPicture.SizeMode = PictureBoxSizeMode.Zoom
         devPicture.Visible = True
-        devPicture.Image = m_TopGUI.GetProductImage(modelInput.Text)
+        devPicture.Image = m_TopGUI.GetProductImage(familyInput.Text)
     End Sub
 
     Private Sub UpdateModelInput()
