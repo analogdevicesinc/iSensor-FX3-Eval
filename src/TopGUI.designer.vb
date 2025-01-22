@@ -75,8 +75,10 @@ Partial Class TopGUI
         Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.btn_ADcmXlBufCapture = New System.Windows.Forms.Button()
         Me.tab_dataLog = New System.Windows.Forms.TabPage()
+        Me.group_regLogging = New System.Windows.Forms.GroupBox()
+        Me.btn_ADcmXlBufCapture = New System.Windows.Forms.Button()
+        Me.group_regPlot = New System.Windows.Forms.GroupBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.dataPlotRegsView = New System.Windows.Forms.DataGridView()
         Me.reg_label = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -129,8 +131,7 @@ Partial Class TopGUI
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
         Me.prodImage = New System.Windows.Forms.PictureBox()
-        Me.group_regPlot = New System.Windows.Forms.GroupBox()
-        Me.group_regLogging = New System.Windows.Forms.GroupBox()
+        Me.btn_ClearPlotRegs = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -142,6 +143,8 @@ Partial Class TopGUI
         Me.GroupBox3.SuspendLayout()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tab_dataLog.SuspendLayout()
+        Me.group_regLogging.SuspendLayout()
+        Me.group_regPlot.SuspendLayout()
         CType(Me.dataPlotRegsView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tab_Pin.SuspendLayout()
         Me.GroupBox12.SuspendLayout()
@@ -155,8 +158,6 @@ Partial Class TopGUI
         Me.GroupBox8.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         CType(Me.prodImage, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.group_regPlot.SuspendLayout()
-        Me.group_regLogging.SuspendLayout()
         Me.SuspendLayout()
         '
         'text_FX3Status
@@ -683,17 +684,9 @@ Partial Class TopGUI
         Me.Contents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
         Me.Contents.Width = 110
         '
-        'btn_ADcmXlBufCapture
-        '
-        Me.btn_ADcmXlBufCapture.Location = New System.Drawing.Point(168, 19)
-        Me.btn_ADcmXlBufCapture.Name = "btn_ADcmXlBufCapture"
-        Me.btn_ADcmXlBufCapture.Size = New System.Drawing.Size(75, 62)
-        Me.btn_ADcmXlBufCapture.TabIndex = 8
-        Me.btn_ADcmXlBufCapture.Text = "ADcmXL Buffer Capture"
-        Me.btn_ADcmXlBufCapture.UseVisualStyleBackColor = True
-        '
         'tab_dataLog
         '
+        Me.tab_dataLog.Controls.Add(Me.btn_ClearPlotRegs)
         Me.tab_dataLog.Controls.Add(Me.group_regLogging)
         Me.tab_dataLog.Controls.Add(Me.group_regPlot)
         Me.tab_dataLog.Controls.Add(Me.Label7)
@@ -706,10 +699,42 @@ Partial Class TopGUI
         Me.tab_dataLog.Text = "Data Capture"
         Me.tab_dataLog.UseVisualStyleBackColor = True
         '
+        'group_regLogging
+        '
+        Me.group_regLogging.Controls.Add(Me.btn_BulkRegRead)
+        Me.group_regLogging.Controls.Add(Me.btn_RealTime)
+        Me.group_regLogging.Controls.Add(Me.btn_ADcmXlBufCapture)
+        Me.group_regLogging.Location = New System.Drawing.Point(259, 110)
+        Me.group_regLogging.Name = "group_regLogging"
+        Me.group_regLogging.Size = New System.Drawing.Size(340, 90)
+        Me.group_regLogging.TabIndex = 13
+        Me.group_regLogging.TabStop = False
+        Me.group_regLogging.Text = "Data Logging"
+        '
+        'btn_ADcmXlBufCapture
+        '
+        Me.btn_ADcmXlBufCapture.Location = New System.Drawing.Point(168, 19)
+        Me.btn_ADcmXlBufCapture.Name = "btn_ADcmXlBufCapture"
+        Me.btn_ADcmXlBufCapture.Size = New System.Drawing.Size(75, 62)
+        Me.btn_ADcmXlBufCapture.TabIndex = 8
+        Me.btn_ADcmXlBufCapture.Text = "ADcmXL Buffer Capture"
+        Me.btn_ADcmXlBufCapture.UseVisualStyleBackColor = True
+        '
+        'group_regPlot
+        '
+        Me.group_regPlot.Controls.Add(Me.btn_plotData)
+        Me.group_regPlot.Controls.Add(Me.btn_plotFFT)
+        Me.group_regPlot.Location = New System.Drawing.Point(259, 14)
+        Me.group_regPlot.Name = "group_regPlot"
+        Me.group_regPlot.Size = New System.Drawing.Size(340, 90)
+        Me.group_regPlot.TabIndex = 12
+        Me.group_regPlot.TabStop = False
+        Me.group_regPlot.Text = "Data Plotting"
+        '
         'Label7
         '
         Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(3, 5)
+        Me.Label7.Location = New System.Drawing.Point(6, 10)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(93, 13)
         Me.Label7.TabIndex = 11
@@ -721,7 +746,7 @@ Partial Class TopGUI
         Me.dataPlotRegsView.AllowUserToDeleteRows = False
         Me.dataPlotRegsView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dataPlotRegsView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.reg_label, Me.plot})
-        Me.dataPlotRegsView.Location = New System.Drawing.Point(6, 21)
+        Me.dataPlotRegsView.Location = New System.Drawing.Point(6, 30)
         Me.dataPlotRegsView.Name = "dataPlotRegsView"
         Me.dataPlotRegsView.RowHeadersVisible = False
         Me.dataPlotRegsView.Size = New System.Drawing.Size(241, 350)
@@ -1227,28 +1252,14 @@ Partial Class TopGUI
         Me.prodImage.TabIndex = 45
         Me.prodImage.TabStop = False
         '
-        'group_regPlot
+        'btn_ClearPlotRegs
         '
-        Me.group_regPlot.Controls.Add(Me.btn_plotData)
-        Me.group_regPlot.Controls.Add(Me.btn_plotFFT)
-        Me.group_regPlot.Location = New System.Drawing.Point(259, 14)
-        Me.group_regPlot.Name = "group_regPlot"
-        Me.group_regPlot.Size = New System.Drawing.Size(340, 90)
-        Me.group_regPlot.TabIndex = 12
-        Me.group_regPlot.TabStop = False
-        Me.group_regPlot.Text = "Data Plotting"
-        '
-        'group_regLogging
-        '
-        Me.group_regLogging.Controls.Add(Me.btn_BulkRegRead)
-        Me.group_regLogging.Controls.Add(Me.btn_RealTime)
-        Me.group_regLogging.Controls.Add(Me.btn_ADcmXlBufCapture)
-        Me.group_regLogging.Location = New System.Drawing.Point(259, 110)
-        Me.group_regLogging.Name = "group_regLogging"
-        Me.group_regLogging.Size = New System.Drawing.Size(340, 90)
-        Me.group_regLogging.TabIndex = 13
-        Me.group_regLogging.TabStop = False
-        Me.group_regLogging.Text = "Data Logging"
+        Me.btn_ClearPlotRegs.Location = New System.Drawing.Point(206, 5)
+        Me.btn_ClearPlotRegs.Name = "btn_ClearPlotRegs"
+        Me.btn_ClearPlotRegs.Size = New System.Drawing.Size(41, 23)
+        Me.btn_ClearPlotRegs.TabIndex = 14
+        Me.btn_ClearPlotRegs.Text = "Clear"
+        Me.btn_ClearPlotRegs.UseVisualStyleBackColor = True
         '
         'TopGUI
         '
@@ -1288,6 +1299,8 @@ Partial Class TopGUI
         CType(Me.regView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tab_dataLog.ResumeLayout(False)
         Me.tab_dataLog.PerformLayout()
+        Me.group_regLogging.ResumeLayout(False)
+        Me.group_regPlot.ResumeLayout(False)
         CType(Me.dataPlotRegsView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tab_Pin.ResumeLayout(False)
         Me.tab_Pin.PerformLayout()
@@ -1306,8 +1319,6 @@ Partial Class TopGUI
         Me.GroupBox8.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
         CType(Me.prodImage, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.group_regPlot.ResumeLayout(False)
-        Me.group_regLogging.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1419,4 +1430,5 @@ Partial Class TopGUI
     Friend WithEvents prodImage As PictureBox
     Friend WithEvents group_regPlot As GroupBox
     Friend WithEvents group_regLogging As GroupBox
+    Friend WithEvents btn_ClearPlotRegs As Button
 End Class

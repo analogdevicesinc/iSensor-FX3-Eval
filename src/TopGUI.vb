@@ -294,6 +294,16 @@ Public Class TopGUI
 #Region "Button Event Handlers"
 
     ''' <summary>
+    ''' Button to clear selected plot registers
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub btn_ClearPlotRegs_Click(sender As Object, e As EventArgs) Handles btn_ClearPlotRegs.Click
+        dataPlotRegs.Clear()
+        SaveDataPlotRegList()
+    End Sub
+
+    ''' <summary>
     ''' Open ADcmXL buffered data capture GUI
     ''' </summary>
     ''' <param name="sender"></param>
