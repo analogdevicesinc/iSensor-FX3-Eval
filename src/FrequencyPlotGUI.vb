@@ -42,7 +42,8 @@ Public Class FrequencyPlotGUI
 
         'check for previously plotted regs
         For Each item In m_TopGUI.dataPlotRegs
-            If regSelect.Items.Contains(item.Reg.Label) Then RegisterList.Items.Add(item.Reg.Label)
+            'Only plot regs set to first plot
+            If item.PlotIndex = 0 And regSelect.Items.Contains(item.Reg.Label) Then RegisterList.Items.Add(item.Reg.Label)
         Next
 
         'populate NFFT setting dropdown
@@ -94,11 +95,13 @@ Public Class FrequencyPlotGUI
         m_TopGUI.plotSettings.ScientificLabels = check_sciLabel.Checked
 
         'save register list
-        m_TopGUI.dataPlotRegs.Clear()
-        For Each reg In selectedRegList
-            m_TopGUI.dataPlotRegs.Add(New RegPlotterInfo With {.Reg = reg})
-        Next
-        m_TopGUI.SaveDataPlotRegList()
+        If selectedRegList.Count > 0 Then
+            m_TopGUI.dataPlotRegs.Clear()
+            For Each reg In selectedRegList
+                m_TopGUI.dataPlotRegs.Add(New RegPlotterInfo With {.Reg = reg})
+            Next
+            m_TopGUI.SaveDataPlotRegList()
+        End If
         'show other forms
         InteractWithOtherForms(False, Me)
         're-enable main form button
