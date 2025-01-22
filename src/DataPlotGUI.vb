@@ -68,7 +68,6 @@ Public Class DataPlotGUI
         axis_autoscale.Checked = m_TopGUI.plotSettings.Autoscale
         logToCSV.Checked = m_TopGUI.plotSettings.LogData
         x_timestamp.Checked = m_TopGUI.plotSettings.Timestamp
-        x_axis_scroll.Checked = m_TopGUI.plotSettings.ScrollBar
 
         'create synchronization structures
         logTimer = New Stopwatch()
@@ -97,7 +96,6 @@ Public Class DataPlotGUI
         m_TopGUI.plotSettings.Autoscale = axis_autoscale.Checked
         m_TopGUI.plotSettings.LogData = logToCSV.Checked
         m_TopGUI.plotSettings.Timestamp = x_timestamp.Checked
-        m_TopGUI.plotSettings.ScrollBar = x_axis_scroll.Checked
         m_TopGUI.plotSettings.NumberPlots = numberPlotAreas
 
         'save regs which were plotted
@@ -138,7 +136,6 @@ Public Class DataPlotGUI
             playFromCSV.Enabled = True
             playFromCSV.Visible = True
             x_timestamp.Enabled = True
-            x_axis_scroll.Enabled = True
             btn_RemovePlot.Enabled = True
             btn_AddPlot.Enabled = True
             m_TopGUI.FX3.UserLEDOn()
@@ -163,7 +160,6 @@ Public Class DataPlotGUI
             playFromCSV.Visible = False
             check_fixedTime.Enabled = False
             x_timestamp.Enabled = False
-            x_axis_scroll.Enabled = False
             btn_RemovePlot.Enabled = False
             btn_AddPlot.Enabled = False
             btn_startStop.Text = "Stop Plotting"
@@ -426,10 +422,6 @@ Public Class DataPlotGUI
 
             dataPlot.ChartAreas(i).AxisX.ScrollBar.IsPositionedInside = False
             dataPlot.ChartAreas(i).AxisY.ScrollBar.IsPositionedInside = False
-            If x_axis_scroll.Checked Then
-                dataPlot.ChartAreas(i).AxisX.ScaleView.Zoomable = True
-                dataPlot.ChartAreas(i).CursorX.IsUserSelectionEnabled = True
-            End If
         Next
         ApplyYAxisTitles()
 
@@ -446,7 +438,6 @@ Public Class DataPlotGUI
         check_fixedTime.Enabled = True
         sampleFreq.Enabled = True
         x_timestamp.Enabled = True
-        x_axis_scroll.Enabled = True
     End Sub
 
     Private Sub DisablePlaybackButtons()
@@ -460,7 +451,6 @@ Public Class DataPlotGUI
         samplesRendered.Enabled = False
         sampleFreq.Enabled = False
         x_timestamp.Enabled = False
-        x_axis_scroll.Enabled = False
     End Sub
 
     Private Sub ApplyYAxisTitles()
@@ -594,11 +584,9 @@ Public Class DataPlotGUI
 
         'Update the series for the plot area
         For i As Integer = 0 To selectedRegList.Count() - 1
-            If Not x_axis_scroll.Checked Then
-                If dataPlot.Series(i).Points.Count() = numSamples Then
-                    dataPlot.Series(i).Points.RemoveAt(0)
-                    dataPlot.ResetAutoValues()
-                End If
+            If dataPlot.Series(i).Points.Count() = numSamples Then
+                dataPlot.Series(i).Points.RemoveAt(0)
+                dataPlot.ResetAutoValues()
             End If
             If x_timestamp.Checked Then
                 dataPlot.Series(i).Points.AddXY((logTimer.ElapsedMilliseconds / 1000.0), plotValues(i))

@@ -25,6 +25,11 @@ Partial Class DataPlotGUI
         Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.regView = New System.Windows.Forms.DataGridView()
+        Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Offset = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.label_sampleFreq = New System.Windows.Forms.Label()
         Me.sampleFreq = New System.Windows.Forms.TextBox()
         Me.btn_startStop = New System.Windows.Forms.Button()
@@ -44,15 +49,9 @@ Partial Class DataPlotGUI
         Me.axis_autoscale = New System.Windows.Forms.CheckBox()
         Me.btn_copyPlot = New System.Windows.Forms.Button()
         Me.SettingsPage = New System.Windows.Forms.TabPage()
-        Me.x_axis_scroll = New System.Windows.Forms.CheckBox()
         Me.btn_RemovePlot = New System.Windows.Forms.Button()
         Me.btn_AddPlot = New System.Windows.Forms.Button()
         Me.btn_setTitle = New System.Windows.Forms.Button()
-        Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Offset = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.regView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dataPlot, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PlotOptions.SuspendLayout()
@@ -78,6 +77,47 @@ Partial Class DataPlotGUI
         Me.regView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.regView.Size = New System.Drawing.Size(515, 389)
         Me.regView.TabIndex = 3
+        '
+        'Label
+        '
+        Me.Label.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.Label.HeaderText = "Label"
+        Me.Label.Name = "Label"
+        Me.Label.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Label.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Page
+        '
+        Me.Page.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Page.HeaderText = "Page"
+        Me.Page.Name = "Page"
+        Me.Page.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Page.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Page.Width = 35
+        '
+        'Address
+        '
+        Me.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Address.HeaderText = "Address"
+        Me.Address.Name = "Address"
+        Me.Address.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Address.Width = 50
+        '
+        'Contents
+        '
+        Me.Contents.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Contents.HeaderText = "Contents"
+        Me.Contents.Name = "Contents"
+        Me.Contents.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Contents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Offset
+        '
+        Me.Offset.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
+        Me.Offset.HeaderText = "Offset"
+        Me.Offset.Name = "Offset"
+        Me.Offset.Width = 60
         '
         'label_sampleFreq
         '
@@ -260,7 +300,6 @@ Partial Class DataPlotGUI
         '
         'SettingsPage
         '
-        Me.SettingsPage.Controls.Add(Me.x_axis_scroll)
         Me.SettingsPage.Controls.Add(Me.btn_RemovePlot)
         Me.SettingsPage.Controls.Add(Me.btn_AddPlot)
         Me.SettingsPage.Controls.Add(Me.btn_setTitle)
@@ -278,16 +317,6 @@ Partial Class DataPlotGUI
         Me.SettingsPage.TabIndex = 1
         Me.SettingsPage.Text = "Settings"
         Me.SettingsPage.UseVisualStyleBackColor = True
-        '
-        'x_axis_scroll
-        '
-        Me.x_axis_scroll.AutoSize = True
-        Me.x_axis_scroll.Location = New System.Drawing.Point(124, 62)
-        Me.x_axis_scroll.Name = "x_axis_scroll"
-        Me.x_axis_scroll.Size = New System.Drawing.Size(74, 17)
-        Me.x_axis_scroll.TabIndex = 29
-        Me.x_axis_scroll.Text = "Plot Zoom"
-        Me.x_axis_scroll.UseVisualStyleBackColor = True
         '
         'btn_RemovePlot
         '
@@ -315,47 +344,6 @@ Partial Class DataPlotGUI
         Me.btn_setTitle.TabIndex = 26
         Me.btn_setTitle.Text = "Set Title"
         Me.btn_setTitle.UseVisualStyleBackColor = True
-        '
-        'Label
-        '
-        Me.Label.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.Label.HeaderText = "Label"
-        Me.Label.Name = "Label"
-        Me.Label.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Label.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Page
-        '
-        Me.Page.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Page.HeaderText = "Page"
-        Me.Page.Name = "Page"
-        Me.Page.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Page.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Page.Width = 35
-        '
-        'Address
-        '
-        Me.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Address.HeaderText = "Address"
-        Me.Address.Name = "Address"
-        Me.Address.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Address.Width = 50
-        '
-        'Contents
-        '
-        Me.Contents.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Contents.HeaderText = "Contents"
-        Me.Contents.Name = "Contents"
-        Me.Contents.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Contents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Offset
-        '
-        Me.Offset.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader
-        Me.Offset.HeaderText = "Offset"
-        Me.Offset.Name = "Offset"
-        Me.Offset.Width = 60
         '
         'DataPlotGUI
         '
@@ -403,7 +391,6 @@ Partial Class DataPlotGUI
     Friend WithEvents btn_setTitle As Button
     Friend WithEvents btn_RemovePlot As Button
     Friend WithEvents btn_AddPlot As Button
-    Friend WithEvents x_axis_scroll As CheckBox
     Friend WithEvents axis_autoscale As CheckBox
     Friend WithEvents Label As DataGridViewTextBoxColumn
     Friend WithEvents Page As DataGridViewTextBoxColumn
