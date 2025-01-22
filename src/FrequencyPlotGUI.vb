@@ -288,6 +288,7 @@ Public Class FrequencyPlotGUI
         btn_Clear.Enabled = False
         btn_stopPlot.Enabled = True
         btn_run.Enabled = False
+        check_DCNull.Enabled = False
 
         'hide other forms
         InteractWithOtherForms(True, Me)
@@ -307,6 +308,7 @@ Public Class FrequencyPlotGUI
         btn_addreg.Enabled = True
         btn_removeReg.Enabled = True
         btn_run.Enabled = True
+        check_DCNull.Enabled = True
         btn_stopPlot.Enabled = False
 
         'disable DRactive
