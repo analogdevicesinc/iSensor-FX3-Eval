@@ -103,11 +103,13 @@ Public Class DataPlotGUI
         m_TopGUI.plotSettings.NumberPlots = numberPlotAreas
 
         'save regs which were plotted
-        m_TopGUI.dataPlotRegs.Clear()
-        For Each reg In selectedRegList
-            m_TopGUI.dataPlotRegs.Add(reg)
-        Next
-        m_TopGUI.SaveDataPlotRegList()
+        If selectedRegList.Count > 0 Then
+            m_TopGUI.dataPlotRegs.Clear()
+            For Each reg In selectedRegList
+                m_TopGUI.dataPlotRegs.Add(reg)
+            Next
+            m_TopGUI.SaveDataPlotRegList()
+        End If
         m_TopGUI.btn_plotData.Enabled = True
     End Sub
 
