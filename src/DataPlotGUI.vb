@@ -110,8 +110,8 @@ Public Class DataPlotGUI
     Private Sub ResizeHandler() Handles Me.Resize
         regView.Height = Height - 172
         dataPlot.Top = 6
-        dataPlot.Left = 532
-        dataPlot.Width = Width - 555
+        dataPlot.Left = 518
+        dataPlot.Width = Width - 540
         dataPlot.Height = Height - 53
         dataPlot.ResetAutoValues()
     End Sub

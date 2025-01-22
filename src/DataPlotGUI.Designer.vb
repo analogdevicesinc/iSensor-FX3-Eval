@@ -46,9 +46,9 @@ Partial Class DataPlotGUI
         Me.btn_SetLabel = New System.Windows.Forms.Button()
         Me.PlotOptions = New System.Windows.Forms.TabControl()
         Me.ControlPage = New System.Windows.Forms.TabPage()
-        Me.axis_autoscale = New System.Windows.Forms.CheckBox()
         Me.btn_copyPlot = New System.Windows.Forms.Button()
         Me.SettingsPage = New System.Windows.Forms.TabPage()
+        Me.axis_autoscale = New System.Windows.Forms.CheckBox()
         Me.btn_RemovePlot = New System.Windows.Forms.Button()
         Me.btn_AddPlot = New System.Windows.Forms.Button()
         Me.btn_setTitle = New System.Windows.Forms.Button()
@@ -75,7 +75,7 @@ Partial Class DataPlotGUI
         Me.regView.RowTemplate.Height = 24
         Me.regView.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
         Me.regView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.regView.Size = New System.Drawing.Size(515, 389)
+        Me.regView.Size = New System.Drawing.Size(500, 389)
         Me.regView.TabIndex = 3
         '
         'Label
@@ -150,13 +150,13 @@ Partial Class DataPlotGUI
         Me.dataPlot.ChartAreas.Add(ChartArea1)
         Legend1.Name = "Legend1"
         Me.dataPlot.Legends.Add(Legend1)
-        Me.dataPlot.Location = New System.Drawing.Point(531, 6)
+        Me.dataPlot.Location = New System.Drawing.Point(518, 6)
         Me.dataPlot.Name = "dataPlot"
         Series1.ChartArea = "ChartArea1"
         Series1.Legend = "Legend1"
         Series1.Name = "Series1"
         Me.dataPlot.Series.Add(Series1)
-        Me.dataPlot.Size = New System.Drawing.Size(850, 508)
+        Me.dataPlot.Size = New System.Drawing.Size(860, 508)
         Me.dataPlot.TabIndex = 7
         Me.dataPlot.Text = "Data Plot"
         '
@@ -182,13 +182,13 @@ Partial Class DataPlotGUI
         Me.btn_autonull.Name = "btn_autonull"
         Me.btn_autonull.Size = New System.Drawing.Size(88, 35)
         Me.btn_autonull.TabIndex = 1
-        Me.btn_autonull.Text = "Auto-Null"
+        Me.btn_autonull.Text = "Auto-Null Plot"
         Me.btn_autonull.UseVisualStyleBackColor = True
         '
         'logToCSV
         '
         Me.logToCSV.AutoSize = True
-        Me.logToCSV.Location = New System.Drawing.Point(204, 62)
+        Me.logToCSV.Location = New System.Drawing.Point(101, 58)
         Me.logToCSV.Name = "logToCSV"
         Me.logToCSV.Size = New System.Drawing.Size(106, 17)
         Me.logToCSV.TabIndex = 6
@@ -197,7 +197,7 @@ Partial Class DataPlotGUI
         '
         'btn_saveChart
         '
-        Me.btn_saveChart.Location = New System.Drawing.Point(413, 6)
+        Me.btn_saveChart.Location = New System.Drawing.Point(398, 6)
         Me.btn_saveChart.Name = "btn_saveChart"
         Me.btn_saveChart.Size = New System.Drawing.Size(88, 35)
         Me.btn_saveChart.TabIndex = 2
@@ -225,7 +225,7 @@ Partial Class DataPlotGUI
         'check_fixedTime
         '
         Me.check_fixedTime.AutoSize = True
-        Me.check_fixedTime.Location = New System.Drawing.Point(213, 57)
+        Me.check_fixedTime.Location = New System.Drawing.Point(213, 59)
         Me.check_fixedTime.Name = "check_fixedTime"
         Me.check_fixedTime.Size = New System.Drawing.Size(115, 17)
         Me.check_fixedTime.TabIndex = 21
@@ -244,7 +244,7 @@ Partial Class DataPlotGUI
         '
         'btn_SetLabel
         '
-        Me.btn_SetLabel.Location = New System.Drawing.Point(413, 47)
+        Me.btn_SetLabel.Location = New System.Drawing.Point(398, 47)
         Me.btn_SetLabel.Name = "btn_SetLabel"
         Me.btn_SetLabel.Size = New System.Drawing.Size(88, 35)
         Me.btn_SetLabel.TabIndex = 23
@@ -258,40 +258,30 @@ Partial Class DataPlotGUI
         Me.PlotOptions.Location = New System.Drawing.Point(10, 6)
         Me.PlotOptions.Name = "PlotOptions"
         Me.PlotOptions.SelectedIndex = 0
-        Me.PlotOptions.Size = New System.Drawing.Size(516, 111)
+        Me.PlotOptions.Size = New System.Drawing.Size(502, 111)
         Me.PlotOptions.TabIndex = 25
         '
         'ControlPage
         '
-        Me.ControlPage.Controls.Add(Me.axis_autoscale)
         Me.ControlPage.Controls.Add(Me.btn_copyPlot)
         Me.ControlPage.Controls.Add(Me.btn_startStop)
         Me.ControlPage.Controls.Add(Me.btn_stopPlayback)
         Me.ControlPage.Controls.Add(Me.playFromCSV)
+        Me.ControlPage.Controls.Add(Me.logToCSV)
         Me.ControlPage.Controls.Add(Me.check_fixedTime)
         Me.ControlPage.Controls.Add(Me.btn_autonull)
         Me.ControlPage.Controls.Add(Me.btn_saveChart)
         Me.ControlPage.Location = New System.Drawing.Point(4, 22)
         Me.ControlPage.Name = "ControlPage"
         Me.ControlPage.Padding = New System.Windows.Forms.Padding(3)
-        Me.ControlPage.Size = New System.Drawing.Size(508, 85)
+        Me.ControlPage.Size = New System.Drawing.Size(494, 85)
         Me.ControlPage.TabIndex = 0
         Me.ControlPage.Text = "Plotter Control"
         Me.ControlPage.UseVisualStyleBackColor = True
         '
-        'axis_autoscale
-        '
-        Me.axis_autoscale.AutoSize = True
-        Me.axis_autoscale.Location = New System.Drawing.Point(100, 57)
-        Me.axis_autoscale.Name = "axis_autoscale"
-        Me.axis_autoscale.Size = New System.Drawing.Size(107, 17)
-        Me.axis_autoscale.TabIndex = 23
-        Me.axis_autoscale.Text = "AutoScale Y-Axis"
-        Me.axis_autoscale.UseVisualStyleBackColor = True
-        '
         'btn_copyPlot
         '
-        Me.btn_copyPlot.Location = New System.Drawing.Point(413, 47)
+        Me.btn_copyPlot.Location = New System.Drawing.Point(398, 47)
         Me.btn_copyPlot.Name = "btn_copyPlot"
         Me.btn_copyPlot.Size = New System.Drawing.Size(88, 35)
         Me.btn_copyPlot.TabIndex = 22
@@ -300,6 +290,7 @@ Partial Class DataPlotGUI
         '
         'SettingsPage
         '
+        Me.SettingsPage.Controls.Add(Me.axis_autoscale)
         Me.SettingsPage.Controls.Add(Me.btn_RemovePlot)
         Me.SettingsPage.Controls.Add(Me.btn_AddPlot)
         Me.SettingsPage.Controls.Add(Me.btn_setTitle)
@@ -309,18 +300,27 @@ Partial Class DataPlotGUI
         Me.SettingsPage.Controls.Add(Me.sampleFreq)
         Me.SettingsPage.Controls.Add(Me.samplesRendered)
         Me.SettingsPage.Controls.Add(Me.label_samplesRendered)
-        Me.SettingsPage.Controls.Add(Me.logToCSV)
         Me.SettingsPage.Location = New System.Drawing.Point(4, 22)
         Me.SettingsPage.Name = "SettingsPage"
         Me.SettingsPage.Padding = New System.Windows.Forms.Padding(3)
-        Me.SettingsPage.Size = New System.Drawing.Size(508, 85)
+        Me.SettingsPage.Size = New System.Drawing.Size(494, 85)
         Me.SettingsPage.TabIndex = 1
         Me.SettingsPage.Text = "Settings"
         Me.SettingsPage.UseVisualStyleBackColor = True
         '
+        'axis_autoscale
+        '
+        Me.axis_autoscale.AutoSize = True
+        Me.axis_autoscale.Location = New System.Drawing.Point(128, 62)
+        Me.axis_autoscale.Name = "axis_autoscale"
+        Me.axis_autoscale.Size = New System.Drawing.Size(107, 17)
+        Me.axis_autoscale.TabIndex = 29
+        Me.axis_autoscale.Text = "AutoScale Y-Axis"
+        Me.axis_autoscale.UseVisualStyleBackColor = True
+        '
         'btn_RemovePlot
         '
-        Me.btn_RemovePlot.Location = New System.Drawing.Point(319, 47)
+        Me.btn_RemovePlot.Location = New System.Drawing.Point(304, 47)
         Me.btn_RemovePlot.Name = "btn_RemovePlot"
         Me.btn_RemovePlot.Size = New System.Drawing.Size(88, 35)
         Me.btn_RemovePlot.TabIndex = 28
@@ -329,7 +329,7 @@ Partial Class DataPlotGUI
         '
         'btn_AddPlot
         '
-        Me.btn_AddPlot.Location = New System.Drawing.Point(319, 6)
+        Me.btn_AddPlot.Location = New System.Drawing.Point(304, 6)
         Me.btn_AddPlot.Name = "btn_AddPlot"
         Me.btn_AddPlot.Size = New System.Drawing.Size(88, 35)
         Me.btn_AddPlot.TabIndex = 27
@@ -338,7 +338,7 @@ Partial Class DataPlotGUI
         '
         'btn_setTitle
         '
-        Me.btn_setTitle.Location = New System.Drawing.Point(413, 6)
+        Me.btn_setTitle.Location = New System.Drawing.Point(398, 6)
         Me.btn_setTitle.Name = "btn_setTitle"
         Me.btn_setTitle.Size = New System.Drawing.Size(88, 35)
         Me.btn_setTitle.TabIndex = 26
@@ -391,10 +391,10 @@ Partial Class DataPlotGUI
     Friend WithEvents btn_setTitle As Button
     Friend WithEvents btn_RemovePlot As Button
     Friend WithEvents btn_AddPlot As Button
-    Friend WithEvents axis_autoscale As CheckBox
     Friend WithEvents Label As DataGridViewTextBoxColumn
     Friend WithEvents Page As DataGridViewTextBoxColumn
     Friend WithEvents Address As DataGridViewTextBoxColumn
     Friend WithEvents Contents As DataGridViewTextBoxColumn
     Friend WithEvents Offset As DataGridViewTextBoxColumn
+    Friend WithEvents axis_autoscale As CheckBox
 End Class
