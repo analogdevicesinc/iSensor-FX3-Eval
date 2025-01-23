@@ -566,9 +566,7 @@ Public Class Logger : Implements IDisposable
         Next
         If m_logTimestamps Then
             'Add timestamp
-            header += "SAMPLE_TIMESTAMP_MS" + m_DataSeparator
-            'Add date / time
-            header += "PACKET_DATE_TIME"
+            header += "USB_TIMESTAMP_MS"
         Else
             'remove last separator
             Return header.Substring(0, header.Length() - m_DataSeparator.Length())
@@ -639,9 +637,6 @@ Public Class Logger : Implements IDisposable
                 Dim duration As TimeSpan = (Buf.Time - m_StreamStartTime)
                 'add stream running time
                 sb.Append(duration.TotalMilliseconds.ToString())
-                sb.Append(m_DataSeparator)
-                'add USB packet time
-                sb.Append(Buf.Time.ToString("hh:mm:ss:fff"))
             Else
                 'remove last separator
                 sb.Remove(sb.Length - m_DataSeparator.Length, m_DataSeparator.Length)
