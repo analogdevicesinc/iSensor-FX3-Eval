@@ -1392,17 +1392,22 @@ Public Class TopGUI
             subGUI.ShowDialog()
             selectedFX3SN = FX3.ActiveFX3SerialNumber
         ElseIf FX3.BusyFX3s.Count > 0 Then
-            'FX3s are already running the application firmware
-            If ResetAllFX3s() Then
-                btn_Connect.Enabled = False
-                'Restart connect recursively
-                FX3.WaitForBoard(10)
-                ConnectWork()
-                Exit Sub
+            'Allow sharing FX3 board if debugging
+            If Diagnostics.Debugger.IsAttached Then
+                selectedFX3SN = FX3.BusyFX3s(0)
             Else
-                label_FX3Status.BackColor = ERROR_COLOR
-                label_FX3Status.Text = "ERROR: All FX3s in Use"
-                btn_Connect.Text = "Connect to FX3"
+                'FX3s are already running the application firmware
+                If ResetAllFX3s() Then
+                    btn_Connect.Enabled = False
+                    'Restart connect recursively
+                    FX3.WaitForBoard(10)
+                    ConnectWork()
+                    Exit Sub
+                Else
+                    label_FX3Status.BackColor = ERROR_COLOR
+                    label_FX3Status.Text = "ERROR: All FX3s in Use"
+                    btn_Connect.Text = "Connect to FX3"
+                End If
             End If
         Else
             label_FX3Status.BackColor = ERROR_COLOR
