@@ -76,6 +76,7 @@ Partial Class TopGUI
         Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tab_dataLog = New System.Windows.Forms.TabPage()
+        Me.btn_ClearPlotRegs = New System.Windows.Forms.Button()
         Me.group_regLogging = New System.Windows.Forms.GroupBox()
         Me.btn_ADcmXlBufCapture = New System.Windows.Forms.Button()
         Me.group_regPlot = New System.Windows.Forms.GroupBox()
@@ -131,7 +132,6 @@ Partial Class TopGUI
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
         Me.prodImage = New System.Windows.Forms.PictureBox()
-        Me.btn_ClearPlotRegs = New System.Windows.Forms.Button()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -349,7 +349,7 @@ Partial Class TopGUI
         '
         Me.group_util.Controls.Add(Me.btn_ResetDUT)
         Me.group_util.Controls.Add(Me.btn_CheckDUTConnection)
-        Me.group_util.Location = New System.Drawing.Point(275, 12)
+        Me.group_util.Location = New System.Drawing.Point(451, 11)
         Me.group_util.Name = "group_util"
         Me.group_util.Size = New System.Drawing.Size(170, 90)
         Me.group_util.TabIndex = 34
@@ -360,7 +360,7 @@ Partial Class TopGUI
         '
         Me.GroupBox1.Controls.Add(Me.btn_SelectDUT)
         Me.GroupBox1.Controls.Add(Me.btn_FX3Config)
-        Me.GroupBox1.Location = New System.Drawing.Point(451, 12)
+        Me.GroupBox1.Location = New System.Drawing.Point(275, 11)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(170, 90)
         Me.GroupBox1.TabIndex = 35
@@ -371,7 +371,7 @@ Partial Class TopGUI
         '
         Me.GroupBox6.Controls.Add(Me.btn_Connect)
         Me.GroupBox6.Controls.Add(Me.btn_APIInfo)
-        Me.GroupBox6.Location = New System.Drawing.Point(12, 12)
+        Me.GroupBox6.Location = New System.Drawing.Point(12, 11)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Size = New System.Drawing.Size(170, 90)
         Me.GroupBox6.TabIndex = 40
@@ -698,6 +698,15 @@ Partial Class TopGUI
         Me.tab_dataLog.TabIndex = 2
         Me.tab_dataLog.Text = "Data Capture"
         Me.tab_dataLog.UseVisualStyleBackColor = True
+        '
+        'btn_ClearPlotRegs
+        '
+        Me.btn_ClearPlotRegs.Location = New System.Drawing.Point(206, 5)
+        Me.btn_ClearPlotRegs.Name = "btn_ClearPlotRegs"
+        Me.btn_ClearPlotRegs.Size = New System.Drawing.Size(41, 23)
+        Me.btn_ClearPlotRegs.TabIndex = 14
+        Me.btn_ClearPlotRegs.Text = "Clear"
+        Me.btn_ClearPlotRegs.UseVisualStyleBackColor = True
         '
         'group_regLogging
         '
@@ -1252,15 +1261,6 @@ Partial Class TopGUI
         Me.prodImage.TabIndex = 45
         Me.prodImage.TabStop = False
         '
-        'btn_ClearPlotRegs
-        '
-        Me.btn_ClearPlotRegs.Location = New System.Drawing.Point(206, 5)
-        Me.btn_ClearPlotRegs.Name = "btn_ClearPlotRegs"
-        Me.btn_ClearPlotRegs.Size = New System.Drawing.Size(41, 23)
-        Me.btn_ClearPlotRegs.TabIndex = 14
-        Me.btn_ClearPlotRegs.Text = "Clear"
-        Me.btn_ClearPlotRegs.UseVisualStyleBackColor = True
-        '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1268,11 +1268,11 @@ Partial Class TopGUI
         Me.ClientSize = New System.Drawing.Size(634, 736)
         Me.Controls.Add(Me.prodImage)
         Me.Controls.Add(Me.link_help)
+        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.dut_access)
         Me.Controls.Add(Me.GroupBox7)
         Me.Controls.Add(Me.GroupBox6)
         Me.Controls.Add(Me.group_util)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.checkVersion)
         Me.Controls.Add(Me.report_issue)
         Me.Controls.Add(Me.regMapPath_Label)
