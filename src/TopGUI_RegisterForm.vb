@@ -429,12 +429,13 @@ Partial Class TopGUI
                         readStr = "Write Only"
                     End If
                     If regIndex >= regView.RowCount Then
-                        regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), readStr}
+                        regStr = {reg.Label, reg.Page.ToString(), reg.Address.ToString(), (8 * reg.NumBytes).ToString(), readStr}
                         regView.Rows.Add(regStr)
                     Else
                         regView.Item("Label", regIndex).Value = reg.Label
                         regView.Item("Page", regIndex).Value = reg.Page
                         regView.Item("Address", regIndex).Value = reg.Address
+                        regView.Item("Bits", regIndex).Value = 8 * reg.NumBytes
                         regView.Item("Contents", regIndex).Value = readStr
                     End If
                     regIndex += 1

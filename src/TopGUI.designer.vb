@@ -71,10 +71,6 @@ Partial Class TopGUI
         Me.Label6 = New System.Windows.Forms.Label()
         Me.selectPage = New System.Windows.Forms.ComboBox()
         Me.regView = New System.Windows.Forms.DataGridView()
-        Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tab_dataLog = New System.Windows.Forms.TabPage()
         Me.btn_ClearPlotRegs = New System.Windows.Forms.Button()
         Me.group_regLogging = New System.Windows.Forms.GroupBox()
@@ -132,6 +128,11 @@ Partial Class TopGUI
         Me.btn_checkError = New System.Windows.Forms.Button()
         Me.link_help = New System.Windows.Forms.LinkLabel()
         Me.prodImage = New System.Windows.Forms.PictureBox()
+        Me.Label = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Page = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Address = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Bits = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Contents = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.group_util.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
@@ -631,7 +632,7 @@ Partial Class TopGUI
         Me.regView.AllowUserToDeleteRows = False
         Me.regView.BackgroundColor = System.Drawing.Color.White
         Me.regView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Contents})
+        Me.regView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Label, Me.Page, Me.Address, Me.Bits, Me.Contents})
         Me.regView.Location = New System.Drawing.Point(7, 34)
         Me.regView.Margin = New System.Windows.Forms.Padding(2)
         Me.regView.MultiSelect = False
@@ -644,45 +645,6 @@ Partial Class TopGUI
         Me.regView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.regView.Size = New System.Drawing.Size(385, 427)
         Me.regView.TabIndex = 34
-        '
-        'Label
-        '
-        Me.Label.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
-        Me.Label.HeaderText = "Label"
-        Me.Label.Name = "Label"
-        Me.Label.ReadOnly = True
-        Me.Label.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Label.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        '
-        'Page
-        '
-        Me.Page.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Page.HeaderText = "Page"
-        Me.Page.Name = "Page"
-        Me.Page.ReadOnly = True
-        Me.Page.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Page.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Page.Width = 35
-        '
-        'Address
-        '
-        Me.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Address.HeaderText = "Address"
-        Me.Address.Name = "Address"
-        Me.Address.ReadOnly = True
-        Me.Address.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Address.Width = 50
-        '
-        'Contents
-        '
-        Me.Contents.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Contents.HeaderText = "Contents"
-        Me.Contents.Name = "Contents"
-        Me.Contents.ReadOnly = True
-        Me.Contents.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Contents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-        Me.Contents.Width = 110
         '
         'tab_dataLog
         '
@@ -1261,6 +1223,54 @@ Partial Class TopGUI
         Me.prodImage.TabIndex = 45
         Me.prodImage.TabStop = False
         '
+        'Label
+        '
+        Me.Label.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.Label.HeaderText = "Label"
+        Me.Label.Name = "Label"
+        Me.Label.ReadOnly = True
+        Me.Label.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Label.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        '
+        'Page
+        '
+        Me.Page.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Page.HeaderText = "Page"
+        Me.Page.Name = "Page"
+        Me.Page.ReadOnly = True
+        Me.Page.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Page.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Page.Width = 40
+        '
+        'Address
+        '
+        Me.Address.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Address.HeaderText = "Addr"
+        Me.Address.Name = "Address"
+        Me.Address.ReadOnly = True
+        Me.Address.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Address.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Address.Width = 40
+        '
+        'Bits
+        '
+        Me.Bits.HeaderText = "Bits"
+        Me.Bits.Name = "Bits"
+        Me.Bits.ReadOnly = True
+        Me.Bits.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Bits.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Bits.Width = 40
+        '
+        'Contents
+        '
+        Me.Contents.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
+        Me.Contents.HeaderText = "Contents"
+        Me.Contents.Name = "Contents"
+        Me.Contents.ReadOnly = True
+        Me.Contents.Resizable = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Contents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+        Me.Contents.Width = 110
+        '
         'TopGUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1378,10 +1388,6 @@ Partial Class TopGUI
     Friend WithEvents Label6 As Label
     Friend WithEvents selectPage As ComboBox
     Friend WithEvents regView As DataGridView
-    Friend WithEvents Label As DataGridViewTextBoxColumn
-    Friend WithEvents Page As DataGridViewTextBoxColumn
-    Friend WithEvents Address As DataGridViewTextBoxColumn
-    Friend WithEvents Contents As DataGridViewTextBoxColumn
     Friend WithEvents GroupBox9 As GroupBox
     Friend WithEvents GroupBox8 As GroupBox
     Friend WithEvents GroupBox2 As GroupBox
@@ -1431,4 +1437,9 @@ Partial Class TopGUI
     Friend WithEvents group_regPlot As GroupBox
     Friend WithEvents group_regLogging As GroupBox
     Friend WithEvents btn_ClearPlotRegs As Button
+    Friend WithEvents Label As DataGridViewTextBoxColumn
+    Friend WithEvents Page As DataGridViewTextBoxColumn
+    Friend WithEvents Address As DataGridViewTextBoxColumn
+    Friend WithEvents Bits As DataGridViewTextBoxColumn
+    Friend WithEvents Contents As DataGridViewTextBoxColumn
 End Class
