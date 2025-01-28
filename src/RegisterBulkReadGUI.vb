@@ -38,7 +38,6 @@ Public Class RegisterBulkReadGUI
         DRDIO.Items.Add("DIO2")
         DRDIO.Items.Add("DIO3")
         DRDIO.Items.Add("DIO4")
-
         If m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO1.ToString Then
             DRDIO.SelectedItem = "DIO1"
         ElseIf m_TopGUI.FX3.ReadyPin.ToString = m_TopGUI.FX3.DIO2.ToString Then
@@ -49,6 +48,7 @@ Public Class RegisterBulkReadGUI
             DRDIO.SelectedItem = "DIO4"
         End If
 
+        'Check box options
         MeasureDR.Enabled = m_TopGUI.FX3.DrActive
         DrActiveBox.Checked = m_TopGUI.FX3.DrActive
         ValidateDR.Checked = m_TopGUI.FX3.DrActive
@@ -56,12 +56,17 @@ Public Class RegisterBulkReadGUI
         check_LogTimestamps.Checked = m_TopGUI.logTimestampData
         check_ScaleData.Checked = m_TopGUI.logScaledData
 
-        selectedRegview.View = View.Details
-        selectedRegview.Columns.Add("Register", selectedRegview.Width - 1, HorizontalAlignment.Left)
         DrFreq.Text = ""
         StreamingAVARCancelButton.Enabled = False
         statusLabel.Text = "Waiting"
         statusLabel.BackColor = Color.White
+
+        'Add columns to register selection and set autosize mode
+        selectedRegview.View = View.Details
+        selectedRegview.Columns.Add("Register")
+        selectedRegview.Columns.Add("Bit Width")
+        selectedRegview.Columns(1).Width = 60
+        selectedRegview.Columns(0).Width = selectedRegview.Width - selectedRegview.Columns(1).Width - 4
 
         'Set load register logging list
         selectedRegview.Items.Clear()
@@ -73,7 +78,7 @@ Public Class RegisterBulkReadGUI
             'Load from the register selection
             For Each reg In m_TopGUI.dataPlotRegs
                 If m_TopGUI.RegMap.Contains(reg.Reg.Label) Then
-                    selectedRegview.Items.Add(New ListViewItem() With {.Text = reg.Reg.Label})
+                    selectedRegview.Items.Add(New ListViewItem(New String() {reg.Reg.Label, (8 * reg.Reg.NumBytes).ToString()}))
                 End If
             Next
         End If
@@ -146,9 +151,8 @@ Public Class RegisterBulkReadGUI
     End Sub
 
     Private Sub AddRegisterButton_Click(sender As Object, e As EventArgs) Handles AddRegisterButton.Click
-        Dim newItem As New ListViewItem()
-        newItem.SubItems(0).Text = RegisterList.SelectedItem
-        selectedRegview.Items.Add(newItem)
+        Dim reg = m_TopGUI.RegMap(RegisterList.SelectedItem)
+        selectedRegview.Items.Add(New ListViewItem(New String() {reg.Label, (8 * reg.NumBytes).ToString()}))
         UpdateRegCountLabel()
     End Sub
 
