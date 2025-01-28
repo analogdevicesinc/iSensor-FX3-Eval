@@ -520,6 +520,7 @@ Public Class BurstManager
             Dim burstReg = m_regMap.BurstReadList(i)
             'ADIS1657x DATA_CNT / TIMESTAMP output follows 16-bit / 32-bit select
             If (Device = BurstDevice.ADIS1657x) And burstReg.Label.Contains("DATA_CNT") Then
+                burstReg = New RegClass With {.Address = burstReg.Address, .Page = burstReg.Page, .Label = burstReg.Label}
                 burstReg.NumBytes = numBytes
             End If
             m_burstRegs.Add(burstReg)
