@@ -27,18 +27,29 @@ Dut = Wrapper(topDir + '\\resources\\', topDir + '\\regmaps\\ADIS1650x_Regmap.cs
 print(Dut.FX3.GetFirmwareVersion)
 Dut.UserLEDBlink(2.0)
 
+# Synchronizes register reads with Data Ready signal on given DIO pin
+# Note that if Data Ready is not toggling, register read operations will hang
+Dut.SetDrPin(1)
+Dut.SetDrActive(True)
+
 #Create reg list
 
 regs_py = ['DIAG_STAT','DATA_CNTR','X_GYRO_OUT','Y_GYRO_OUT','Z_GYRO_OUT','X_ACCL_OUT','Y_ACCL_OUT','Z_ACCL_OUT']
 regs = Array[String](regs_py)
 data = []
 
+N = 10
+
 while True:
-    data = Dut.ReadSigned(regs)
-    for i in (data): 
-        print(i, end =" ") 
+    # Read registers on N consecutive Data Ready pulses
+    data = Dut.ReadSigned(regs, 1, N)
+    for i in range(N):
+        for j in range(len(regs_py)):
+            print(f"{regs_py[j]}={data[j+i*len(regs_py)]}", end =" ") 
+        print()
     print()
     sleep(0.5)
+
 
 
 

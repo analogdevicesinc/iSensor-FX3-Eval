@@ -33,7 +33,9 @@ Dut.UserLEDBlink(5.0);
 %print product ID
 fprintf('Product ID 0x%x',uint32(Dut.ReadUnsigned('PROD_ID')));
 
-%enable dr active
+%Synchronizes register reads with Data Ready signal on given DIO pin
+%Note that if Data Ready is not toggling, register read operations will hang
+Dut.SetDrPin(1);
 Dut.SetDrActive(true);
 
 %Create reglist
